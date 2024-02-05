@@ -20,29 +20,28 @@ import 'notification_services.dart';
 //   }
 // }
 
-// ignore: camel_case_types
-class landingClass extends StatelessWidget {
-  const landingClass({super.key});
+class MessageScreen extends StatelessWidget {
+  const MessageScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: LandingPage(),
+      home: msgScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 // ignore: camel_case_types
-class LandingPage extends StatefulWidget {
-  const LandingPage({super.key});
+class msgScreen extends StatefulWidget {
+  const msgScreen({super.key});
 
   @override
-  State<LandingPage> createState() => _LandingPageState();
+  State<msgScreen> createState() => _msgScreenState();
 }
 
 // ignore: camel_case_types
-class _LandingPageState extends State<LandingPage> {
+class _msgScreenState extends State<msgScreen> {
   final nameController = TextEditingController();
   NotificationServices notificationServices = NotificationServices();
 
@@ -83,26 +82,23 @@ class _LandingPageState extends State<LandingPage> {
         leading: const Icon(Icons.ac_unit_sharp),
         title: const Text('Landing Page'),
         elevation: 50,
-        backgroundColor: Colors.white24,
+        backgroundColor: Colors.black12,
         centerTitle: true,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
       ),
-      body: Directionality(
-        textDirection: TextDirection.ltr,
-        child: Center(
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const secondScreen(id: '3'),
-                  ));
-            },
-            child: const Text('Tap'),
-          ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const secondScreen(id: '3'),
+                ));
+          },
+          child: const Text('Tap'),
         ),
       ),
     );

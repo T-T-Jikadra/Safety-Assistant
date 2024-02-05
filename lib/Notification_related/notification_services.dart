@@ -1,24 +1,25 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:app_settings/app_settings.dart';
+import 'package:fff/Notification_related/show_details.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import 'navigate_to.dart';
 
 // ignore: camel_case_types
 class NotificationServices {
-
   FirebaseMessaging messaging = FirebaseMessaging.instance;
-  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   AndroidNotificationChannel channel = AndroidNotificationChannel(
-      Random.secure().nextInt(100000).toString(),
-      'High Importance',
-      importance: Importance.max
-  );
+      Random.secure().nextInt(100000).toString(), 'High Importance',
+      importance: Importance.max);
 
-
-  //To check the permission state
+  //To check the notification permission state
   void requestNotificationPermission() async {
     NotificationSettings settings = await messaging.requestPermission(
       alert: true,
@@ -48,60 +49,74 @@ class NotificationServices {
     }
   }
 
-
-  void initLocalNotification(BuildContext context, RemoteMessage? message) async {
-    var androidInitialization = const AndroidInitializationSettings('@mipmap/ic_launcher');
+  void initLocalNotification(
+      BuildContext context, RemoteMessage message) async {
+    var androidInitialization =
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
     var iosInitialization = const DarwinInitializationSettings();
 
     var initializationSetting = InitializationSettings(
         android: androidInitialization, iOS: iosInitialization);
 
-    await _flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel);
+    // await _flutterLocalNotificationsPlugin
+    //     .resolvePlatformSpecificImplementation<
+    //         AndroidFlutterLocalNotificationsPlugin>()
+    //     ?.createNotificationChannel(channel);
 
-    await _flutterLocalNotificationsPlugin.initialize(
-        initializationSetting,
+    await _flutterLocalNotificationsPlugin.initialize(initializationSetting,
         onDidReceiveNotificationResponse: (payload) async {
-          handleMessage(context, message!);
-        });
+      handleMessage(context, message);
+      // if (payload != null) {
+      //   Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (context) => secondScreen(id: message.data['type']),
+      //       ));
+      // }
+    });
   }
 
-  void firebaseInit() {
-
+  void firebaseInit(BuildContext context) {
     FirebaseMessaging.onMessage.listen((message) {
-
       if (kDebugMode) {
         print(message.notification!.title.toString());
         print(message.notification!.body.toString());
-        // print(message.data.toString());
-        // print(message.data['type']);
-        // print(message.data['id']);
+        print(message.data.toString());
+        print(message.data['type']);
+        print(message.data['id']);
       }
-      //at 12 PM
-      if (message.notification != null) {
-        if (kDebugMode) {
-          print('Message also contained a notification: ${message.notification}');
-        }
+      if (Platform.isAndroid) {
+        //to open a specific page (doesn't works for now)
+        initLocalNotification(context, message);
+        //Shows the notification
+        showNotification(message);
+      } else {
+        //Shows the notification
+        showNotification(message);
       }
 
-      //initLocalNotification(context, message);
-      showNotification(message);
+      //at 12 PM
+
+      if (message.notification != null) {
+        if (kDebugMode) {
+          print(
+              'Message also contained a notification: ${message.notification}');
+        }
+      }
     });
   }
 
   Future<void> showNotification(RemoteMessage message) async {
-    AndroidNotificationChannel channel = AndroidNotificationChannel(
-        Random.secure().nextInt(100000).toString(),
+    AndroidNotificationChannel channel = const AndroidNotificationChannel(
+        //Random.secure().nextInt(100000).toString(),
+        '69',
         'High Importance',
-        importance: Importance.max
-    );
+        importance: Importance.max);
 
     //for android
     AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
-            channel.id.toString(),
-            channel.name.toString(),
+            channel.id.toString(), channel.name.toString(),
             channelDescription: 'Your channel description',
             importance: Importance.high,
             ticker: 'ticker');
@@ -109,13 +124,10 @@ class NotificationServices {
     //for ios
     const DarwinNotificationDetails darwinNotificationDetails =
         DarwinNotificationDetails(
-            presentAlert: true,
-            presentBadge: true,
-            presentSound: true);
+            presentAlert: true, presentBadge: true, presentSound: true);
 
     NotificationDetails notificationDetails = NotificationDetails(
-        android: androidNotificationDetails,
-        iOS: darwinNotificationDetails);
+        android: androidNotificationDetails, iOS: darwinNotificationDetails);
 
     Future.delayed(Duration.zero, () {
       _flutterLocalNotificationsPlugin.show(
@@ -142,8 +154,29 @@ class NotificationServices {
     });
   }
 
+  Future<void> setupInteractMessage(BuildContext context) async {
+    //when app is terminated ..
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
 
-  void handleMessage(BuildContext context , RemoteMessage message){
+    if (initialMessage != null) {
+      // ignore: use_build_context_synchronously
+      handleMessage(context, initialMessage);
+    }
 
+    //when app is in background ...
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      handleMessage(context, event);
+    });
+  }
+
+  void handleMessage(BuildContext context, RemoteMessage message) {
+    if (message.data != null) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ShowDetails(id: message.data['type']),
+          ));
+    }
   }
 }

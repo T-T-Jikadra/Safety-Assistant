@@ -1,3 +1,4 @@
+import 'package:fff/Notification_related/message_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ void main() async {
   await Firebase.initializeApp();
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandle);
-  runApp(const MyApp());
+  runApp(const MessageScreen());
 }
 
 //top lvl function ...
@@ -33,7 +34,6 @@ class MyApp extends StatefulWidget {
 
 //Widget state
 class _MyAppState extends State<MyApp> {
-
   final nameController = TextEditingController();
   NotificationServices notificationServices = NotificationServices();
 
@@ -44,14 +44,13 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     //at 12pm
-    NotificationServices()
-        .initLocalNotification(context, null); // Initialize local notifications
+    //NotificationServices().initLocalNotification(context, null); // Initialize local notifications
 
     //for notification permission pop up
     notificationServices.requestNotificationPermission();
 
     //for ...
-    notificationServices.firebaseInit();
+    notificationServices.firebaseInit(context);
 
     //for token refresh
     //notificationServices.isTokenRefresh();
@@ -71,7 +70,16 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-
+        appBar: AppBar(
+          elevation: 50,
+          backgroundColor: Colors.grey,
+          centerTitle: true,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(25),
+                  bottomLeft: Radius.circular(25))),
+          title: const Text("DMS"),
+        ),
         body: Padding(
           padding: const EdgeInsets.all(80.0),
           child: Column(
@@ -82,13 +90,28 @@ class _MyAppState extends State<MyApp> {
                   hintText: 'add',
                 ),
               ),
+              const SizedBox(
+                height: 100,
+              ),
               ElevatedButton(
                   onPressed: () {
                     CollectionReference colRef =
                         FirebaseFirestore.instance.collection('client');
                     colRef.add({'name': nameController.text});
                   },
-                  child: const Text("Add to database"))
+                  child: const Text("Add to database")),
+              const SizedBox(
+                height: 50,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MessageScreen(),
+                        ));
+                  },
+                  child: const Text("Next screen")),
             ],
           ),
         ),
