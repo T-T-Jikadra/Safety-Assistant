@@ -9,7 +9,17 @@ import 'Notification_related/notification_services.dart';
 //void main
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    //TO run the app on the web
+    options: const FirebaseOptions(
+      apiKey: 'AIzaSyA0-7aYWL06konrMbgAU2aqQz7abmigULE',
+      //authDomain: 'YOUR_AUTH_DOMAIN',
+      projectId: 'flutter-demo-63b73',
+      //storageBucket: 'YOUR_STORAGE_BUCKET',
+      messagingSenderId: '730549856356',
+      appId: '1:730549856356:android:1f057a3601180a5a5ed771',
+    ),
+  );
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandle);
   runApp(const MessageScreen());

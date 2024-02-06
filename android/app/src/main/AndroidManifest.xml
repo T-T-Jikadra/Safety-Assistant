@@ -3,7 +3,7 @@
     android:versionCode="TODO"
     android:versionName="TODO">
     <application
-        android:label="App"
+        android:label="CAS"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -62,8 +62,8 @@ class _secondScreenState extends State<secondScreen> {
                       'priority': 'high',
                       //shown details
                       'notification': {
-                        'title': 'TT',
-                        'body': 'Hemloow',
+                        'title': 'Alert!',
+                        'body': "It's Emergency Alert ...",
                       },
                       //
                       'android': {
@@ -72,7 +72,8 @@ class _secondScreenState extends State<secondScreen> {
                         },
                       },
                       //passed data
-                      'data': {'type': 'Temp', 'id': '1234567890'}
+                      'data': {
+                        'type': "It's Emergency Alert ...", 'id': '1234567890'}
                     };
                     await http.post(
                         Uri.parse('https://fcm.googleapis.com/fcm/send'),

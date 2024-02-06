@@ -7,17 +7,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-import 'navigate_to.dart';
-
 // ignore: camel_case_types
 class NotificationServices {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  AndroidNotificationChannel channel = AndroidNotificationChannel(
-      Random.secure().nextInt(100000).toString(), 'High Importance',
-      importance: Importance.max);
+  AndroidNotificationChannel channel = const AndroidNotificationChannel(
+      //Random.secure().nextInt(100000).toString(),
+      "22",
+      'High Importance', importance: Importance.max);
 
   //To check the notification permission state
   void requestNotificationPermission() async {
@@ -171,12 +170,10 @@ class NotificationServices {
   }
 
   void handleMessage(BuildContext context, RemoteMessage message) {
-    if (message.data != null) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ShowDetails(id: message.data['type']),
-          ));
-    }
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ShowDetails(msg: message.data["type"]),
+        ));
   }
 }

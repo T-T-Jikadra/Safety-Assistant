@@ -1,6 +1,8 @@
 import 'package:fff/services/auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../services/auth.dart';
+
 // ignore: camel_case_types
 class signIn extends StatefulWidget {
   const signIn({super.key});
