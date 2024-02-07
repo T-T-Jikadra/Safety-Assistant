@@ -41,9 +41,9 @@ class InternetPopup {
         _isDialogOn = true;
         // ignore: use_build_context_synchronously
         Alerts(context: context).customDialog(
-            type: AlertType.warning,
-            message: customMessage ?? 'No Internet Connection Found!',
-            description: customDescription ?? 'Please enable your internet',
+            type: AlertType.signal,
+            message: customMessage ?? 'No Internet Connection Found !',
+            description: customDescription ?? 'Please check your internet connection on your smartphone to use the application .',
             showButton: onTapPop,
             onTap: () {
               _isDialogOn = false;
@@ -68,9 +68,9 @@ class InternetPopup {
         _isDialogOn = true;
         // ignore: use_build_context_synchronously
         Alerts(context: context).customDialog(
-            type: AlertType.warning,
-            message: customMessage ?? 'No Internet Connection Found!',
-            description: customDescription ?? 'Please enable your internet',
+            type: AlertType.signal,
+            message: customMessage ?? 'No Internet Connection Found !',
+            description: customDescription ?? 'Please check your internet connection on your smartphone to use the application .',
             showButton: onTapPop,
             onTap: () {
               _isDialogOn = false;

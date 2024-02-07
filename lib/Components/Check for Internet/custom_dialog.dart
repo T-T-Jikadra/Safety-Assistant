@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum AlertType { success, info, error, warning }
+enum AlertType { success, info, error, warning, signal }
 
 class Alerts {
   final BuildContext context;
@@ -13,10 +13,10 @@ class Alerts {
 
   void customDialog(
       {required AlertType type,
-        String? message,
-        String? description,
-        bool? showButton,
-        VoidCallback? onTap}) {
+      String? message,
+      String? description,
+      bool? showButton,
+      VoidCallback? onTap}) {
     IconData iconData;
     String defaultMessage;
     Color color;
@@ -26,6 +26,10 @@ class Alerts {
       color = Colors.green;
     } else if (type == AlertType.error) {
       iconData = Icons.cancel;
+      defaultMessage = "ERROR";
+      color = Colors.red;
+    } else if (type == AlertType.signal) {
+      iconData = Icons.signal_cellular_connected_no_internet_4_bar_outlined;
       defaultMessage = "ERROR";
       color = Colors.red;
     } else if (type == AlertType.warning) {
@@ -71,7 +75,7 @@ class Alerts {
                           BoxShadow(
                             color: Colors.black,
                             offset: Offset(0, 10),
-                            blurRadius: 40,
+                            blurRadius: 80,
                           )
                         ],
                       ),
@@ -104,52 +108,52 @@ class Alerts {
                           (description == null)
                               ? const SizedBox()
                               : Flexible(
-                            child: ListView(
-                              shrinkWrap: true,
-                              children: [
-                                Center(
-                                  child: Text(
-                                    description,
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    textAlign: TextAlign.center,
+                                  child: ListView(
+                                    shrinkWrap: true,
+                                    children: [
+                                      Center(
+                                        child: Text(
+                                          description,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
                           SizedBox(
                             height: h * .02,
                           ),
                           (showButton == true)
                               ? Align(
-                            alignment: Alignment.bottomRight,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
-                                side: const BorderSide(
-                                    color: Colors.white, width: 1.0),
-                              ),
-                              onPressed: onTap ??
-                                      () {
-                                    Navigator.pop(context1);
-                                  },
-                              child: const Text(
-                                'Ok',
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          )
+                                  alignment: Alignment.bottomRight,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.green,
+                                      side: const BorderSide(
+                                          color: Colors.white, width: 1.0),
+                                    ),
+                                    onPressed: onTap ??
+                                        () {
+                                          Navigator.pop(context1);
+                                        },
+                                    child: const Text(
+                                      'Ok',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                )
                               : SizedBox(
-                            height: h * .03,
-                          ),
+                                  height: h * .03,
+                                ),
                         ],
                       ),
                     ),
