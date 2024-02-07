@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'notification_services.dart';
 import 'package:http/http.dart' as http;
@@ -16,6 +15,7 @@ class secondScreen extends StatefulWidget {
 
 // ignore: camel_case_types
 class _secondScreenState extends State<secondScreen> {
+  TextEditingController txtControl = TextEditingController();
   NotificationServices notificationServices = NotificationServices();
 
   @override
@@ -40,8 +40,9 @@ class _secondScreenState extends State<secondScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: TextFormField(
+                controller: txtControl ,
                 keyboardType: TextInputType.text,
-                initialValue: widget.id,
+                //initialValue: widget.id,
                 decoration:
                     const InputDecoration(prefixIcon: Icon(Icons.accessible)),
               ),
@@ -63,7 +64,8 @@ class _secondScreenState extends State<secondScreen> {
                       //shown details
                       'notification': {
                         'title': 'Alert!',
-                        'body': "It's Emergency Alert ...",
+                        'body': txtControl.text
+                        //'body': "It's Emergency Alert ...",
                       },
                       //
                       'android': {
@@ -73,7 +75,9 @@ class _secondScreenState extends State<secondScreen> {
                       },
                       //passed data
                       'data': {
-                        'type': "It's Emergency Alert ...", 'id': '1234567890'}
+                        //'type': "It's Emergency Alert ...",
+                        'type': "It's ${txtControl.text}",
+                        'id': '1234567890'}
                     };
                     await http.post(
                         Uri.parse('https://fcm.googleapis.com/fcm/send'),

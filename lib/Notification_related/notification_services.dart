@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 import 'package:app_settings/app_settings.dart';
 import 'package:fff/Notification_related/show_details.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
