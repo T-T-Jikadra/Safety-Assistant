@@ -1,17 +1,14 @@
+import 'package:fff/src/utils/constants.dart';
 import 'package:flutter/material.dart';
 
-import '../../src/utils/constants.dart';
-
-// ignore: camel_case_types
-class Home_Screen extends StatefulWidget {
-  const Home_Screen({super.key});
+class FAQScreen extends StatefulWidget {
+  const FAQScreen({super.key});
 
   @override
-  State<Home_Screen> createState() => _Home_ScreenState();
+  State<FAQScreen> createState() => _FAQScreenState();
 }
 
-// ignore: camel_case_types
-class _Home_ScreenState extends State<Home_Screen> {
+class _FAQScreenState extends State<FAQScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,10 +20,10 @@ class _Home_ScreenState extends State<Home_Screen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name - Home Page"),
+        title: const Text("$appbar_display_name - FAQ "),
       ),
       body: const Center(
-        child: Text("It's Home Page"),
+        child: Text("It's FAQ Page"),
       ),
     );
   }

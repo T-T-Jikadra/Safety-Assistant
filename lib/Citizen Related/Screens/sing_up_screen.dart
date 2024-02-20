@@ -1,4 +1,3 @@
-//import 'package:csc_picker/csc_picker.dart';
 import 'package:fff/Citizen%20Related/Screens/sing_in_screen.dart';
 import 'package:fff/Screens/entry_point.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,7 +7,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gender_picker/source/enums.dart';
 import 'package:gender_picker/source/gender_picker.dart';
 import 'package:intl/intl.dart';
-
 import '../../Components/common_background.dart';
 
 class SingUpScreen extends StatefulWidget {

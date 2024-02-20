@@ -20,7 +20,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text(appbar_display_name),
+        title: const Text("$appbar_display_name - About Us "),
       ),
       body: const Center(
         child: Text("It's About Us Page"),

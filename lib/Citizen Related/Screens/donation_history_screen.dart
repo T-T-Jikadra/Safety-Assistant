@@ -22,7 +22,7 @@ class _Donation_History_ScreenState extends State<Donation_History_Screen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text(appbar_display_name),
+        title: const Text("$appbar_display_name - Donation History"),
       ),
       body: const Center(
         child: Text("It's Donation History Page"),

@@ -3,7 +3,9 @@ import 'package:fff/Citizen%20Related/Components/side_menu.dart';
 import 'package:fff/Notification_related/message_screen.dart';
 import 'package:flutter/material.dart';
 import '../../src/utils/rive_utils.dart';
+import '../Screens/FAQ_screen.dart';
 import '../Screens/NGO-GA_list_screen.dart';
+import '../Screens/about_us_screen.dart';
 import '../Screens/donation_history_screen.dart';
 import '../Screens/req_history_screen.dart';
 import '../Screens/profile_screen.dart';
@@ -204,13 +206,44 @@ class _SideBarState extends State<SideBar> {
                                   },
                                 ),
                               );
-                            } else if (menu.title.contains("FAQ")) {
+                            }
+                            //till above
+                          },
+                          riveOnInit: (artboard) {
+                            menu.rive.status = RiveUtils.getRiveInput(artboard,
+                                stateMachineName: menu.rive.stateMachineName);
+                          },
+                        ))
+                    .toList(),
+                Padding(
+                  padding: const EdgeInsets.only(left: 24, top: 40, bottom: 16),
+                  child: Text(
+                    "Others".toUpperCase(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(color: Colors.white70),
+                  ),
+                ),
+                ...sidebarMenus2
+                    .map((menu) => SideMenu(
+                          menu: menu,
+                          selectedMenu: selectedSideMenu,
+                          press: () async {
+                            RiveUtils.chnageSMIBoolState(menu.rive.status!);
+                            setState(() {
+                              selectedSideMenu = menu;
+                            });
+                            await Future.delayed(
+                                const Duration(milliseconds: 500));
+
+                            if (menu.title.contains("FAQ")) {
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const msgScreen(),
+                                      const FAQScreen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -235,7 +268,7 @@ class _SideBarState extends State<SideBar> {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const msgScreen(),
+                                      const AboutUsScreen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -255,34 +288,6 @@ class _SideBarState extends State<SideBar> {
                                 ),
                               );
                             }
-
-                            //till above
-                          },
-                          riveOnInit: (artboard) {
-                            menu.rive.status = RiveUtils.getRiveInput(artboard,
-                                stateMachineName: menu.rive.stateMachineName);
-                          },
-                        ))
-                    .toList(),
-                Padding(
-                  padding: const EdgeInsets.only(left: 24, top: 40, bottom: 16),
-                  child: Text(
-                    "Others".toUpperCase(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium!
-                        .copyWith(color: Colors.white70),
-                  ),
-                ),
-                ...sidebarMenus2
-                    .map((menu) => SideMenu(
-                          menu: menu,
-                          selectedMenu: selectedSideMenu,
-                          press: () {
-                            RiveUtils.chnageSMIBoolState(menu.rive.status!);
-                            setState(() {
-                              selectedSideMenu = menu;
-                            });
                           },
                           riveOnInit: (artboard) {
                             menu.rive.status = RiveUtils.getRiveInput(artboard,

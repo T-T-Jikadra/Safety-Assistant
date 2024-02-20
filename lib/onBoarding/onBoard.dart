@@ -1,9 +1,7 @@
-import 'package:fff/Notification_related/message_screen.dart';
-import 'package:fff/Screens/Splash/splash_Screen.dart';
+// ignore: file_names
 import 'package:fff/Screens/entry_point.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -76,7 +74,8 @@ class _liquidpagesState extends State<liquidpages> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image(
-                        image: const AssetImage("assets/images/img.png"),
+                        image: const AssetImage(
+                            "assets/images/electricity_user_1.jpg"),
                         height: size.height * 0.5),
                     Column(
                       children: [
@@ -151,10 +150,8 @@ class _liquidpagesState extends State<liquidpages> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Center(
-                      child: Image(
-                          image:
-                              const AssetImage("assets/images/img_image_1.png"),
-                          height: size.height * 0.5),
+                      child: SvgPicture.asset(
+                          "assets/svg/services_help.svg"),
                     ),
                     Column(
                       children: [
@@ -176,7 +173,23 @@ class _liquidpagesState extends State<liquidpages> {
                 ),
               ),
               //4th
-              Container( color: const Color(0xFFd3d3d3 ),),
+              Container(
+                color: const Color(0xFFd3d3d3),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: SvgPicture.asset(
+                          "assets/svg/services_help.svg"),
+                    ),
+                    const SizedBox(
+                      height: 100,
+                    )
+                  ],
+                ),
+              ),
               //5th
               Container(
                 decoration: const BoxDecoration(
@@ -206,8 +219,7 @@ class _liquidpagesState extends State<liquidpages> {
                   if (nextPage == 5) {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const entry()),
+                      MaterialPageRoute(builder: (context) => const entry()),
                     );
                   }
                 },
@@ -232,8 +244,7 @@ class _liquidpagesState extends State<liquidpages> {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const entry()),
+                    MaterialPageRoute(builder: (context) => const entry()),
                   );
                   //lController.jumpToPage(page: 2);
                 },

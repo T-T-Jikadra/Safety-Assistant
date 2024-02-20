@@ -1,4 +1,5 @@
 import 'package:fff/onBoarding/onBoard.dart';
+import 'package:fff/src/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../src/utils/themes/theme.dart';
@@ -33,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    startAnimation();
+    startAnimationIn();
   }
 
   @override
@@ -45,8 +46,8 @@ class _SplashScreenState extends State<SplashScreen> {
             //1st object on the top left corner ..
             AnimatedPositioned(
               duration: const Duration(milliseconds: 1600),
-              top: animate ? 15 : -30,
-              left: animate ? 20 : -30,
+              top: animate ? 15 : -60,
+              left: animate ? 20 : -60,
               height: 130,
               width: 130,
               child: Container(
@@ -91,10 +92,9 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: 450,
                 width: 350,
                 child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 1600),
-                  opacity: animate ? 1 : 0,
-                  child: SvgPicture.asset("assets/svg/splash_svg.svg")
-                )),
+                    duration: const Duration(milliseconds: 1600),
+                    opacity: animate ? 1 : 0,
+                    child: SvgPicture.asset(splash_svg))),
             //4th small object at bottom ..
             AnimatedPositioned(
               duration: const Duration(milliseconds: 1600),
@@ -126,12 +126,16 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   //function for animation
-  Future startAnimation() async {
+  Future startAnimationIn() async {
     await Future.delayed(const Duration(milliseconds: 500));
     setState(() {
       animate = true;
     });
-    await Future.delayed(const Duration(milliseconds: 5000));
+    await Future.delayed(const Duration(milliseconds: 3500));
+    setState(() {
+      animate = false;
+    });
+    await Future.delayed(const Duration(milliseconds: 1500));
     // ignore: use_build_context_synchronously
     Navigator.pushReplacement(
         context,
@@ -139,4 +143,12 @@ class _SplashScreenState extends State<SplashScreen> {
           builder: (context) => const liquidpages(),
         ));
   }
+
+//function for animation
+// Future startAnimationOut() async {
+//   await Future.delayed(const Duration(milliseconds: 500));
+//   setState(() {
+//     animate = true;
+//   });
+// }
 }

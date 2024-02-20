@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../src/utils/constants.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -7,9 +9,14 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.red,
-          title: const Text('User Profile Page'),
-          //leading: const MenuWidget(),
+          elevation: 50,
+          backgroundColor: Colors.white24,
+          centerTitle: true,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(25),
+                  bottomLeft: Radius.circular(25))),
+          title: const Text("$appbar_display_name - Profile  Page"),
         ),
         body: const UserProfile(),
       );
@@ -46,56 +53,58 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const CircleAvatar(
-            radius: 50,
-            backgroundImage: AssetImage("assets/img1.jpg"),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            '$_userName $_userSurname',
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+      child: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage("assets/img1.jpg"),
             ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Gender: $_gender',
-            style: const TextStyle(fontSize: 16),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Email: $_email',
-            style: const TextStyle(fontSize: 16),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Mobile No: $_mobileNo',
-            style: const TextStyle(fontSize: 16),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Address: $_address',
-            style: const TextStyle(fontSize: 16),
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: _updateProfile,
-            child: const Text('Update Profile'),
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () {
-              // Implement logout logic here
-              // For simplicity, navigate to the login screen
-              Navigator.of(context).pop();
-            },
-            child: const Text('Logout'),
-          ),
-        ],
+            const SizedBox(height: 16),
+            Text(
+              '$_userName $_userSurname',
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Gender: $_gender',
+              style: const TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Email: $_email',
+              style: const TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Mobile No: $_mobileNo',
+              style: const TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Address: $_address',
+              style: const TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: _updateProfile,
+              child: const Text('Update Profile'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                // Implement logout logic here
+                // For simplicity, navigate to the login screen
+                Navigator.of(context).pop();
+              },
+              child: const Text('Logout'),
+            ),
+          ],
+        ),
       ),
     );
   }

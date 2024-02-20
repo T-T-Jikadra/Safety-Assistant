@@ -22,7 +22,7 @@ class _NGO_GA_ListScreenState extends State<NGO_GA_ListScreen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text(appbar_display_name),
+        title: const Text("$appbar_display_name - NGO List Page"),
       ),
       body: const Center(
         child: Text("It's NGO / GA List Page"),
