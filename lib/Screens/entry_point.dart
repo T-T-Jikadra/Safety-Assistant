@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:fff/Components/common_background.dart';
 import '../models/menu_btn.dart';
+import '../src/utils/constants.dart';
 import '../src/utils/themes/theme.dart';
-import '../utills/constants.dart';
 
 // ignore: camel_case_types
 class entry extends StatelessWidget {
@@ -129,7 +129,7 @@ class _EntryPointState extends State<EntryPoint>
                   _animationController.forward();
                 } else {
                   _animationController.reverse();
-                  Menu selectedSideMenu = sidebarMenus.first;
+                  //Menu selectedSideMenu = sidebarMenus.first;
                 }
 
                 setState(

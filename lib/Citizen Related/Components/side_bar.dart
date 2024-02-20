@@ -2,11 +2,11 @@ import 'package:fff/Citizen%20Related/Components/menu.dart';
 import 'package:fff/Citizen%20Related/Components/side_menu.dart';
 import 'package:fff/Notification_related/message_screen.dart';
 import 'package:flutter/material.dart';
+import '../../src/utils/rive_utils.dart';
 import '../Screens/NGO-GA_list_screen.dart';
 import '../Screens/donation_history_screen.dart';
 import '../Screens/req_history_screen.dart';
 import '../Screens/profile_screen.dart';
-import '../../utills/rive_utils.dart';
 import '../../Components/info_card.dart';
 
 class SideBar extends StatefulWidget {

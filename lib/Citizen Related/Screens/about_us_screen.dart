@@ -1,4 +1,4 @@
-import 'package:fff/utills/constants.dart';
+import 'package:fff/src/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class AboutUsScreen extends StatefulWidget {

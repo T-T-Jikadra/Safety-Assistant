@@ -1,9 +1,7 @@
 import 'package:fff/onBoarding/onBoard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../src/utils/themes/theme.dart';
-import '../../utills/constants.dart';
 
 // ignore: camel_case_types
 class splash extends StatelessWidget {

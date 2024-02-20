@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../utills/constants.dart';
+import '../../src/utils/constants.dart';
 
 // ignore: camel_case_types
 class Request_History_Screen extends StatefulWidget {
