@@ -1,9 +1,13 @@
+import 'package:fff/Notification_related/message_screen.dart';
+import 'package:fff/Screens/Splash/splash_Screen.dart';
+import 'package:fff/Screens/entry_point.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../Components/Check for Internet/check_internet.dart';
-import '../Notification_related/message_screen.dart';
 import '../Notification_related/notification_services.dart';
 import '../src/utils/themes/theme.dart';
 
@@ -13,6 +17,7 @@ class LiquidPages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'CAS',
       debugShowCheckedModeBanner: false,
       theme: TAppTheme.LightTheme,
       darkTheme: TAppTheme.DarkTheme,
@@ -41,9 +46,11 @@ class _liquidpagesState extends State<liquidpages> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    //for internet connection checkup
     InternetPopup().initialize(context: context);
   }
 
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
@@ -61,7 +68,8 @@ class _liquidpagesState extends State<liquidpages> {
               //1st
               Container(
                 padding: const EdgeInsets.all(10),
-                color: Colors.white,
+                //color: Colors.white,
+                color: const Color(0xFFffebcd),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   mainAxisSize: MainAxisSize.max,
@@ -94,7 +102,8 @@ class _liquidpagesState extends State<liquidpages> {
               //2nd
               Container(
                 padding: const EdgeInsets.all(10),
-                color: Colors.green,
+                //color: Colors.green,
+                color: const Color(0xFFaaf0d1),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   mainAxisSize: MainAxisSize.max,
@@ -134,7 +143,8 @@ class _liquidpagesState extends State<liquidpages> {
               //3rd
               Container(
                 padding: const EdgeInsets.all(10),
-                color: Colors.blueGrey,
+                //color: Colors.blueGrey,
+                color: const Color(0xFFe9969a),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   mainAxisSize: MainAxisSize.max,
@@ -166,7 +176,7 @@ class _liquidpagesState extends State<liquidpages> {
                 ),
               ),
               //4th
-              Container(color: Colors.blue),
+              Container( color: const Color(0xFFd3d3d3 ),),
               //5th
               Container(
                 decoration: const BoxDecoration(
@@ -193,11 +203,11 @@ class _liquidpagesState extends State<liquidpages> {
                 onPressed: () {
                   int nextPage = lController.currentPage + 1;
                   lController.animateToPage(page: nextPage);
-                  if (nextPage == 4) {
-                    Navigator.push(
+                  if (nextPage == 5) {
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const MessageScreen()),
+                          builder: (context) => const entry()),
                     );
                   }
                 },
@@ -220,11 +230,11 @@ class _liquidpagesState extends State<liquidpages> {
               right: 20,
               child: TextButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MessageScreen(),
-                      ));
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const entry()),
+                  );
                   //lController.jumpToPage(page: 2);
                 },
                 child: const Text(

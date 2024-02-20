@@ -1,4 +1,5 @@
 import 'package:fff/Notification_related/message_screen.dart';
+import 'package:fff/Screens/Splash/splash_Screen.dart';
 import 'package:fff/onBoarding/onBoard.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -23,7 +24,7 @@ void main() async {
   );
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandle);
-  runApp(const LiquidPages());
+  runApp(splash());
 }
 
 //top lvl function ...

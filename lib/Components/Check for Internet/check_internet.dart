@@ -1,9 +1,10 @@
 library internet_popup;
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:fff/Components/Check%20for%20Internet/custom_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+
+import 'custom_dialog.dart';
 
 class InternetPopup {
   bool _isOnline = false;
