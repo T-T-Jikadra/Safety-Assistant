@@ -1,5 +1,4 @@
 // ignore: file_names
-import 'package:fff/Screens/entry_point.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
@@ -7,7 +6,8 @@ import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../Components/Check for Internet/check_internet.dart';
 import '../Notification_related/notification_services.dart';
-import '../src/utils/themes/theme.dart';
+import '../Utils/themes/theme.dart';
+import '../mobile Otp/screens/login_screen/login_screen.dart';
 
 class LiquidPages extends StatelessWidget {
   const LiquidPages({super.key});
@@ -17,8 +17,8 @@ class LiquidPages extends StatelessWidget {
     return MaterialApp(
       title: 'CAS',
       debugShowCheckedModeBanner: false,
-      theme: TAppTheme.LightTheme,
-      darkTheme: TAppTheme.DarkTheme,
+      theme: TAppTheme.lightTheme,
+      darkTheme: TAppTheme.darkTheme,
       themeMode: ThemeMode.system,
       home: const liquidpages(),
     );
@@ -82,7 +82,7 @@ class _liquidpagesState extends State<liquidpages> {
                         Text("Think Beyond Limit ...",
                             style: Theme.of(context).textTheme.titleLarge),
                         const SizedBox(
-                          height: 10,
+                          height: 15,
                         ),
                         Text(
                           "Explore now ...",
@@ -109,7 +109,7 @@ class _liquidpagesState extends State<liquidpages> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Center(
-                      child: Lottie.asset("assets/json/lt.json",
+                      child: Lottie.asset("assets/json/otp_lottie.json",
                           //width: 250,
                           height: size.height * 0.5,
                           fit: BoxFit.fitWidth),
@@ -123,7 +123,7 @@ class _liquidpagesState extends State<liquidpages> {
                         Text("Customise Your Stuffs ...",
                             style: Theme.of(context).textTheme.titleLarge),
                         const SizedBox(
-                          height: 10,
+                          height: 15,
                         ),
                         Text("As your thinking capability ...",
                             style: Theme.of(context).textTheme.bodyLarge),
@@ -219,7 +219,7 @@ class _liquidpagesState extends State<liquidpages> {
                   if (nextPage == 5) {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const entry()),
+                      MaterialPageRoute(builder: (context) => const LoginScreen()),
                     );
                   }
                 },
@@ -244,7 +244,7 @@ class _liquidpagesState extends State<liquidpages> {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const entry()),
+                    MaterialPageRoute(builder: (context) => const LoginScreen()),
                   );
                   //lController.jumpToPage(page: 2);
                 },

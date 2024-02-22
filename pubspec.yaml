@@ -63,12 +63,12 @@ dependencies:
   internet_connection_checker: ^0.0.1+4
   connectivity_plus: ^2.3.6
 
-  # Drawer
-  fan_side_drawer: ^1.0.2
-
   #charts_flutter: ^0.10.0
 
   get: ^4.6.6
+
+  flutter_otp_text_field: ^1.1.1
+  otp_pin_field: ^1.2.2
 
   #from Divya
   flutter_svg: ^2.0.9

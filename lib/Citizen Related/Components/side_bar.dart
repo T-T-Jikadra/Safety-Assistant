@@ -1,8 +1,11 @@
 import 'package:fff/Citizen%20Related/Components/menu.dart';
 import 'package:fff/Citizen%20Related/Components/side_menu.dart';
 import 'package:fff/Notification_related/message_screen.dart';
+import 'package:fff/Utils/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../src/utils/rive_utils.dart';
+import 'package:flutter/services.dart';
+import '../../Utils/rive_utils.dart';
 import '../Screens/FAQ_screen.dart';
 import '../Screens/NGO-GA_list_screen.dart';
 import '../Screens/about_us_screen.dart';
@@ -32,7 +35,7 @@ class _SideBarState extends State<SideBar> {
           //light purple
           //color: Color(0xFF9999db),
           //dark bluish
-          color: Color(0xFF17203A),
+          color: Sidebar_BG,
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(25), bottomRight: Radius.circular(25)),
         ),
@@ -44,12 +47,6 @@ class _SideBarState extends State<SideBar> {
               children: [
                 GestureDetector(
                   onTap: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const msgScreen(),
-                      ),
-                    ),
                   },
                   child: const InfoCard(
                     name: "TYBCA",
@@ -287,6 +284,11 @@ class _SideBarState extends State<SideBar> {
                                   },
                                 ),
                               );
+                            }else if (menu.title.contains("Logout")) {
+                              // ignore: use_build_context_synchronously
+                              //To logs out the current user ..
+                              await FirebaseAuth.instance.signOut();
+                              SystemNavigator.pop();
                             }
                           },
                           riveOnInit: (artboard) {

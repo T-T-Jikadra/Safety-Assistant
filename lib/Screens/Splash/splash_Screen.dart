@@ -1,8 +1,11 @@
 import 'package:fff/onBoarding/onBoard.dart';
-import 'package:fff/src/utils/constants.dart';
+import 'package:fff/Utils/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../src/utils/themes/theme.dart';
+import '../../Utils/themes/theme.dart';
+import '../../mobile Otp/screens/otp_screen/otp_screen.dart';
+import '../entry_point.dart';
 
 // ignore: camel_case_types
 class splash extends StatelessWidget {
@@ -13,10 +16,15 @@ class splash extends StatelessWidget {
     return MaterialApp(
       title: 'CAS',
       debugShowCheckedModeBanner: false,
-      theme: TAppTheme.LightTheme,
-      darkTheme: TAppTheme.DarkTheme,
+      theme: TAppTheme.lightTheme,
+      darkTheme: TAppTheme.darkTheme,
       themeMode: ThemeMode.system,
       home: const SplashScreen(),
+      //Paths of the screens in key value pair ..
+      routes: <String, WidgetBuilder>{
+        '/otpScreen': (BuildContext ctx) => OtpScreen(),
+        '/homeScreen': (BuildContext ctx) => const EntryPoint(),
+      },
     );
   }
 }
@@ -127,6 +135,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   //function for animation
   Future startAnimationIn() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
     await Future.delayed(const Duration(milliseconds: 500));
     setState(() {
       animate = true;
@@ -136,12 +146,28 @@ class _SplashScreenState extends State<SplashScreen> {
       animate = false;
     });
     await Future.delayed(const Duration(milliseconds: 1500));
+
+    if (user != null) {
+      // User is signed in.
+      // Navigate to the home screen.
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const EntryPoint(),
+          ));
+    } else {
+      // User is not signed in.
+      // Navigate to the login screen.
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const liquidpages(),
+          ));
+    }
+
     // ignore: use_build_context_synchronously
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const liquidpages(),
-        ));
   }
 
 //function for animation

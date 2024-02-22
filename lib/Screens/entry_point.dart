@@ -6,25 +6,23 @@ import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
 import 'package:fff/Components/common_background.dart';
 import '../models/menu_btn.dart';
-import '../src/utils/constants.dart';
-import '../src/utils/themes/theme.dart';
+import '../Utils/constants.dart';
 
-// ignore: camel_case_types
-class entry extends StatelessWidget {
-  const entry({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'CAS',
-      debugShowCheckedModeBanner: false,
-      theme: TAppTheme.LightTheme,
-      darkTheme: TAppTheme.DarkTheme,
-      themeMode: ThemeMode.system,
-      home: const EntryPoint(),
-    );
-  }
-}
+// class entry extends StatelessWidget {
+//   const entry({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'CAS',
+//       debugShowCheckedModeBanner: false,
+//       theme: TAppTheme.lightTheme,
+//       darkTheme: TAppTheme.darkTheme,
+//       themeMode: ThemeMode.system,
+//       home: const EntryPoint(),
+//     );
+//   }
+// }
 
 class EntryPoint extends StatefulWidget {
   const EntryPoint({super.key});

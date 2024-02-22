@@ -1,8 +1,6 @@
-import 'package:fan_side_drawer/fan_side_drawer.dart';
-import 'package:fff/Notification_related/show_details.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../src/utils/themes/theme.dart';
+import '../Utils/themes/theme.dart';
 import 'navigate_to.dart';
 import 'notification_services.dart';
 
@@ -30,8 +28,8 @@ class MessageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       //For the themes functionalities as per the system .
-      theme: TAppTheme.LightTheme,
-      darkTheme: TAppTheme.DarkTheme,
+      theme: TAppTheme.lightTheme,
+      darkTheme: TAppTheme.darkTheme,
       themeMode: ThemeMode.system,
       home: const msgScreen(),
       debugShowCheckedModeBanner: false,

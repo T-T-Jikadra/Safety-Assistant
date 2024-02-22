@@ -1,4 +1,4 @@
-import 'package:fff/src/utils/constants.dart';
+import 'package:fff/Utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class FAQScreen extends StatefulWidget {

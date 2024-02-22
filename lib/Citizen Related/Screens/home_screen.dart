@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../src/utils/constants.dart';
+import '../../Utils/constants.dart';
 
 // ignore: camel_case_types
 class Home_Screen extends StatefulWidget {

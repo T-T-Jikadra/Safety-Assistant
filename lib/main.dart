@@ -1,11 +1,11 @@
 import 'package:fff/Notification_related/message_screen.dart';
 import 'package:fff/Screens/Splash/splash_Screen.dart';
-import 'package:fff/onBoarding/onBoard.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:get/get.dart';
 import 'Notification_related/notification_services.dart';
 
 //void main
@@ -22,9 +22,9 @@ void main() async {
       appId: '1:730549856356:android:1f057a3601180a5a5ed771',
     ),
   );
-
+  //Get.put(Authentication_Repo());
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandle);
-  runApp(splash());
+  runApp(const splash());
 }
 
 //top lvl function ...
