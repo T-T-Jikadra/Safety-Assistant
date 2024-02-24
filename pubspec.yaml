@@ -65,6 +65,7 @@ dependencies:
 
   #charts_flutter: ^0.10.0
 
+  #GetX
   get: ^4.6.6
 
   flutter_otp_text_field: ^1.1.1

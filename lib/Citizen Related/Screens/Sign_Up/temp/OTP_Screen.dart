@@ -51,15 +51,31 @@
 //                 ),
 //                 Lottie.asset("assets/json/otp_lottie.json",
 //                     width: 300, height: 300, fit: BoxFit.fitWidth),
+//
+//                 //applied ..
 //                 OtpTextField(
 //                   numberOfFields: 6,
 //                   fillColor: Colors.deepPurple.withOpacity(0.1),
 //                   filled: true,
 //                   onSubmit: (code) {
 //                     otp = code;
-//                     OTPController.instance.verify0TP(otp);
+//                     //OTPController.instance.verify0TP(otp);
 //                     //otp_entered = code.toString();
 //                   },
+//                 ),
+//
+//                 //removedd..
+//                 OtpPinField(
+//                   key: _otpPinFieldKey,
+//                   textInputAction: TextInputAction.done,
+//                   maxLength: 6,
+//                   fieldWidth: 38,
+//                   otpPinFieldDecoration:
+//                   OtpPinFieldDecoration.roundedPinBoxDecoration,
+//                   onSubmit: (text) {
+//                     smsOTP = text;
+//                   },
+//                   onChange: (text) {},
 //                 ),
 //                 const SizedBox(
 //                   height: 50,
@@ -69,7 +85,7 @@
 //                   width: double.infinity,
 //                   child: ElevatedButton(
 //                       onPressed: () {
-//                         OTPController.instance.verify0TP(otp);
+//                         //OTPController.instance.verify0TP(otp);
 //
 //                         Get.snackbar(
 //                           "Otp is - ",

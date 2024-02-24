@@ -15,9 +15,23 @@ class CustomButton extends StatelessWidget {
       child: ClipRRect(
           borderRadius: BorderRadius.circular(50),
           child: ElevatedButton(
-              onPressed: () {
-                //Navigator.push(context, MaterialPageRoute(builder: (context) => OtpScreen()));
+              onPressed: () async {
+                //Circular progress bar ..
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return const Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    );
+                  },
+                );
+                await Future.delayed(const Duration(milliseconds: 800));
+                // ignore: use_build_context_synchronously
+                Navigator.pop(context);
+                // ignore: use_build_context_synchronously
                 clickOnLogin(context);
+                //Navigator.push(context, MaterialPageRoute(builder: (context) => OtpScreen()));
               },
               child: const Text("Proceed .."))),
     );

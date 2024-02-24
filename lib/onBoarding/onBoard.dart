@@ -6,8 +6,8 @@ import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../Components/Check for Internet/check_internet.dart';
 import '../Notification_related/notification_services.dart';
+import '../Screens/FIgma/type of user/select_user_type_screen.dart';
 import '../Utils/themes/theme.dart';
-import '../mobile Otp/screens/login_screen/login_screen.dart';
 
 class LiquidPages extends StatelessWidget {
   const LiquidPages({super.key});
@@ -219,7 +219,7 @@ class _liquidpagesState extends State<liquidpages> {
                   if (nextPage == 5) {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const LoginScreen()),
+                      MaterialPageRoute(builder: (context) => const SelectOptionPageScreen()),
                     );
                   }
                 },
@@ -244,7 +244,7 @@ class _liquidpagesState extends State<liquidpages> {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const LoginScreen()),
+                    MaterialPageRoute(builder: (context) => const SelectOptionPageScreen()),
                   );
                   //lController.jumpToPage(page: 2);
                 },

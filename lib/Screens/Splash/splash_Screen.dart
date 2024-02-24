@@ -145,7 +145,7 @@ class _SplashScreenState extends State<SplashScreen> {
     setState(() {
       animate = false;
     });
-    await Future.delayed(const Duration(milliseconds: 1500));
+    await Future.delayed(const Duration(milliseconds: 1000));
 
     if (user != null) {
       // User is signed in.

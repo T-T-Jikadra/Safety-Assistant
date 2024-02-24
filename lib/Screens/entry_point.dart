@@ -1,10 +1,10 @@
 import 'dart:math';
-import 'package:fff/Citizen%20Related/Components/menu.dart';
-import 'package:fff/Citizen%20Related/Components/side_bar.dart';
+import 'package:fff/Citizen%20Related/Components/Drawer/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
 import 'package:fff/Components/common_background.dart';
+import '../Citizen Related/Components/Drawer/side_bar.dart';
 import '../models/menu_btn.dart';
 import '../Utils/constants.dart';
 

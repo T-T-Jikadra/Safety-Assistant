@@ -21,8 +21,22 @@ const Color backgroundColor2 = Color(0xFF17203A);
 
 //asset path
 // ignore: constant_identifier_names
-const String splash_svg = "assets/svg/splash_svg.svg";
-// ignore: constant_identifier_names
 const String splash_shape = "assets/images/img_image_1.png";
 // ignore: constant_identifier_names
 const String splash_image = "assets/images/123.png";
+
+//svg assets
+// ignore: constant_identifier_names
+const String splash_svg = "assets/svg/splash_svg.svg";
+
+// ignore: constant_identifier_names
+const String svg_for_calendar = "assets/svg/img_calendar.svg";
+
+// ignore: constant_identifier_names
+const String svg_for_call = "assets/svg/img_call.svg";
+
+// ignore: constant_identifier_names
+const String svg_for_line = "assets/svg/img_line.svg";
+
+// ignore: constant_identifier_names
+const String svg_for_phone = "assets/svg/mobile_user.svg";

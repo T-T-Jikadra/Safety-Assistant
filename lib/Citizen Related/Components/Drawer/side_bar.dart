@@ -1,18 +1,18 @@
-import 'package:fff/Citizen%20Related/Components/menu.dart';
-import 'package:fff/Citizen%20Related/Components/side_menu.dart';
+import 'package:fff/Citizen%20Related/Components/Drawer/menu.dart';
+import 'package:fff/Citizen%20Related/Components/Drawer/side_menu.dart';
 import 'package:fff/Notification_related/message_screen.dart';
 import 'package:fff/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../Utils/rive_utils.dart';
-import '../Screens/FAQ_screen.dart';
-import '../Screens/NGO-GA_list_screen.dart';
-import '../Screens/about_us_screen.dart';
-import '../Screens/donation_history_screen.dart';
-import '../Screens/req_history_screen.dart';
-import '../Screens/profile_screen.dart';
-import '../../Components/info_card.dart';
+import '../../../Utils/rive_utils.dart';
+import '../../Screens/FAQ_screen.dart';
+import '../../Screens/NGO-GA_list_screen.dart';
+import '../../Screens/about_us_screen.dart';
+import '../../Screens/donation_history_screen.dart';
+import '../../Screens/req_history_screen.dart';
+import '../../Screens/profile_screen.dart';
+import '../../../Components/info_card.dart';
 
 class SideBar extends StatefulWidget {
   const SideBar({super.key});

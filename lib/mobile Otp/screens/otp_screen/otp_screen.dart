@@ -5,31 +5,35 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:otp_pin_field/otp_pin_field.dart';
 
 // ignore: must_be_immutable
 class OtpScreen extends StatefulWidget {
-  bool _isInit = true;
-  var _contact = '';
+  bool _isInit = true; // Flag to track the initialization state
+  var _contact = ''; // Variable to store the contact number
 
-  OtpScreen({super.key});
+  OtpScreen({super.key}); // Constructor
 
   @override
   // ignore: library_private_types_in_public_api
-  _OtpScreenState createState() => _OtpScreenState();
+  _OtpScreenState createState() => _OtpScreenState(); // Create state object
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  late String phoneNo;
-  late String smsOTP;
-  late String verificationId;
-  String errorMessage = '';
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final _otpPinFieldKey = GlobalKey<OtpPinFieldState>();
+  late String phoneNo; // Variable to store phone number
+  late String smsOTP = ''; // Variable to store OTP
 
-  //this is method is used to initialize data
+  // ignore: non_constant_identifier_names
+  late String onChnaged_input_OTPField; // Variable to store changed OTP
+
+  late String verificationId; // Variable to store verification ID
+  String errorMessage = ''; // Variable to store error message
+  final FirebaseAuth _auth =
+      FirebaseAuth.instance; // Firebase authentication instance
+
+  // Method to initialize data
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -37,9 +41,9 @@ class _OtpScreenState extends State<OtpScreen> {
     if (widget._isInit) {
       final arguments = ModalRoute.of(context)?.settings.arguments;
       if (arguments != null && arguments is String) {
-        widget._contact = arguments;
-        generateOtp(widget._contact);
-        widget._isInit = false;
+        widget._contact = arguments; // Store contact number
+        generateOtp(widget._contact); // Generate OTP
+        widget._isInit = false; // Update initialization flag
       } else {
         if (kDebugMode) {
           print("!!! Mobile number not correctly passed to this screen !!!");
@@ -48,18 +52,18 @@ class _OtpScreenState extends State<OtpScreen> {
     }
   }
 
-  //dispose controllers
+  // Dispose controllers
   @override
   void dispose() {
     super.dispose();
   }
 
-  //build method for UI
+  // Build method for UI
   @override
   Widget build(BuildContext context) {
-    //Getting screen height width
+    // Getting screen height
     final screenHeight = MediaQuery.of(context).size.height;
-    //final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -71,13 +75,13 @@ class _OtpScreenState extends State<OtpScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: screenHeight * 0.1,
+                  height: screenHeight * 0.05,
                 ),
                 const Text("Check Your Inbox ... (●'◡'●)",
                     style:
-                        TextStyle(fontSize: 40, fontWeight: FontWeight.w600)),
+                        TextStyle(fontSize: 37, fontWeight: FontWeight.w600)),
                 const SizedBox(
-                  height: 2,
+                  height: 0,
                 ),
                 Lottie.asset("assets/json/otp_lottie.json",
                     width: 300, height: 300, fit: BoxFit.fitWidth),
@@ -93,7 +97,6 @@ class _OtpScreenState extends State<OtpScreen> {
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 18,
-                    //color: Colors.black,
                   ),
                 ),
                 SizedBox(
@@ -102,35 +105,35 @@ class _OtpScreenState extends State<OtpScreen> {
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 15),
                   padding: const EdgeInsets.all(5.0),
-                  // decoration: BoxDecoration(
-                  //     color: Colors.white,
-                  //     // ignore: prefer_const_literals_to_create_immutables
-                  //     boxShadow: [
-                  //       const BoxShadow(
-                  //         color: Colors.grey,
-                  //         offset: Offset(0.0, 1.0), //(x,y)
-                  //         blurRadius: 6.0,
-                  //       ),
-                  //     ],
-                  //     borderRadius: BorderRadius.circular(16.0)),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      OtpPinField(
-                        key: _otpPinFieldKey,
-                        textInputAction: TextInputAction.done,
-                        maxLength: 6,
-                        fieldWidth: 38,
-                        otpPinFieldDecoration:
-                            OtpPinFieldDecoration.roundedPinBoxDecoration,
-                        onSubmit: (text) {
-                          smsOTP = text;
+                      OtpTextField(
+                        numberOfFields: 6,
+                        fillColor: Colors.deepPurple.withOpacity(0.1),
+                        filled: true,
+                        onSubmit: (code) {
+                          smsOTP = code; // Store entered OTP
                         },
-                        onChange: (text) {},
+                        onCodeChanged: (value) {
+                          smsOTP = value; // Store changed OTP
+                          onChnaged_input_OTPField = value; // Store changed OTP
+                        },
                       ),
                       SizedBox(
-                        height: screenHeight * 0.04,
+                        height: screenHeight * 0.03,
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context); // Pop the current screen
+                          },
+                          child: const Text(
+                            "Didn't get an OTP ? \n Resend Code ",
+                            textAlign: TextAlign.center,
+                          )),
+                      SizedBox(
+                        height: screenHeight * 0.03,
                       ),
                       Container(
                         padding: const EdgeInsets.only(bottom: 20),
@@ -139,7 +142,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             borderRadius: BorderRadius.circular(50),
                             child: ElevatedButton(
                                 onPressed: () {
-                                  verifyOtp();
+                                  verifyOtp(); // Verify OTP
                                 },
                                 child: const Text("Verify .."))),
                       )
@@ -154,14 +157,12 @@ class _OtpScreenState extends State<OtpScreen> {
     );
   }
 
-  //Method for generate otp from firebase
+  // Method to generate OTP from Firebase
   Future<void> generateOtp(String contact) async {
-    // final PhoneCodeSent smsOTPSent = (verId, forceResendingToken) {
-    //   verificationId = verId;
-    // };
     smsOTPSent(verId, forceResendingToken) {
       verificationId = verId;
     }
+
     try {
       await _auth.verifyPhoneNumber(
         phoneNumber: contact,
@@ -178,7 +179,7 @@ class _OtpScreenState extends State<OtpScreen> {
         },
       );
     } catch (e) {
-      //for testing :
+      // Handle errors
       Get.snackbar(
         "Got an Error : ",
         "$e",
@@ -200,11 +201,12 @@ class _OtpScreenState extends State<OtpScreen> {
     }
   }
 
-  //Method for verify otp entered by user
+  // Method to verify OTP entered by user
   Future<void> verifyOtp() async {
-    if (smsOTP.isEmpty || smsOTP == '') {
-      showAlertDialog(context, 'Please enter 6 digit otp ..');
-      return;
+    if (smsOTP.isEmpty || smsOTP.length < 6) {
+      showAlertDialog(context,
+          smsOTP.isEmpty ? 'Code is Empty ..' : 'Enter 6 digits OTP ..');
+      return; // Exit the method if OTP is empty or less than 6 digits
     }
     try {
       final AuthCredential credential = PhoneAuthProvider.credential(
@@ -214,6 +216,21 @@ class _OtpScreenState extends State<OtpScreen> {
       final UserCredential user = await _auth.signInWithCredential(credential);
       final User? currentUser = _auth.currentUser;
       assert(user.user?.uid == currentUser?.uid);
+
+      // Show circular progress indicator for 1 second
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const Center(
+            child: CircularProgressIndicator(color: Colors.white),
+          );
+        },
+      );
+
+      // Delay for 1 second before navigating to the next screen
+      await Future.delayed(const Duration(seconds: 1));
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
           context,
@@ -223,31 +240,16 @@ class _OtpScreenState extends State<OtpScreen> {
     } on PlatformException catch (e) {
       handleError(e);
     } catch (e) {
-      //for test :
-      Get.snackbar(
-        "Got an Error - ",
-        "$e",
-        duration: const Duration(milliseconds: 1400),
-        backgroundColor: const Color(0xFFf5f5dc),
-        titleText: const Text("Got an Error - "),
-        animationDuration: const Duration(milliseconds: 1500),
-        colorText: Colors.brown,
-        isDismissible: true,
-        mainButton: TextButton(
-            onPressed: () {
-              Get.back();
-            },
-            child: const Text("Cancel")),
-        showProgressIndicator: true,
-        maxWidth: 320,
-      );
+      // Handle other exceptions
       if (kDebugMode) {
-        print('Got An Error :- $e');
+        print('Error: $e');
       }
+      // ignore: use_build_context_synchronously
+      showAlertDialog(context, 'Invalid OTP :(');
     }
   }
 
-  //Method for handle the errors
+  // Method to handle errors
   void handleError(PlatformException error) {
     switch (error.code) {
       case 'ERROR_INVALID_VERIFICATION_CODE':
@@ -263,9 +265,8 @@ class _OtpScreenState extends State<OtpScreen> {
     }
   }
 
-  //Basic alert dialogue for alert errors and confirmations
+  // Method to show an alert dialog
   void showAlertDialog(BuildContext context, String message) {
-    // set up the AlertDialog
     final CupertinoAlertDialog alert = CupertinoAlertDialog(
       title: const Text('Error : '),
       content: Text('\n$message'),
@@ -279,12 +280,18 @@ class _OtpScreenState extends State<OtpScreen> {
         )
       ],
     );
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return alert;
       },
     );
+  }
+
+  // Method to check for errors
+  checkForAnError(onchnagedInputOtpfield) {
+    if (onchnagedInputOtpfield == null || onchnagedInputOtpfield.isEmpty) {
+      showAlertDialog(context, 'Code is empty');
+    }
   }
 }
