@@ -150,8 +150,7 @@ class _liquidpagesState extends State<liquidpages> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Center(
-                      child: SvgPicture.asset(
-                          "assets/svg/services_help.svg"),
+                      child: SvgPicture.asset("assets/svg/services_help.svg"),
                     ),
                     Column(
                       children: [
@@ -181,8 +180,7 @@ class _liquidpagesState extends State<liquidpages> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Center(
-                      child: SvgPicture.asset(
-                          "assets/svg/services_help.svg"),
+                      child: SvgPicture.asset("assets/svg/services_help.svg"),
                     ),
                     const SizedBox(
                       height: 100,
@@ -219,7 +217,8 @@ class _liquidpagesState extends State<liquidpages> {
                   if (nextPage == 5) {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const SelectOptionPageScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const SelectOptionPageScreen()),
                     );
                   }
                 },
@@ -244,7 +243,8 @@ class _liquidpagesState extends State<liquidpages> {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const SelectOptionPageScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const SelectOptionPageScreen()),
                   );
                   //lController.jumpToPage(page: 2);
                 },

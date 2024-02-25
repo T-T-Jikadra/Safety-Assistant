@@ -1,4 +1,4 @@
-import 'package:fff/Admin%20Releted/Lower%20Level%20Admin/lowerAdmin.dart';
+import 'package:fff/Admin%20Related/Lower%20Level%20Admin/lowerAdmin.dart';
 import 'package:flutter/material.dart';
 
 import '../onBoarding/onBoard.dart';

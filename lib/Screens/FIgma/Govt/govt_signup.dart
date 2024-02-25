@@ -1,38 +1,33 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 import '../../../Utils/constants.dart';
-import '../../../mobile Otp/screens/login_screen/login_screen.dart';
-import 'custom_checkbox_button.dart';
-import 'custom_radio_button.dart';
+import '../citizen/custom_checkbox_button.dart';
 
 // ignore: must_be_immutable
-class CitizenSignupPageOneScreen extends StatefulWidget {
-  const CitizenSignupPageOneScreen({Key? key})
+class GovtSignupPageScreen extends StatefulWidget {
+  const GovtSignupPageScreen({Key? key})
       : super(
-          key: key,
-        );
+    key: key,
+  );
 
   @override
-  State<CitizenSignupPageOneScreen> createState() =>
-      _CitizenSignupPageOneScreenState();
+  State<GovtSignupPageScreen> createState() => _GovtSignupPageScreenState();
 }
 
-class _CitizenSignupPageOneScreenState
-    extends State<CitizenSignupPageOneScreen> {
-  TextEditingController createCitizenAccountTextController =
-      TextEditingController();
-  TextEditingController phoneNumberEditTextController = TextEditingController();
-  TextEditingController connectWithYourTextController = TextEditingController();
+class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
+  TextEditingController nameOfNGOTextController = TextEditingController();
+  TextEditingController regNoTextController = TextEditingController();
   TextEditingController dateEditTextController = TextEditingController();
-  TextEditingController zipcodeEditTextController = TextEditingController();
-  TextEditingController addressEditTextController = TextEditingController();
-
-  String radioGroup = "";
+  TextEditingController contactNoTextController = TextEditingController();
+  TextEditingController emailIdTextController = TextEditingController();
+  TextEditingController websiteURLTextController = TextEditingController();
+  TextEditingController zipCodeTextController = TextEditingController();
+  TextEditingController addressTextController = TextEditingController();
+  TextEditingController pwdTextController = TextEditingController();
+  TextEditingController confirmPwdTextController = TextEditingController();
 
   String selectedState = '';
-
-  List<String> radioList = ["lbl_male", "lbl_female", "lbl_others"];
 
   List<String> dropdownItemList1 = [
     "Andaman & Nicobar Islands",
@@ -42,13 +37,13 @@ class _CitizenSignupPageOneScreenState
     "Bihar",
     "Chandigarh",
     "Chhattisgarh",
-    "Dadra & Nagar Haveli & Daman & Diu",
+    "Diu & Daman",
     "Delhi",
     "Goa",
     "Gujarat",
     "Haryana",
     "Himachal Pradesh",
-    "Jammu and Kashmir",
+    "Jammu & Kashmir",
     "Jharkhand",
     "Karnataka",
     "Kerala",
@@ -152,7 +147,7 @@ class _CitizenSignupPageOneScreenState
       "Raipur",
       "Rajnandgaon"
     ],
-    "Dadra & Nagar Haveli & Daman & Diu": ["Daman", "Diu", "Silvassa"],
+    "Diu & Daman": ["Daman", "Diu", "Silvassa"],
     "Delhi": ["Delhi", "New Delhi"],
     "Goa": ["Madgaon", "Panaji"],
     "Gujarat": [
@@ -216,7 +211,7 @@ class _CitizenSignupPageOneScreenState
       "Shimla",
       "Una"
     ],
-    "Jammu and Kashmir": [
+    "Jammu & Kashmir": [
       "Anantnag",
       "Baramula",
       "Doda",
@@ -633,7 +628,10 @@ class _CitizenSignupPageOneScreenState
     });
   }
 
-  bool checkboxCheckBox = false;
+  // ignore: non_constant_identifier_names
+  bool GovtTnC = false;
+  bool _obscurePwdText = true;
+  bool _obscureConfirmPwdText = true;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _firstNameFocusNode = FocusNode();
@@ -650,165 +648,122 @@ class _CitizenSignupPageOneScreenState
             width: double.maxFinite,
             child: Column(
               children: [
-                const SizedBox(height: 30),
+                const SizedBox(height: 25),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Container(
-                      margin: const EdgeInsets.only(bottom: 43),
+                      margin: const EdgeInsets.only(bottom: 30),
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Column(
                         children: [
                           const Text(
-                            "Create Citizen Account :",
+                            "Create Govt Account :",
                             style: TextStyle(fontSize: 24),
                           ),
                           const SizedBox(height: 9),
                           const Text(
-                            "Connect with your city now!",
+                            "Connect with your city now !",
                           ),
                           const SizedBox(height: 50),
-                          SvgPicture.asset(svg_for_phone),
-                          const SizedBox(height: 36),
-                          //fname lname
+                          SvgPicture.asset(svg_for_signup),
+                          const SizedBox(height: 30),
+                          //ngo name
                           Padding(
-                            padding: const EdgeInsets.only(left: 3, right: 5),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 5),
-                                    child: TextFormField(
-                                      focusNode: _firstNameFocusNode,
-                                      controller:
-                                          createCitizenAccountTextController,
-                                      decoration: const InputDecoration(
-                                        hintText: "First Name",
-                                        contentPadding: EdgeInsets.symmetric(
-                                          horizontal: 20,
-                                          vertical: 18,
-                                        ),
-                                        filled: true,
-                                      ),
-                                    ),
-                                  ),
+                            padding: const EdgeInsets.only(right: 5, left: 5),
+                            child: TextFormField(
+                              focusNode: _firstNameFocusNode,
+                              controller: nameOfNGOTextController,
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.account_box_outlined,
+                                    color: Colors.deepPurple),
+                                hintText: "Name of NGO",
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 18,
                                 ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 5),
-                                    child: TextFormField(
-                                      focusNode: _lastNameFocusNode,
-                                      controller: connectWithYourTextController,
-                                      decoration: InputDecoration(
-                                        hintText: "Last Name",
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                          horizontal: 20,
-                                          vertical: 18,
-                                        ),
-                                        border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Colors.grey),
-                                          // Replace with your desired border style
-                                          borderRadius: BorderRadius.circular(
-                                              4), // Replace with your desired border radius
-                                        ),
-                                        filled: true,
-                                        // fillColor: Colors.deepPurple,
-                                      ),
-                                      // validator: (value){
-                                      //   if (value == null || value.isEmpty) {
-                                      //     FocusScope.of(context).requestFocus(_lastNameFocusNode);
-                                      //
-                                      //     return 'Please enter last name';
-                                      //
-                                      //   }
-                                      //   return null;
-                                      // },
-                                    ),
-                                  ),
-                                ),
-                              ],
+                                filled: true,
+                              ),
                             ),
                           ),
-                          const SizedBox(height: 13),
-                          //gender
+                          const SizedBox(height: 12),
+                          //ngo reg no
                           Padding(
-                            padding: const EdgeInsets.only(left: 8, right: 11),
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 2),
-                                  child: CustomRadioButton(
-                                    text: "Male",
-                                    value: radioList[0],
-                                    groupValue: radioGroup,
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 1),
-                                    onChange: (value) {
-                                      // Update the state when a radio button is selected
-                                      setState(() {
-                                        radioGroup = value;
-                                      });
-                                    },
-                                  ),
+                            padding: const EdgeInsets.only(right: 5, left: 5),
+                            child: TextFormField(
+                              focusNode: _lastNameFocusNode,
+                              controller: regNoTextController,
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.app_registration,
+                                    color: Colors.deepPurple),
+                                hintText: "Registration No.",
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 18,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 24, bottom: 2),
-                                  child: CustomRadioButton(
-                                    text: "Female",
-                                    value: radioList[1],
-                                    groupValue: radioGroup,
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 1),
-                                    onChange: (value) {
-                                      // Update the state when a radio button is selected
-                                      setState(() {
-                                        radioGroup = value;
-                                      });
-                                    },
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 28, top: 0),
-                                  child: CustomRadioButton(
-                                    text: "Others",
-                                    value: radioList[2],
-                                    groupValue: radioGroup,
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 1),
-                                    onChange: (value) {
-                                      // Update the state when a radio button is selected
-                                      setState(() {
-                                        radioGroup = value;
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ],
+                                // border: OutlineInputBorder(
+                                //   borderSide: BorderSide(color: Colors.grey),
+                                //   // borderRadius: BorderRadius.circular(4), // Replace with your desired border radius
+                                // ),
+                                filled: true,
+                                // fillColor: Colors.deepPurple,
+                              ),
+                              // validator: (value){
+                              //   if (value == null || value.isEmpty) {
+                              //     FocusScope.of(context).requestFocus(_lastNameFocusNode);
+                              //
+                              //     return 'Please enter last name';
+                              //
+                              //   }
+                              //   return null;
+                              // },
                             ),
                           ),
-                          const SizedBox(height: 11),
-                          //phone
+                          const SizedBox(height: 12),
+                          //services
                           Padding(
                             padding: const EdgeInsets.only(
                               left: 0,
                               right: 0,
                             ),
                             child: TextFormField(
-                              maxLength: 10,
-                              controller: phoneNumberEditTextController,
+                              onTap: () {
+                                _showCupertinoDialog(context);
+                              },
+                              controller: dateEditTextController,
+                              readOnly: true,
                               decoration: InputDecoration(
-                                prefixText: "+91 ",
-                                hintText: "Enter Mobile Number",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                hintText: "Select your Services",
+                                prefixIcon: Container(
+                                  margin:
+                                  const EdgeInsets.fromLTRB(20, 16, 12, 16),
+                                  child: SvgPicture.asset(svg_for_calendar),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          //contact
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 5,
+                              right: 5,
+                            ),
+                            child: TextFormField(
+                              maxLength: 10,
+                              controller: contactNoTextController,
+                              decoration: InputDecoration(
+                                //prefixText: "+91 ",
+                                hintText: "Enter Contact / Telephone Number",
                                 prefixIcon: Container(
                                   decoration: const BoxDecoration(
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(30)),
+                                    BorderRadius.all(Radius.circular(30)),
                                   ),
                                   margin:
-                                      const EdgeInsets.fromLTRB(20, 16, 12, 16),
+                                  const EdgeInsets.fromLTRB(20, 16, 12, 16),
                                   child: SvgPicture.asset(svg_for_call),
                                 ),
                                 prefixIconConstraints: const BoxConstraints(
@@ -819,31 +774,35 @@ class _CitizenSignupPageOneScreenState
                             ),
                           ),
                           const SizedBox(height: 8),
-                          //date
+                          //email
                           Padding(
-                            padding: const EdgeInsets.only(
-                              left: 0,
-                              right: 0,
+                            padding: const EdgeInsets.only(right: 5, left: 5),
+                            child: TextFormField(
+                              controller: emailIdTextController,
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.email_outlined,
+                                    color: Colors.deepPurple),
+                                hintText: "Enter Authorized Email address",
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 18,
+                                ),
+                              ),
                             ),
-                            child: GestureDetector(
-                              onTap: () {
-                                _selectDate(context);
-                              },
-                              child: AbsorbPointer(
-                                child: TextFormField(
-                                  controller: dateEditTextController,
-                                  readOnly: true,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                    hintText: "Birthdate",
-                                    prefixIcon: Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          20, 16, 12, 16),
-                                      child: SvgPicture.asset(svg_for_calendar),
-                                    ),
-                                  ),
+                          ),
+                          const SizedBox(height: 12),
+                          //website
+                          Padding(
+                            padding: const EdgeInsets.only(right: 5, left: 5),
+                            child: TextFormField(
+                              controller: websiteURLTextController,
+                              decoration: const InputDecoration(
+                                prefixIcon:
+                                Icon(Icons.web, color: Colors.deepPurple),
+                                hintText: "Enter Website URL",
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 18,
                                 ),
                               ),
                             ),
@@ -852,8 +811,8 @@ class _CitizenSignupPageOneScreenState
                           //state
                           Padding(
                             padding: const EdgeInsets.only(
-                              left: 0,
-                              right: 0,
+                              left: 5,
+                              right: 5,
                             ),
                             child: Expanded(
                               child: DropdownButtonFormField<String>(
@@ -882,8 +841,8 @@ class _CitizenSignupPageOneScreenState
                           //city
                           Padding(
                             padding: const EdgeInsets.only(
-                              left: 0,
-                              right: 0,
+                              left: 5,
+                              right: 5,
                             ),
                             child: DropdownButtonFormField<String>(
                               value: dropdownItemList2.isNotEmpty
@@ -903,34 +862,108 @@ class _CitizenSignupPageOneScreenState
                             ),
                           ),
                           const SizedBox(height: 12),
-                          //zip
-                          TextFormField(
-                            maxLength: 6,
-                            controller: zipcodeEditTextController,
-                            decoration: const InputDecoration(
-                              hintText: "Enter your Zip Code / Pin Code",
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 18,
+                          //zip /pin
+                          Padding(
+                            padding: const EdgeInsets.only(right: 5, left: 5),
+                            child: TextFormField(
+                              maxLength: 6,
+                              controller: zipCodeTextController,
+                              decoration: const InputDecoration(
+                                hintText: "Enter your Zip Code / Pin Code",
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 18,
+                                ),
                               ),
+                              keyboardType: TextInputType.number,
                             ),
-                            keyboardType: TextInputType.number,
                           ),
                           const SizedBox(height: 12),
-                          TextFormField(
-                            controller: addressEditTextController,
-                            decoration: const InputDecoration(
-                              hintText: "Enter your address",
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 18,
+                          //address
+                          Padding(
+                            padding: const EdgeInsets.only(right: 5, left: 5),
+                            child: TextFormField(
+                              controller: addressTextController,
+                              decoration: const InputDecoration(
+                                hintText: "Enter your address",
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 18,
+                                ),
                               ),
+                              keyboardType: TextInputType.text,
+                              maxLength: 150,
+                              maxLines: 4,
                             ),
-                            keyboardType: TextInputType.text,
-                            maxLength: 150,
-                            maxLines: 4,
                           ),
                           const SizedBox(height: 31),
+                          //pwd
+                          Padding(
+                            padding: const EdgeInsets.only(right: 5, left: 5),
+                            child: TextFormField(
+                              controller: pwdTextController,
+                              obscureText: _obscurePwdText,
+                              decoration: InputDecoration(
+                                prefixIcon: const Icon(
+                                  Icons.lock,
+                                  color: Colors.deepPurple,
+                                ),
+                                hintText: "Password",
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 18,
+                                ),
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _obscurePwdText = !_obscurePwdText;
+                                    });
+                                  },
+                                  child: Icon(
+                                    _obscurePwdText
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          // Confirm pwd
+                          Padding(
+                            padding: const EdgeInsets.only(right: 5, left: 5),
+                            child: TextFormField(
+                              controller: confirmPwdTextController,
+                              obscureText: _obscureConfirmPwdText,
+                              decoration: InputDecoration(
+                                prefixIcon: const Icon(
+                                  Icons.lock,
+                                  color: Colors.deepPurple,
+                                ),
+                                hintText: "Password",
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 18,
+                                ),
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _obscureConfirmPwdText =
+                                      !_obscureConfirmPwdText;
+                                    });
+                                  },
+                                  child: Icon(
+                                    _obscureConfirmPwdText
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
                           //t&c
                           Align(
                             alignment: Alignment.centerLeft,
@@ -942,100 +975,102 @@ class _CitizenSignupPageOneScreenState
                               child: CustomCheckboxButton(
                                 alignment: Alignment.centerLeft,
                                 text: "I accept term & conditions",
-                                value: checkboxCheckBox,
+                                value: GovtTnC,
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 1),
+                                const EdgeInsets.symmetric(vertical: 1),
                                 onChange: (value) {
                                   setState(() {
-                                    checkboxCheckBox = value;
+                                    GovtTnC = value;
                                   });
                                 },
                               ),
                             ),
                           ),
-                          const SizedBox(height: 33),
                           //btn
-                          Container(
-                            padding: const EdgeInsets.only(bottom: 20),
-                            width: double.infinity,
-                            child: ClipRRect(
-                                // borderRadius: BorderRadius.circular(50),
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      // Navigate based on selected role
-                                      final snackBar = SnackBar(
-                                        dismissDirection:
-                                            DismissDirection.vertical,
-                                        elevation: 35,
-                                        padding: const EdgeInsets.all(7),
-                                        content: const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('Under Construction..'),
-                                        ),
-                                        duration: const Duration(seconds: 3),
-                                        // Duration for which SnackBar will be visible
-                                        action: SnackBarAction(
-                                          label: 'Undo',
-                                          onPressed: () {
-                                            // Undo functionality
-                                            ScaffoldMessenger.of(context)
-                                                .hideCurrentSnackBar();
-                                          },
-                                        ),
-                                      );
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(snackBar);
-                                    },
-                                    style: ButtonStyle(
-                                        shape: MaterialStateProperty.all(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        18)))),
-                                    child: const Text("Continue .."))),
-                          ),
-                          const SizedBox(height: 5),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 30),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                const Text(
-                                  "Already have an account? ",
-                                ),
-                                SizedBox(
-                                  height: 40,
-                                  width: 89,
-                                  child: Stack(
-                                    alignment: Alignment.bottomLeft,
-                                    children: [
-                                      Align(
-                                          alignment: Alignment.topLeft,
-                                          child: TextButton(
-                                              onPressed: () {
-                                                Navigator.pushReplacement(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const LoginScreen(),
-                                                    ));
-                                              },
-                                              child: const Text(
-                                                "Login ..",
-                                                // selectionColor: Colors.blueGrey,
-                                              ))),
-                                      SvgPicture.asset(svg_for_line, width: 65),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          //const SizedBox(height: 5),
                         ],
                       ),
                     ),
                   ),
                 ),
+                const SizedBox(height: 9),
+                Padding(
+                  padding: const EdgeInsets.only(right: 7, left: 7),
+                  child: Container(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    width: double.infinity,
+                    child: ClipRRect(
+                      // borderRadius: BorderRadius.circular(50),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              // Navigate based on selected role
+                              final snackBar = SnackBar(
+                                dismissDirection: DismissDirection.vertical,
+                                elevation: 35,
+                                padding: const EdgeInsets.all(7),
+                                content: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('Under Construction..'),
+                                ),
+                                duration: const Duration(seconds: 3),
+                                // Duration for which SnackBar will be visible
+                                action: SnackBarAction(
+                                  label: 'Undo',
+                                  onPressed: () {
+                                    // Undo functionality
+                                    ScaffoldMessenger.of(context)
+                                        .hideCurrentSnackBar();
+                                  },
+                                ),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            },
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(18)))),
+                            child: const Text("Continue .."))),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Text(
+                        "Already have an account? ",
+                      ),
+                      SizedBox(
+                        height: 35,
+                        width: 89,
+                        child: Stack(
+                          alignment: Alignment.bottomLeft,
+                          children: [
+                            Align(
+                                alignment: Alignment.topLeft,
+                                child: TextButton(
+                                    onPressed: () {
+                                      // Navigator.pushReplacement(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //       builder: (context) =>
+                                      //       const LoginScreen(),
+                                      //     ));
+                                    },
+                                    child: const Text(
+                                      "Login ..",
+                                      // selectionColor: Colors.blueGrey,
+                                    ))),
+                            SvgPicture.asset(svg_for_line, width: 65),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 15),
               ],
             ),
           ),
@@ -1044,39 +1079,171 @@ class _CitizenSignupPageOneScreenState
     );
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? pickedDate = await showDatePicker(
+  void _showCupertinoDialog(BuildContext context) {
+    List<String> listOfServices = [
+      "Mass Human Rescue",
+      "Provision Temporary Shelter / Relocation",
+      "Provision Emergency Health Care",
+      "Provision Food and Water",
+      "Provision against fire break out",
+      "Repairing vital services (Telecommunication)",
+      "Repairing vital services (Transportation)",
+      "Repairing vital services (Electricity)",
+      "Animal Rescue"
+    ];
+    List<bool> checked = List.filled(listOfServices.length, false);
+
+    showDialog(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Colors.blue, // Header background color
-              onPrimary: Colors.white, // Header text color
-              onSurface: Colors.black, // Body text color
-            ),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.blue, // Button text color
-              ),
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Select your services from the list :'),
+          content: SizedBox(
+            width: double.maxFinite,
+            height: 300, // Adjust the height as needed
+            child: ListView.builder(
+              itemCount: listOfServices.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      checked[index] = !checked[index];
+                    });
+                  },
+                  child: ListTile(
+                    title: Text(listOfServices[index]),
+                    trailing: CupertinoSwitch(
+                      value: checked[index],
+                      onChanged: (bool value) {
+                        setState(() {
+                          checked[index] = value;
+                        });
+                      },
+                    ),
+                  ),
+                );
+              },
             ),
           ),
-          child: child!,
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                String selectedOptions = '';
+                for (int i = 0; i < listOfServices.length; i++) {
+                  if (checked[i]) {
+                    selectedOptions += '${listOfServices[i]}, ';
+                  }
+                }
+                if (selectedOptions.isNotEmpty) {
+                  selectedOptions = selectedOptions.substring(
+                      0, selectedOptions.length - 2);
+                }
+                dateEditTextController.text = selectedOptions;
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
         );
       },
     );
-    // ignore: unrelated_type_equality_checks
-    if (pickedDate != null && pickedDate != dateEditTextController.text) {
-      final formattedDate = DateFormat.yMMMd()
-          .format(pickedDate); // Format date to show day, month, year
-      setState(() {
-        dateEditTextController.text = formattedDate;
-      });
-    }
   }
+
+
+// void _showCupertinoDialog(BuildContext context) {
+//   List<String> options = ['Option 1', 'Option 2', 'Option 3']; // Your list of options
+//   List<bool> checked = List.filled(options.length, false);
+//
+//   showCupertinoModalPopup(
+//     context: context,
+//     builder: (BuildContext context) {
+//       return CupertinoAlertDialog(
+//         title: const Text('Select Options'),
+//         content: Column(
+//           children: List.generate(
+//             options.length,
+//                 (index) {
+//               return CheckboxListTile(
+//                 title: Text(options[index]),
+//                 value: checked[index],
+//                 onChanged: (bool? value) {
+//                   if (value != null) {
+//                     checked[index] = value;
+//                   }
+//                   setState(() {}); // Update dialog to reflect changes
+//                 },
+//               );
+//             },
+//           ),
+//         ),
+//         actions: <Widget>[
+//           CupertinoDialogAction(
+//             child: const Text('Cancel'),
+//             onPressed: () {
+//               Navigator.of(context).pop();
+//             },
+//           ),
+//           CupertinoDialogAction(
+//             child: const Text('OK'),
+//             onPressed: () {
+//               String selectedOptions = '';
+//               for (int i = 0; i < options.length; i++) {
+//                 if (checked[i]) {
+//                   selectedOptions += options[i] + ', ';
+//                 }
+//               }
+//               if (selectedOptions.isNotEmpty) {
+//                 selectedOptions = selectedOptions.substring(0, selectedOptions.length - 2);
+//               }
+//               dateEditTextController.text = selectedOptions;
+//               Navigator.of(context).pop();
+//             },
+//           ),
+//         ],
+//       );
+//     },
+//   );
+// }
+
+// Future<void> _selectDate(BuildContext context) async {
+//   final DateTime? pickedDate = await showDatePicker(
+//     context: context,
+//     initialDate: DateTime.now(),
+//     firstDate: DateTime(1900),
+//     lastDate: DateTime.now(),
+//     builder: (BuildContext context, Widget? child) {
+//       return Theme(
+//         data: ThemeData.light().copyWith(
+//           colorScheme: const ColorScheme.light(
+//             primary: Colors.blue, // Header background color
+//             onPrimary: Colors.white, // Header text color
+//             onSurface: Colors.black, // Body text color
+//           ),
+//           textButtonTheme: TextButtonThemeData(
+//             style: TextButton.styleFrom(
+//               foregroundColor: Colors.blue, // Button text color
+//             ),
+//           ),
+//         ),
+//         child: child!,
+//       );
+//     },
+//   );
+//   // ignore: unrelated_type_equality_checks
+//   if (pickedDate != null && pickedDate != dateEditTextController.text) {
+//     final formattedDate = DateFormat.yMMMd()
+//         .format(pickedDate); // Format date to show day, month, year
+//     setState(() {
+//       dateEditTextController.text = formattedDate;
+//     });
+//   }
+// }
 
 // /// Section Widget
 // Widget _buildGroup38RadioGroup(BuildContext context) {

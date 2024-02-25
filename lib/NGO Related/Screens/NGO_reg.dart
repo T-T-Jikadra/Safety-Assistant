@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../Utils/constants.dart';
 
+// ignore: camel_case_types
 class NGO_Register extends StatefulWidget {
   const NGO_Register({super.key});
 
@@ -9,6 +10,7 @@ class NGO_Register extends StatefulWidget {
   State<NGO_Register> createState() => _NGO_RegisterState();
 }
 
+// ignore: camel_case_types
 class _NGO_RegisterState extends State<NGO_Register> {
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,6 @@
 name: fff
-description: A Citizen Aided Initiative In Form of An Application ..
+description: A Citizen Aided Initiative In Form of An Application .. 
+  [ Emergency response support system and Citizen helpdesk system ] ...
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev

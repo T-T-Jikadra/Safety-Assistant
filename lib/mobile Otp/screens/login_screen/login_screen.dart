@@ -4,18 +4,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../Citizen Related/Screens/Sign_Up/temp/SignUp_header_widget.dart';
-import '../../../Screens/FIgma/citizen_signup/citizen_signup.dart';
+import '../../../Screens/FIgma/citizen/citizen_signup.dart';
 import '../../../Utils/constants.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class CitizenLoginScreen extends StatefulWidget {
+  const CitizenLoginScreen({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _LoginScreenState createState() => _LoginScreenState();
+  _CitizenLoginScreenState createState() => _CitizenLoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _CitizenLoginScreenState extends State<CitizenLoginScreen> {
   final _contactEditingController = TextEditingController();
   var _dialCode = '';
 
@@ -112,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      const CitizenSignupPageOneScreen(),
+                                      const CitizenSignupPageScreen(),
                                 ));
                           },
                           child: const Text(

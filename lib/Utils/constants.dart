@@ -39,4 +39,7 @@ const String svg_for_call = "assets/svg/img_call.svg";
 const String svg_for_line = "assets/svg/img_line.svg";
 
 // ignore: constant_identifier_names
-const String svg_for_phone = "assets/svg/mobile_user.svg";
+const String svg_for_login = "assets/svg/mobile_user.svg";
+
+// ignore: constant_identifier_names
+const String svg_for_signup = "assets/svg/ngo_login.svg";

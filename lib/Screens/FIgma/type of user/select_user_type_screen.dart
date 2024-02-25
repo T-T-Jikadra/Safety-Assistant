@@ -1,9 +1,9 @@
-import 'package:fff/Admin%20Releted/Lower%20Level%20Admin/lowerAdmin.dart';
+import 'package:fff/Admin%20Related/Lower%20Level%20Admin/lowerAdmin.dart';
 import 'package:fff/Screens/FIgma/type%20of%20user/typecolumnlist_item_widget.dart';
 import 'package:flutter/material.dart';
-import '../../../Govt Body Related/Screens/Govt_reg.dart';
-import '../../../NGO Related/Screens/NGO_reg.dart';
 import '../../../mobile Otp/screens/login_screen/login_screen.dart';
+import '../Govt/govt_login.dart';
+import '../ngo/ngo_login.dart';
 
 class SelectOptionPageScreen extends StatefulWidget {
   const SelectOptionPageScreen({Key? key}) : super(key: key);
@@ -105,19 +105,19 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const LoginScreen()));
+                                              const CitizenLoginScreen()));
                                 } else if (_selectedRole == "NGO") {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const NGO_Register()));
+                                              const NGOLoginPageScreen()));
                                 } else if (_selectedRole == "Government Body") {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const Govt_Register()));
+                                              const GovtLoginPageScreen()));
                                 } else {
                                   final snackBar = SnackBar(
                                     dismissDirection: DismissDirection.vertical,
