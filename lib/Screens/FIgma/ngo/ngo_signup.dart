@@ -726,8 +726,8 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                           //services
                           Padding(
                             padding: const EdgeInsets.only(
-                              left: 0,
-                              right: 0,
+                              left: 5,
+                              right: 5,
                             ),
                             child: TextFormField(
                               onTap: () {
@@ -861,39 +861,47 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                           ),
                           const SizedBox(height: 12),
                           //state
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 5,
-                              right: 5,
-                            ),
-                            child: Expanded(
-                              child: DropdownButtonFormField<String>(
-                                value: selectedState,
-                                items: dropdownItemState.map((String state) {
-                                  return DropdownMenuItem<String>(
-                                    // alignment: AlignmentDirectional.topStart,
-                                    value: state,
-                                    child: Text(state),
-                                  );
-                                }).toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedState = value!;
-                                    updateCityList(selectedState);
-                                  });
-                                },
-                                decoration: const InputDecoration(
-                                  // border: OutlineInputBorder(),
-                                  hintText: "Select NGO State",
+                          Flex(
+                            direction: Axis.horizontal,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 5,
+                                    right: 5,
+                                  ),
+                                  child: SizedBox(
+                                    height: 60,
+                                    child: DropdownButtonFormField<String>(
+                                        value: selectedState,
+                                        items: dropdownItemState.map((String state) {
+                                          return DropdownMenuItem<String>(
+                                            // alignment: AlignmentDirectional.topStart,
+                                            value: state,
+                                            child: Text(state),
+                                          );
+                                        }).toList(),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            selectedState = value!;
+                                            updateCityList(selectedState);
+                                          });
+                                        },
+                                        decoration: const InputDecoration(
+                                          // border: OutlineInputBorder(),
+                                          hintText: "Select NGO State",
+                                        ),
+                                        validator: (value) {
+                                          if (value == "Select NGO state") {
+                                            return 'Select NGO State';
+                                          }
+                                          return null; // Return null if the input is valid
+                                        },
+                                      ),
+                                  ),
+                                  ),
                                 ),
-                                validator: (value) {
-                                  if (value == "Select NGO state") {
-                                    return 'Select NGO State';
-                                  }
-                                  return null; // Return null if the input is valid
-                                },
-                              ),
-                            ),
+                              ],
                           ),
                           const SizedBox(height: 12),
                           //city
@@ -902,26 +910,29 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               left: 5,
                               right: 5,
                             ),
-                            child: DropdownButtonFormField<String>(
-                              value: dropdownItemCity.isNotEmpty
-                                  ? dropdownItemCity.first
-                                  : null,
-                              items: dropdownItemCity.map((String city) {
-                                return DropdownMenuItem<String>(
-                                  value: city,
-                                  child: Text(city),
-                                );
-                              }).toList(),
-                              onChanged: (value) {},
-                              decoration: const InputDecoration(
-                                hintText: "Select NGO City",
+                            child: SizedBox(
+                              height: 58,
+                              child: DropdownButtonFormField<String>(
+                                value: dropdownItemCity.isNotEmpty
+                                    ? dropdownItemCity.first
+                                    : null,
+                                items: dropdownItemCity.map((String city) {
+                                  return DropdownMenuItem<String>(
+                                    value: city,
+                                    child: Text(city),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {},
+                                decoration: const InputDecoration(
+                                  hintText: "Select NGO City",
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Select NGO City';
+                                  }
+                                  return null; // Return null if the input is valid
+                                },
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Select NGO City';
-                                }
-                                return null; // Return null if the input is valid
-                              },
                             ),
                           ),
                           const SizedBox(height: 12),

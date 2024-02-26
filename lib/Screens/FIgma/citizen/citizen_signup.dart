@@ -877,41 +877,50 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                           ),
                           const SizedBox(height: 12),
                           //state
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 5,
-                              right: 5,
-                            ),
-                            child: Expanded(
-                              child: DropdownButtonFormField<String>(
-                                value: selectedState,
-                                items: dropdownItemState.map((String state) {
-                                  return DropdownMenuItem<String>(
-                                    // alignment: AlignmentDirectional.topStart,
-                                    value: state,
-                                    child: Text(state),
-                                  );
-                                }).toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedState = value!;
-                                    updateCityList(selectedState);
-                                  });
-                                },
-                                decoration: const InputDecoration(
-                                  // border: OutlineInputBorder(),
-                                  hintText: "Select your State",
+
+                            Flex(
+                              direction: Axis.horizontal,
+                              children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 5,
+                                    right: 5,
+                                  ),
+                                  child: SizedBox(
+                                    height: 60,
+                                    child: DropdownButtonFormField<String>(
+                                      value: selectedState,
+                                        items: dropdownItemState.map((String state) {
+                                          return DropdownMenuItem<String>(
+                                            // alignment: AlignmentDirectional.topStart,
+                                            value: state,
+                                            child: Text(state),
+                                          );
+                                        }).toList(),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            selectedState = value!;
+                                            updateCityList(selectedState);
+                                          });
+                                        },
+                                        decoration: const InputDecoration(
+                                          // border: OutlineInputBorder(),
+                                          hintText: "Select your State",
+                                        ),
+                                        //hint: const Text("Select your State"), // Hint text displayed initially
+                                        validator: (value) {
+                                          if (value == "Select your state") {
+                                            return 'Select your State';
+                                          }
+                                          return null; // Return null if the input is valid
+                                        },
+                                      ),
+                                  ),
+                                  ),
                                 ),
-                                //hint: const Text("Select your State"), // Hint text displayed initially
-                                validator: (value) {
-                                  if (value == "Select your state") {
-                                    return 'Select your State';
-                                  }
-                                  return null; // Return null if the input is valid
-                                },
-                              ),
+                              ],
                             ),
-                          ),
                           const SizedBox(height: 12),
                           //city
                           Padding(
@@ -919,26 +928,29 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                               left: 5,
                               right: 5,
                             ),
-                            child: DropdownButtonFormField<String>(
-                              value: dropdownItemCity.isNotEmpty
-                                  ? dropdownItemCity.first
-                                  : null,
-                              items: dropdownItemCity.map((String city) {
-                                return DropdownMenuItem<String>(
-                                  value: city,
-                                  child: Text(city),
-                                );
-                              }).toList(),
-                              onChanged: (value) {},
-                              decoration: const InputDecoration(
-                                hintText: "Select your City",
+                            child: SizedBox(
+                              height: 60,
+                              child: DropdownButtonFormField<String>(
+                                value: dropdownItemCity.isNotEmpty
+                                    ? dropdownItemCity.first
+                                    : null,
+                                items: dropdownItemCity.map((String city) {
+                                  return DropdownMenuItem<String>(
+                                    value: city,
+                                    child: Text(city),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {},
+                                decoration: const InputDecoration(
+                                  hintText: "Select your City",
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Select your City';
+                                  }
+                                  return null; // Return null if the input is valid
+                                },
                               ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Select your City';
-                                }
-                                return null; // Return null if the input is valid
-                              },
                             ),
                           ),
                           const SizedBox(height: 12),
