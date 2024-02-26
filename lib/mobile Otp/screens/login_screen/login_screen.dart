@@ -3,6 +3,7 @@ import 'package:fff/mobile%20Otp/screens/login_screen/widget/custom_button.dart'
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../../Citizen Related/Screens/Sign_Up/temp/SignUp_header_widget.dart';
 import '../../../Screens/FIgma/citizen/citizen_signup.dart';
 import '../../../Utils/constants.dart';
@@ -38,7 +39,7 @@ class _CitizenLoginScreenState extends State<CitizenLoginScreen> {
                   padding: EdgeInsets.only(left: 16),
                   child: FormHeaderWidget(
                     image: splash_shape,
-                    title: "Get on Board !",
+                    title: "Get on \nBoard !",
                     subTitle: "Create Your Profile \nwith Mobile no ... ",
                   ),
                 ),
@@ -106,18 +107,42 @@ class _CitizenLoginScreenState extends State<CitizenLoginScreen> {
                       // Custom login button
                       CustomButton(clickOnLogin),
                       // const SizedBox(height: 0),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const CitizenSignupPageScreen(),
-                                ));
-                          },
-                          child: const Text(
-                              "Don't have an Account ? \n Sign Up First",
-                              textAlign: TextAlign.center))
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            const Text(
+                              "Don't have an Account ? ",
+                            ),
+                            SizedBox(
+                              height: 35,
+                              width: 120,
+                              child: Stack(
+                                alignment: Alignment.bottomLeft,
+                                children: [
+                                  Align(
+                                      alignment: Alignment.topLeft,
+                                      child: TextButton(
+                                          onPressed: () {
+                                            Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                  const CitizenSignupPageScreen(),
+                                                ));
+                                          },
+                                          child: const Text(
+                                            "Sign Up First ! ..",
+                                            // selectionColor: Colors.blueGrey,
+                                          ))),
+                                  SvgPicture.asset(svg_for_line, width: 108),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 )

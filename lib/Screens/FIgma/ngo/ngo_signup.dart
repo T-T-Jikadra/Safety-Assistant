@@ -17,6 +17,7 @@ class NGOSignupPageScreen extends StatefulWidget {
 }
 
 class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController nameOfNGOTextController = TextEditingController();
   TextEditingController regNoTextController = TextEditingController();
   TextEditingController dateEditTextController = TextEditingController();
@@ -30,7 +31,8 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
 
   String selectedState = '';
 
-  List<String> dropdownItemList1 = [
+  List<String> dropdownItemState = [
+    "Select NGO state",
     "Andaman & Nicobar Islands",
     "Andhra Pradesh",
     "Arunachal Pradesh",
@@ -68,10 +70,10 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
     "West Bengal",
   ];
 
-  List<String> dropdownItemList2 = [];
+  List<String> dropdownItemCity = [];
 
   Map<String, List<String>> cityMap = {
-    "Andaman and Nicobar Islands": ["Port Blair"],
+    "Andaman & Nicobar Islands": ["Port Blair"],
     "Andhra Pradesh": [
       "Adoni",
       "Amaravati",
@@ -619,14 +621,8 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
   @override
   void initState() {
     super.initState();
-    selectedState = dropdownItemList1.first;
+    selectedState = dropdownItemState.first;
     updateCityList(selectedState);
-  }
-
-  void updateCityList(String state) {
-    setState(() {
-      dropdownItemList2 = cityMap[state] ?? [];
-    });
   }
 
   // ignore: non_constant_identifier_names
@@ -634,7 +630,6 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
   bool _obscurePwdText = true;
   bool _obscureConfirmPwdText = true;
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _firstNameFocusNode = FocusNode();
   final _lastNameFocusNode = FocusNode();
 
@@ -654,17 +649,20 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                   child: SingleChildScrollView(
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 30),
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      padding: EdgeInsets.only(
+                          //for fields that are covered under keyboard
+                          bottom: MediaQuery.of(context).viewInsets.bottom,
+                          left: 16,
+                          right: 16),
                       child: Column(
                         children: [
                           const Text(
-                            "Create NGO Account :",
-                            style: TextStyle(fontSize: 24),
+                            "Create Account for an NGO : ",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 23),
                           ),
                           const SizedBox(height: 9),
-                          const Text(
-                            "Connect with your city now !",
-                          ),
+                          // const Text("Connect with your city now !",),
                           const SizedBox(height: 50),
                           SvgPicture.asset(svg_for_signup),
                           const SizedBox(height: 30),
@@ -677,13 +675,22 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.account_box_outlined,
                                     color: Colors.deepPurple),
-                                hintText: "Name of NGO",
+                                hintText: "Enter name of the NGO",
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
                                 ),
                                 filled: true,
                               ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Enter NGO name';
+                                }
+                                if (value.isNotEmpty && value.length < 2) {
+                                  return 'Minimum 3 Characters required';
+                                }
+                                return null; // Return null if the input is valid
+                              },
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -696,27 +703,23 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.app_registration,
                                     color: Colors.deepPurple),
-                                hintText: "Registration No.",
+                                hintText: "Enter Registration no. of the NGO",
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
                                 ),
-                                // border: OutlineInputBorder(
-                                //   borderSide: BorderSide(color: Colors.grey),
-                                //   // borderRadius: BorderRadius.circular(4), // Replace with your desired border radius
-                                // ),
                                 filled: true,
                                 // fillColor: Colors.deepPurple,
                               ),
-                              // validator: (value){
-                              //   if (value == null || value.isEmpty) {
-                              //     FocusScope.of(context).requestFocus(_lastNameFocusNode);
-                              //
-                              //     return 'Please enter last name';
-                              //
-                              //   }
-                              //   return null;
-                              // },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Enter Registration No';
+                                }
+                                if (value.isNotEmpty && value.length < 2) {
+                                  return 'Minimum 3 Characters required';
+                                }
+                                return null; // Return null if the input is valid
+                              },
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -736,13 +739,23 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(4),
                                 ),
-                                hintText: "Select your Services",
+                                hintText:
+                                    "Select the Services NGO can provide",
                                 prefixIcon: Container(
                                   margin:
                                       const EdgeInsets.fromLTRB(20, 16, 12, 16),
                                   child: SvgPicture.asset(svg_for_calendar),
                                 ),
                               ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Select your serving Services from list';
+                                }
+                                // if (value.isNotEmpty && value.length < 2) {
+                                //   return 'Minimum 3 Characters';
+                                // }
+                                return null; // Return null if the input is valid
+                              },
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -757,7 +770,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               controller: contactNoTextController,
                               decoration: InputDecoration(
                                 //prefixText: "+91 ",
-                                hintText: "Enter Contact / Telephone Number",
+                                hintText: "Enter contact number of NGO",
                                 prefixIcon: Container(
                                   decoration: const BoxDecoration(
                                     borderRadius:
@@ -772,6 +785,15 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                 ),
                               ),
                               keyboardType: TextInputType.phone,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Enter Telephone number';
+                                }
+                                if (value.isNotEmpty && value.length < 2) {
+                                  return 'Minimum no should be of 10 digits';
+                                }
+                                return null; // Return null if the input is valid
+                              },
                             ),
                           ),
                           const SizedBox(height: 8),
@@ -783,12 +805,25 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.email_outlined,
                                     color: Colors.deepPurple),
-                                hintText: "Enter Authorized Email address",
+                                hintText:
+                                    "Enter authorized mail address of an NGO",
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
                                 ),
                               ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Enter an email address';
+                                }
+                                // Regular expression for validating an email address
+                                final emailRegex =
+                                    RegExp(r'^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$');
+                                if (!emailRegex.hasMatch(value)) {
+                                  return 'Enter valid email address';
+                                }
+                                return null; // Return null if the input is valid
+                              },
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -800,12 +835,28 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               decoration: const InputDecoration(
                                 prefixIcon:
                                     Icon(Icons.web, color: Colors.deepPurple),
-                                hintText: "Enter Website URL",
+                                hintText: "Enter website URL of an NGO",
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
                                 ),
                               ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Enter website URL';
+                                }
+                                // Regular expression for validating a URL
+                                final urlRegex = RegExp(
+                                  r'^(https?://)?'
+                                  r'([a-z0-9-]+\.)*[a-z0-9-]+'
+                                  r'\.[a-z]{2,}(\/\S*)?$',
+                                  caseSensitive: false,
+                                );
+                                if (!urlRegex.hasMatch(value)) {
+                                  return 'Enter valid URL';
+                                }
+                                return null; // Return null if the input is valid
+                              },
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -818,7 +869,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                             child: Expanded(
                               child: DropdownButtonFormField<String>(
                                 value: selectedState,
-                                items: dropdownItemList1.map((String state) {
+                                items: dropdownItemState.map((String state) {
                                   return DropdownMenuItem<String>(
                                     // alignment: AlignmentDirectional.topStart,
                                     value: state,
@@ -833,8 +884,14 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                 },
                                 decoration: const InputDecoration(
                                   // border: OutlineInputBorder(),
-                                  hintText: "Select your State",
+                                  hintText: "Select NGO State",
                                 ),
+                                validator: (value) {
+                                  if (value == "Select NGO state") {
+                                    return 'Select NGO State';
+                                  }
+                                  return null; // Return null if the input is valid
+                                },
                               ),
                             ),
                           ),
@@ -846,10 +903,10 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               right: 5,
                             ),
                             child: DropdownButtonFormField<String>(
-                              value: dropdownItemList2.isNotEmpty
-                                  ? dropdownItemList2.first
+                              value: dropdownItemCity.isNotEmpty
+                                  ? dropdownItemCity.first
                                   : null,
-                              items: dropdownItemList2.map((String city) {
+                              items: dropdownItemCity.map((String city) {
                                 return DropdownMenuItem<String>(
                                   value: city,
                                   child: Text(city),
@@ -857,26 +914,40 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               }).toList(),
                               onChanged: (value) {},
                               decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: "Select your City",
+                                hintText: "Select NGO City",
                               ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Select NGO City';
+                                }
+                                return null; // Return null if the input is valid
+                              },
                             ),
                           ),
                           const SizedBox(height: 12),
-                          //zip /pin
+                          //pin
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
                               maxLength: 6,
                               controller: zipCodeTextController,
                               decoration: const InputDecoration(
-                                hintText: "Enter your Zip Code / Pin Code",
+                                hintText: "Enter NGO Pin code",
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
                                 ),
                               ),
                               keyboardType: TextInputType.number,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Enter pin code of an NGO';
+                                }
+                                if (value.isNotEmpty || value.length < 6) {
+                                  return 'Enter 6 digits Zip code';
+                                }
+                                return null; // Return null if the input is valid
+                              },
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -886,7 +957,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                             child: TextFormField(
                               controller: addressTextController,
                               decoration: const InputDecoration(
-                                hintText: "Enter your address",
+                                hintText: "Enter full address of an NGO",
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -895,6 +966,15 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               keyboardType: TextInputType.text,
                               maxLength: 150,
                               maxLines: 4,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Enter your address';
+                                }
+                                if (value.isNotEmpty || value.length < 10) {
+                                  return 'Enter your full address';
+                                }
+                                return null; // Return null if the input is valid
+                              },
                             ),
                           ),
                           const SizedBox(height: 31),
@@ -909,7 +989,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                   Icons.lock,
                                   color: Colors.deepPurple,
                                 ),
-                                hintText: "Password",
+                                hintText: "Create Password for an NGO",
                                 contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -928,6 +1008,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                   ),
                                 ),
                               ),
+                              validator: _validatePassword,
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -942,7 +1023,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                   Icons.lock,
                                   color: Colors.deepPurple,
                                 ),
-                                hintText: "Password",
+                                hintText: "Confirm Password",
                                 contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -962,9 +1043,18 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                   ),
                                 ),
                               ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Enter confirm password';
+                                }
+                                if (value != pwdTextController.text) {
+                                  return "Confirm password doesn't matches";
+                                }
+                                return null; // Return null if the input is valid
+                              },
                             ),
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 20),
                           //t&c
                           Align(
                             alignment: Alignment.centerLeft,
@@ -994,7 +1084,8 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 9),
+                //out of scrollbar
+                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.only(right: 7, left: 7),
                   child: Container(
@@ -1004,35 +1095,44 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                         // borderRadius: BorderRadius.circular(50),
                         child: ElevatedButton(
                             onPressed: () {
-                              // Navigate based on selected role
-                              final snackBar = SnackBar(
-                                dismissDirection: DismissDirection.vertical,
-                                elevation: 35,
-                                padding: const EdgeInsets.all(7),
-                                content: const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text('Under Construction..'),
-                                ),
-                                duration: const Duration(seconds: 3),
-                                // Duration for which SnackBar will be visible
-                                action: SnackBarAction(
-                                  label: 'Undo',
-                                  onPressed: () {
-                                    // Undo functionality
-                                    ScaffoldMessenger.of(context)
-                                        .hideCurrentSnackBar();
-                                  },
-                                ),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
+                              if (!NGOTnC) {
+                                final tnCError = SnackBar(
+                                  dismissDirection: DismissDirection.vertical,
+                                  elevation: 35,
+                                  padding: const EdgeInsets.all(7),
+                                  content: const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                        'Please accept terms & conditions..'),
+                                  ),
+                                  duration: const Duration(seconds: 3),
+                                  // Duration for which SnackBar will be visible
+                                  action: SnackBarAction(
+                                    label: 'Hide',
+                                    onPressed: () {
+                                      // Undo functionality
+                                      ScaffoldMessenger.of(context)
+                                          .hideCurrentSnackBar();
+                                    },
+                                  ),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(tnCError);
+                              }
+
+                              if (_formKey.currentState!.validate()) {
+                                // If the form is valid, you can proceed with form submission
+                                // For example, you can save the form data or navigate to the next screen
+                                // If you need to access the form field values, you can use the controller
+                                // For example: fnameTextController.text
+                              }
                             },
                             style: ButtonStyle(
                                 shape: MaterialStateProperty.all(
                                     RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(18)))),
-                            child: const Text("Continue .."))),
+                            child: const Text("Continue"))),
                   ),
                 ),
                 Padding(
@@ -1057,7 +1157,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                            const NGOLoginPageScreen(),
+                                                const NGOLoginPageScreen(),
                                           ));
                                     },
                                     child: const Text(
@@ -1078,6 +1178,34 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
         ),
       ),
     );
+  }
+
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a password';
+    }
+
+    if (value.length < 8) {
+      return 'Password must be at least 8 characters long';
+    }
+
+    if (!value.contains(RegExp(r'[a-z]'))) {
+      return 'Password must contain at least one lowercase letter';
+    }
+
+    if (!value.contains(RegExp(r'[A-Z]'))) {
+      return 'Password must contain at least one uppercase letter';
+    }
+
+    if (!value.contains(RegExp(r'[0-9]'))) {
+      return 'Password must contain at least one digit';
+    }
+
+    if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+      return 'Password must contain at least one special character';
+    }
+
+    return null; // Return null if the password passes all validations
   }
 
   void _showCupertinoDialog(BuildContext context) {
@@ -1142,8 +1270,8 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                   }
                 }
                 if (selectedOptions.isNotEmpty) {
-                  selectedOptions = selectedOptions.substring(
-                      0, selectedOptions.length - 2);
+                  selectedOptions =
+                      selectedOptions.substring(0, selectedOptions.length - 2);
                 }
                 dateEditTextController.text = selectedOptions;
                 Navigator.of(context).pop();
@@ -1156,6 +1284,11 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
     );
   }
 
+  void updateCityList(String state) {
+    setState(() {
+      dropdownItemCity = cityMap[state] ?? [];
+    });
+  }
 
 // void _showCupertinoDialog(BuildContext context) {
 //   List<String> options = ['Option 1', 'Option 2', 'Option 3']; // Your list of options

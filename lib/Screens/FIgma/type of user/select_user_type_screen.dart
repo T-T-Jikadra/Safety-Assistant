@@ -13,6 +13,7 @@ class SelectOptionPageScreen extends StatefulWidget {
 }
 
 class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
+
   int? _selectedIndex; // Index of the selected role in the list
   String? _selectedRole; // The selected role
 
@@ -34,8 +35,9 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        //left btn
                         Padding(
-                          padding: const EdgeInsets.only(left: 5, top: 10),
+                          padding: const EdgeInsets.only(left: 5, top: 15),
                           child: TextButton(
                             onPressed: () {
                               // Functionality for Local Authority button
@@ -45,8 +47,9 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                                 style: TextStyle(fontSize: 14)),
                           ),
                         ),
+                        //right btn
                         Padding(
-                          padding: const EdgeInsets.only(right: 7, top: 10),
+                          padding: const EdgeInsets.only(right: 7, top: 15),
                           child: TextButton(
                             onPressed: () {
                               // Navigate to Local Admin screen
@@ -62,23 +65,17 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 35),
-                    const Text(
-                      "Choose Role",
-                      style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.deepPurple),
-                    ),
-                    const SizedBox(height: 25),
+                    const SizedBox(height: 15),
+                    // const Text("Choose Role",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.deepPurple),),
+                    const SizedBox(height: 30),
                     const SizedBox(
                       width: 260,
-                      child: Text(
-                          "Please select your Role to help us for\n give you your functionality",
+                      child: Text("Let us know who you are ..",
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.w200)),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w200, fontSize: 24)),
                     ),
                     const SizedBox(height: 50),
                     _buildTypeColumnList(context), // Building the list of roles
@@ -92,61 +89,66 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                     const SizedBox(
                       height: 30,
                     ),
-                    Container(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      width: double.infinity,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(50),
-                          child: ElevatedButton(
-                              onPressed: () {
-                                // Navigate based on selected role
-                                if (_selectedRole == "Citizen") {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const CitizenLoginScreen()));
-                                } else if (_selectedRole == "NGO") {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const NGOLoginPageScreen()));
-                                } else if (_selectedRole == "Government Body") {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const GovtLoginPageScreen()));
-                                } else {
-                                  final snackBar = SnackBar(
-                                    dismissDirection: DismissDirection.vertical,
-                                    elevation: 35,
-                                    padding: const EdgeInsets.all(7),
-                                    content: const Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Text(
-                                          'Please select type of user first ..'),
-                                    ),
-                                    duration: const Duration(seconds: 3),
-                                    // Duration for which SnackBar will be visible
-                                    action: SnackBarAction(
-                                      label: 'Undo',
-                                      onPressed: () {
-                                        // Undo functionality
-                                        ScaffoldMessenger.of(context)
-                                            .hideCurrentSnackBar();
-                                      },
-                                    ),
-                                  );
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
-                                }
-                              },
-                              child: const Text("Continue .."))),
-                    ),
+
                   ],
                 ),
+              ),
+            ),
+
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                padding: const EdgeInsets.only(bottom: 30,left: 20,right: 20),
+                width: double.infinity,
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          // Navigate based on selected role
+                          if (_selectedRole == "I am Citizen") {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                    const CitizenLoginScreen()));
+                          } else if (_selectedRole == "I am an NGO") {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                    const NGOLoginPageScreen()));
+                          } else if (_selectedRole == "I am Government Agency") {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                    const GovtLoginPageScreen()));
+                          } else {
+                            final snackBar = SnackBar(
+                              dismissDirection: DismissDirection.vertical,
+                              elevation: 35,
+                              padding: const EdgeInsets.all(7),
+                              content: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                    'Please select type of user first ..'),
+                              ),
+                              duration: const Duration(seconds: 3),
+                              // Duration for which SnackBar will be visible
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                onPressed: () {
+                                  // Undo functionality
+                                  ScaffoldMessenger.of(context)
+                                      .hideCurrentSnackBar();
+                                },
+                              ),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
+                        },
+                        child: const Text("Continue .."))),
               ),
             ),
           ],
@@ -171,13 +173,13 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
           String roleName;
           switch (index) {
             case 0:
-              roleName = 'Citizen';
+              roleName = 'I am Citizen';
               break;
             case 1:
-              roleName = 'NGO';
+              roleName = 'I am an NGO';
               break;
             case 2:
-              roleName = 'Government Body';
+              roleName = 'I am Government Agency';
               break;
             default:
               roleName = 'Unknown';

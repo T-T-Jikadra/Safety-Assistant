@@ -7,28 +7,24 @@ import 'govt_signup.dart';
 class GovtLoginPageScreen extends StatefulWidget {
   const GovtLoginPageScreen({Key? key})
       : super(
-    key: key,
-  );
+          key: key,
+        );
 
   @override
   State<GovtLoginPageScreen> createState() => _GovtLoginPageScreenState();
 }
 
 class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
-  TextEditingController regNoTextController = TextEditingController();
-  TextEditingController pwdTextController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController loginRegNoTextController = TextEditingController();
+  TextEditingController loginPwdTextController = TextEditingController();
+
+  bool _obscurePwdText = true;
 
   @override
   void initState() {
     super.initState();
   }
-
-  bool _obscurePwdText = true;
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  //final _firstNameFocusNode = FocusNode();
-  final _lastNameFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -41,22 +37,24 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
             width: double.maxFinite,
             child: Column(
               children: [
-                const SizedBox(height: 75),
+                const SizedBox(height: 41),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Container(
-                      margin: const EdgeInsets.only(bottom: 30),
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      margin: const EdgeInsets.only(bottom: 5),
+                      padding: EdgeInsets.only(
+                          //for fields that are covered under keyboard
+                          bottom: MediaQuery.of(context).viewInsets.bottom,
+                          left: 16,
+                          right: 16),
                       child: Column(
                         children: [
                           const Text(
-                            "Start Serving ( Govt ) :",
+                            "Log In to Continue : ",
                             style: TextStyle(fontSize: 24),
                           ),
                           const SizedBox(height: 30),
-                          const Text(
-                            "By logging In First !",
-                          ),
+                          // const Text("By logging In First !"),
                           const SizedBox(height: 50),
                           SvgPicture.asset(svg_for_login,
                               height: 200, width: 200),
@@ -65,28 +63,26 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
-                              focusNode: _lastNameFocusNode,
-                              controller: regNoTextController,
+                              controller: loginRegNoTextController,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.app_registration,
                                     color: Colors.deepPurple),
-                                hintText: "Registration No.",
+                                hintText: "Enter registration no of Govt. Agency",
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
                                 ),
                                 filled: true,
-                                // fillColor: Colors.deepPurple,
                               ),
-                              // validator: (value){
-                              //   if (value == null || value.isEmpty) {
-                              //     FocusScope.of(context).requestFocus(_lastNameFocusNode);
-                              //
-                              //     return 'Please enter last name';
-                              //
-                              //   }
-                              //   return null;
-                              // },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Enter Registration No';
+                                }
+                                if (value.isNotEmpty && value.length < 2) {
+                                  return 'Minimum 3 Characters required';
+                                }
+                                return null; // Return null if the input is valid
+                              },
                             ),
                           ),
                           const SizedBox(height: 30),
@@ -94,14 +90,14 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
-                              controller: pwdTextController,
+                              controller: loginPwdTextController,
                               obscureText: _obscurePwdText,
                               decoration: InputDecoration(
                                 prefixIcon: const Icon(
                                   Icons.lock,
                                   color: Colors.deepPurple,
                                 ),
-                                hintText: "Password",
+                                hintText: "Enter Password",
                                 contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -120,6 +116,8 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                                   ),
                                 ),
                               ),
+                              validator: _validatePassword,
+
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -130,43 +128,27 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                 ),
                 const SizedBox(height: 9),
                 Padding(
-                  padding: const EdgeInsets.only(right: 7, left: 7),
+                  padding: const EdgeInsets.only(right: 20, left: 20),
                   child: Container(
                     padding: const EdgeInsets.only(bottom: 28),
                     width: double.infinity,
                     child: ClipRRect(
-                      // borderRadius: BorderRadius.circular(50),
+                        // borderRadius: BorderRadius.circular(50),
                         child: ElevatedButton(
                             onPressed: () {
-                              // Navigate based on selected role
-                              final snackBar = SnackBar(
-                                dismissDirection: DismissDirection.vertical,
-                                elevation: 35,
-                                padding: const EdgeInsets.all(7),
-                                content: const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text('Under Construction..'),
-                                ),
-                                duration: const Duration(seconds: 3),
-                                // Duration for which SnackBar will be visible
-                                action: SnackBarAction(
-                                  label: 'Undo',
-                                  onPressed: () {
-                                    // Undo functionality
-                                    ScaffoldMessenger.of(context)
-                                        .hideCurrentSnackBar();
-                                  },
-                                ),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
+                              if (_formKey.currentState!.validate()) {
+                                // If the form is valid, you can proceed with form submission
+                                // For example, you can save the form data or navigate to the next screen
+                                // If you need to access the form field values, you can use the controller
+                                // For example: fnameTextController.text
+                              }
                             },
                             style: ButtonStyle(
                                 shape: MaterialStateProperty.all(
                                     RoundedRectangleBorder(
                                         borderRadius:
-                                        BorderRadius.circular(18)))),
-                            child: const Text("Continue .."))),
+                                            BorderRadius.circular(18)))),
+                            child: const Text("Continue"))),
                   ),
                 ),
                 Padding(
@@ -191,7 +173,7 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                            const GovtSignupPageScreen(),
+                                                const GovtSignupPageScreen(),
                                           ));
                                     },
                                     child: const Text(
@@ -213,4 +195,33 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
       ),
     );
   }
+
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a password';
+    }
+
+    if (value.length < 8) {
+      return 'Password must be at least 8 characters long';
+    }
+
+    if (!value.contains(RegExp(r'[a-z]'))) {
+      return 'Password must contain at least one lowercase letter';
+    }
+
+    if (!value.contains(RegExp(r'[A-Z]'))) {
+      return 'Password must contain at least one uppercase letter';
+    }
+
+    if (!value.contains(RegExp(r'[0-9]'))) {
+      return 'Password must contain at least one digit';
+    }
+
+    if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+      return 'Password must contain at least one special character';
+    }
+
+    return null; // Return null if the password passes all validations
+  }
+
 }
