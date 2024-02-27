@@ -75,89 +75,91 @@ class _EntryPointState extends State<EntryPoint>
         SystemNavigator.pop();
         return false;
       },
-      child: Scaffold(
-        extendBody: true,
-        resizeToAvoidBottomInset: false,
-        backgroundColor: backgroundColorLight,
-        body: GestureDetector(
-          onTap: () {
-            if (isSideBarOpen) {
-              setState(() {
-                isSideBarOpen = false;
-              });
-              _animationController.reverse();
-              // Trigger click event of MenuBtn
-              // You can call the MenuBtn's press function here if it's accessible
-            }
-          },
-          child: Stack(
-            children: [
-              //To show the drawer
-              AnimatedPositioned(
-                width: 288,
-                height: MediaQuery.of(context).size.height,
-                duration: const Duration(milliseconds: 200),
-                curve: Curves.fastOutSlowIn,
-                left: isSideBarOpen ? 0 : -288,
-                top: 0,
-                child: const SideBar(),
-              ),
-              //To show the moving background
-              Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.identity()
-                  ..setEntry(3, 2, 0.001)
-                  ..rotateY(
-                      1 * animation.value - 30 * (animation.value) * pi / 180),
-                child: Transform.translate(
-                  offset: Offset(animation.value * 265, 0),
-                  child: Transform.scale(
-                    scale: scalAnimation.value,
-                    child: const ClipRRect(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(24),
+      child: SafeArea(
+        child: Scaffold(
+          extendBody: true,
+          resizeToAvoidBottomInset: false,
+          backgroundColor: backgroundColorLight,
+          body: GestureDetector(
+            onTap: () {
+              if (isSideBarOpen) {
+                setState(() {
+                  isSideBarOpen = false;
+                });
+                _animationController.reverse();
+                // Trigger click event of MenuBtn
+                // You can call the MenuBtn's press function here if it's accessible
+              }
+            },
+            child: Stack(
+              children: [
+                //To show the drawer
+                AnimatedPositioned(
+                  width: 288,
+                  height: MediaQuery.of(context).size.height,
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.fastOutSlowIn,
+                  left: isSideBarOpen ? 0 : -288,
+                  top: 0,
+                  child: const SideBar(),
+                ),
+                //To show the moving background
+                Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()
+                    ..setEntry(3, 2, 0.001)
+                    ..rotateY(1 * animation.value -
+                        30 * (animation.value) * pi / 180),
+                  child: Transform.translate(
+                    offset: Offset(animation.value * 265, 0),
+                    child: Transform.scale(
+                      scale: scalAnimation.value,
+                      child: const ClipRRect(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(24),
+                        ),
+                        child: commonbg(),
                       ),
-                      child: commonbg(),
                     ),
                   ),
                 ),
-              ),
-              //to move and animate the drawer opening icon
-              AnimatedPositioned(
-                duration: const Duration(milliseconds: 200),
-                curve: Curves.fastOutSlowIn,
-                left: isSideBarOpen ? 220 : 05,
-                top: 05,
-                child: MenuBtn(
-                  press: () {
-                    isMenuOpenInput.value = !isMenuOpenInput.value;
+                //to move and animate the drawer opening icon
+                AnimatedPositioned(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.fastOutSlowIn,
+                  left: isSideBarOpen ? 220 : 05,
+                  top: 05,
+                  child: MenuBtn(
+                    press: () {
+                      isMenuOpenInput.value = !isMenuOpenInput.value;
 
-                    if (_animationController.value == 0) {
-                      _animationController.forward();
-                    } else {
-                      _animationController.reverse();
-                      //Menu selectedSideMenu = sidebarMenus.first;
-                    }
+                      if (_animationController.value == 0) {
+                        _animationController.forward();
+                      } else {
+                        _animationController.reverse();
+                        //Menu selectedSideMenu = sidebarMenus.first;
+                      }
 
-                    setState(
-                      () {
-                        isSideBarOpen = !isSideBarOpen;
-                      },
-                    );
-                  },
-                  riveOnInit: (artboard) {
-                    final controller = StateMachineController.fromArtboard(
-                        artboard, "State Machine");
+                      setState(
+                        () {
+                          isSideBarOpen = !isSideBarOpen;
+                        },
+                      );
+                    },
+                    riveOnInit: (artboard) {
+                      final controller = StateMachineController.fromArtboard(
+                          artboard, "State Machine");
 
-                    artboard.addController(controller!);
+                      artboard.addController(controller!);
 
-                    isMenuOpenInput =
-                        controller.findInput<bool>("isOpen") as SMIBool;
-                    isMenuOpenInput.value = true;
-                  },
+                      isMenuOpenInput =
+                          controller.findInput<bool>("isOpen") as SMIBool;
+                      isMenuOpenInput.value = true;
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

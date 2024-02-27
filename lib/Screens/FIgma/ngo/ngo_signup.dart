@@ -1,6 +1,11 @@
+// ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../../Models/NGO_Registration_Model.dart';
 import '../../../Utils/constants.dart';
 import '../citizen/custom_checkbox_button.dart';
 import 'ngo_login.dart';
@@ -20,16 +25,17 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController nameOfNGOTextController = TextEditingController();
   TextEditingController regNoTextController = TextEditingController();
-  TextEditingController dateEditTextController = TextEditingController();
+  TextEditingController servicesTextController = TextEditingController();
   TextEditingController contactNoTextController = TextEditingController();
   TextEditingController emailIdTextController = TextEditingController();
   TextEditingController websiteURLTextController = TextEditingController();
-  TextEditingController zipCodeTextController = TextEditingController();
-  TextEditingController addressTextController = TextEditingController();
+  TextEditingController pinCodeTextController = TextEditingController();
+  TextEditingController fullAddressTextController = TextEditingController();
   TextEditingController pwdTextController = TextEditingController();
   TextEditingController confirmPwdTextController = TextEditingController();
 
   String selectedState = '';
+  String selectedCity = ''; // Variable to hold the selected city value
 
   List<String> dropdownItemState = [
     "Select NGO state",
@@ -630,9 +636,6 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
   bool _obscurePwdText = true;
   bool _obscureConfirmPwdText = true;
 
-  final _firstNameFocusNode = FocusNode();
-  final _lastNameFocusNode = FocusNode();
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -670,7 +673,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
-                              focusNode: _firstNameFocusNode,
+                              textCapitalization: TextCapitalization.sentences,
                               controller: nameOfNGOTextController,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.account_box_outlined,
@@ -684,12 +687,16 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Enter NGO name';
+                                  return 'Enter name of NGO';
                                 }
-                                if (value.isNotEmpty && value.length < 2) {
+                                if (value.isNotEmpty && value.length < 3) {
                                   return 'Minimum 3 Characters required';
                                 }
                                 return null; // Return null if the input is valid
+                              },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
                               },
                             ),
                           ),
@@ -698,7 +705,6 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
-                              focusNode: _lastNameFocusNode,
                               controller: regNoTextController,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.app_registration,
@@ -711,14 +717,19 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                 filled: true,
                                 // fillColor: Colors.deepPurple,
                               ),
+                              keyboardType: TextInputType.phone,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Enter Registration No';
                                 }
-                                if (value.isNotEmpty && value.length < 2) {
+                                if (value.isNotEmpty && value.length < 3) {
                                   return 'Minimum 3 Characters required';
                                 }
                                 return null; // Return null if the input is valid
+                              },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
                               },
                             ),
                           ),
@@ -733,7 +744,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               onTap: () {
                                 _showCupertinoDialog(context);
                               },
-                              controller: dateEditTextController,
+                              controller: servicesTextController,
                               readOnly: true,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
@@ -755,6 +766,10 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                 //   return 'Minimum 3 Characters';
                                 // }
                                 return null; // Return null if the input is valid
+                              },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
                               },
                             ),
                           ),
@@ -787,12 +802,16 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               keyboardType: TextInputType.phone,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Enter Telephone number';
+                                  return 'Enter Contact number';
                                 }
-                                if (value.isNotEmpty && value.length < 2) {
-                                  return 'Minimum no should be of 10 digits';
+                                if (value.isNotEmpty && value.length < 10) {
+                                  return 'Contact no should be of 10 digits';
                                 }
                                 return null; // Return null if the input is valid
+                              },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
                               },
                             ),
                           ),
@@ -823,6 +842,10 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                   return 'Enter valid email address';
                                 }
                                 return null; // Return null if the input is valid
+                              },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
                               },
                             ),
                           ),
@@ -857,6 +880,10 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                 }
                                 return null; // Return null if the input is valid
                               },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
+                              },
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -871,37 +898,40 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                     right: 5,
                                   ),
                                   child: SizedBox(
-                                    height: 60,
+                                    //height: 60,
                                     child: DropdownButtonFormField<String>(
                                         value: selectedState,
                                         items: dropdownItemState.map((String state) {
                                           return DropdownMenuItem<String>(
                                             // alignment: AlignmentDirectional.topStart,
-                                            value: state,
-                                            child: Text(state),
-                                          );
-                                        }).toList(),
-                                        onChanged: (value) {
-                                          setState(() {
-                                            selectedState = value!;
-                                            updateCityList(selectedState);
-                                          });
-                                        },
-                                        decoration: const InputDecoration(
-                                          // border: OutlineInputBorder(),
-                                          hintText: "Select NGO State",
-                                        ),
-                                        validator: (value) {
-                                          if (value == "Select NGO state") {
-                                            return 'Select NGO State';
-                                          }
-                                          return null; // Return null if the input is valid
-                                        },
+                                          value: state,
+                                          child: Text(state),
+                                        );
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          selectedState = value!;
+                                          // Update city list based on the selected state
+                                          updateCityList(selectedState);
+                                          // Reset selected city when state changes
+                                          selectedCity = '';
+                                        });
+                                      },
+                                      decoration: const InputDecoration(
+                                        // border: OutlineInputBorder(),
+                                        hintText: "Select NGO State",
                                       ),
-                                  ),
+                                      validator: (value) {
+                                        if (value == "Select NGO state") {
+                                          return 'Select NGO State';
+                                        }
+                                        return null; // Return null if the input is valid
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ],
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 12),
                           //city
@@ -911,10 +941,10 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               right: 5,
                             ),
                             child: SizedBox(
-                              height: 58,
+                              //height: 58,
                               child: DropdownButtonFormField<String>(
-                                value: dropdownItemCity.isNotEmpty
-                                    ? dropdownItemCity.first
+                                value: selectedCity.isNotEmpty
+                                    ? selectedCity
                                     : null,
                                 items: dropdownItemCity.map((String city) {
                                   return DropdownMenuItem<String>(
@@ -922,7 +952,11 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                     child: Text(city),
                                   );
                                 }).toList(),
-                                onChanged: (value) {},
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedCity = value!;
+                                  });
+                                },
                                 decoration: const InputDecoration(
                                   hintText: "Select NGO City",
                                 ),
@@ -941,7 +975,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
                               maxLength: 6,
-                              controller: zipCodeTextController,
+                              controller: pinCodeTextController,
                               decoration: const InputDecoration(
                                 hintText: "Enter NGO Pin code",
                                 contentPadding: EdgeInsets.symmetric(
@@ -949,15 +983,19 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                   vertical: 18,
                                 ),
                               ),
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.phone,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Enter pin code of an NGO';
                                 }
-                                if (value.isNotEmpty || value.length < 6) {
-                                  return 'Enter 6 digits Zip code';
+                                if (value.isNotEmpty && value.length < 6) {
+                                  return 'Enter 6 digits Pin code';
                                 }
                                 return null; // Return null if the input is valid
+                              },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
                               },
                             ),
                           ),
@@ -966,7 +1004,8 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
-                              controller: addressTextController,
+                              textCapitalization: TextCapitalization.sentences,
+                              controller: fullAddressTextController,
                               decoration: const InputDecoration(
                                 hintText: "Enter full address of an NGO",
                                 contentPadding: EdgeInsets.symmetric(
@@ -979,10 +1018,10 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               maxLines: 4,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Enter your address';
+                                  return 'Enter full address';
                                 }
-                                if (value.isNotEmpty || value.length < 10) {
-                                  return 'Enter your full address';
+                                if (value.isNotEmpty && value.length < 10) {
+                                  return 'Too short address';
                                 }
                                 return null; // Return null if the input is valid
                               },
@@ -1020,6 +1059,10 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                 ),
                               ),
                               validator: _validatePassword,
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
+                              },
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -1063,6 +1106,10 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                 }
                                 return null; // Return null if the input is valid
                               },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
+                              },
                             ),
                           ),
                           const SizedBox(height: 20),
@@ -1098,14 +1145,30 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                 //out of scrollbar
                 const SizedBox(height: 10),
                 Padding(
-                  padding: const EdgeInsets.only(right: 7, left: 7),
+                  padding: const EdgeInsets.only(right: 20, left: 20),
                   child: Container(
                     padding: const EdgeInsets.only(bottom: 8),
                     width: double.infinity,
                     child: ClipRRect(
                         // borderRadius: BorderRadius.circular(50),
                         child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
+                              //Circular Progress Bar
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(color: Colors.white),
+                                  );
+                                },
+                              );
+                              await Future.delayed(
+                                  const Duration(milliseconds: 1200));
+                              Navigator.pop(context);
+
+
+
                               if (!NGOTnC) {
                                 final tnCError = SnackBar(
                                   dismissDirection: DismissDirection.vertical,
@@ -1132,10 +1195,57 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               }
 
                               if (_formKey.currentState!.validate()) {
-                                // If the form is valid, you can proceed with form submission
-                                // For example, you can save the form data or navigate to the next screen
-                                // If you need to access the form field values, you can use the controller
-                                // For example: fnameTextController.text
+                                if (!NGOTnC) {
+                                  return;
+                                } else {
+                                  //Storing data to database
+                                  NGORegistration userData = NGORegistration(
+                                    ngoName: nameOfNGOTextController.text,
+                                    ngoRegNo: regNoTextController.text,
+                                    services: servicesTextController.text,
+                                    contactNumber: contactNoTextController.text,
+                                    email: emailIdTextController.text,
+                                    website: websiteURLTextController.text,
+                                    state: selectedState,
+                                    city: selectedCity,
+                                    pinCode: pinCodeTextController.text,
+                                    fullAddress: fullAddressTextController.text,
+                                    password: pwdTextController.text,
+                                    confirmPassword: confirmPwdTextController.text,
+                                    termsAccepted: NGOTnC,
+                                  );
+
+                                  // Convert the object to JSON
+                                  Map<String, dynamic> NGODataJson =
+                                      userData.toJson();
+
+                                  // Store data in Firestore
+                                  try {
+                                    DocumentReference docRef =
+                                        await FirebaseFirestore.instance
+                                            .collection("NGO")
+                                            .add(NGODataJson);
+
+                                    // Document successfully added
+                                    if (kDebugMode) {
+                                      print(
+                                          'Document added with ID: ${docRef.id}');
+                                    }
+
+                                    // Navigate to a new page upon success
+                                    // Navigator.push(context,MaterialPageRoute(builder: (context) => NewPage()),);
+                                  } catch (e) {
+                                    // An error occurred
+                                    if (kDebugMode) {
+                                      print('Error adding NGO document: $e');
+                                    }
+                                  }
+
+                                  if (kDebugMode) {
+                                    print(
+                                        "NGO Stored and Registered successfully [(:-==-:)]");
+                                  }
+                                }
                               }
                             },
                             style: ButtonStyle(
@@ -1284,7 +1394,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                   selectedOptions =
                       selectedOptions.substring(0, selectedOptions.length - 2);
                 }
-                dateEditTextController.text = selectedOptions;
+                servicesTextController.text = selectedOptions;
                 Navigator.of(context).pop();
               },
               child: const Text('OK'),

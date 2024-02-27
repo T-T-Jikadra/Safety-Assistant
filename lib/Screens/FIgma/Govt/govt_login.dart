@@ -78,7 +78,7 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                                 if (value == null || value.isEmpty) {
                                   return 'Enter Registration No';
                                 }
-                                if (value.isNotEmpty && value.length < 2) {
+                                if (value.isNotEmpty && value.length < 3) {
                                   return 'Minimum 3 Characters required';
                                 }
                                 return null; // Return null if the input is valid
@@ -135,7 +135,21 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                     child: ClipRRect(
                         // borderRadius: BorderRadius.circular(50),
                         child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
+                              //Circular Progress Bar
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(color: Colors.white),
+                                  );
+                                },
+                              );
+                              await Future.delayed(const Duration(milliseconds: 800));
+                              // ignore: use_build_context_synchronously
+                              Navigator.pop(context);
+
                               if (_formKey.currentState!.validate()) {
                                 // If the form is valid, you can proceed with form submission
                                 // For example, you can save the form data or navigate to the next screen

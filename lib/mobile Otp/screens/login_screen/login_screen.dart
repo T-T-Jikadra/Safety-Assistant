@@ -25,128 +25,130 @@ class _CitizenLoginScreenState extends State<CitizenLoginScreen> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(15.0),
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 16),
-                  child: FormHeaderWidget(
-                    image: splash_shape,
-                    title: "Get on \nBoard !",
-                    subTitle: "Create Your Profile \nwith Mobile no ... ",
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.all(15.0),
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 16),
+                    child: FormHeaderWidget(
+                      image: splash_shape,
+                      title: "Get on \nBoard !",
+                      subTitle: "Create Your Profile \nwith Mobile no ... ",
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: screenHeight * 0.03,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(7.0),
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(16.0)),
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                        height: 52,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: const Color.fromARGB(255, 30, 188, 51),
+                  SizedBox(
+                    height: screenHeight * 0.03,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(7.0),
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(16.0)),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          height: 52,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 30, 188, 51),
+                            ),
+                            borderRadius: BorderRadius.circular(36),
                           ),
-                          borderRadius: BorderRadius.circular(36),
-                        ),
-                        child: Row(
-                          children: [
-                            // Country picker widget
-                            CountryPicker(
-                              callBackFunction: _callBackFunction,
-                              headerText: 'Select Country',
-                              headerBackgroundColor:
-                                  Theme.of(context).primaryColor,
-                              headerTextColor: Colors.white,
-                            ),
-                            SizedBox(
-                              width: screenWidth * 0.02,
-                            ),
-                            Expanded(
-                              child: TextField(
-                                cursorRadius: const Radius.circular(50),
-                                cursorWidth: 3,
-                                // Close keyboard on editing completed
-                                onEditingComplete: () {
-                                  FocusScope.of(context).unfocus();
-                                },
-                                decoration: const InputDecoration(
-                                  hintText: 'Mobile Number',
-                                  border: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  contentPadding:
-                                      EdgeInsets.symmetric(vertical: 13.5),
+                          child: Row(
+                            children: [
+                              // Country picker widget
+                              CountryPicker(
+                                callBackFunction: _callBackFunction,
+                                headerText: 'Select Country',
+                                headerBackgroundColor:
+                                    Theme.of(context).primaryColor,
+                                headerTextColor: Colors.white,
+                              ),
+                              SizedBox(
+                                width: screenWidth * 0.02,
+                              ),
+                              Expanded(
+                                child: TextField(
+                                  cursorRadius: const Radius.circular(50),
+                                  cursorWidth: 3,
+                                  // Close keyboard on editing completed
+                                  onEditingComplete: () {
+                                    FocusScope.of(context).unfocus();
+                                  },
+                                  decoration: const InputDecoration(
+                                    hintText: 'Mobile Number',
+                                    border: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: 13.5),
+                                  ),
+                                  controller: _contactEditingController,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(10)
+                                  ],
                                 ),
-                                controller: _contactEditingController,
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  LengthLimitingTextInputFormatter(10)
-                                ],
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      // Custom login button
-                      CustomButton(clickOnLogin),
-                      // const SizedBox(height: 0),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const Text(
-                              "Don't have an Account ? ",
-                            ),
-                            SizedBox(
-                              height: 35,
-                              width: 120,
-                              child: Stack(
-                                alignment: Alignment.bottomLeft,
-                                children: [
-                                  Align(
-                                      alignment: Alignment.topLeft,
-                                      child: TextButton(
-                                          onPressed: () {
-                                            Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                  const CitizenSignupPageScreen(),
-                                                ));
-                                          },
-                                          child: const Text(
-                                            "Sign Up First ! ..",
-                                            // selectionColor: Colors.blueGrey,
-                                          ))),
-                                  SvgPicture.asset(svg_for_line, width: 108),
-                                ],
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        // Custom login button
+                        CustomButton(clickOnLogin),
+                        // const SizedBox(height: 0),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              const Text(
+                                "Don't have an Account ? ",
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                height: 35,
+                                width: 120,
+                                child: Stack(
+                                  alignment: Alignment.bottomLeft,
+                                  children: [
+                                    Align(
+                                        alignment: Alignment.topLeft,
+                                        child: TextButton(
+                                            onPressed: () {
+                                              Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                    const CitizenSignupPageScreen(),
+                                                  ));
+                                            },
+                                            child: const Text(
+                                              "Sign Up First ! ..",
+                                              // selectionColor: Colors.blueGrey,
+                                            ))),
+                                    SvgPicture.asset(svg_for_line, width: 108),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

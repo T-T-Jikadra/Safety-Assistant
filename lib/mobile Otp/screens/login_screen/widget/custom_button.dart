@@ -33,7 +33,7 @@ class CustomButton extends StatelessWidget {
                 clickOnLogin(context);
                 //Navigator.push(context, MaterialPageRoute(builder: (context) => OtpScreen()));
               },
-              child: const Text("Proceed .."))),
+              child: const Text("Proceed"))),
     );
   }
 }

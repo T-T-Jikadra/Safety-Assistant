@@ -1,6 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fff/Screens/entry_point.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import '../../../Models/User_Registration_Model.dart';
 import '../../../Utils/constants.dart';
 import '../../../mobile Otp/screens/login_screen/login_screen.dart';
 import 'custom_checkbox_button.dart';
@@ -19,13 +27,12 @@ class CitizenSignupPageScreen extends StatefulWidget {
 }
 
 class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController fnameTextController = TextEditingController();
   TextEditingController lnameTextController = TextEditingController();
   TextEditingController phoneTextController = TextEditingController();
   TextEditingController birthDateTextController = TextEditingController();
-  TextEditingController zipCodeTextController = TextEditingController();
+  TextEditingController pinCodeTextController = TextEditingController();
   TextEditingController fullAddressTextController = TextEditingController();
 
   String? genderRadio;
@@ -34,6 +41,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
   List<String> genderList = ["Male", "Female", "Others"];
 
   String selectedState = '';
+  String selectedCity = ''; // Variable to hold the selected city value
 
   List<String> dropdownItemState = [
     "Select your state",
@@ -625,14 +633,18 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
   // ignore: non_constant_identifier_names
   bool CitizenTnC = false;
 
-  final _firstNameFocusNode = FocusNode();
-  final _lastNameFocusNode = FocusNode();
-
   @override
   void initState() {
     super.initState();
     selectedState = dropdownItemState.first;
     updateCityList(selectedState);
+    //status bar color
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.white12, // Change this color to the desired color
+        statusBarIconBrightness: Brightness.light, // Change the status bar icons' color
+      ),
+    );
   }
 
   @override
@@ -676,7 +688,8 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(right: 5),
                                     child: TextFormField(
-                                      focusNode: _firstNameFocusNode,
+                                      textCapitalization:
+                                          TextCapitalization.sentences,
                                       controller: fnameTextController,
                                       decoration: const InputDecoration(
                                         hintText: "First Name",
@@ -690,10 +703,15 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter first name';
                                         }
-                                        if (value.isNotEmpty && value.length < 2) {
-                                          return 'Minimum 3 Characters required';
+                                        if (value.isNotEmpty &&
+                                            value.length < 3) {
+                                          return "Minimum 3 Characters required";
                                         }
                                         return null; // Return null if the input is valid
+                                      },
+                                      onEditingComplete: () {
+                                        // Move focus to the next field when "Enter" is pressed
+                                        FocusScope.of(context).nextFocus();
                                       },
                                     ),
                                   ),
@@ -702,7 +720,8 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(right: 5),
                                     child: TextFormField(
-                                      focusNode: _lastNameFocusNode,
+                                      textCapitalization:
+                                          TextCapitalization.sentences,
                                       controller: lnameTextController,
                                       decoration: const InputDecoration(
                                         hintText: "Last Name",
@@ -716,10 +735,15 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter last name';
                                         }
-                                        if (value.isNotEmpty && value.length < 2) {
+                                        if (value.isNotEmpty &&
+                                            value.length < 3) {
                                           return 'Minimum 3 Characters';
                                         }
                                         return null; // Return null if the input is valid
+                                      },
+                                      onEditingComplete: () {
+                                        // Move focus to the next field when "Enter" is pressed
+                                        FocusScope.of(context).nextFocus();
                                       },
                                     ),
                                   ),
@@ -815,10 +839,6 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                 prefixText: "+91 ",
                                 hintText: "Enter your Mobile number",
                                 prefixIcon: Container(
-                                  decoration: const BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(30)),
-                                  ),
                                   margin:
                                       const EdgeInsets.fromLTRB(20, 16, 12, 16),
                                   child: SvgPicture.asset(svg_for_call),
@@ -831,10 +851,14 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                 if (value == null || value.isEmpty) {
                                   return 'Enter mobile no';
                                 }
-                                if (value.isNotEmpty || value.length < 10) {
+                                if (value.length < 10) {
                                   return 'Mobile no should be of 10 digits';
                                 }
                                 return null; // Return null if the input is valid
+                              },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
                               },
                               keyboardType: TextInputType.phone,
                             ),
@@ -871,16 +895,19 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                     }
                                     return null; // Return null if the input is valid
                                   },
+                                  onEditingComplete: () {
+                                    // Move focus to the next field when "Enter" is pressed
+                                    FocusScope.of(context).nextFocus();
+                                  },
                                 ),
                               ),
                             ),
                           ),
                           const SizedBox(height: 12),
                           //state
-
-                            Flex(
-                              direction: Axis.horizontal,
-                              children: [
+                          Flex(
+                            direction: Axis.horizontal,
+                            children: [
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.only(
@@ -888,39 +915,43 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                     right: 5,
                                   ),
                                   child: SizedBox(
-                                    height: 60,
+                                    //height: 60,
                                     child: DropdownButtonFormField<String>(
                                       value: selectedState,
-                                        items: dropdownItemState.map((String state) {
-                                          return DropdownMenuItem<String>(
-                                            // alignment: AlignmentDirectional.topStart,
-                                            value: state,
-                                            child: Text(state),
-                                          );
-                                        }).toList(),
-                                        onChanged: (value) {
-                                          setState(() {
-                                            selectedState = value!;
-                                            updateCityList(selectedState);
-                                          });
-                                        },
-                                        decoration: const InputDecoration(
-                                          // border: OutlineInputBorder(),
-                                          hintText: "Select your State",
-                                        ),
-                                        //hint: const Text("Select your State"), // Hint text displayed initially
-                                        validator: (value) {
-                                          if (value == "Select your state") {
-                                            return 'Select your State';
-                                          }
-                                          return null; // Return null if the input is valid
-                                        },
+                                      items:
+                                          dropdownItemState.map((String state) {
+                                        return DropdownMenuItem<String>(
+                                          // alignment: AlignmentDirectional.topStart,
+                                          value: state,
+                                          child: Text(state),
+                                        );
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          selectedState = value!;
+                                          // Update city list based on the selected state
+                                          updateCityList(selectedState);
+                                          // Reset selected city when state changes
+                                          selectedCity = '';
+                                        });
+                                      },
+                                      decoration: const InputDecoration(
+                                        // border: OutlineInputBorder(),
+                                        hintText: "Select your State",
                                       ),
-                                  ),
+                                      //hint: const Text("Select your State"), // Hint text displayed initially
+                                      validator: (value) {
+                                        if (value == "Select your state") {
+                                          return 'Select your State';
+                                        }
+                                        return null; // Return null if the input is valid
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
+                          ),
                           const SizedBox(height: 12),
                           //city
                           Padding(
@@ -929,10 +960,10 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                               right: 5,
                             ),
                             child: SizedBox(
-                              height: 60,
+                              //height: 60,
                               child: DropdownButtonFormField<String>(
-                                value: dropdownItemCity.isNotEmpty
-                                    ? dropdownItemCity.first
+                                value: selectedCity.isNotEmpty
+                                    ? selectedCity
                                     : null,
                                 items: dropdownItemCity.map((String city) {
                                   return DropdownMenuItem<String>(
@@ -940,7 +971,11 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                     child: Text(city),
                                   );
                                 }).toList(),
-                                onChanged: (value) {},
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedCity = value!;
+                                  });
+                                },
                                 decoration: const InputDecoration(
                                   hintText: "Select your City",
                                 ),
@@ -959,7 +994,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                             padding: const EdgeInsets.only(left: 5, right: 5),
                             child: TextFormField(
                               maxLength: 6,
-                              controller: zipCodeTextController,
+                              controller: pinCodeTextController,
                               decoration: const InputDecoration(
                                 hintText: "Enter your Pin Code",
                                 contentPadding: EdgeInsets.symmetric(
@@ -971,19 +1006,24 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                 if (value == null || value.isEmpty) {
                                   return 'Enter zip code';
                                 }
-                                if (value.isNotEmpty || value.length < 6) {
-                                  return 'Enter 6 digits Zip code';
+                                if (value.length < 6) {
+                                  return 'Enter 6 digits Pin code';
                                 }
                                 return null; // Return null if the input is valid
                               },
-                              keyboardType: TextInputType.number,
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
+                              },
+                              keyboardType: TextInputType.phone,
                             ),
                           ),
                           const SizedBox(height: 12),
                           //address
                           Padding(
-                            padding: const EdgeInsets.only(left: 5,right: 5),
+                            padding: const EdgeInsets.only(left: 5, right: 5),
                             child: TextFormField(
+                              textCapitalization: TextCapitalization.sentences,
                               controller: fullAddressTextController,
                               decoration: const InputDecoration(
                                 hintText: "Enter your full address",
@@ -997,12 +1037,16 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                               maxLines: 4,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Enter your address';
-                                }
-                                if (value.isNotEmpty || value.length < 10) {
                                   return 'Enter your full address';
                                 }
+                                if (value.length < 10) {
+                                  return 'Too short address';
+                                }
                                 return null; // Return null if the input is valid
+                              },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
                               },
                             ),
                           ),
@@ -1043,10 +1087,23 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                     width: double.infinity,
                     child: ClipRRect(
                         child: ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                showErrorTnC = genderRadio == null;
-                              });
+                            onPressed: () async {
+                              //Circular Progress Bar
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(
+                                        color: Colors.white),
+                                  );
+                                },
+                              );
+                              await Future.delayed(
+                                  const Duration(milliseconds: 1200));
+                              Navigator.pop(context);
+
+
 
                               if (!CitizenTnC) {
                                 final tnCError = SnackBar(
@@ -1055,12 +1112,13 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                   padding: const EdgeInsets.all(7),
                                   content: const Padding(
                                     padding: EdgeInsets.all(8.0),
-                                    child: Text('Please accept terms & conditions..'),
+                                    child: Text(
+                                        'Please accept terms & conditions..'),
                                   ),
                                   duration: const Duration(seconds: 3),
                                   // Duration for which SnackBar will be visible
                                   action: SnackBarAction(
-                                    label: 'Undo',
+                                    label: 'Hide',
                                     onPressed: () {
                                       // Undo functionality
                                       ScaffoldMessenger.of(context)
@@ -1068,42 +1126,112 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                     },
                                   ),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(tnCError);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(tnCError);
                               }
+
                               if (_formKey.currentState!.validate()) {
-                                // If the form is valid, you can proceed with form submission
-                                // For example, you can save the form data or navigate to the next screen
-                                // If you need to access the form field values, you can use the controller
-                                // For example: fnameTextController.text
+                                setState(() {
+                                  showErrorTnC = genderRadio == null;
+                                });
+                                if (!CitizenTnC) {
+                                  return;
+                                } else {
+                                  String dateString =
+                                      birthDateTextController.text;
+                                  DateTime birthDate = DateFormat('MMM d, yyyy')
+                                      .parse(dateString);
+
+                                  //Storing data to database
+                                  UserRegistration userData = UserRegistration(
+                                    firstName: fnameTextController.text,
+                                    lastName: lnameTextController.text,
+                                    gender: genderRadio ?? "",
+                                    // Assuming genderRadio is nullable String
+                                    phoneNumber: phoneTextController.text,
+                                    birthDate: birthDate,
+                                    state: selectedState,
+                                    city: selectedCity,
+                                    pinCode: pinCodeTextController.text,
+                                    fullAddress: fullAddressTextController.text,
+                                    termsAccepted: CitizenTnC,
+                                  );
+
+                                  // Convert the object to JSON
+                                  Map<String, dynamic> userDataJson =
+                                      userData.toJson();
+
+                                  // Store data in Firestore
+                                  try {
+                                    DocumentReference docRef =
+                                        await FirebaseFirestore.instance
+                                            .collection("Citizens")
+                                            .add(userDataJson);
+
+                                    // Document successfully added
+                                    if (kDebugMode) {
+                                      print(
+                                          'Document added with ID: ${docRef.id}');
+                                    }
+                                    // Show a toast message upon success
+                                    Fluttertoast.showToast(
+                                        msg: "Citizen Account Created ..",
+                                        toastLength: Toast.LENGTH_LONG,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0
+                                    );
+
+                                    // Navigate to a new page upon success
+                                    Navigator.of(context).push(
+                                      PageRouteBuilder(
+                                        pageBuilder: (context, animation,
+                                                secondaryAnimation) =>
+                                            const EntryPoint(),
+                                        transitionsBuilder: (context, animation,
+                                            secondaryAnimation, child) {
+                                          var begin = const Offset(1.0, 0.0);
+                                          var end = Offset.zero;
+                                          var curve = Curves.ease;
+
+                                          var tween = Tween(
+                                                  begin: begin, end: end)
+                                              .chain(CurveTween(curve: curve));
+                                          var offsetAnimation =
+                                              animation.drive(tween);
+                                          //slight fade effect
+                                          var opacityAnimation = animation.drive(tween);
+
+                                          return SlideTransition(
+                                            position: offsetAnimation,
+                                            child: child,
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  } catch (e) {
+                                    // An error occurred
+                                    if (kDebugMode) {
+                                      print(
+                                          'Error adding citizen document: $e');
+                                    }
+                                  }
+
+                                  if (kDebugMode) {
+                                    print(
+                                        "Citizen Stored and Registered successfully [(:-==-:)]");
+                                  }
+                                }
                               }
-                              // final snackBar = SnackBar(
-                              //   dismissDirection: DismissDirection.vertical,
-                              //   elevation: 35,
-                              //   padding: const EdgeInsets.all(7),
-                              //   content: const Padding(
-                              //     padding: EdgeInsets.all(8.0),
-                              //     child: Text('Under Construction..'),
-                              //   ),
-                              //   duration: const Duration(seconds: 3),
-                              //   // Duration for which SnackBar will be visible
-                              //   action: SnackBarAction(
-                              //     label: 'Undo',
-                              //     onPressed: () {
-                              //       // Undo functionality
-                              //       ScaffoldMessenger.of(context)
-                              //           .hideCurrentSnackBar();
-                              //     },
-                              //   ),
-                              // );
-                              // ScaffoldMessenger.of(context)
-                              //     .showSnackBar(snackBar);
                             },
                             style: ButtonStyle(
                                 shape: MaterialStateProperty.all(
                                     RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(18)))),
-                            child: const Text("Continue .."))),
+                            child: const Text("Continue"))),
                   ),
                 ),
                 Padding(

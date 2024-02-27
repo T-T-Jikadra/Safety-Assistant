@@ -1,6 +1,10 @@
+// ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../../Models/Govt_Registration_Model.dart';
 import '../../../Utils/constants.dart';
 import '../citizen/custom_checkbox_button.dart';
 import 'govt_login.dart';
@@ -19,18 +23,19 @@ class GovtSignupPageScreen extends StatefulWidget {
 class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController nameOfNGOTextController = TextEditingController();
-  TextEditingController regNoTextController = TextEditingController();
-  TextEditingController dateEditTextController = TextEditingController();
-  TextEditingController contactNoTextController = TextEditingController();
-  TextEditingController emailIdTextController = TextEditingController();
-  TextEditingController websiteURLTextController = TextEditingController();
-  TextEditingController zipCodeTextController = TextEditingController();
-  TextEditingController addressTextController = TextEditingController();
-  TextEditingController pwdTextController = TextEditingController();
-  TextEditingController confirmPwdTextController = TextEditingController();
+  TextEditingController nameOfGovtTextController = TextEditingController();
+  TextEditingController regNoGovtTextController = TextEditingController();
+  TextEditingController serviceGovtTextController = TextEditingController();
+  TextEditingController contactNoGovtTextController = TextEditingController();
+  TextEditingController emailIdGovtTextController = TextEditingController();
+  TextEditingController websiteURLGovtTextController = TextEditingController();
+  TextEditingController pinCodeGovtTextController = TextEditingController();
+  TextEditingController fullAddressGovtTextController = TextEditingController();
+  TextEditingController pwdGovtTextController = TextEditingController();
+  TextEditingController confirmPwdGovtTextController = TextEditingController();
 
   String selectedState = '';
+  String selectedCity = ''; // Variable to hold the selected city value
 
   List<String> dropdownItemState = [
     "Select Govt Agency State",
@@ -626,13 +631,9 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
     updateCityList(selectedState);
   }
 
-  // ignore: non_constant_identifier_names
   bool GovtTnC = false;
   bool _obscurePwdText = true;
   bool _obscureConfirmPwdText = true;
-
-  final _firstNameFocusNode = FocusNode();
-  final _lastNameFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -671,8 +672,8 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
-                              focusNode: _firstNameFocusNode,
-                              controller: nameOfNGOTextController,
+                              textCapitalization: TextCapitalization.sentences,
+                              controller: nameOfGovtTextController,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.account_box_outlined,
                                     color: Colors.deepPurple),
@@ -687,10 +688,14 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                 if (value == null || value.isEmpty) {
                                   return 'Enter Govt Agency name';
                                 }
-                                if (value.isNotEmpty && value.length < 2) {
+                                if (value.isNotEmpty && value.length < 3) {
                                   return 'Minimum 3 Characters required';
                                 }
                                 return null; // Return null if the input is valid
+                              },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
                               },
                             ),
                           ),
@@ -699,12 +704,12 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
-                              focusNode: _lastNameFocusNode,
-                              controller: regNoTextController,
+                              controller: regNoGovtTextController,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.app_registration,
                                     color: Colors.deepPurple),
-                                hintText: "Enter registration no. of Govt. Agency",
+                                hintText:
+                                    "Enter registration no. of Govt. Agency",
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -712,14 +717,19 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                 filled: true,
                                 // fillColor: Colors.deepPurple,
                               ),
+                              keyboardType: TextInputType.phone,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Enter Registration No';
                                 }
-                                if (value.isNotEmpty && value.length < 2) {
+                                if (value.isNotEmpty && value.length < 3) {
                                   return 'Minimum 3 Characters required';
                                 }
                                 return null; // Return null if the input is valid
+                              },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
                               },
                             ),
                           ),
@@ -734,7 +744,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                               onTap: () {
                                 _showCupertinoDialog(context);
                               },
-                              controller: dateEditTextController,
+                              controller: serviceGovtTextController,
                               readOnly: true,
                               decoration: InputDecoration(
                                 hintText: "Select Services Govt. can provide",
@@ -748,10 +758,11 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                 if (value == null || value.isEmpty) {
                                   return 'Select your serving Services from list';
                                 }
-                                // if (value.isNotEmpty && value.length < 2) {
-                                //   return 'Minimum 3 Characters';
-                                // }
                                 return null; // Return null if the input is valid
+                              },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
                               },
                             ),
                           ),
@@ -764,7 +775,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                             ),
                             child: TextFormField(
                               maxLength: 10,
-                              controller: contactNoTextController,
+                              controller: contactNoGovtTextController,
                               decoration: InputDecoration(
                                 //prefixText: "+91 ",
                                 hintText: "Enter contact number of Govt. Agency",
@@ -783,12 +794,16 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                               keyboardType: TextInputType.phone,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Enter Telephone number';
+                                  return 'Enter Contact number';
                                 }
-                                if (value.isNotEmpty && value.length < 2) {
-                                  return 'Minimum no should be of 10 digits';
+                                if (value.isNotEmpty && value.length < 10) {
+                                  return 'Contact no should be of 10 digits';
                                 }
                                 return null; // Return null if the input is valid
+                              },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
                               },
                             ),
                           ),
@@ -797,7 +812,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
-                              controller: emailIdTextController,
+                              controller: emailIdGovtTextController,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.email_outlined,
                                     color: Colors.deepPurple),
@@ -818,6 +833,10 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                 }
                                 return null; // Return null if the input is valid
                               },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
+                              },
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -825,7 +844,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
-                              controller: websiteURLTextController,
+                              controller: websiteURLGovtTextController,
                               decoration: const InputDecoration(
                                 prefixIcon:
                                 Icon(Icons.web, color: Colors.deepPurple),
@@ -851,6 +870,10 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                   }
                                   return null; // Return null if the input is valid
                                 },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
+                              },
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -865,37 +888,42 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                     right: 5,
                                   ),
                                   child: SizedBox(
-                                    height: 60,
+                                    //height: 60,
                                     child: DropdownButtonFormField<String>(
-                                        value: selectedState,
-                                        items: dropdownItemState.map((String state) {
-                                          return DropdownMenuItem<String>(
-                                            // alignment: AlignmentDirectional.topStart,
-                                            value: state,
-                                            child: Text(state),
-                                          );
-                                        }).toList(),
-                                        onChanged: (value) {
-                                          setState(() {
-                                            selectedState = value!;
-                                            updateCityList(selectedState);
-                                          });
-                                        },
-                                        decoration: const InputDecoration(
-                                          // border: OutlineInputBorder(),
-                                          hintText: "Select Govt Agency State",
-                                        ),
-                                        validator: (value) {
-                                          if (value == "Select Govt Agency State") {
-                                            return 'Select Govt Agency State';
-                                          }
-                                          return null; // Return null if the input is valid
-                                        },
+                                      value: selectedState,
+                                      items:
+                                          dropdownItemState.map((String state) {
+                                        return DropdownMenuItem<String>(
+                                          // alignment: AlignmentDirectional.topStart,
+                                          value: state,
+                                          child: Text(state),
+                                        );
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          selectedState = value!;
+                                          // Update city list based on the selected state
+                                          updateCityList(selectedState);
+                                          // Reset selected city when state changes
+                                          selectedCity = '';
+                                        });
+                                      },
+                                      decoration: const InputDecoration(
+                                        // border: OutlineInputBorder(),
+                                        hintText: "Select Govt Agency State",
                                       ),
-                                  ),
+                                      validator: (value) {
+                                        if (value ==
+                                            "Select Govt Agency State") {
+                                          return 'Select Govt Agency State';
+                                        }
+                                        return null; // Return null if the input is valid
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ],
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 12),
                           //city
@@ -905,10 +933,10 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                               right: 5,
                             ),
                             child: SizedBox(
-                              height: 60,
+                              //height: 60,
                               child: DropdownButtonFormField<String>(
-                                value: dropdownItemCity.isNotEmpty
-                                    ? dropdownItemCity.first
+                                value: selectedCity.isNotEmpty
+                                    ? selectedCity
                                     : null,
                                 items: dropdownItemCity.map((String city) {
                                   return DropdownMenuItem<String>(
@@ -916,7 +944,11 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                     child: Text(city),
                                   );
                                 }).toList(),
-                                onChanged: (value) {},
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedCity = value!;
+                                  });
+                                },
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   hintText: "Select Govt Agency City",
@@ -936,7 +968,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
                               maxLength: 6,
-                              controller: zipCodeTextController,
+                              controller: pinCodeGovtTextController,
                               decoration: const InputDecoration(
                                 hintText: "Enter Pin code of Govt. Agency",
                                 contentPadding: EdgeInsets.symmetric(
@@ -944,15 +976,19 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                   vertical: 18,
                                 ),
                               ),
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.phone,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Enter zip code';
+                                  return 'Enter Pin code';
                                 }
-                                if (value.isNotEmpty || value.length < 6) {
-                                  return 'Enter 6 digits Zip code';
+                                if (value.isNotEmpty && value.length < 6) {
+                                  return 'Enter 6 digits Pin code';
                                 }
                                 return null; // Return null if the input is valid
+                              },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
                               },
                             ),
                           ),
@@ -961,7 +997,8 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
-                              controller: addressTextController,
+                              textCapitalization: TextCapitalization.sentences,
+                              controller: fullAddressGovtTextController,
                               decoration: const InputDecoration(
                                 hintText: "Enter full address of Govt. Agency",
                                 contentPadding: EdgeInsets.symmetric(
@@ -974,10 +1011,10 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                               maxLines: 4,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Enter your address';
+                                  return 'Enter full address';
                                 }
-                                if (value.isNotEmpty || value.length < 10) {
-                                  return 'Enter your full address';
+                                if (value.isNotEmpty && value.length < 10) {
+                                  return "Too short address";
                                 }
                                 return null; // Return null if the input is valid
                               },
@@ -988,7 +1025,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
-                              controller: pwdTextController,
+                              controller: pwdGovtTextController,
                               obscureText: _obscurePwdText,
                               decoration: InputDecoration(
                                 prefixIcon: const Icon(
@@ -1015,6 +1052,10 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                 ),
                               ),
                               validator: _validatePassword,
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
+                              },
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -1022,7 +1063,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
-                              controller: confirmPwdTextController,
+                              controller: confirmPwdGovtTextController,
                               obscureText: _obscureConfirmPwdText,
                               decoration: InputDecoration(
                                 prefixIcon: const Icon(
@@ -1053,10 +1094,14 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                 if (value == null || value.isEmpty) {
                                   return 'Enter confirm password';
                                 }
-                                if (value!=pwdTextController.text) {
+                                if (value!=pwdGovtTextController.text) {
                                   return "Confirm password doesn't matches";
                                 }
                                 return null; // Return null if the input is valid
+                              },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
                               },
                             ),
                           ),
@@ -1100,7 +1145,20 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                     child: ClipRRect(
                       // borderRadius: BorderRadius.circular(50),
                         child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
+                              //Circular Progress Bar
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(color: Colors.white),
+                                  );
+                                },
+                              );
+                              await Future.delayed(const Duration(milliseconds: 1200));
+                              Navigator.pop(context);
+
                               if (!GovtTnC) {
                                 final tnCError = SnackBar(
                                   dismissDirection: DismissDirection.vertical,
@@ -1121,14 +1179,62 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                     },
                                   ),
                                 );
-                                ScaffoldMessenger.of(context).showSnackBar(tnCError);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(tnCError);
                               }
 
                               if (_formKey.currentState!.validate()) {
-                                // If the form is valid, you can proceed with form submission
-                                // For example, you can save the form data or navigate to the next screen
-                                // If you need to access the form field values, you can use the controller
-                                // For example: fnameTextController.text
+                                if (!GovtTnC) {
+                                  return;
+                                } else {
+                                  //Storing data to database
+                                  GovtRegistration userData = GovtRegistration(
+                                    GovtAgencyName: nameOfGovtTextController.text,
+                                    GovtAgencyARegNo: regNoGovtTextController.text,
+                                    services: serviceGovtTextController.text,
+                                    contactNumber: contactNoGovtTextController.text,
+                                    email: emailIdGovtTextController.text,
+                                    website: websiteURLGovtTextController.text,
+                                    state: selectedState,
+                                    city: selectedCity,
+                                    pinCode: pinCodeGovtTextController.text,
+                                    fullAddress: fullAddressGovtTextController.text,
+                                    password: pwdGovtTextController.text,
+                                    confirmPassword: confirmPwdGovtTextController.text,
+                                    termsAccepted: GovtTnC,
+                                  );
+
+                                  // Convert the object to JSON
+                                  Map<String, dynamic> GovtDataJson =
+                                  userData.toJson();
+
+                                  // Store data in Firestore
+                                  try {
+                                    DocumentReference docRef =
+                                        await FirebaseFirestore.instance
+                                            .collection("Govt")
+                                            .add(GovtDataJson);
+
+                                    // Document successfully added
+                                    if (kDebugMode) {
+                                      print(
+                                          'Document added with ID: ${docRef.id}');
+                                    }
+
+                                    // Navigate to a new page upon success
+                                    // Navigator.push(context,MaterialPageRoute(builder: (context) => NewPage()));
+                                  } catch (e) {
+                                    // An error occurred
+                                    if (kDebugMode) {
+                                      print('Error adding Govt document: $e');
+                                    }
+                                  }
+
+                                  if (kDebugMode) {
+                                    print(
+                                        "Govt Agency Stored and Registered successfully [(:-==-:)]");
+                                  }
+                                }
                               }
                             },
                             style: ButtonStyle(
@@ -1136,7 +1242,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                     RoundedRectangleBorder(
                                         borderRadius:
                                         BorderRadius.circular(18)))),
-                            child: const Text("Continue .."))),
+                            child: const Text("Continue"))),
                   ),
                 ),
                 Padding(
@@ -1277,7 +1383,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                   selectedOptions = selectedOptions.substring(
                       0, selectedOptions.length - 2);
                 }
-                dateEditTextController.text = selectedOptions;
+                serviceGovtTextController.text = selectedOptions;
                 Navigator.of(context).pop();
               },
               child: const Text('OK'),
