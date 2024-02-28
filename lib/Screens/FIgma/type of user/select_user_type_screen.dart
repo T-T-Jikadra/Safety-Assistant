@@ -105,19 +105,19 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                     child: ElevatedButton(
                         onPressed: () {
                           // Navigate based on selected role
-                          if (_selectedRole == "I am Citizen") {
+                          if (_selectedRole!.contains("Citizen")) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
                                     const CitizenLoginScreen()));
-                          } else if (_selectedRole == "I am an NGO") {
+                          } else if (_selectedRole!.contains("NGO")) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
                                     const NGOLoginPageScreen()));
-                          } else if (_selectedRole == "I am Government Agency") {
+                          } else if (_selectedRole!.contains("Gov")) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -173,16 +173,16 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
           String roleName;
           switch (index) {
             case 0:
-              roleName = 'I am Citizen';
+              roleName = "I am Citizen";
               break;
             case 1:
-              roleName = 'I am an NGO';
+              roleName = "I am an NGO";
               break;
             case 2:
-              roleName = 'I am Government Agency';
+              roleName = "I am Government Agency \t 🏛️";
               break;
             default:
-              roleName = 'Unknown';
+              roleName = "Unknown";
               break;
           }
 

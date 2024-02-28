@@ -1,5 +1,4 @@
-import 'package:fff/Citizen%20Related/Components/Drawer/menu.dart';
-import 'package:fff/Citizen%20Related/Components/Drawer/side_menu.dart';
+import 'package:fff/Citizen%20Related/Screens/citizen_home_screen/side_menu.dart';
 import 'package:fff/Notification_related/message_screen.dart';
 import 'package:fff/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,6 +12,7 @@ import '../../Screens/donation_history_screen.dart';
 import '../../Screens/req_history_screen.dart';
 import '../../Screens/profile_screen.dart';
 import '../../../Components/info_card.dart';
+import 'menu.dart';
 
 class SideBar extends StatefulWidget {
   const SideBar({super.key});

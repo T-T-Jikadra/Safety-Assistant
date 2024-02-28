@@ -1,9 +1,11 @@
 // ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fff/Govt%20Body%20Related/Screens/govt_home_screen/home_screen_govt.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../../Models/Govt_Registration_Model.dart';
 import '../../../Utils/constants.dart';
 import '../citizen/custom_checkbox_button.dart';
@@ -1220,9 +1222,45 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                       print(
                                           'Document added with ID: ${docRef.id}');
                                     }
+                                    // Show a toast message upon success
+                                    Fluttertoast.showToast(
+                                        msg: "Government Agency registered successfully ..",
+                                        toastLength: Toast.LENGTH_LONG,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0
+                                    );
 
                                     // Navigate to a new page upon success
-                                    // Navigator.push(context,MaterialPageRoute(builder: (context) => NewPage()));
+                                    Navigator.of(context).push(
+                                      PageRouteBuilder(
+                                        pageBuilder: (context, animation,
+                                            secondaryAnimation) =>
+                                        const GovtHomeScreen(),
+                                        transitionsBuilder: (context, animation,
+                                            secondaryAnimation, child) {
+                                          var begin = const Offset(1.0, 0.0);
+                                          var end = Offset.zero;
+                                          var curve = Curves.ease;
+
+                                          var tween = Tween(
+                                              begin: begin, end: end)
+                                              .chain(CurveTween(curve: curve));
+                                          var offsetAnimation =
+                                          animation.drive(tween);
+                                          //slight fade effect
+                                          //var opacityAnimation = animation.drive(tween);
+
+                                          return SlideTransition(
+                                            position: offsetAnimation,
+                                            child: child,
+                                          );
+                                        },
+                                      ),
+                                    );
+
                                   } catch (e) {
                                     // An error occurred
                                     if (kDebugMode) {

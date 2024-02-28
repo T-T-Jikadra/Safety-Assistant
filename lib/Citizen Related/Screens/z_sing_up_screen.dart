@@ -1,5 +1,4 @@
-import 'package:fff/Citizen%20Related/Screens/sing_in_screen.dart';
-import 'package:fff/Screens/entry_point.dart';
+import 'package:fff/Citizen%20Related/Screens/z_sing_in_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gender_picker/source/enums.dart';
 import 'package:gender_picker/source/gender_picker.dart';
 import 'package:intl/intl.dart';
-import '../../Components/common_background.dart';
+
+import 'citizen_home_screen/common_background.dart';
+import 'citizen_home_screen/home_screen_citizen.dart';
 
 class SingUpScreen extends StatefulWidget {
   const SingUpScreen({super.key});
@@ -313,7 +314,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_) => const EntryPoint()));
+                                builder: (_) => const CitizenHomeScreen()));
                           }
                         },
                         style: ElevatedButton.styleFrom(

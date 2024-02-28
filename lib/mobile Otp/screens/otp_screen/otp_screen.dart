@@ -1,18 +1,25 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
-import 'package:fff/Screens/entry_point.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fff/Citizen%20Related/Screens/citizen_home_screen/home_screen_citizen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+
+import '../../../Screens/FIgma/citizen/citizen_signup.dart';
 
 // ignore: must_be_immutable
 class OtpScreen extends StatefulWidget {
   bool _isInit = true; // Flag to track the initialization state
   var _contact = ''; // Variable to store the contact number
+  //bool isUserRegOrNot = false;
 
   OtpScreen({super.key}); // Constructor
 
@@ -30,8 +37,9 @@ class _OtpScreenState extends State<OtpScreen> {
 
   late String verificationId; // Variable to store verification ID
   String errorMessage = ''; // Variable to store error message
-  final FirebaseAuth _auth =
-      FirebaseAuth.instance; // Firebase authentication instance
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  bool isUserRegOrNot = false; // Firebase authentication instance
 
   // Method to initialize data
   @override
@@ -46,7 +54,7 @@ class _OtpScreenState extends State<OtpScreen> {
         widget._isInit = false; // Update initialization flag
       } else {
         if (kDebugMode) {
-          print("!!! Mobile number not correctly passed to this screen !!!");
+          print("!!! Mobile number isn't correctly passed to this screen !!!");
         }
       }
     }
@@ -64,92 +72,95 @@ class _OtpScreenState extends State<OtpScreen> {
     // Getting screen height
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(16.0),
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: screenHeight * 0.05,
-                ),
-                const Text("Check Your Inbox ... (●'◡'●)",
-                    style:
-                        TextStyle(fontSize: 37, fontWeight: FontWeight.w600)),
-                const SizedBox(
-                  height: 0,
-                ),
-                Lottie.asset("assets/json/otp_lottie.json",
-                    width: 300, height: 300, fit: BoxFit.fitWidth),
-                const Text(
-                  'Verification process : ',
-                  style: TextStyle(fontSize: 28),
-                ),
-                SizedBox(
-                  height: screenHeight * 0.01,
-                ),
-                Text(
-                  'Enter 6 digit number that was \nsent to : ${widget._contact}',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 18,
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.all(16.0),
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: screenHeight * 0.01,
                   ),
-                ),
-                SizedBox(
-                  height: screenHeight * 0.01,
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 15),
-                  padding: const EdgeInsets.all(5.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      OtpTextField(
-                        numberOfFields: 6,
-                        fillColor: Colors.deepPurple.withOpacity(0.1),
-                        filled: true,
-                        onSubmit: (code) {
-                          smsOTP = code; // Store entered OTP
-                        },
-                        onCodeChanged: (value) {
-                          smsOTP = value; // Store changed OTP
-                          onChnaged_input_OTPField = value; // Store changed OTP
-                        },
-                      ),
-                      SizedBox(
-                        height: screenHeight * 0.03,
-                      ),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pop(context); // Pop the current screen
+                  const Text("Check Your Inbox ... (●'◡'●)",
+                      style:
+                          TextStyle(fontSize: 37, fontWeight: FontWeight.w600)),
+                  const SizedBox(
+                    height: 0,
+                  ),
+                  Lottie.asset("assets/json/otp_lottie.json",
+                      width: 300, height: 300, fit: BoxFit.fitWidth),
+                  const Text(
+                    'Verification process : ',
+                    style: TextStyle(fontSize: 28),
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.01,
+                  ),
+                  Text(
+                    'Enter 6 digit number that was \nsent to : ${widget._contact}',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.01,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.all(5.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        OtpTextField(
+                          numberOfFields: 6,
+                          fillColor: Colors.deepPurple.withOpacity(0.1),
+                          filled: true,
+                          onSubmit: (code) {
+                            smsOTP = code; // Store entered OTP
                           },
-                          child: const Text(
-                            "Didn't get an OTP ? \n Resend Code ",
-                            textAlign: TextAlign.center,
-                          )),
-                      SizedBox(
-                        height: screenHeight * 0.03,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        width: double.infinity,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  verifyOtp(); // Verify OTP
-                                },
-                                child: const Text("Verify .."))),
-                      )
-                    ],
+                          onCodeChanged: (value) {
+                            smsOTP = value; // Store changed OTP
+                            onChnaged_input_OTPField =
+                                value; // Store changed OTP
+                          },
+                        ),
+                        SizedBox(
+                          height: screenHeight * 0.03,
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.pop(context); // Pop the current screen
+                            },
+                            child: const Text(
+                              "Didn't get an OTP ? \n Resend Code ",
+                              textAlign: TextAlign.center,
+                            )),
+                        SizedBox(
+                          height: screenHeight * 0.03,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          width: double.infinity,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    verifyOtp(); // Verify OTP
+                                  },
+                                  child: const Text("Verify .."))),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -164,6 +175,19 @@ class _OtpScreenState extends State<OtpScreen> {
     }
 
     try {
+      // Check if the mobile number exists in the citizen collection
+      final DocumentReference citizenRef  = FirebaseFirestore.instance.collection('Citizens').doc(contact);
+      // Get the document snapshot
+      final DocumentSnapshot citizenSnapshot = await citizenRef.get();
+
+      if (citizenSnapshot.exists) {
+        isUserRegOrNot = true;
+        // Mobile number not found in the citizen collection
+        // You can handle this case accordingly, for example, show an error message
+        //showAlertDialog(context, 'Mobile number not registered');
+        //return;
+      }
+
       await _auth.verifyPhoneNumber(
         phoneNumber: contact,
         codeAutoRetrievalTimeout: (String verId) {
@@ -218,7 +242,6 @@ class _OtpScreenState extends State<OtpScreen> {
       assert(user.user?.uid == currentUser?.uid);
 
       // Show circular progress indicator for 1 second
-      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         barrierDismissible: false,
@@ -231,12 +254,39 @@ class _OtpScreenState extends State<OtpScreen> {
 
       // Delay for 1 second before navigating to the next screen
       await Future.delayed(const Duration(seconds: 1));
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const EntryPoint(),
-          ));
+
+      //if its not empty
+      if (isUserRegOrNot) {
+        Fluttertoast.showToast(
+            msg: "Citizen logged in successfully..",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const CitizenHomeScreen(),
+            ));
+      } else {
+        Fluttertoast.showToast(
+            msg: "Complete your profile first ..",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CitizenSignupPageScreen(contactNumber: widget._contact),
+            ));
+      }
     } on PlatformException catch (e) {
       handleError(e);
     } catch (e) {
@@ -244,7 +294,6 @@ class _OtpScreenState extends State<OtpScreen> {
       if (kDebugMode) {
         print('Error: $e');
       }
-      // ignore: use_build_context_synchronously
       showAlertDialog(context, 'Invalid OTP :(');
     }
   }
@@ -288,10 +337,10 @@ class _OtpScreenState extends State<OtpScreen> {
     );
   }
 
-  // Method to check for errors
-  checkForAnError(onchnagedInputOtpfield) {
-    if (onchnagedInputOtpfield == null || onchnagedInputOtpfield.isEmpty) {
-      showAlertDialog(context, 'Code is empty');
-    }
-  }
+// Method to check for errors
+// checkForAnError(onchnagedInputOtpfield) {
+//   if (onchnagedInputOtpfield == null || onchnagedInputOtpfield.isEmpty) {
+//     showAlertDialog(context, 'Code is empty');
+//   }
+// }
 }

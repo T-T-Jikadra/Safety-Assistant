@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../Utils/themes/theme.dart';
 import '../../mobile Otp/screens/otp_screen/otp_screen.dart';
-import '../entry_point.dart';
+import '../../Citizen Related/Screens/citizen_home_screen/home_screen_citizen.dart';
 
 // ignore: camel_case_types
 class splash extends StatelessWidget {
@@ -23,7 +23,7 @@ class splash extends StatelessWidget {
       //Paths of the screens in key value pair ..
       routes: <String, WidgetBuilder>{
         '/otpScreen': (BuildContext ctx) => OtpScreen(),
-        '/homeScreen': (BuildContext ctx) => const EntryPoint(),
+        '/homeScreen': (BuildContext ctx) => const CitizenHomeScreen(),
       },
     );
   }
@@ -135,8 +135,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   //function for animation
   Future startAnimationIn() async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user = auth.currentUser;
+
     await Future.delayed(const Duration(milliseconds: 500));
     setState(() {
       animate = true;
@@ -147,6 +146,10 @@ class _SplashScreenState extends State<SplashScreen> {
     });
     await Future.delayed(const Duration(milliseconds: 1000));
 
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+    //String? emailOfUser = auth.currentUser!.email;
+
     if (user != null) {
       // User is signed in.
       // Navigate to the home screen.
@@ -154,7 +157,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const EntryPoint(),
+            builder: (context) => const CitizenHomeScreen(),
           ));
     } else {
       // User is not signed in.
@@ -166,8 +169,6 @@ class _SplashScreenState extends State<SplashScreen> {
             builder: (context) => const liquidpages(),
           ));
     }
-
-    // ignore: use_build_context_synchronously
   }
 
 //function for animation

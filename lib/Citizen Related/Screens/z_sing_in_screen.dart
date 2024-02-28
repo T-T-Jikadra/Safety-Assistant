@@ -1,8 +1,8 @@
-import 'package:fff/Citizen%20Related/Screens/sing_up_screen.dart';
-import 'package:fff/screens/entry_point.dart';
-import '../../components/common_background.dart';
+import 'package:fff/Citizen%20Related/Screens/z_sing_up_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'citizen_home_screen/common_background.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -69,8 +69,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     ElevatedButton.icon(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => const EntryPoint()));
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (_) => const EntryPoint()));
 
                         //first once user tab the sign in button it shows the loading
                         //SignUp(context);

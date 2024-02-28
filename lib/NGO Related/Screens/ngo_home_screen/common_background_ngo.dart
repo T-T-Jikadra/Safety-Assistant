@@ -1,16 +1,17 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
-import '../Notification_related/message_screen.dart';
+import '../../../Notification_related/message_screen.dart';
 
 // ignore: camel_case_types
-class commonbg extends StatelessWidget {
-  const commonbg({super.key});
+class commonbg_ngo extends StatelessWidget {
+  const commonbg_ngo({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        //Just remove the 3 Positioned widgets as soon as possible
         Positioned(
             width: MediaQuery.of(context).size.width * 1.7,
             bottom: 200,
@@ -29,14 +30,16 @@ class commonbg extends StatelessWidget {
           ),
         ),
 
-        //home design
+
+
+
+        //home page starts from here
         Center(
           child: ElevatedButton(
-            child: const Text("Click"),
+            child: const Text("It's NGO Home Page"),
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const msgScreen())
-              );
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const msgScreen()));
             },
           ),
         ),

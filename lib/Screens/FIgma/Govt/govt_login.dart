@@ -16,8 +16,10 @@ class GovtLoginPageScreen extends StatefulWidget {
 
 class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController loginRegNoTextController = TextEditingController();
-  TextEditingController loginPwdTextController = TextEditingController();
+  TextEditingController loginRegNoGovtTextController = TextEditingController();
+  TextEditingController loginPwdGovtTextController = TextEditingController();
+  TextEditingController loginEmailGovtTextController = TextEditingController();
+
 
   bool _obscurePwdText = true;
 
@@ -37,7 +39,7 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
             width: double.maxFinite,
             child: Column(
               children: [
-                const SizedBox(height: 41),
+                const SizedBox(height: 30),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Container(
@@ -53,9 +55,9 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                             "Log In to Continue : ",
                             style: TextStyle(fontSize: 24),
                           ),
-                          const SizedBox(height: 30),
+                          // const SizedBox(height: 30),
                           // const Text("By logging In First !"),
-                          const SizedBox(height: 50),
+                          const SizedBox(height: 30),
                           SvgPicture.asset(svg_for_login,
                               height: 200, width: 200),
                           const SizedBox(height: 45),
@@ -63,7 +65,7 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
-                              controller: loginRegNoTextController,
+                              controller: loginRegNoGovtTextController,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.app_registration,
                                     color: Colors.deepPurple),
@@ -85,12 +87,44 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                               },
                             ),
                           ),
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 25),
+                          //govt email
+                          Padding(
+                            padding: const EdgeInsets.only(right: 5, left: 5),
+                            child: TextFormField(
+                              controller: loginEmailGovtTextController,
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.email_outlined,
+                                    color: Colors.deepPurple),
+                                hintText: "Enter authorized mail id of Govt. Agency",
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 18,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Enter an email address';
+                                }
+                                // Regular expression for validating an email address
+                                final emailRegex = RegExp(r'^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$');
+                                if (!emailRegex.hasMatch(value)) {
+                                  return 'Enter valid email address';
+                                }
+                                return null; // Return null if the input is valid
+                              },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 25),
                           //pwd
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
-                              controller: loginPwdTextController,
+                              controller: loginPwdGovtTextController,
                               obscureText: _obscurePwdText,
                               decoration: InputDecoration(
                                 prefixIcon: const Icon(
@@ -120,7 +154,7 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
 
                             ),
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 15),
                         ],
                       ),
                     ),

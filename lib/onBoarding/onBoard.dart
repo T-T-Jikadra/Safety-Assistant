@@ -77,21 +77,22 @@ class _liquidpagesState extends State<liquidpages> {
                         image: const AssetImage(
                             "assets/images/electricity_user_1.jpg"),
                         height: size.height * 0.5),
-                    Column(
+                    const Column(
                       children: [
                         Text("Think Beyond Limit ...",
-                            style: Theme.of(context).textTheme.titleLarge),
-                        const SizedBox(
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 20)),
+                        SizedBox(
                           height: 15,
                         ),
                         Text(
                           "Explore now ...",
-                          style: Theme.of(context).textTheme.bodyLarge,
+                          style: TextStyle(color: Colors.black, fontSize: 14),
                         ),
                       ],
                     ),
-                    Text("1/3 ...",
-                        style: Theme.of(context).textTheme.titleLarge),
+                    const Text("1/4 ...",
+                        style: TextStyle(color: Colors.black, fontSize: 20)),
                     const SizedBox(
                       height: 100,
                     )
@@ -118,21 +119,21 @@ class _liquidpagesState extends State<liquidpages> {
                     //     image: const AssetImage("i mg/ss.png"),
                     //     height: size.height * 0.5),
                     ,
-                    Column(
+                    const Column(
                       children: [
                         Text("Customise Your Stuffs ...",
-                            style: Theme.of(context).textTheme.titleLarge),
-                        const SizedBox(
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 20)),
+                        SizedBox(
                           height: 15,
                         ),
                         Text("As your thinking capability ...",
-                            style: Theme.of(context).textTheme.bodyLarge),
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 14)),
                       ],
                     ),
-                    Text(
-                      "2/3 ..",
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
+                    const Text("2/4 ..",
+                        style: TextStyle(color: Colors.black, fontSize: 20)),
                     const SizedBox(
                       height: 100,
                     )
@@ -152,19 +153,21 @@ class _liquidpagesState extends State<liquidpages> {
                     Center(
                       child: SvgPicture.asset("assets/svg/services_help.svg"),
                     ),
-                    Column(
+                    const Column(
                       children: [
                         Text("Thing Beyond Limit ...",
-                            style: Theme.of(context).textTheme.titleLarge),
-                        const SizedBox(
-                          height: 10,
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 20)),
+                        SizedBox(
+                          height: 15,
                         ),
                         Text("Explore now ...",
-                            style: Theme.of(context).textTheme.bodyLarge),
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 14)),
                       ],
                     ),
-                    Text("3/3 ...",
-                        style: Theme.of(context).textTheme.titleLarge),
+                    const Text("3/4 ...",
+                        style: TextStyle(color: Colors.black, fontSize: 20)),
                     const SizedBox(
                       height: 100,
                     )
@@ -175,16 +178,21 @@ class _liquidpagesState extends State<liquidpages> {
               Container(
                 color: const Color(0xFFd3d3d3),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    const SizedBox(
+                      height: 30,
+                    ),
                     Center(
                       child: SvgPicture.asset("assets/svg/services_help.svg"),
                     ),
                     const SizedBox(
-                      height: 100,
-                    )
+                      height: 60,
+                    ),
+                    const Text("4/4 ...",
+                        style: TextStyle(color: Colors.black, fontSize: 20)),
                   ],
                 ),
               ),

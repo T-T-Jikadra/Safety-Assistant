@@ -15,8 +15,9 @@ class NGOLoginPageScreen extends StatefulWidget {
 }
 
 class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
-  TextEditingController loginRegNoTextController = TextEditingController();
-  TextEditingController loginPwdTextController = TextEditingController();
+  TextEditingController loginRegNoNGOTextController = TextEditingController();
+  TextEditingController loginPwdNGOTextController = TextEditingController();
+  TextEditingController loginEmailNGOTextController = TextEditingController();
 
   @override
   void initState() {
@@ -41,7 +42,7 @@ class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
             width: double.maxFinite,
             child: Column(
               children: [
-                const SizedBox(height: 41),
+                const SizedBox(height: 30),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Container(
@@ -57,9 +58,9 @@ class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
                             "Log In to Continue : ",
                             style: TextStyle(fontSize: 24),
                           ),
-                          const SizedBox(height: 30),
+                          // const SizedBox(height: 30),
                           // const Text("By logging In First !"),
-                          const SizedBox(height: 50),
+                          const SizedBox(height: 30),
                           SvgPicture.asset(svg_for_login,
                               height: 200, width: 200),
                           const SizedBox(height: 45),
@@ -68,7 +69,7 @@ class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
                               focusNode: _lastNameFocusNode,
-                              controller: loginRegNoTextController,
+                              controller: loginRegNoNGOTextController,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.app_registration,
                                     color: Colors.deepPurple),
@@ -89,15 +90,48 @@ class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
                                 }
                                 return null; // Return null if the input is valid
                               },
-
                             ),
                           ),
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 25),
+                          //email
+                          Padding(
+                            padding: const EdgeInsets.only(right: 5, left: 5),
+                            child: TextFormField(
+                              controller: loginEmailNGOTextController,
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.email_outlined,
+                                    color: Colors.deepPurple),
+                                hintText:
+                                "Enter authorized mail address of an NGO",
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 18,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Enter an email address';
+                                }
+                                // Regular expression for validating an email address
+                                final emailRegex =
+                                RegExp(r'^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$');
+                                if (!emailRegex.hasMatch(value)) {
+                                  return 'Enter valid email address';
+                                }
+                                return null; // Return null if the input is valid
+                              },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 25),
                           //pwd
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
-                              controller: loginPwdTextController,
+                              controller: loginPwdNGOTextController,
                               obscureText: _obscurePwdText,
                               decoration: InputDecoration(
                                 prefixIcon: const Icon(
@@ -126,7 +160,7 @@ class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
                               validator: _validatePassword,
                             ),
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 15),
                         ],
                       ),
                     ),

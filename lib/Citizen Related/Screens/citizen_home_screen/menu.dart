@@ -68,13 +68,13 @@ List<Menu> sidebarMenus2 = [
         artboard: "CHAT",
         stateMachineName: "CHAT_Interactivity"),
   ),
-  Menu(
-    title: "---",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity"),
-  ),
+  // Menu(
+  //   title: "---",
+  //   rive: RiveModel(
+  //       src: "assets/RiveAssets/icons.riv",
+  //       artboard: "CHAT",
+  //       stateMachineName: "CHAT_Interactivity"),
+  // ),
 ];
 
 //for navigation bar which is not gonna use

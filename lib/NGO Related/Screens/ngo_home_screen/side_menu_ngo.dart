@@ -1,19 +1,20 @@
-import 'package:fff/Citizen%20Related/Components/Drawer/menu.dart';
+// ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
+import 'menu_ngo.dart';
 
-class SideMenu extends StatelessWidget {
-  const SideMenu(
+class SideMenu_ngo extends StatelessWidget {
+  const SideMenu_ngo(
       {super.key,
       required this.menu,
       required this.press,
       required this.riveOnInit,
       required this.selectedMenu});
 
-  final Menu menu;
+  final Menu_ngo menu;
   final VoidCallback press;
   final ValueChanged<Artboard> riveOnInit;
-  final Menu selectedMenu;
+  final Menu_ngo selectedMenu;
 
   @override
   Widget build(BuildContext context) {

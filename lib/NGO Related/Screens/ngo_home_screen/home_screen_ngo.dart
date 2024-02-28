@@ -1,12 +1,12 @@
 import 'dart:math';
-import 'package:fff/Citizen%20Related/Components/Drawer/menu.dart';
+import 'package:fff/NGO%20Related/Screens/ngo_home_screen/common_background_ngo.dart';
+import 'package:fff/NGO%20Related/Screens/ngo_home_screen/side_bar_ngo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
-import 'package:fff/Components/common_background.dart';
-import '../Citizen Related/Components/Drawer/side_bar.dart';
-import '../models/menu_btn.dart';
-import '../Utils/constants.dart';
+import '../../../models/menu_btn.dart';
+import '../../../Utils/constants.dart';
+import 'menu_ngo.dart';
 
 // class entry extends StatelessWidget {
 //   const entry({super.key});
@@ -24,18 +24,18 @@ import '../Utils/constants.dart';
 //   }
 // }
 
-class EntryPoint extends StatefulWidget {
-  const EntryPoint({super.key});
+class NGOHomeScreen extends StatefulWidget {
+  const NGOHomeScreen({super.key});
 
   @override
-  State<EntryPoint> createState() => _EntryPointState();
+  State<NGOHomeScreen> createState() => _NGOHomeScreenState();
 }
 
-class _EntryPointState extends State<EntryPoint>
+class _NGOHomeScreenState extends State<NGOHomeScreen>
     with SingleTickerProviderStateMixin {
   bool isSideBarOpen = false;
 
-  Menu selectedSideMenu = sidebarMenus.first;
+  Menu_ngo selectedSideMenu = sidebarMenus.first;
 
   late SMIBool isMenuOpenInput;
 
@@ -50,7 +50,7 @@ class _EntryPointState extends State<EntryPoint>
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 200))
       ..addListener(
-        () {
+            () {
           setState(() {});
         },
       );
@@ -101,7 +101,7 @@ class _EntryPointState extends State<EntryPoint>
                   curve: Curves.fastOutSlowIn,
                   left: isSideBarOpen ? 0 : -288,
                   top: 0,
-                  child: const SideBar(),
+                  child: const SideBar_ngo(),
                 ),
                 //To show the moving background
                 Transform(
@@ -118,7 +118,7 @@ class _EntryPointState extends State<EntryPoint>
                         borderRadius: BorderRadius.all(
                           Radius.circular(24),
                         ),
-                        child: commonbg(),
+                        child: commonbg_ngo(),
                       ),
                     ),
                   ),
@@ -141,7 +141,7 @@ class _EntryPointState extends State<EntryPoint>
                       }
 
                       setState(
-                        () {
+                            () {
                           isSideBarOpen = !isSideBarOpen;
                         },
                       );
@@ -153,7 +153,7 @@ class _EntryPointState extends State<EntryPoint>
                       artboard.addController(controller!);
 
                       isMenuOpenInput =
-                          controller.findInput<bool>("isOpen") as SMIBool;
+                      controller.findInput<bool>("isOpen") as SMIBool;
                       isMenuOpenInput.value = true;
                     },
                   ),

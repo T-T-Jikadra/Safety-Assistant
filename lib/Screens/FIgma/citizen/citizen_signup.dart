@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fff/Screens/entry_point.dart';
+import 'package:fff/Citizen%20Related/Screens/citizen_home_screen/home_screen_citizen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,13 +10,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import '../../../Models/User_Registration_Model.dart';
 import '../../../Utils/constants.dart';
-import '../../../mobile Otp/screens/login_screen/login_screen.dart';
 import 'custom_checkbox_button.dart';
 import 'custom_radio_button.dart';
 
 // ignore: must_be_immutable
 class CitizenSignupPageScreen extends StatefulWidget {
-  const CitizenSignupPageScreen({Key? key})
+  final String contactNumber;
+
+  const CitizenSignupPageScreen({Key? key, required this.contactNumber})
       : super(
           key: key,
         );
@@ -30,7 +31,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController fnameTextController = TextEditingController();
   TextEditingController lnameTextController = TextEditingController();
-  TextEditingController phoneTextController = TextEditingController();
+  //TextEditingController phoneTextController = TextEditingController();
   TextEditingController birthDateTextController = TextEditingController();
   TextEditingController pinCodeTextController = TextEditingController();
   TextEditingController fullAddressTextController = TextEditingController();
@@ -833,10 +834,12 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                               right: 5,
                             ),
                             child: TextFormField(
-                              maxLength: 10,
-                              controller: phoneTextController,
+                              initialValue: widget.contactNumber,
+                              enabled: false,
+                              maxLength: 13,
+                              //controller: phoneTextController,
                               decoration: InputDecoration(
-                                prefixText: "+91 ",
+                                //prefixText: "+91 ",
                                 hintText: "Enter your Mobile number",
                                 prefixIcon: Container(
                                   margin:
@@ -1104,7 +1107,6 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                               Navigator.pop(context);
 
 
-
                               if (!CitizenTnC) {
                                 final tnCError = SnackBar(
                                   dismissDirection: DismissDirection.vertical,
@@ -1148,7 +1150,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                     lastName: lnameTextController.text,
                                     gender: genderRadio ?? "",
                                     // Assuming genderRadio is nullable String
-                                    phoneNumber: phoneTextController.text,
+                                    phoneNumber: widget.contactNumber,
                                     birthDate: birthDate,
                                     state: selectedState,
                                     city: selectedCity,
@@ -1163,19 +1165,20 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
 
                                   // Store data in Firestore
                                   try {
-                                    DocumentReference docRef =
-                                        await FirebaseFirestore.instance
-                                            .collection("Citizens")
-                                            .add(userDataJson);
+                                    await FirebaseFirestore.instance
+                                        .collection("Citizens")
+                                        .doc(widget.contactNumber)
+                                        .set(userDataJson);
+                                    // .add(userDataJson);
 
                                     // Document successfully added
                                     if (kDebugMode) {
                                       print(
-                                          'Document added with ID: ${docRef.id}');
+                                          "Document added with ID : ${widget.contactNumber}");
                                     }
                                     // Show a toast message upon success
                                     Fluttertoast.showToast(
-                                        msg: "Citizen Account Created ..",
+                                        msg: "Citizen registered successfully..",
                                         toastLength: Toast.LENGTH_LONG,
                                         gravity: ToastGravity.CENTER,
                                         timeInSecForIosWeb: 1,
@@ -1189,7 +1192,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                       PageRouteBuilder(
                                         pageBuilder: (context, animation,
                                                 secondaryAnimation) =>
-                                            const EntryPoint(),
+                                            const CitizenHomeScreen(),
                                         transitionsBuilder: (context, animation,
                                             secondaryAnimation, child) {
                                           var begin = const Offset(1.0, 0.0);
@@ -1202,7 +1205,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                           var offsetAnimation =
                                               animation.drive(tween);
                                           //slight fade effect
-                                          var opacityAnimation = animation.drive(tween);
+                                          //var opacityAnimation = animation.drive(tween);
 
                                           return SlideTransition(
                                             position: offsetAnimation,
@@ -1234,43 +1237,43 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                             child: const Text("Continue"))),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      const Text(
-                        "Already have an account  ? ",
-                      ),
-                      SizedBox(
-                        height: 35,
-                        width: 89,
-                        child: Stack(
-                          alignment: Alignment.bottomLeft,
-                          children: [
-                            Align(
-                                alignment: Alignment.topLeft,
-                                child: TextButton(
-                                    onPressed: () {
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const CitizenLoginScreen(),
-                                          ));
-                                    },
-                                    // style: TextButton.styleFrom(backgroundColor: Colors.white.withOpacity(0.25)),
-                                    child: const Text(
-                                      "Login ..",
-                                      // selectionColor: Colors.blueGrey,
-                                    ))),
-                            SvgPicture.asset(svg_for_line, width: 65),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 30),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //     children: [
+                //       const Text(
+                //         "Already have an account  ? ",
+                //       ),
+                //       SizedBox(
+                //         height: 35,
+                //         width: 89,
+                //         child: Stack(
+                //           alignment: Alignment.bottomLeft,
+                //           children: [
+                //             Align(
+                //                 alignment: Alignment.topLeft,
+                //                 child: TextButton(
+                //                     onPressed: () {
+                //                       Navigator.pushReplacement(
+                //                           context,
+                //                           MaterialPageRoute(
+                //                             builder: (context) =>
+                //                                 const CitizenLoginScreen(),
+                //                           ));
+                //                     },
+                //                     // style: TextButton.styleFrom(backgroundColor: Colors.white.withOpacity(0.25)),
+                //                     child: const Text(
+                //                       "Login ..",
+                //                       // selectionColor: Colors.blueGrey,
+                //                     ))),
+                //             SvgPicture.asset(svg_for_line, width: 65),
+                //           ],
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 const SizedBox(height: 15),
               ],
             ),
