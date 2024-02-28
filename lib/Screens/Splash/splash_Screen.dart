@@ -3,6 +3,7 @@ import 'package:fff/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../Govt Body Related/Screens/govt_home_screen/home_screen_govt.dart';
 import '../../Utils/themes/theme.dart';
 import '../../mobile Otp/screens/otp_screen/otp_screen.dart';
 import '../../Citizen Related/Screens/citizen_home_screen/home_screen_citizen.dart';
@@ -157,8 +158,9 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const CitizenHomeScreen(),
+            builder: (context) => const GovtHomeScreen(),
           ));
+      //CitizenHomeScreen
     } else {
       // User is not signed in.
       // Navigate to the login screen.

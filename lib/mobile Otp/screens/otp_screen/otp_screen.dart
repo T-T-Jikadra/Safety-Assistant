@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
 
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -29,15 +29,14 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   late String phoneNo; // Variable to store phone number
   late String smsOTP = ''; // Variable to store OTP
-
-  // ignore: non_constant_identifier_names
   late String onChnaged_input_OTPField; // Variable to store changed OTP
-
   late String verificationId; // Variable to store verification ID
   String errorMessage = ''; // Variable to store error message
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   bool isUserRegOrNot = false; // Firebase authentication instance
 

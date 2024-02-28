@@ -72,6 +72,8 @@ dependencies:
   flutter_otp_text_field: ^1.1.1
   otp_pin_field: ^1.2.2
   fluttertoast: ^8.2.4
+  path_provider: ^2.0.8
+
 
   #from Divya
   flutter_svg: ^2.0.9

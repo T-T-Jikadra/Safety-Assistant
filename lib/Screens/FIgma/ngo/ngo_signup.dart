@@ -1,13 +1,13 @@
 // ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../Models/NGO_Registration_Model.dart';
-import '../../../NGO Related/Screens/ngo_home_screen/home_screen_ngo.dart';
 import '../../../Utils/constants.dart';
 import '../citizen/custom_checkbox_button.dart';
 import 'ngo_login.dart';
@@ -1222,15 +1222,21 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
 
                                   // Store data in Firestore
                                   try {
-                                    DocumentReference docRef =
-                                        await FirebaseFirestore.instance
-                                            .collection("NGO")
-                                            .add(NGODataJson);
+                                    await FirebaseFirestore.instance
+                                        .collection("NGO")
+                                        .doc(emailIdTextController.text.trim())
+                                        .set(NGODataJson);
+
+                                    FirebaseAuth.instance
+                                        .createUserWithEmailAndPassword(
+                                      email: emailIdTextController.text,
+                                      password: pwdTextController.text,
+                                    );
 
                                     // Document successfully added
                                     if (kDebugMode) {
                                       print(
-                                          'Document added with ID: ${docRef.id}');
+                                          'Document added with ID: ${emailIdTextController.text}');
                                     }
                                     // Show a toast message upon success
                                     Fluttertoast.showToast(
@@ -1248,7 +1254,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                         PageRouteBuilder(
                                           pageBuilder: (context, animation,
                                               secondaryAnimation) =>
-                                          const NGOHomeScreen(),
+                                          const NGOLoginPageScreen(),
                                           transitionsBuilder: (context, animation,
                                               secondaryAnimation, child) {
                                             var begin = const Offset(1.0, 0.0);

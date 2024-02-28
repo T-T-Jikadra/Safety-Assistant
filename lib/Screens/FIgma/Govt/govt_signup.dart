@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, non_constant_identifier_names
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fff/Govt%20Body%20Related/Screens/govt_home_screen/home_screen_govt.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -626,16 +626,16 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
     ]
   };
 
+  bool GovtTnC = false;
+  bool _obscurePwdText = true;
+  bool _obscureConfirmPwdText = true;
+
   @override
   void initState() {
     super.initState();
     selectedState = dropdownItemState.first;
     updateCityList(selectedState);
   }
-
-  bool GovtTnC = false;
-  bool _obscurePwdText = true;
-  bool _obscureConfirmPwdText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -1029,6 +1029,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                             child: TextFormField(
                               controller: pwdGovtTextController,
                               obscureText: _obscurePwdText,
+                              keyboardType: TextInputType.visiblePassword,
                               decoration: InputDecoration(
                                 prefixIcon: const Icon(
                                   Icons.lock,
@@ -1067,6 +1068,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                             child: TextFormField(
                               controller: confirmPwdGovtTextController,
                               obscureText: _obscureConfirmPwdText,
+                              keyboardType: TextInputType.visiblePassword,
                               decoration: InputDecoration(
                                 prefixIcon: const Icon(
                                   Icons.lock,
@@ -1191,18 +1193,18 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                 } else {
                                   //Storing data to database
                                   GovtRegistration userData = GovtRegistration(
-                                    GovtAgencyName: nameOfGovtTextController.text,
-                                    GovtAgencyARegNo: regNoGovtTextController.text,
-                                    services: serviceGovtTextController.text,
-                                    contactNumber: contactNoGovtTextController.text,
-                                    email: emailIdGovtTextController.text,
-                                    website: websiteURLGovtTextController.text,
-                                    state: selectedState,
-                                    city: selectedCity,
-                                    pinCode: pinCodeGovtTextController.text,
-                                    fullAddress: fullAddressGovtTextController.text,
-                                    password: pwdGovtTextController.text,
-                                    confirmPassword: confirmPwdGovtTextController.text,
+                                    GovtAgencyName: nameOfGovtTextController.text.trim(),
+                                    GovtAgencyARegNo: regNoGovtTextController.text.trim(),
+                                    services: serviceGovtTextController.text.trim(),
+                                    contactNumber: contactNoGovtTextController.text.trim(),
+                                    email: emailIdGovtTextController.text.trim(),
+                                    website: websiteURLGovtTextController.text.trim(),
+                                    state: selectedState.trim(),
+                                    city: selectedCity.trim(),
+                                    pinCode: pinCodeGovtTextController.text.trim(),
+                                    fullAddress: fullAddressGovtTextController.text.trim(),
+                                    password: pwdGovtTextController.text.trim(),
+                                    confirmPassword: confirmPwdGovtTextController.text.trim(),
                                     termsAccepted: GovtTnC,
                                   );
 
@@ -1212,15 +1214,22 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
 
                                   // Store data in Firestore
                                   try {
-                                    DocumentReference docRef =
-                                        await FirebaseFirestore.instance
-                                            .collection("Govt")
-                                            .add(GovtDataJson);
+                                    // DocumentReference docRef =await FirebaseFirestore.instance.collection("Govt").add(GovtDataJson);
+                                    await FirebaseFirestore.instance
+                                        .collection("Govt")
+                                        .doc(emailIdGovtTextController.text)
+                                        .set(GovtDataJson);
+
+                                    FirebaseAuth.instance
+                                        .createUserWithEmailAndPassword(
+                                      email: emailIdGovtTextController.text,
+                                      password: pwdGovtTextController.text,
+                                    );
 
                                     // Document successfully added
                                     if (kDebugMode) {
                                       print(
-                                          'Document added with ID: ${docRef.id}');
+                                          'Document added with ID: ${emailIdGovtTextController.text}');
                                     }
                                     // Show a toast message upon success
                                     Fluttertoast.showToast(
@@ -1238,13 +1247,12 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                       PageRouteBuilder(
                                         pageBuilder: (context, animation,
                                             secondaryAnimation) =>
-                                        const GovtHomeScreen(),
+                                        const GovtLoginPageScreen(),
                                         transitionsBuilder: (context, animation,
                                             secondaryAnimation, child) {
                                           var begin = const Offset(1.0, 0.0);
                                           var end = Offset.zero;
                                           var curve = Curves.ease;
-
                                           var tween = Tween(
                                               begin: begin, end: end)
                                               .chain(CurveTween(curve: curve));
@@ -1252,7 +1260,6 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                           animation.drive(tween);
                                           //slight fade effect
                                           //var opacityAnimation = animation.drive(tween);
-
                                           return SlideTransition(
                                             position: offsetAnimation,
                                             child: child,
@@ -1260,14 +1267,12 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                         },
                                       ),
                                     );
-
                                   } catch (e) {
                                     // An error occurred
                                     if (kDebugMode) {
                                       print('Error adding Govt document: $e');
                                     }
                                   }
-
                                   if (kDebugMode) {
                                     print(
                                         "Govt Agency Stored and Registered successfully [(:-==-:)]");

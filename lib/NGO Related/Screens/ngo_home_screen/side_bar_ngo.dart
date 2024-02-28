@@ -1,7 +1,9 @@
 // ignore_for_file: camel_case_types
 import 'package:fff/NGO%20Related/Screens/ngo_home_screen/side_menu_ngo.dart';
 import 'package:fff/Utils/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../../Utils/rive_utils.dart';
 import '../../../Components/info_card.dart';
 import 'menu_ngo.dart';
@@ -279,8 +281,8 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                             }else if (menu_ngo.title.contains("Logout")) {
                               // ignore: use_build_context_synchronously
                               //To logs out the current user ..
-                              //await FirebaseAuth.instance.signOut();
-                              //SystemNavigator.pop();
+                              await FirebaseAuth.instance.signOut();
+                              SystemNavigator.pop();
                             }
                           },
                           riveOnInit: (artboard) {

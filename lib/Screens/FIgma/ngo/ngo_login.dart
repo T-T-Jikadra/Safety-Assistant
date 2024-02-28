@@ -1,5 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import '../../../NGO Related/Screens/ngo_home_screen/home_screen_ngo.dart';
 import '../../../Utils/constants.dart';
 import 'ngo_signup.dart';
 
@@ -90,6 +96,10 @@ class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
                                 }
                                 return null; // Return null if the input is valid
                               },
+                              onEditingComplete: () {
+                                // Move focus to the next field when "Enter" is pressed
+                                FocusScope.of(context).nextFocus();
+                              },
                             ),
                           ),
                           const SizedBox(height: 25),
@@ -119,10 +129,6 @@ class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
                                   return 'Enter valid email address';
                                 }
                                 return null; // Return null if the input is valid
-                              },
-                              onEditingComplete: () {
-                                // Move focus to the next field when "Enter" is pressed
-                                FocusScope.of(context).nextFocus();
                               },
                             ),
                           ),
@@ -187,13 +193,138 @@ class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
                                 },
                               );
                               await Future.delayed(const Duration(milliseconds: 800));
-                              // ignore: use_build_context_synchronously
                               Navigator.pop(context);
                               if (_formKey.currentState!.validate()) {
-                                // If the form is valid, you can proceed with form submission
-                                // For example, you can save the form data or navigate to the next screen
-                                // If you need to access the form field values, you can use the controller
-                                // For example: fnameTextController.text
+
+
+                                String emailValue = loginEmailNGOTextController.text.trim();
+                                String regNoValue = loginRegNoNGOTextController.text.trim();
+                                String pwdValue = loginPwdNGOTextController.text.trim();
+
+                                try {
+                                  DocumentReference govtRef = FirebaseFirestore
+                                      .instance
+                                      .collection("NGO")
+                                      .doc(emailValue);
+                                  final DocumentSnapshot govtSnapshot =
+                                  await govtRef.get();
+
+                                  if (govtSnapshot.exists) {
+                                    // Fluttertoast.showToast(
+                                    //     msg: "Email matched with doc id ..",
+                                    //     toastLength: Toast.LENGTH_LONG,
+                                    //     gravity: ToastGravity.CENTER,
+                                    //     timeInSecForIosWeb: 1,
+                                    //     backgroundColor: Colors.red,
+                                    //     textColor: Colors.white,
+                                    //     fontSize: 16.0
+                                    // );
+                                    // Document(s) found with the field value matching the text field's value
+                                    // You can perform further actions here
+                                    // Document with the specified ID exists
+                                    var data = govtSnapshot.data();
+
+                                    if (data != null &&
+                                        data is Map<String, dynamic>) {
+                                      // Retrieve the password and regNo from the document data
+                                      String? regNoFromDatabase =
+                                      data["NGORegNo"] as String?;
+                                      String? passwordFromDatabase =
+                                      data["password"] as String?;
+
+                                      // Check if the inputted password and regNo match the values from the database
+                                      //both true
+                                      if (regNoFromDatabase == regNoValue && passwordFromDatabase == pwdValue) {
+                                        //success
+
+                                        Fluttertoast.showToast(
+                                            msg: "NGO Logged in successfully ..",
+                                            toastLength: Toast.LENGTH_LONG,
+                                            gravity: ToastGravity.CENTER,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0
+                                        );
+                                        // Navigate to a new page upon success
+                                        Navigator.of(context).push(
+                                          PageRouteBuilder(
+                                            pageBuilder: (context, animation,
+                                                secondaryAnimation) =>
+                                            const NGOHomeScreen(),
+                                            transitionsBuilder: (context, animation,
+                                                secondaryAnimation, child) {
+                                              var begin = const Offset(1.0, 0.0);
+                                              var end = Offset.zero;
+                                              var curve = Curves.ease;
+                                              var tween = Tween(
+                                                  begin: begin, end: end)
+                                                  .chain(CurveTween(curve: curve));
+                                              var offsetAnimation =
+                                              animation.drive(tween);
+                                              //slight fade effect
+                                              //var opacityAnimation = animation.drive(tween);
+                                              return SlideTransition(
+                                                position: offsetAnimation,
+                                                child: child,
+                                              );
+                                            },
+                                          ),
+                                        );
+                                        try{
+                                          // Sign in the user with email and password
+                                          FirebaseAuth.instance
+                                              .signInWithEmailAndPassword(
+                                            email: loginEmailNGOTextController.text.trim(),
+                                            password: loginPwdNGOTextController.text.trim(),
+                                          );
+                                        }
+                                        catch(e){
+                                          if (kDebugMode) {
+                                            print("Error signing in: $e");
+                                          }
+                                        }
+
+                                        //one of them false
+                                      } else if ((regNoFromDatabase == regNoValue && passwordFromDatabase != pwdValue)
+                                          ||  (passwordFromDatabase == pwdValue && regNoFromDatabase != regNoValue)) {
+                                        Fluttertoast.showToast(
+                                            msg: "Incorrect reg no or password ..",
+                                            toastLength: Toast.LENGTH_LONG,
+                                            gravity: ToastGravity.CENTER,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0
+                                        );
+                                        return;
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg: "Invalid credentials ..",
+                                            toastLength: Toast.LENGTH_LONG,
+                                            gravity: ToastGravity.CENTER,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0
+                                        );
+                                        return;
+                                      }
+                                    }
+                                  } else {
+                                    // No document found with the matching field value
+                                    Fluttertoast.showToast(
+                                        msg: "Invalid credentials ..",
+                                        toastLength: Toast.LENGTH_LONG,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
+                                  }
+                                } catch (e) {
+                                  // Handle any errors
+                                }
                               }
                             },
                             style: ButtonStyle(
