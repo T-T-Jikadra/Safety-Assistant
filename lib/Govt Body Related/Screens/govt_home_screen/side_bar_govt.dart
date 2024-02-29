@@ -5,8 +5,11 @@ import 'package:fff/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../Screens/FIgma/type of user/select_user_type_screen.dart';
 import '../../../Utils/rive_utils.dart';
 import '../../../Components/info_card.dart';
+import '../govt_apply_grant.dart';
 import 'menu_govt.dart';
 
 class SideBar_govt extends StatefulWidget {
@@ -48,16 +51,17 @@ class _SideBar_govtState extends State<SideBar_govt> {
                     bio: "Government Agency...",
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
-                  child: Text(
-                    "Browse".toUpperCase(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium!
-                        .copyWith(color: Colors.white70),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
+                //   child: Text(
+                //     "Browse".toUpperCase(),
+                //     style: Theme.of(context)
+                //         .textTheme
+                //         .titleMedium!
+                //         .copyWith(color: Colors.white70),
+                //   ),
+                // ),
+                const SizedBox(height: 25),
                 ...sidebarMenus
                     .map((menu_govt) => SideMenu_govt(
                           menu: menu_govt,
@@ -173,31 +177,31 @@ class _SideBar_govtState extends State<SideBar_govt> {
                               //     },
                               //   ),
                               // );
-                            } else if (menu_govt.title.contains("Donation")) {
+                            } else if (menu_govt.title.contains("Alerts")) {
                               // ignore: use_build_context_synchronously
-                              // Navigator.of(context).push(
-                              //   PageRouteBuilder(
-                              //     pageBuilder: (context, animation,
-                              //             secondaryAnimation) =>
-                              //         const Donation_History_Screen(),
-                              //     transitionsBuilder: (context, animation,
-                              //         secondaryAnimation, child) {
-                              //       var begin = const Offset(1.0, 0.0);
-                              //       var end = Offset.zero;
-                              //       var curve = Curves.ease;
-                              //
-                              //       var tween = Tween(begin: begin, end: end)
-                              //           .chain(CurveTween(curve: curve));
-                              //       var offsetAnimation =
-                              //           animation.drive(tween);
-                              //
-                              //       return SlideTransition(
-                              //         position: offsetAnimation,
-                              //         child: child,
-                              //       );
-                              //     },
-                              //   ),
-                              // );
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      const GovtApplyForGrant(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                        animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
                             }
                             //till above
                           },
@@ -282,8 +286,16 @@ class _SideBar_govtState extends State<SideBar_govt> {
                             }else if (menu_govt.title.contains("Logout")) {
                               // ignore: use_build_context_synchronously
                               //To logs out the current user ..
+                              final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+                              sharedPref.remove("userType");
                               await FirebaseAuth.instance.signOut();
-                              SystemNavigator.pop();
+                              // ignore: use_build_context_synchronously
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const SelectOptionPageScreen()),
+                              );
                             }
                           },
                           riveOnInit: (artboard) {

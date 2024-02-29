@@ -73,6 +73,8 @@ dependencies:
   otp_pin_field: ^1.2.2
   fluttertoast: ^8.2.4
   path_provider: ^2.0.8
+  url_launcher: ^6.1.0
+  shared_preferences: ^2.0.9
 
 
   #from Divya

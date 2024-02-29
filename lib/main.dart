@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/services.dart';
 
 //import 'package:get/get.dart';
 import 'Notification_related/notification_services.dart';
@@ -29,8 +28,8 @@ void main() async {
   runApp(const splash());
 
   //Orientation
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+  // SystemChrome.setPreferredOrientations(
+  //     [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   //Status color
   // SystemChrome.setSystemUIOverlayStyle(
   //     const SystemUiOverlayStyle(statusBarColor: Colors.white12));

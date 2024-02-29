@@ -3,7 +3,8 @@ import 'package:fff/NGO%20Related/Screens/ngo_home_screen/side_menu_ngo.dart';
 import 'package:fff/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../Screens/FIgma/type of user/select_user_type_screen.dart';
 import '../../../Utils/rive_utils.dart';
 import '../../../Components/info_card.dart';
 import 'menu_ngo.dart';
@@ -47,16 +48,17 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                     bio: "N-G-O",
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
-                  child: Text(
-                    "Browse".toUpperCase(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium!
-                        .copyWith(color: Colors.white70),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
+                //   child: Text(
+                //     "Browse".toUpperCase(),
+                //     style: Theme.of(context)
+                //         .textTheme
+                //         .titleMedium!
+                //         .copyWith(color: Colors.white70),
+                //   ),
+                // ),
+                const SizedBox(height: 25),
                 ...sidebarMenus
                     .map((menu_ngo) => SideMenu_ngo(
                           menu: menu_ngo,
@@ -281,8 +283,16 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                             }else if (menu_ngo.title.contains("Logout")) {
                               // ignore: use_build_context_synchronously
                               //To logs out the current user ..
+                              final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+                              sharedPref.remove("userType");
                               await FirebaseAuth.instance.signOut();
-                              SystemNavigator.pop();
+                              // ignore: use_build_context_synchronously
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const SelectOptionPageScreen()),
+                              );
                             }
                           },
                           riveOnInit: (artboard) {

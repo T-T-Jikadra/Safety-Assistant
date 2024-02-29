@@ -12,6 +12,7 @@ import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Screens/FIgma/citizen/citizen_signup.dart';
 
@@ -237,6 +238,10 @@ class _OtpScreenState extends State<OtpScreen> {
         smsCode: smsOTP,
       );
       final UserCredential user = await _auth.signInWithCredential(credential);
+      //SharedPreferences
+      final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+      sharedPref.setString("userType", "Citizen");
+
       final User? currentUser = _auth.currentUser;
       assert(user.user?.uid == currentUser?.uid);
 

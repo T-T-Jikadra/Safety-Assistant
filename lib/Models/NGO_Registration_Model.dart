@@ -14,6 +14,7 @@ class NGORegistration {
   final String confirmPassword;
   final bool termsAccepted;
   final DateTime registrationTime; // New field to store registration time
+  final String userType;
 
   NGORegistration({
     required this.ngoName,
@@ -29,6 +30,7 @@ class NGORegistration {
     required this.password,
     required this.confirmPassword,
     required this.termsAccepted,
+    this.userType = "NGO",
     DateTime?
     registrationTime, // Nullable DateTime to allow automatic assignment
   }) : registrationTime =
@@ -50,6 +52,8 @@ class NGORegistration {
       'confirmPassword': confirmPassword,
       'termsAccepted': termsAccepted,
       'registrationTime': registrationTime.toString(),
+      'userType': "NGO"
+
     };
   }
 }

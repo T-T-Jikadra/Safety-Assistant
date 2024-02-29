@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../NGO Related/Screens/ngo_home_screen/home_screen_ngo.dart';
 import '../../../Utils/constants.dart';
 import 'ngo_signup.dart';
@@ -202,14 +203,14 @@ class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
                                 String pwdValue = loginPwdNGOTextController.text.trim();
 
                                 try {
-                                  DocumentReference govtRef = FirebaseFirestore
+                                  DocumentReference ngotRef = FirebaseFirestore
                                       .instance
                                       .collection("NGO")
                                       .doc(emailValue);
-                                  final DocumentSnapshot govtSnapshot =
-                                  await govtRef.get();
+                                  final DocumentSnapshot ngoSnapshot =
+                                  await ngotRef.get();
 
-                                  if (govtSnapshot.exists) {
+                                  if (ngoSnapshot.exists) {
                                     // Fluttertoast.showToast(
                                     //     msg: "Email matched with doc id ..",
                                     //     toastLength: Toast.LENGTH_LONG,
@@ -222,7 +223,7 @@ class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
                                     // Document(s) found with the field value matching the text field's value
                                     // You can perform further actions here
                                     // Document with the specified ID exists
-                                    var data = govtSnapshot.data();
+                                    var data = ngoSnapshot.data();
 
                                     if (data != null &&
                                         data is Map<String, dynamic>) {
@@ -236,6 +237,10 @@ class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
                                       //both true
                                       if (regNoFromDatabase == regNoValue && passwordFromDatabase == pwdValue) {
                                         //success
+                                        //SharedPreferences
+                                        final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+                                        sharedPref.setString("userType", "NGO");
+
 
                                         Fluttertoast.showToast(
                                             msg: "NGO Logged in successfully ..",

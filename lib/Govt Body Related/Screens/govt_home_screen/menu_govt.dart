@@ -24,21 +24,28 @@ List<Menu_govt> sidebarMenus = [
         stateMachineName: "SEARCH_Interactivity"),
   ),
   Menu_govt(
-    title: "Serving NGO / Government Body",
+    title: "Other Serving Government Agency ",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "CHAT",
         stateMachineName: "CHAT_Interactivity"),
   ),
   Menu_govt(
-    title: "Response History",
+    title: "Respond History",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "LIKE/STAR",
         stateMachineName: "STAR_Interactivity"),
   ),
   Menu_govt(
-    title: "Donation History",
+    title: "Alerts",
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "CHAT",
+        stateMachineName: "CHAT_Interactivity"),
+  ),
+  Menu_govt(
+    title: "Notices",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "CHAT",

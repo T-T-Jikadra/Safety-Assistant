@@ -1,9 +1,17 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:async';
+
 import 'package:fff/onBoarding/onBoard.dart';
 import 'package:fff/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Govt Body Related/Screens/govt_home_screen/home_screen_govt.dart';
+import '../../NGO Related/Screens/ngo_home_screen/home_screen_ngo.dart';
 import '../../Utils/themes/theme.dart';
 import '../../mobile Otp/screens/otp_screen/otp_screen.dart';
 import '../../Citizen Related/Screens/citizen_home_screen/home_screen_citizen.dart';
@@ -14,7 +22,7 @@ class splash extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'CAS',
       debugShowCheckedModeBanner: false,
       theme: TAppTheme.lightTheme,
@@ -39,11 +47,16 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   bool animate = false;
+  String? finalUserType = "";
 
   @override
   void initState() {
     super.initState();
-    startAnimationIn();
+    startAnimationIn().whenComplete(() async {
+      Timer(
+          const Duration(milliseconds: 5),
+      () => navigateToPageBasedOnUserType(finalUserType));
+    });
   }
 
   @override
@@ -147,24 +160,86 @@ class _SplashScreenState extends State<SplashScreen> {
     });
     await Future.delayed(const Duration(milliseconds: 1000));
 
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user = auth.currentUser;
+    final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    var obtainedUserType = sharedPref.getString("userType");
+    setState(() {
+      finalUserType = obtainedUserType;
+    });
+
+    // FirebaseAuth auth = FirebaseAuth.instance;
+    // User? user = auth.currentUser;
     //String? emailOfUser = auth.currentUser!.email;
 
-    if (user != null) {
-      // User is signed in.
-      // Navigate to the home screen.
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const GovtHomeScreen(),
-          ));
-      //CitizenHomeScreen
+    // if (user != null) {
+    //   // User is signed in.
+    //   // Navigate to the home screen.
+    //   Navigator.pushReplacement(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => const GovtHomeScreen(),
+    //       ));
+    //   //CitizenHomeScreen
+    // } else {
+    //   // User is not signed in.
+    //   // Navigate to the login screen.
+    //   Navigator.pushReplacement(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => const liquidpages(),
+    //       ));
+    // }
+  }
+
+  void navigateToPageBasedOnUserType(String? userType) {
+    if (userType == "NGO") {
+      Get.offAll(const NGOHomeScreen());
+    } else if (userType == "Govt") {
+      // Navigate to Government screen
+       Get.offAll(const GovtHomeScreen());
+    } else if (userType == "Citizen") {
+      // Navigate to Citizen screen
+       Get.offAll(const CitizenHomeScreen());
     } else {
-      // User is not signed in.
-      // Navigate to the login screen.
-      // ignore: use_build_context_synchronously
+      Get.offAll(const liquidpages());
+
+      // Handle invalid userType
+      if (kDebugMode) {
+        print("Invalid userType: $userType");
+      }
+    }
+  }
+
+
+
+  Future<void> checkUSerState() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+
+    //user is not null (has some value)
+    if (user != null) {
+      String? userEmail = auth.currentUser!.email;
+
+      if (kDebugMode) {
+        print("user is : $user");
+      }
+      //email is not null
+      if (userEmail != null) {
+
+      } else {
+        // User is signed in. Navigate to the home screen.
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const CitizenHomeScreen(),
+            ));
+        //CitizenHomeScreen
+      }
+    } else {
+      if (kDebugMode) {
+        print("user is null :( ");
+      }
+
+      // User is not signed in. Navigate to the login screen.
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(

@@ -1,11 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Govt Body Related/Screens/govt_home_screen/home_screen_govt.dart';
+import '../../../Utils/Utils.dart';
 import '../../../Utils/constants.dart';
 import 'govt_signup.dart';
 
@@ -187,8 +187,8 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                               if (_formKey.currentState!.validate()) {
 
                                 String emailValue = loginEmailGovtTextController.text.trim();
-                                String regNoValue = loginRegNoGovtTextController.text.trim();
-                                String pwdValue = loginPwdGovtTextController.text.trim();
+                                //String regNoValue = loginRegNoGovtTextController.text.trim();
+                                //String pwdValue = loginPwdGovtTextController.text.trim();
 
                                 try {
                                   DocumentReference govtRef = FirebaseFirestore
@@ -199,42 +199,18 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                                       await govtRef.get();
 
                                   if (govtSnapshot.exists) {
-                                    // Fluttertoast.showToast(
-                                    //     msg: "Email matched with doc id ..",
-                                    //     toastLength: Toast.LENGTH_LONG,
-                                    //     gravity: ToastGravity.CENTER,
-                                    //     timeInSecForIosWeb: 1,
-                                    //     backgroundColor: Colors.red,
-                                    //     textColor: Colors.white,
-                                    //     fontSize: 16.0
-                                    // );
-                                    // Document(s) found with the field value matching the text field's value
-                                    // You can perform further actions here
-                                    // Document with the specified ID exists
-                                    var data = govtSnapshot.data();
-
-                                    if (data != null &&
-                                        data is Map<String, dynamic>) {
-                                      // Retrieve the password and regNo from the document data
-                                      String? regNoFromDatabase =
-                                          data["GovtAgencyRegNo"] as String?;
-                                      String? passwordFromDatabase =
-                                          data["password"] as String?;
-
-                                      // Check if the inputted password and regno match the values from the database
-                                      //both true
-                                      if (regNoFromDatabase == regNoValue && passwordFromDatabase == pwdValue) {
+                                    try{
+                                      // Sign in the user with email and password
+                                      FirebaseAuth.instance
+                                          .signInWithEmailAndPassword(
+                                        email: loginEmailGovtTextController.text.trim(),
+                                        password: loginPwdGovtTextController.text.trim(),
+                                      ).then((value) async {
+                                        //SharedPreferences
+                                        final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+                                        sharedPref.setString("userType", "Govt");
                                         //success
-
-                                        Fluttertoast.showToast(
-                                            msg: "Govt Agency Logged in successfully ..",
-                                            toastLength: Toast.LENGTH_LONG,
-                                            gravity: ToastGravity.CENTER,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor: Colors.red,
-                                            textColor: Colors.white,
-                                            fontSize: 16.0
-                                        );
+                                        showToastMsg("Govt Agency Logged in successfully ..");
                                         // Navigate to a new page upon success
                                         Navigator.of(context).push(
                                           PageRouteBuilder(
@@ -260,54 +236,52 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                                             },
                                           ),
                                         );
-                                        try{
-                                          // Sign in the user with email and password
-                                          FirebaseAuth.instance
-                                              .signInWithEmailAndPassword(
-                                            email: loginEmailGovtTextController.text.trim(),
-                                            password: loginPwdGovtTextController.text.trim(),
-                                          );
-                                        }
-                                        catch(e){
-                                          print("Error signing in: $e");
-                                        }
-
-                                        //one of them false
-                                      } else if ((regNoFromDatabase == regNoValue && passwordFromDatabase != pwdValue)
-                                          ||  (passwordFromDatabase == pwdValue && regNoFromDatabase != regNoValue)) {
-                                        Fluttertoast.showToast(
-                                            msg: "Incorrect reg no or password ..",
-                                            toastLength: Toast.LENGTH_LONG,
-                                            gravity: ToastGravity.CENTER,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor: Colors.red,
-                                            textColor: Colors.white,
-                                            fontSize: 16.0
-                                        );
-                                        return;
-                                      } else {
-                                        Fluttertoast.showToast(
-                                            msg: "Invalid credentials ..",
-                                            toastLength: Toast.LENGTH_LONG,
-                                            gravity: ToastGravity.CENTER,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor: Colors.red,
-                                            textColor: Colors.white,
-                                            fontSize: 16.0
-                                        );
-                                        return;
-                                      }
+                                      }).onError((error, stackTrace) {
+                                        debugPrint(error.toString());
+                                        showToastMsg(error.toString());
+                                      });
                                     }
+                                    catch(e){
+                                      debugPrint("Error signing in : $e");
+                                    }
+                                    // try{
+                                    //   FirebaseAuth.instance.sendPasswordResetEmail(email: loginEmailGovtTextController.text.trim());
+                                    // } on FirebaseAuthException catch(e){
+                                    //   showToastMsg(e);
+                                    // }
+
+                                    // Document(s) found with the field value matching the text field's value
+                                    // You can perform further actions here
+                                    // Document with the specified ID exists
+                                    // var data = govtSnapshot.data();
+                                    //
+                                    // if (data != null &&
+                                    //     data is Map<String, dynamic>) {
+                                    //   // Retrieve the password and regNo from the document data
+                                    //   String? regNoFromDatabase =
+                                    //       data["GovtAgencyRegNo"] as String?;
+                                    //   String? passwordFromDatabase =
+                                    //       data["password"] as String?;
+                                    //
+                                    //   // Check if the inputted password and regno match the values from the database
+                                    //   //both true
+                                    //   if (regNoFromDatabase == regNoValue && passwordFromDatabase == pwdValue) {
+                                    //
+                                    //     //success
+                                    //
+                                    //     //one of them false
+                                    //   } else if ((regNoFromDatabase == regNoValue && passwordFromDatabase != pwdValue)
+                                    //       ||  (passwordFromDatabase == pwdValue && regNoFromDatabase != regNoValue)) {
+                                    //     showToastMsg("Incorrect reg no or password");
+                                    //     return;
+                                    //   } else {
+                                    //     showToastMsg("Invalid credentials");
+                                    //     return;
+                                    //   }
+                                    // }
                                   } else {
                                     // No document found with the matching field value
-                                    Fluttertoast.showToast(
-                                        msg: "Invalid credentials ..",
-                                        toastLength: Toast.LENGTH_LONG,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.red,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0);
+                                    showToastMsg("Invalid credentials ..");
                                   }
                                 } catch (e) {
                                   // Handle any errors

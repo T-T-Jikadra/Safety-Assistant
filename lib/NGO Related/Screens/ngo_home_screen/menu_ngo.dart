@@ -25,14 +25,14 @@ List<Menu_ngo> sidebarMenus = [
         stateMachineName: "SEARCH_Interactivity"),
   ),
   Menu_ngo(
-    title: "Serving NGO / Government Body",
+    title: "Other serving NGOs",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "CHAT",
         stateMachineName: "CHAT_Interactivity"),
   ),
   Menu_ngo(
-    title: "Response History",
+    title: "Respond History",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "LIKE/STAR",
@@ -40,6 +40,20 @@ List<Menu_ngo> sidebarMenus = [
   ),
   Menu_ngo(
     title: "Donation History",
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "CHAT",
+        stateMachineName: "CHAT_Interactivity"),
+  ),
+  Menu_ngo(
+    title: "Alerts",
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "CHAT",
+        stateMachineName: "CHAT_Interactivity"),
+  ),
+  Menu_ngo(
+    title: "Notices",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "CHAT",

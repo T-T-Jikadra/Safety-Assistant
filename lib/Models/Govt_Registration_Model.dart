@@ -14,6 +14,7 @@ class GovtRegistration {
   final String confirmPassword;
   final bool termsAccepted;
   final DateTime registrationTime; // New field to store registration time
+  final String userType;
 
   GovtRegistration({
     required this.GovtAgencyName,
@@ -29,6 +30,7 @@ class GovtRegistration {
     required this.password,
     required this.confirmPassword,
     required this.termsAccepted,
+    this.userType = "Govt",
     DateTime?
     registrationTime, // Nullable DateTime to allow automatic assignment
   }) : registrationTime =
@@ -50,6 +52,7 @@ class GovtRegistration {
       'confirmPassword': confirmPassword,
       'termsAccepted': termsAccepted,
       'registrationTime': registrationTime.toString(),
+      'userType': "Govt"
     };
   }
 }

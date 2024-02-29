@@ -11,6 +11,7 @@ class UserRegistration {
   final String fullAddress;
   final bool termsAccepted;
   final DateTime registrationTime; // New field to store registration time
+  final String userType;
 
   UserRegistration({
     required this.firstName,
@@ -23,6 +24,7 @@ class UserRegistration {
     required this.pinCode,
     required this.fullAddress,
     required this.termsAccepted,
+    this.userType = "Citizen",
     DateTime?
         registrationTime, // Nullable DateTime to allow automatic assignment
   }) : registrationTime =
@@ -41,6 +43,7 @@ class UserRegistration {
       'fullAddress': fullAddress,
       'termsAccepted': termsAccepted,
       'registrationTime': registrationTime.toString(),
+      'userType': "Citizen"
     };
   }
 }

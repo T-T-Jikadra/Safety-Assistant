@@ -44,9 +44,30 @@ List<Menu> sidebarMenus = [
         artboard: "CHAT",
         stateMachineName: "CHAT_Interactivity"),
   ),
+  Menu(
+    title: "Alerts",
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "CHAT",
+        stateMachineName: "CHAT_Interactivity"),
+  ),
+  Menu(
+    title: "Notices",
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "CHAT",
+        stateMachineName: "CHAT_Interactivity"),
+  ),
 ];
 
 List<Menu> sidebarMenus2 = [
+  Menu(
+    title: "Digital Survival Guide",
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "TIMER",
+        stateMachineName: "TIMER_Interactivity"),
+  ),
   Menu(
     title: "FAQ",
     rive: RiveModel(
