@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import '../../../Models/Govt_Registration_Model.dart';
+import '../../../Utils/Utils.dart';
 import '../../../Utils/constants.dart';
 import '../citizen/custom_checkbox_button.dart';
 import 'govt_login.dart';
@@ -38,6 +38,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
 
   String selectedState = '';
   String selectedCity = ''; // Variable to hold the selected city value
+  String selectedPincode = ''; // Declare selectedPincode
 
   List<String> dropdownItemState = [
     "Select Govt Agency State",
@@ -626,6 +627,17 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
     ]
   };
 
+  Map<String, List<String>> pincodeMap = {
+    "Port Blair": ["111", "222", "333"],
+    "Adoni": ["444", "555", "666"],
+  };
+
+  List<String> fetchPinCodes(String selectedCity) {
+    return pincodeMap[selectedCity] ?? [];
+  }
+
+  List<String> dropdownItemPincode = [];
+
   bool GovtTnC = false;
   bool _obscurePwdText = true;
   bool _obscureConfirmPwdText = true;
@@ -949,6 +961,10 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                 onChanged: (value) {
                                   setState(() {
                                     selectedCity = value!;
+                                    // Fetch pin codes based on the selected city
+                                    dropdownItemPincode = fetchPinCodes(selectedCity);
+                                    // Reset selected pincode when city changes
+                                    selectedPincode = '';
                                   });
                                 },
                                 decoration: const InputDecoration(
@@ -965,6 +981,42 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                             ),
                           ),
                           const SizedBox(height: 12),
+                          // Pincode
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 5,
+                              right: 5,
+                            ),
+                            child: SizedBox(
+                              //height: 60,
+                              child: DropdownButtonFormField<String>(
+                                value: selectedPincode.isNotEmpty ? selectedPincode : null,
+                                items: dropdownItemPincode.map((String pincode) {
+                                  return DropdownMenuItem<String>(
+                                    value: pincode,
+                                    child: Text(pincode),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedPincode = value!;
+                                  });
+                                },
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  hintText: "Select Pin code",
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Select Pin code';
+                                  }
+                                  return null; // Return null if the input is valid
+                                },
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+
                           //pin
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
@@ -1054,7 +1106,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                   ),
                                 ),
                               ),
-                              validator: _validatePassword,
+                              validator: validatePassword,
                               onEditingComplete: () {
                                 // Move focus to the next field when "Enter" is pressed
                                 FocusScope.of(context).nextFocus();
@@ -1232,15 +1284,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                           'Document added with ID: ${emailIdGovtTextController.text}');
                                     }
                                     // Show a toast message upon success
-                                    Fluttertoast.showToast(
-                                        msg: "Government Agency registered successfully ..",
-                                        toastLength: Toast.LENGTH_LONG,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.red,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0
-                                    );
+                                    showToastMsg("Government Agency registered successfully ..");
 
                                     // Navigate to a new page upon success
                                     Navigator.of(context).push(
@@ -1331,34 +1375,6 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
         ),
       ),
     );
-  }
-
-  String? _validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter a password';
-    }
-
-    if (value.length < 8) {
-      return 'Password must be at least 8 characters long';
-    }
-
-    if (!value.contains(RegExp(r'[a-z]'))) {
-      return 'Password must contain at least one lowercase letter';
-    }
-
-    if (!value.contains(RegExp(r'[A-Z]'))) {
-      return 'Password must contain at least one uppercase letter';
-    }
-
-    if (!value.contains(RegExp(r'[0-9]'))) {
-      return 'Password must contain at least one digit';
-    }
-
-    if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-      return 'Password must contain at least one special character';
-    }
-
-    return null; // Return null if the password passes all validations
   }
 
   void _showCupertinoDialog(BuildContext context) {

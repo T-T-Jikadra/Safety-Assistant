@@ -29,6 +29,8 @@ class splash extends StatelessWidget {
       darkTheme: TAppTheme.darkTheme,
       themeMode: ThemeMode.system,
       home: const SplashScreen(),
+      initialRoute: '/', // Set the initial route to '/'
+
       //Paths of the screens in key value pair ..
       routes: <String, WidgetBuilder>{
         '/otpScreen': (BuildContext ctx) => OtpScreen(),
@@ -62,8 +64,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
+      body: Stack(
           children: [
             //1st object on the top left corner ..
             AnimatedPositioned(
@@ -143,7 +144,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           ],
         ),
-      ),
+
     );
   }
 

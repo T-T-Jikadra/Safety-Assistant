@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../Models/NGO_Registration_Model.dart';
+import '../../../Utils/Utils.dart';
 import '../../../Utils/constants.dart';
 import '../citizen/custom_checkbox_button.dart';
 import 'ngo_login.dart';
@@ -1059,7 +1060,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                   ),
                                 ),
                               ),
-                              validator: _validatePassword,
+                              validator: validatePassword,
                               onEditingComplete: () {
                                 // Move focus to the next field when "Enter" is pressed
                                 FocusScope.of(context).nextFocus();
@@ -1239,15 +1240,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                           'Document added with ID: ${emailIdTextController.text}');
                                     }
                                     // Show a toast message upon success
-                                    Fluttertoast.showToast(
-                                        msg: "NGO registered successfully..",
-                                        toastLength: Toast.LENGTH_LONG,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.red,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0
-                                    );
+                                    showToastMsg("NGO registered successfully..");
 
                                     // Navigate to a new page upon success
                                     Navigator.of(context).push(
@@ -1341,34 +1334,6 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
         ),
       ),
     );
-  }
-
-  String? _validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter a password';
-    }
-
-    if (value.length < 8) {
-      return 'Password must be at least 8 characters long';
-    }
-
-    if (!value.contains(RegExp(r'[a-z]'))) {
-      return 'Password must contain at least one lowercase letter';
-    }
-
-    if (!value.contains(RegExp(r'[A-Z]'))) {
-      return 'Password must contain at least one uppercase letter';
-    }
-
-    if (!value.contains(RegExp(r'[0-9]'))) {
-      return 'Password must contain at least one digit';
-    }
-
-    if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-      return 'Password must contain at least one special character';
-    }
-
-    return null; // Return null if the password passes all validations
   }
 
   void _showCupertinoDialog(BuildContext context) {
