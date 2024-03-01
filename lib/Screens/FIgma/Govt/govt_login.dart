@@ -1,17 +1,12 @@
 // ignore_for_file: use_build_context_synchronously, unnecessary_const
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:fff/Citizen%20Related/Screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Govt Body Related/Screens/govt_home_screen/home_screen_govt.dart';
 import '../../../Utils/Utils.dart';
 import '../../../Utils/constants.dart';
-import 'forget_password.dart';
 import 'govt_signup.dart';
 
 // ignore: must_be_immutable
@@ -161,7 +156,8 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                             ),
                           ),
                           //forgot pwd
-                          Align(alignment: Alignment.topRight,
+                          Align(alignment:
+                          Alignment.topRight,
                             child: Padding(
                               padding: const EdgeInsets.only(right: 5, left: 5),
                               child: TextButton(
