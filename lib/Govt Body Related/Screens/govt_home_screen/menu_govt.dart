@@ -45,6 +45,13 @@ List<Menu_govt> sidebarMenus = [
         stateMachineName: "CHAT_Interactivity"),
   ),
   Menu_govt(
+    title: "Apply for Grant",
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "CHAT",
+        stateMachineName: "CHAT_Interactivity"),
+  ),
+  Menu_govt(
     title: "Notices",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",

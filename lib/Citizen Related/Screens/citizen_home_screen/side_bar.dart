@@ -1,18 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fff/Citizen%20Related/Screens/citizen_home_screen/side_menu.dart';
-import 'package:fff/Notification_related/message_screen.dart';
 import 'package:fff/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../Screens/FIgma/type of user/select_user_type_screen.dart';
+import '../../../Components/Notification_related/message_screen.dart';
 import '../../../Utils/rive_utils.dart';
-import '../../Screens/FAQ_screen.dart';
-import '../../Screens/NGO-GA_list_screen.dart';
-import '../../Screens/about_us_screen.dart';
-import '../../Screens/donation_history_screen.dart';
-import '../../Screens/req_history_screen.dart';
-import '../../Screens/profile_screen.dart';
+import '../../../_Root/type of user/select_user_type_screen.dart';
+import '../../Screens/citizen_FAQ_screen.dart';
+import '../../Screens/citizen_NGO-GA_list_screen.dart';
+import '../../Screens/citizen_about_us_screen.dart';
+import '../../Screens/citizen_donation_history_screen.dart';
+import '../../Screens/citizen_req_history_screen.dart';
+import '../../Screens/citizen_profile_screen.dart';
 import '../../../Components/info_card.dart';
 import 'menu.dart';
 
@@ -25,7 +26,15 @@ class SideBar extends StatefulWidget {
 
 class _SideBarState extends State<SideBar> {
   Menu selectedSideMenu = sidebarMenus.first;
+  String citizenName = "";
+  String citizenMobile = "";
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchCitizenData();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -50,21 +59,12 @@ class _SideBarState extends State<SideBar> {
                 GestureDetector(
                   onTap: () => {
                   },
-                  child: const InfoCard(
-                    name: "TYBCA",
-                    bio: "BAKCHODIANS",
+                  child: InfoCard(
+                    name: citizenName,
+                    bio: citizenMobile,
                   ),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
-                //   child: Text(
-                //     "Browse".toUpperCase(),
-                //     style: Theme.of(context)
-                //         .textTheme
-                //         .titleMedium!
-                //         .copyWith(color: Colors.white70),
-                //   ),
-                // ),
+
                 const SizedBox(height: 25),
                 ...sidebarMenus
                     .map((menu) => SideMenu(
@@ -308,6 +308,7 @@ class _SideBarState extends State<SideBar> {
                           },
                         ))
                     .toList(),
+                const SizedBox(height: 50)
               ],
             ),
           ),
@@ -315,4 +316,36 @@ class _SideBarState extends State<SideBar> {
       ),
     );
   }
+
+  Future<void> fetchCitizenData() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+
+      // Fetch data from Firestore
+      DocumentSnapshot citizenSnapshot = await FirebaseFirestore.instance
+          .collection('Citizens')
+          .doc(user?.phoneNumber)
+          .get();
+
+      // Check if the document exists
+      if (citizenSnapshot.exists) {
+        // Access the fields from the document
+        setState(() {
+          String fname =citizenSnapshot.get('firstName');
+          String lname = citizenSnapshot.get('lastName');
+          citizenName = "$fname $lname";
+          citizenMobile = citizenSnapshot.get('phoneNumber');
+        });
+      } else {
+        if (kDebugMode) {
+          print('Document does not exist');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching user data: $e');
+      }
+    }
+  }
+
 }

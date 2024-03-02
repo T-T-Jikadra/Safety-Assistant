@@ -1,14 +1,15 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, non_constant_identifier_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fff/Govt%20Body%20Related/Screens/govt_home_screen/side_menu_govt.dart';
 import 'package:fff/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../Screens/FIgma/type of user/select_user_type_screen.dart';
 import '../../../Utils/rive_utils.dart';
 import '../../../Components/info_card.dart';
+import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../govt_apply_grant.dart';
 import 'menu_govt.dart';
 
@@ -21,6 +22,15 @@ class SideBar_govt extends StatefulWidget {
 
 class _SideBar_govtState extends State<SideBar_govt> {
   Menu_govt selectedSideMenu = sidebarMenus.first;
+  String govtAgencyName = "";
+  String govtEmail = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchGovtData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,21 +56,11 @@ class _SideBar_govtState extends State<SideBar_govt> {
                 GestureDetector(
                   onTap: () => {
                   },
-                  child: const InfoCard(
-                    name: "User type :",
-                    bio: "Government Agency...",
+                  child: InfoCard(
+                    name: govtAgencyName,
+                    bio: govtEmail,
                   ),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
-                //   child: Text(
-                //     "Browse".toUpperCase(),
-                //     style: Theme.of(context)
-                //         .textTheme
-                //         .titleMedium!
-                //         .copyWith(color: Colors.white70),
-                //   ),
-                // ),
                 const SizedBox(height: 25),
                 ...sidebarMenus
                     .map((menu_govt) => SideMenu_govt(
@@ -177,7 +177,7 @@ class _SideBar_govtState extends State<SideBar_govt> {
                               //     },
                               //   ),
                               // );
-                            } else if (menu_govt.title.contains("Alerts")) {
+                            } else if (menu_govt.title.contains("Grant")) {
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
@@ -304,11 +304,41 @@ class _SideBar_govtState extends State<SideBar_govt> {
                           },
                         ))
                     .toList(),
+                const SizedBox(height: 50)
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future<void> fetchGovtData() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+
+      // Fetch data from Firestore
+      DocumentSnapshot GovtSnapshot = await FirebaseFirestore.instance
+          .collection('Govt')
+          .doc(user?.email)
+          .get();
+
+      // Check if the document exists
+      if (GovtSnapshot.exists) {
+        // Access the fields from the document
+        setState(() {
+          govtAgencyName = GovtSnapshot.get('GovtAgencyName');
+          govtEmail = GovtSnapshot.get('email');
+        });
+      } else {
+        if (kDebugMode) {
+          print('Document does not exist');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching user data: $e');
+      }
+    }
   }
 }

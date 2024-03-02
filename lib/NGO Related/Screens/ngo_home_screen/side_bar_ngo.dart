@@ -1,12 +1,15 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, non_constant_identifier_names
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fff/NGO%20Related/Screens/ngo_home_screen/side_menu_ngo.dart';
 import 'package:fff/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../Screens/FIgma/type of user/select_user_type_screen.dart';
+import '../../../Govt Body Related/Screens/govt_apply_grant.dart';
 import '../../../Utils/rive_utils.dart';
 import '../../../Components/info_card.dart';
+import '../../../_Root/type of user/select_user_type_screen.dart';
 import 'menu_ngo.dart';
 
 class SideBar_ngo extends StatefulWidget {
@@ -18,7 +21,15 @@ class SideBar_ngo extends StatefulWidget {
 
 class _SideBar_ngoState extends State<SideBar_ngo> {
   Menu_ngo selectedSideMenu = sidebarMenus.first;
+  String NGOName = "";
+  String NGOEmail = "";
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchGovtData();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -43,21 +54,12 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                 GestureDetector(
                   onTap: () => {
                   },
-                  child: const InfoCard(
-                    name: "User type :",
-                    bio: "N-G-O",
+                  child: InfoCard(
+                    name: NGOName,
+                    bio: NGOEmail,
                   ),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
-                //   child: Text(
-                //     "Browse".toUpperCase(),
-                //     style: Theme.of(context)
-                //         .textTheme
-                //         .titleMedium!
-                //         .copyWith(color: Colors.white70),
-                //   ),
-                // ),
+
                 const SizedBox(height: 25),
                 ...sidebarMenus
                     .map((menu_ngo) => SideMenu_ngo(
@@ -199,6 +201,31 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                               //     },
                               //   ),
                               // );
+                            } else if (menu_ngo.title.contains("Grant")) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                      secondaryAnimation) =>
+                                  const GovtApplyForGrant(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                    animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
                             }
                             //till above
                           },
@@ -301,11 +328,41 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                           },
                         ))
                     .toList(),
+                const SizedBox(height: 50)
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future<void> fetchGovtData() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+
+      // Fetch data from Firestore
+      DocumentSnapshot GovtSnapshot = await FirebaseFirestore.instance
+          .collection('NGO')
+          .doc(user?.email)
+          .get();
+
+      // Check if the document exists
+      if (GovtSnapshot.exists) {
+        // Access the fields from the document
+        setState(() {
+          NGOName = GovtSnapshot.get('nameOfNGO');
+          NGOEmail = GovtSnapshot.get('email');
+        });
+      } else {
+        if (kDebugMode) {
+          print('Document does not exist');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching user data: $e');
+      }
+    }
   }
 }

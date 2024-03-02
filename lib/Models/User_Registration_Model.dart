@@ -5,13 +5,15 @@ class UserRegistration {
   final String gender;
   final String phoneNumber;
   final DateTime birthDate;
+  final String userAge;
   final String state;
   final String city;
   final String pinCode;
   final String fullAddress;
   final bool termsAccepted;
   final DateTime registrationTime; // New field to store registration time
-  final String userType;
+  final String deviceToken;
+
 
   UserRegistration({
     required this.firstName,
@@ -19,12 +21,13 @@ class UserRegistration {
     required this.gender,
     required this.phoneNumber,
     required this.birthDate,
+    required this.userAge,
     required this.state,
     required this.city,
     required this.pinCode,
     required this.fullAddress,
     required this.termsAccepted,
-    this.userType = "Citizen",
+    required this.deviceToken,
     DateTime?
         registrationTime, // Nullable DateTime to allow automatic assignment
   }) : registrationTime =
@@ -35,15 +38,16 @@ class UserRegistration {
       'firstName': firstName,
       'lastName': lastName,
       'gender': gender,
-      'phoneNumber': "+91$phoneNumber",
+      'phoneNumber': phoneNumber,
       'birthDate': birthDate,
+      'userAge' : userAge,
       'state': state,
       'city': city,
       'pinCode': pinCode,
       'fullAddress': fullAddress,
       'termsAccepted': termsAccepted,
       'registrationTime': registrationTime.toString(),
-      'userType': "Citizen"
+      'deviceToken': deviceToken,
     };
   }
 }

@@ -1,13 +1,12 @@
-import 'package:fff/Notification_related/message_screen.dart';
-import 'package:fff/Screens/Splash/splash_Screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'Components/Notification_related/message_screen.dart';
+import 'Components/Notification_related/notification_services.dart';
+import '_Root/Splash/splash_Screen.dart';
 //import 'package:get/get.dart';
-import 'Notification_related/notification_services.dart';
 
 //void main
 void main() async {

@@ -82,9 +82,14 @@ dependencies:
   flutter_svg: ^2.0.9
   flutter_zoom_drawer: ^3.1.2
   gender_picker: ^1.1.0
-  intl: ^0.19.0
+  #intl: ^0.19.0
   rive: ^0.9.1
   csc_picker: ^0.2.7
+
+  #preet
+  pie_chart: ^5.4.0
+  stacked_bar_chart: ^1.1.0+2
+  marquee: ^2.2.3
 
 
 dev_dependencies:

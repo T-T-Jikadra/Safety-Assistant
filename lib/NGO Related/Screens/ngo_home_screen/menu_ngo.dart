@@ -53,6 +53,13 @@ List<Menu_ngo> sidebarMenus = [
         stateMachineName: "CHAT_Interactivity"),
   ),
   Menu_ngo(
+    title: "Apply for Grant",
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "CHAT",
+        stateMachineName: "CHAT_Interactivity"),
+  ),
+  Menu_ngo(
     title: "Notices",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",

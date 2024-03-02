@@ -1,11 +1,31 @@
+// ignore_for_file: camel_case_types, non_constant_identifier_names
+
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
-import '../../../Notification_related/message_screen.dart';
 
-// ignore: camel_case_types
-class commonbg_ngo extends StatelessWidget {
+import '../../../Components/Notification_related/message_screen.dart';
+
+  class commonbg_ngo extends StatefulWidget {
   const commonbg_ngo({super.key});
+
+  @override
+  State<commonbg_ngo> createState() => _commonbg_ngoState();
+}
+
+class _commonbg_ngoState extends State<commonbg_ngo> {
+  String fetchedState = "";
+  String fetchedCity = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchNGOData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +54,82 @@ class commonbg_ngo extends StatelessWidget {
 
 
         //home page starts from here
-        Center(
-          child: ElevatedButton(
-            child: const Text("It's NGO Home Page"),
-            onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const msgScreen()));
-            },
-          ),
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 80, top: 25),
+              child: Row(
+                children: [
+                  const Icon(Icons.location_on_outlined,
+                      color: Colors.redAccent, size: 18),
+                  const SizedBox(width: 8),
+                  Text(
+                    "$fetchedCity, $fetchedState",
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: Container(
+                height: 150,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                  color: Colors.black12,
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(12.0),
+                  child: Text("Temsting"),
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+            Center(
+              child: ElevatedButton(
+                child: const Text("It's NGO Home Page"),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const msgScreen()));
+                },
+              ),
+            ),
+          ],
         ),
       ],
     );
   }
+
+  Future<void> fetchNGOData() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+
+      // Fetch data from Firestore
+      DocumentSnapshot GovtSnapshot = await FirebaseFirestore.instance
+          .collection('NGO')
+          .doc(user?.email)
+          .get();
+
+      // Check if the document exists
+      if (GovtSnapshot.exists) {
+        // Access the fields from the document
+        setState(() {
+          fetchedState = GovtSnapshot.get('state');
+          fetchedCity = GovtSnapshot.get('city');
+        });
+      } else {
+        if (kDebugMode) {
+          print('Document does not exist');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching user data: $e');
+      }
+    }
+  }
+
 }
