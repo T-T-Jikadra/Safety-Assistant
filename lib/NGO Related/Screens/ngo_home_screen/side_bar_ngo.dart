@@ -10,6 +10,7 @@ import '../../../Govt Body Related/Screens/govt_apply_grant.dart';
 import '../../../Utils/rive_utils.dart';
 import '../../../Components/info_card.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
+import '../NGO_list/NGO_list.dart';
 import 'menu_ngo.dart';
 
 class SideBar_ngo extends StatefulWidget {
@@ -126,31 +127,31 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                               //     },
                               //   ),
                               // );
-                            } else if (menu_ngo.title.contains("NGO")) {
+                            } else if (menu_ngo.title.contains("serving")) {
                               // ignore: use_build_context_synchronously
-                              // Navigator.of(context).push(
-                              //   PageRouteBuilder(
-                              //     pageBuilder: (context, animation,
-                              //             secondaryAnimation) =>
-                              //         const NGO_GA_ListScreen(),
-                              //     transitionsBuilder: (context, animation,
-                              //         secondaryAnimation, child) {
-                              //       var begin = const Offset(1.0, 0.0);
-                              //       var end = Offset.zero;
-                              //       var curve = Curves.ease;
-                              //
-                              //       var tween = Tween(begin: begin, end: end)
-                              //           .chain(CurveTween(curve: curve));
-                              //       var offsetAnimation =
-                              //           animation.drive(tween);
-                              //
-                              //       return SlideTransition(
-                              //         position: offsetAnimation,
-                              //         child: child,
-                              //       );
-                              //     },
-                              //   ),
-                              // );
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      const NGO_List(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                        animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
                             } else if (menu_ngo.title.contains("Req")) {
                               // ignore: use_build_context_synchronously
                               // Navigator.of(context).push(

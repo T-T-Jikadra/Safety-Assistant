@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Utils/rive_utils.dart';
 import '../../../Components/info_card.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
-import '../Govt_list_GovtAgency/Govt_list_GovtAgency.dart';
+import '../Govt_list_GovtAgency/Govt_list.dart';
 import '../govt_apply_grant.dart';
 import 'menu_govt.dart';
 

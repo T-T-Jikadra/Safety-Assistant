@@ -105,17 +105,21 @@ class _NgoListTileState extends State<NgoListTile>
                   const SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: Text("Service List: ${widget.serviceList}"),
+                    child: Text("Service List: ${widget.serviceList}",
+                        style: const TextStyle(color: Colors.black)),
                   ),
                   const SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: Row(
                       children: [
-                        Text("Contact: ${widget.contact}"),
+                        Text("Contact: ${widget.contact}",
+                            style: const TextStyle(color: Colors.black)),
                         TextButton(
                           onPressed: () {
-                            launch('tel:${widget.contact}');
+                            launch(
+                              'tel:${widget.contact}',
+                            );
                           },
                           child: Text('Contact now',
                               style: TextStyle(
@@ -140,31 +144,66 @@ class _NgoListTileState extends State<NgoListTile>
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Text("Registration Number: ${widget.regNo}"),
+                        child: Text("Registration Number: ${widget.regNo}",
+                            style: const TextStyle(color: Colors.black)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(3.0),
-                        child: Text("Address : ${widget.address}"),
+                        child: Text("Address : ${widget.address}",
+                            style: const TextStyle(color: Colors.black)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(3.0),
-                        child: Text("Pincode : ${widget.pinCode}"),
+                        child: Text("Pincode : ${widget.pinCode}",
+                            style: const TextStyle(color: Colors.black)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(3.0),
-                        child: Text("City : ${widget.city}"),
+                        child: Text("City : ${widget.city}",
+                            style: const TextStyle(color: Colors.black)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(3.0),
-                        child: Text("State : ${widget.state}"),
+                        child: Text("State : ${widget.state}",
+                            style: const TextStyle(color: Colors.black)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(3.0),
-                        child: Text("Email : ${widget.email}"),
+                        child: Text("Email : ${widget.email}",
+                            style: const TextStyle(color: Colors.black)),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Text("Website : ${widget.website}"),
+                      Row(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(3.0),
+                            child: Text(
+                              "Website : ",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              _launchWebURL("https://${widget.website}");
+                            },
+                            child: MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: Padding(
+                                padding: const EdgeInsets.all(3.0),
+                                child: Text(
+                                  widget.website,
+                                  style: TextStyle(
+                                    color: Colors.blue.shade200,
+                                    // Change the text color to blue for indicating a link
+                                    decoration: TextDecoration
+                                        .underline, // Add underline decoration for indicating a link
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       // Text(widget.pwd),
                       SizedBox(
@@ -174,7 +213,8 @@ class _NgoListTileState extends State<NgoListTile>
                               onPressed: () {
                                 showToastMsg(widget.nameOfNGO);
                               },
-                              child: const Text("View More")))
+                              child: const Text("View more",
+                                  style: TextStyle(color: Colors.black))))
                     ],
                   ),
                 ),
@@ -220,5 +260,13 @@ class _NgoListTileState extends State<NgoListTile>
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void _launchWebURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

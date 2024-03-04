@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../Govt Body Related/Screens/Govt_list_GovtAgency/Govt_list_GovtAgency.dart';
+import '../../../Govt Body Related/Screens/Govt_list_GovtAgency/Govt_list.dart';
 import '../../../NGO Related/Screens/NGO_list/NGO_list.dart';
 import '../../../Utils/constants.dart';
 
@@ -20,9 +20,10 @@ class _NGO_GA_ListScreenState extends State<NGO_GA_ListScreen> {
       child: DefaultTabController(
         length: 2, // Number of tabs
         child: Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
             elevation: 50,
-            backgroundColor: Colors.white24,
+            backgroundColor: Colors.white12,
             centerTitle: true,
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(

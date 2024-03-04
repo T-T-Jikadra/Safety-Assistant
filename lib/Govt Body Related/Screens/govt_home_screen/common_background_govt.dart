@@ -68,7 +68,9 @@ class _commonbg_govtState extends State<commonbg_govt> {
                   Text(
                     "$fetchedCity, $fetchedState",
                     style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -85,7 +87,7 @@ class _commonbg_govtState extends State<commonbg_govt> {
                 ),
                 child: const Padding(
                   padding: EdgeInsets.all(12.0),
-                  child: Text("Temsting"),
+                  child: Text("Temsting",style: TextStyle(color: Colors.black),),
                 ),
               ),
             ),

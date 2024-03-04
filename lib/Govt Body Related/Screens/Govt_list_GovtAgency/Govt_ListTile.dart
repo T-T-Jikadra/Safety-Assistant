@@ -1,5 +1,6 @@
-// ignore_for_file: library_private_types_in_public_api, camel_case_types, file_names
+// ignore_for_file: library_private_types_in_public_api, camel_case_types, file_names, deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Utils/Utils.dart';
 
@@ -71,7 +72,7 @@ class _NgoListTileState extends State<govtListTile>
       },
       child: Card(
         color: Colors.white,
-        margin: const EdgeInsets.only(bottom: 12,left: 10,right: 10),
+        margin: const EdgeInsets.only(bottom: 12, left: 10, right: 10),
         // Set margin to zero to remove white spaces
         elevation: 3,
         shape: RoundedRectangleBorder(
@@ -104,12 +105,28 @@ class _NgoListTileState extends State<govtListTile>
                   const SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: Text("Service List: ${widget.serviceList}"),
+                    child: Text("Service List: ${widget.serviceList}",
+                        style: const TextStyle(color: Colors.black)),
                   ),
                   const SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: Text("Contact: ${widget.contact}"),
+                    child: Row(
+                      children: [
+                        Text("Contact: ${widget.contact}",
+                            style: const TextStyle(color: Colors.black)),
+                        TextButton(
+                          onPressed: () {
+                            launch(
+                              'tel:${widget.contact}',
+                            );
+                          },
+                          child: Text('Contact now',
+                              style: TextStyle(
+                                  fontSize: 13, color: Colors.green.shade800)),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -127,36 +144,71 @@ class _NgoListTileState extends State<govtListTile>
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Text("Registration Number: ${widget.regNo}"),
+                        child: Text("Registration Number: ${widget.regNo}",
+                            style: const TextStyle(color: Colors.black)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(3.0),
-                        child: Text("Address : ${widget.address}"),
+                        child: Text("Address : ${widget.address}",
+                            style: const TextStyle(color: Colors.black)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(3.0),
-                        child: Text("Pincode : ${widget.pinCode}"),
+                        child: Text("Pincode : ${widget.pinCode}",
+                            style: const TextStyle(color: Colors.black)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(3.0),
-                        child: Text("City : ${widget.city}"),
+                        child: Text("City : ${widget.city}",
+                            style: const TextStyle(color: Colors.black)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(3.0),
-                        child: Text("State : ${widget.state}"),
+                        child: Text("State : ${widget.state}",
+                            style: const TextStyle(color: Colors.black)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(3.0),
-                        child: Text("Email : ${widget.email}"),
+                        child: Text("Email : ${widget.email}",
+                            style: const TextStyle(color: Colors.black)),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Text("Website : ${widget.website}"),
+                      Row(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(3.0),
+                            child: Text(
+                              "Website : ",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              _launchWebURL("https://${widget.website}");
+                            },
+                            child: MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: Padding(
+                                padding: const EdgeInsets.all(3.0),
+                                child: Text(
+                                  widget.website,
+                                  style: TextStyle(
+                                    color: Colors.blue.shade200,
+                                    // Change the text color to blue for indicating a link
+                                    decoration: TextDecoration
+                                        .underline, // Add underline decoration for indicating a link
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       // Text(widget.pwd),
                       SizedBox(
-                        // height: 30,
-                        // width: 50,
+                          // height: 30,
+                          // width: 50,
                           child: TextButton(
                               onPressed: () {
                                 showToastMsg(widget.govtAgencyName);
@@ -207,5 +259,13 @@ class _NgoListTileState extends State<govtListTile>
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void _launchWebURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

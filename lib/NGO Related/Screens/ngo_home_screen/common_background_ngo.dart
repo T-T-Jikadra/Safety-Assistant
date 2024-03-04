@@ -67,7 +67,9 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                   Text(
                     "$fetchedCity, $fetchedState",
                     style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -84,7 +86,10 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                 ),
                 child: const Padding(
                   padding: EdgeInsets.all(12.0),
-                  child: Text("Temsting"),
+                  child: Text(
+                    "Temsting",
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
               ),
             ),

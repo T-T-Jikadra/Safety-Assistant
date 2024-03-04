@@ -35,6 +35,7 @@ class _SideBarState extends State<SideBar> {
     super.initState();
     fetchCitizenData();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,13 +59,33 @@ class _SideBarState extends State<SideBar> {
               children: [
                 GestureDetector(
                   onTap: () => {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            const UserProfile(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          var begin = const Offset(1.0, 0.0);
+                          var end = Offset.zero;
+                          var curve = Curves.ease;
+
+                          var tween = Tween(begin: begin, end: end)
+                              .chain(CurveTween(curve: curve));
+                          var offsetAnimation = animation.drive(tween);
+
+                          return SlideTransition(
+                            position: offsetAnimation,
+                            child: child,
+                          );
+                        },
+                      ),
+                    )
                   },
                   child: InfoCard(
                     name: citizenName,
                     bio: citizenMobile,
                   ),
                 ),
-
                 const SizedBox(height: 25),
                 ...sidebarMenus
                     .map((menu) => SideMenu(
@@ -287,10 +308,11 @@ class _SideBarState extends State<SideBar> {
                                   },
                                 ),
                               );
-                            }else if (menu.title.contains("Logout")) {
+                            } else if (menu.title.contains("Logout")) {
                               // ignore: use_build_context_synchronously
                               //To logs out the current user ..
-                              final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+                              final SharedPreferences sharedPref =
+                                  await SharedPreferences.getInstance();
                               sharedPref.remove("userType");
                               await FirebaseAuth.instance.signOut();
                               // ignore: use_build_context_synchronously
@@ -331,7 +353,7 @@ class _SideBarState extends State<SideBar> {
       if (citizenSnapshot.exists) {
         // Access the fields from the document
         setState(() {
-          String fname =citizenSnapshot.get('firstName');
+          String fname = citizenSnapshot.get('firstName');
           String lname = citizenSnapshot.get('lastName');
           citizenName = "$fname $lname";
           citizenMobile = citizenSnapshot.get('phoneNumber');
@@ -347,5 +369,4 @@ class _SideBarState extends State<SideBar> {
       }
     }
   }
-
 }

@@ -70,7 +70,9 @@ class _commonbgState extends State<commonbg> {
                       Text(
                         "$fetchedCity, $fetchedState",
                         style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -92,10 +94,11 @@ class _commonbgState extends State<commonbg> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Text("Temsting"),
+                          const Text("Temsting",
+                              style: TextStyle(color: Colors.black)),
                           TextButton(
                               onPressed: () {
-                                Get.to(()=> const fetch_Location());
+                                Get.to(() => const fetch_Location());
                               },
                               child: const Text("Request for and Emergency"))
                         ],
