@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Utils/rive_utils.dart';
 import '../../../Components/info_card.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
+import '../Govt_list_GovtAgency/Govt_list_GovtAgency.dart';
 import '../govt_apply_grant.dart';
 import 'menu_govt.dart';
 
@@ -127,31 +128,31 @@ class _SideBar_govtState extends State<SideBar_govt> {
                               //     },
                               //   ),
                               // );
-                            } else if (menu_govt.title.contains("NGO")) {
+                            } else if (menu_govt.title.contains("Other")) {
                               // ignore: use_build_context_synchronously
-                              // Navigator.of(context).push(
-                              //   PageRouteBuilder(
-                              //     pageBuilder: (context, animation,
-                              //             secondaryAnimation) =>
-                              //         const NGO_GA_ListScreen(),
-                              //     transitionsBuilder: (context, animation,
-                              //         secondaryAnimation, child) {
-                              //       var begin = const Offset(1.0, 0.0);
-                              //       var end = Offset.zero;
-                              //       var curve = Curves.ease;
-                              //
-                              //       var tween = Tween(begin: begin, end: end)
-                              //           .chain(CurveTween(curve: curve));
-                              //       var offsetAnimation =
-                              //           animation.drive(tween);
-                              //
-                              //       return SlideTransition(
-                              //         position: offsetAnimation,
-                              //         child: child,
-                              //       );
-                              //     },
-                              //   ),
-                              // );
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      const govt_ListofAgency(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                        animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
                             } else if (menu_govt.title.contains("Req")) {
                               // ignore: use_build_context_synchronously
                               // Navigator.of(context).push(

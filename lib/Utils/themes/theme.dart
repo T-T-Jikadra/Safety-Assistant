@@ -23,6 +23,7 @@ class TAppTheme {
     elevatedButtonTheme: TElevatedButtonTheme.lightElevatedButtonTheme,
     outlinedButtonTheme: TOutlinedButtonTheme.lightOutlinedButtonTheme,
     inputDecorationTheme: TTextFormFieldTheme.lightInputDecorationTheme,
+    // textButtonTheme: TTextButtonTheme.lightTextButtonTheme,
     scaffoldBackgroundColor: Colors.white,
     //chipTheme: TChipTheme.lightChipTheme
   );
@@ -41,6 +42,7 @@ class TAppTheme {
     elevatedButtonTheme: TElevatedButtonTheme.darkElevatedButtonTheme,
     outlinedButtonTheme: TOutlinedButtonTheme.darkOutlinedButtonTheme,
     inputDecorationTheme: TTextFormFieldTheme.darkInputDecorationTheme,
+    // textButtonTheme: TTextButtonTheme.darkTextButtonTheme
     //chipTheme: TChipTheme.darkChipTheme
   );
 }

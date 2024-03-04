@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Citizen Related/Screens/citizen_login_screen/otp_screen.dart';
+import '../../Components/Check for Internet/check_internet.dart';
 import '../../Govt Body Related/Screens/govt_home_screen/home_screen_govt.dart';
 import '../../NGO Related/Screens/ngo_home_screen/home_screen_ngo.dart';
 import '../../Utils/themes/theme.dart';
@@ -33,6 +34,7 @@ class splash extends StatelessWidget {
       //Paths of the screens in key value pair ..
       routes: <String, WidgetBuilder>{
         '/otpScreen': (BuildContext ctx) => OtpScreen(),
+        '/liquidpages': (BuildContext ctx) => const liquidpages(),
         '/homeScreen': (BuildContext ctx) => const CitizenHomeScreen(),
         '/GovtHomeScreen': (BuildContext ctx) => const GovtHomeScreen(),
         '/NGOHomeScreen': (BuildContext ctx) => const NGOHomeScreen(),
@@ -59,6 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Timer(const Duration(milliseconds: 5),
           () => navigateToPageBasedOnUserType(finalUserType));
     });
+    InternetPopup().initialize(context: context);
   }
 
   @override
@@ -203,8 +206,12 @@ class _SplashScreenState extends State<SplashScreen> {
       if (user != null) {
         //String? userEmail = auth.currentUser!.email;
         String? phone = auth.currentUser!.phoneNumber;
-        print("citizen phone : ");
-        print(phone);
+        if (kDebugMode) {
+          print("citizen phone : ");
+        }
+        if (kDebugMode) {
+          print(phone);
+        }
         // Navigate to Citizen screen
         Get.offAll(() => const CitizenHomeScreen());
       }
@@ -226,8 +233,12 @@ class _SplashScreenState extends State<SplashScreen> {
     if (user != null) {
       String? userEmail = auth.currentUser!.email;
       String? phone = auth.currentUser!.phoneNumber;
-      print("citizen phone : ");
-      print(phone);
+      if (kDebugMode) {
+        print("citizen phone : ");
+      }
+      if (kDebugMode) {
+        print(phone);
+      }
 
       if (kDebugMode) {
         print("user is : $user");

@@ -1259,7 +1259,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                   return;
                                 } else {
                                   //Storing data to database
-                                  GovtRegistration userData = GovtRegistration(
+                                  GovtRegistration GovtData = GovtRegistration(
                                       GovtAgencyName:
                                           nameOfGovtTextController.text.trim(),
                                       GovtAgencyARegNo:
@@ -1290,7 +1290,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
 
                                   // Convert the object to JSON
                                   Map<String, dynamic> GovtDataJson =
-                                      userData.toJson();
+                                      GovtData.toJsonGovt();
 
                                   // Store data in Firestore
                                   try {

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
 import '../../../Components/Notification_related/message_screen.dart';
+import '../../../Components/Notification_related/notification_services.dart';
 
 class commonbg_govt extends StatefulWidget {
   const commonbg_govt({super.key});
@@ -17,6 +18,7 @@ class commonbg_govt extends StatefulWidget {
 }
 
 class _commonbg_govtState extends State<commonbg_govt> {
+  NotificationServices notificationServices = NotificationServices();
   String fetchedState = "";
   String fetchedCity = "";
 
@@ -25,6 +27,8 @@ class _commonbg_govtState extends State<commonbg_govt> {
     // TODO: implement initState
     super.initState();
     fetchGovtData();
+    //for notification permission pop up
+    notificationServices.requestNotificationPermission();
   }
 
   @override

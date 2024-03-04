@@ -59,11 +59,11 @@ class _msgScreenState extends State<msgScreen> {
     //at 12pm
     //NotificationServices().initLocalNotification(context, null); // Initialize local notifications
 
-    //for notification permission pop up
-    notificationServices.requestNotificationPermission();
+    // //for notification permission pop up
+    // notificationServices.requestNotificationPermission();
 
-    //for ...
-    notificationServices.firebaseInit(context);
+    //listen to  incoming msg...
+     notificationServices.firebaseInit(context);
 
     //for  notification when background and terminated case of application
     notificationServices.setupInteractMessage(context);

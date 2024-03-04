@@ -4,21 +4,20 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../Utils/constants.dart';
-
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
-
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  @override
-  Widget build(BuildContext context) => const Scaffold(
-        body: UserProfile(),
-      );
-}
-
+//
+// class ProfileScreen extends StatefulWidget {
+//   const ProfileScreen({super.key});
+//
+//   @override
+//   State<ProfileScreen> createState() => _ProfileScreenState();
+// }
+//
+// class _ProfileScreenState extends State<ProfileScreen> {
+//   @override
+//   Widget build(BuildContext context) => const Scaffold(
+//         body: UserProfile(),
+//       );
+// }
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
 
@@ -33,7 +32,6 @@ class _UserProfileState extends State<UserProfile> {
   String fetchedLname = "";
   String fetchedGender = "";
   String? fetchedPhone = "";
-
   //String fetchedBirthDate = "";
   String fetchedAge = "";
   String fetchedState = "";
@@ -232,13 +230,13 @@ class _UserProfileState extends State<UserProfile> {
     }
   }
 
-  int calculateAge(DateTime birthDate) {
-    final now = DateTime.now();
-    int age = now.year - birthDate.year;
-    if (now.month < birthDate.month ||
-        (now.month == birthDate.month && now.day < birthDate.day)) {
-      age--;
-    }
-    return age;
-  }
+  // int calculateAge(DateTime birthDate) {
+  //   final now = DateTime.now();
+  //   int age = now.year - birthDate.year;
+  //   if (now.month < birthDate.month ||
+  //       (now.month == birthDate.month && now.day < birthDate.day)) {
+  //     age--;
+  //   }
+  //   return age;
+  // }
 }

@@ -8,8 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
 import '../../../Components/Notification_related/message_screen.dart';
+import '../../../Components/Notification_related/notification_services.dart';
 
-  class commonbg_ngo extends StatefulWidget {
+class commonbg_ngo extends StatefulWidget {
   const commonbg_ngo({super.key});
 
   @override
@@ -17,6 +18,7 @@ import '../../../Components/Notification_related/message_screen.dart';
 }
 
 class _commonbg_ngoState extends State<commonbg_ngo> {
+  NotificationServices notificationServices = NotificationServices();
   String fetchedState = "";
   String fetchedCity = "";
 
@@ -25,6 +27,8 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
     // TODO: implement initState
     super.initState();
     fetchNGOData();
+    //for notification permission pop up
+    notificationServices.requestNotificationPermission();
   }
 
   @override
@@ -49,9 +53,6 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
             child: const SizedBox(),
           ),
         ),
-
-
-
 
         //home page starts from here
         Column(
@@ -92,8 +93,8 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
               child: ElevatedButton(
                 child: const Text("It's NGO Home Page"),
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const msgScreen()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const msgScreen()));
                 },
               ),
             ),
@@ -131,5 +132,4 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
       }
     }
   }
-
 }

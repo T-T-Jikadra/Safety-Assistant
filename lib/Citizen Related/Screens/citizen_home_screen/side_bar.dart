@@ -9,7 +9,7 @@ import '../../../Components/Notification_related/message_screen.dart';
 import '../../../Utils/rive_utils.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../../Screens/citizen_FAQ_screen.dart';
-import '../../Screens/citizen_NGO-GA_list_screen.dart';
+import '../citizen_NGO-GA_list/citizen_NGO-GA_list_screen.dart';
 import '../../Screens/citizen_about_us_screen.dart';
 import '../../Screens/citizen_donation_history_screen.dart';
 import '../../Screens/citizen_req_history_screen.dart';
@@ -112,7 +112,7 @@ class _SideBarState extends State<SideBar> {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const ProfileScreen(),
+                                      const UserProfile(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);

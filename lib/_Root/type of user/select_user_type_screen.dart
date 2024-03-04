@@ -1,9 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:fff/Admin%20Related/Lower%20Level%20Admin/lowerAdmin.dart';
 import 'package:fff/_Root/type%20of%20user/typecolumnlist_item_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../Govt Body Related/Screens/govt_login_screen/govt_login.dart';
 import '../../../NGO Related/Screens/ngo_login_screen/ngo_login.dart';
 import '../../Citizen Related/Screens/citizen_login_screen/login_screen.dart';
+import '../../Components/Check for Internet/check_internet.dart';
+import '../../Components/Notification_related/notification_services.dart';
 
 class SelectOptionPageScreen extends StatefulWidget {
   const SelectOptionPageScreen({Key? key}) : super(key: key);
@@ -13,10 +18,19 @@ class SelectOptionPageScreen extends StatefulWidget {
 }
 
 class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
-
+  NotificationServices notificationServices = NotificationServices();
   int? _selectedIndex; // Index of the selected role in the list
   String? _selectedRole; // The selected role
 
+  @override
+  void initState() {
+    print(_selectedRole);
+    // TODO: implement initState
+    super.initState();
+    InternetPopup().initialize(context: context);
+    notificationServices.requestNotificationPermission();
+
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -80,12 +94,9 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                     const SizedBox(height: 50),
                     _buildTypeColumnList(context), // Building the list of roles
                     const SizedBox(height: 15),
-                    _selectedRole !=
-                            null // Show selected role if one is selected
-                        ? Text(
-                            "Selected Role: $_selectedRole",
-                          )
-                        : const SizedBox.shrink(),
+                    // _selectedRole !=null
+                    //     ? Text("Selected Role: $_selectedRole")
+                    //     : const SizedBox.shrink(),
                     const SizedBox(
                       height: 30,
                     ),
@@ -103,7 +114,20 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(50),
                     child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return const Center(
+                                child: CircularProgressIndicator(color: Colors.white),
+                              );
+                            },
+                          );
+                          await Future.delayed(const Duration(milliseconds: 400));
+                          Navigator.pop(context);
+                          //showErrorDialog(context, 'Mobile number can\'t be empty.');
+
                           // showToastMsg("gey"),
                           // Navigate based on selected role
                           if (_selectedRole!.contains("Citizen")) {
@@ -124,7 +148,8 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                                 MaterialPageRoute(
                                     builder: (context) =>
                                     const GovtLoginPageScreen()));
-                          } else {
+                          } else if(_selectedRole!.isEmpty) {
+
                             final snackBar = SnackBar(
                               dismissDirection: DismissDirection.vertical,
                               elevation: 35,
@@ -199,6 +224,38 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
           );
         },
       ),
+    );
+  }
+
+  @override
+  void dispose() {
+    // Dispose any resources here
+    super.dispose();
+    _selectedRole = null;
+
+  }
+
+  void showErrorDialog(BuildContext context, String message) {
+    // Set up the AlertDialog
+    final CupertinoAlertDialog alert = CupertinoAlertDialog(
+      title: const Text('Error : '),
+      content: Text('\n$message'),
+      actions: <Widget>[
+        CupertinoDialogAction(
+          isDefaultAction: true,
+          child: const Text('Okay'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        )
+      ],
+    );
+    // Show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

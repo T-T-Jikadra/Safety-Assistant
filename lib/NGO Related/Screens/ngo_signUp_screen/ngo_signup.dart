@@ -1210,7 +1210,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                   return;
                                 } else {
                                   //Storing data to database
-                                  NGORegistration userData = NGORegistration(
+                                  NGORegistration NGOData = NGORegistration(
                                       ngoName: nameOfNGOTextController.text,
                                       ngoRegNo: regNoTextController.text,
                                       services: servicesTextController.text,
@@ -1231,7 +1231,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
 
                                   // Convert the object to JSON
                                   Map<String, dynamic> NGODataJson =
-                                      userData.toJson();
+                                      NGOData.toJsonNGO();
 
                                   // Store data in Firestore
                                   try {

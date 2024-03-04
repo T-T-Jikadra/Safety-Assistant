@@ -6,6 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import 'navigate_to.dart';
+
 // ignore: camel_case_types
 class NotificationServices {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -14,8 +16,9 @@ class NotificationServices {
 
   AndroidNotificationChannel channel = const AndroidNotificationChannel(
       //Random.secure().nextInt(100000).toString(),
-      "22",
-      'High Importance', importance: Importance.max);
+      "101",
+      'High Importance',
+      importance: Importance.max);
 
   //To check the notification permission state
   void requestNotificationPermission() async {
@@ -31,18 +34,18 @@ class NotificationServices {
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       if (kDebugMode) {
-        print("User Granted Permission ...");
+        print("User Granted notification permission ...");
       }
       //for ios
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
       if (kDebugMode) {
-        print("User Granted Provisional Permission ...");
+        print("User Granted Provisional notification permission ...");
       }
     } else {
       AppSettings.openNotificationSettings();
       if (kDebugMode) {
-        print("User Denied Permission ...");
+        print("User Denied notification permission ...");
       }
     }
   }
@@ -64,14 +67,12 @@ class NotificationServices {
     await _flutterLocalNotificationsPlugin.initialize(initializationSetting,
         onDidReceiveNotificationResponse: (payload) async {
       handleMessage(context, message);
-      // if (payload != null) {
-      //   Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //         builder: (context) => secondScreen(id: message.data['type']),
-      //       ));
-      // }
-    });
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => secondScreen(id: message.data['type']),
+          ));
+        });
   }
 
   void firebaseInit(BuildContext context) {
@@ -107,7 +108,7 @@ class NotificationServices {
   Future<void> showNotification(RemoteMessage message) async {
     AndroidNotificationChannel channel = const AndroidNotificationChannel(
         //Random.secure().nextInt(100000).toString(),
-        '69',
+        '101',
         'High Importance',
         importance: Importance.max);
 

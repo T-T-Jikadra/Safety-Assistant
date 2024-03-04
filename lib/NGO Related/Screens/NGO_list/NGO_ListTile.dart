@@ -1,7 +1,8 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: deprecated_member_use
 
-import 'package:flutter/foundation.dart';
+import 'package:fff/Utils/Utils.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NgoListTile extends StatefulWidget {
   final String index;
@@ -69,81 +70,148 @@ class _NgoListTileState extends State<NgoListTile>
           }
         });
       },
-      child: Column(
-        children: [
-          SingleChildScrollView(
-            child: ListTile(
-              leading: CircleAvatar(
-                child: Text(widget.index),
-              ),
-              title: Text(widget.nameOfNGO,
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.purpleAccent.shade700.withOpacity(0.5))),
-              subtitle: AnimatedContainer(
-                decoration: const BoxDecoration(
-                    // color: Colors.black38
+      child: Card(
+        color: Colors.white,
+        margin: const EdgeInsets.only(bottom: 12),
+        // Set margin to zero to remove white spaces
+        elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListTile(
+                    leading: CircleAvatar(
+                      maxRadius: 14,
+                      backgroundColor: Colors.grey,
+                      child: Text(widget.index),
                     ),
-                duration: const Duration(milliseconds: 300),
-                height: isExpanded ? null : 0,
-                child: Flex(
-                  direction: Axis.vertical,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(widget.regNo),
-                    const SizedBox(
-                      height: 30,
+                    textColor: Colors.white,
+                    title: Text(
+                      widget.nameOfNGO,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black.withOpacity(0.6),
+                      ),
                     ),
-                    Text(widget.nameOfNGO),
-                    Text(widget.email),
-                    Text(widget.serviceList),
-                    Row(
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: Text("Service List: ${widget.serviceList}"),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: Row(
                       children: [
-                        Text(widget.contact),
-                        const SizedBox(width: 50),
-                        ElevatedButton(
-                            onPressed: () {}, child: const Text("Call")),
+                        Text("Contact: ${widget.contact}"),
+                        TextButton(
+                          onPressed: () {
+                            launch('tel:${widget.contact}');
+                          },
+                          child: Text('Contact now',
+                              style: TextStyle(
+                                  fontSize: 13, color: Colors.green.shade800)),
+                        ),
                       ],
                     ),
-                    Text(widget.website),
-                    Text(widget.email),
-                    Text(widget.state),
-                    Text(widget.city),
-                    Text(widget.pinCode),
-                    Text(widget.address),
-                    Text(widget.pwd),
-                  ],
+                  ),
+                ],
+              ),
+            ),
+            AnimatedSize(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              //vsync: this,
+              child: SizedBox(
+                height: isExpanded ? null : 0,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text("Registration Number: ${widget.regNo}"),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text("Address : ${widget.address}"),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text("Pincode : ${widget.pinCode}"),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text("City : ${widget.city}"),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text("State : ${widget.state}"),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text("Email : ${widget.email}"),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text("Website : ${widget.website}"),
+                      ),
+                      // Text(widget.pwd),
+                      SizedBox(
+                          // height: 30,
+                          // width: 50,
+                          child: OutlinedButton(
+                              onPressed: () {
+                                showToastMsg(widget.nameOfNGO);
+                              },
+                              child: const Text("View More")))
+                    ],
+                  ),
                 ),
               ),
-              // Add more fields as needed
             ),
-          ),
-          if (isExpanded)
-            AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) {
-                return SizedBox(
-                  height: _heightAnimation.value,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.close),
+            Padding(
+              padding: const EdgeInsets.only(right: 8, top: 4),
+              // Adjusting the padding
+              child: SizedBox(
+                height: 0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Transform.translate(
+                      offset: const Offset(0, -44),
+                      // Moving the icon slightly up
+                      child: IconButton(
+                        icon: Icon(
+                            isExpanded ? Icons.expand_less : Icons.expand_more),
                         onPressed: () {
                           setState(() {
-                            isExpanded = false;
-                            _controller.reverse();
+                            isExpanded = !isExpanded;
+                            if (isExpanded) {
+                              _controller.forward();
+                            } else {
+                              _controller.reverse();
+                            }
                           });
                         },
                       ),
-                    ],
-                  ),
-                );
-              },
+                    ),
+                  ],
+                ),
+              ),
             ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -152,12 +220,5 @@ class _NgoListTileState extends State<NgoListTile>
   void dispose() {
     _controller.dispose();
     super.dispose();
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<Animation<double>>(
-        '_heightAnimation', _heightAnimation));
   }
 }

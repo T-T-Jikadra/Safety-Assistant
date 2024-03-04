@@ -1,9 +1,12 @@
+// ignore_for_file: library_private_types_in_public_api, camel_case_types, file_names
 import 'package:flutter/material.dart';
 
-class NgoListTile extends StatefulWidget {
+import '../../../Utils/Utils.dart';
+
+class govtListTile extends StatefulWidget {
   final String index;
   final String regNo;
-  final String nameOfNGO;
+  final String govtAgencyName;
   final String serviceList;
   final String contact;
   final String website;
@@ -14,11 +17,11 @@ class NgoListTile extends StatefulWidget {
   final String address;
   final String pwd;
 
-  const NgoListTile({
+  const govtListTile({
     Key? key,
     required this.index,
     required this.regNo,
-    required this.nameOfNGO,
+    required this.govtAgencyName,
     required this.serviceList,
     required this.contact,
     required this.website,
@@ -34,7 +37,7 @@ class NgoListTile extends StatefulWidget {
   _NgoListTileState createState() => _NgoListTileState();
 }
 
-class _NgoListTileState extends State<NgoListTile>
+class _NgoListTileState extends State<govtListTile>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _heightAnimation;
@@ -66,69 +69,136 @@ class _NgoListTileState extends State<NgoListTile>
           }
         });
       },
-      child: Column(
-        children: [
-          SingleChildScrollView(
-            child: Container(
-              child: ListTile(
-                leading: CircleAvatar(
-                  child: Text(widget.index),
-                ),
-                title: Text(widget.nameOfNGO),
-                subtitle: AnimatedContainer(
-                  decoration: const BoxDecoration(
-                      // color: Colors.black38
+      child: Card(
+        color: Colors.white,
+        margin: const EdgeInsets.only(bottom: 12,left: 10,right: 10),
+        // Set margin to zero to remove white spaces
+        elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListTile(
+                    leading: CircleAvatar(
+                      maxRadius: 14,
+                      backgroundColor: Colors.grey,
+                      child: Text(widget.index),
+                    ),
+                    textColor: Colors.white,
+                    title: Text(
+                      widget.govtAgencyName,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black.withOpacity(0.6),
                       ),
-                  duration: const Duration(milliseconds: 300),
-                  height: isExpanded ? null : 0,
-                  child: Flex(
-                    direction: Axis.vertical,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: Text("Service List: ${widget.serviceList}"),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: Text("Contact: ${widget.contact}"),
+                  ),
+                ],
+              ),
+            ),
+            AnimatedSize(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              //vsync: this,
+              child: SizedBox(
+                height: isExpanded ? null : 0,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.regNo),
-                      Text(widget.nameOfNGO),
-                      Text(widget.email),
-                      Text(widget.serviceList),
-                      Text(widget.contact),
-                      Text(widget.website),
-                      Text(widget.email),
-                      Text(widget.state),
-                      Text(widget.city),
-                      Text(widget.pinCode),
-                      Text(widget.address),
-                      Text(widget.pwd),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text("Registration Number: ${widget.regNo}"),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text("Address : ${widget.address}"),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text("Pincode : ${widget.pinCode}"),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text("City : ${widget.city}"),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text("State : ${widget.state}"),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text("Email : ${widget.email}"),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: Text("Website : ${widget.website}"),
+                      ),
+                      // Text(widget.pwd),
+                      SizedBox(
+                        // height: 30,
+                        // width: 50,
+                          child: TextButton(
+                              onPressed: () {
+                                showToastMsg(widget.govtAgencyName);
+                              },
+                              child: const Text("View More")))
                     ],
                   ),
                 ),
-                // Add more fields as needed
               ),
             ),
-          ),
-          if (isExpanded)
-            AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) {
-                return SizedBox(
-                  height: 1,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.close),
+            Padding(
+              padding: const EdgeInsets.only(right: 8, top: 4),
+              // Adjusting the padding
+              child: SizedBox(
+                height: 0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Transform.translate(
+                      offset: const Offset(0, -44),
+                      // Moving the icon slightly up
+                      child: IconButton(
+                        icon: Icon(
+                            isExpanded ? Icons.expand_less : Icons.expand_more),
                         onPressed: () {
                           setState(() {
-                            isExpanded = false;
-                            _controller.reverse();
+                            isExpanded = !isExpanded;
+                            if (isExpanded) {
+                              _controller.forward();
+                            } else {
+                              _controller.reverse();
+                            }
                           });
                         },
                       ),
-                    ],
-                  ),
-                );
-              },
+                    ),
+                  ],
+                ),
+              ),
             ),
-        ],
+          ],
+        ),
       ),
     );
   }

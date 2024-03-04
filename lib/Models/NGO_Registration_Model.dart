@@ -36,7 +36,7 @@ class NGORegistration {
   }) : registrationTime =
       registrationTime ?? DateTime.now(); // Assign current time if null
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJsonNGO() {
     return {
       'nameOfNGO': ngoName,
       'NGORegNo': ngoRegNo,

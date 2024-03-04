@@ -1,9 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-//
-// void main() {
-//   runApp(MyWebsite());
-// }
+import '../../Utils/Utils.dart';
 
 // ignore: camel_case_types
 class ad_lower extends StatelessWidget {
@@ -128,8 +125,46 @@ class Dashboard extends StatelessWidget {
           ),
         ],
       ),
-      body: const Center(
-        child: Text('Welcome to User Dashboard'),
+      body: Center(
+        child: Column(
+          children: [
+            const Text('Welcome to User Dashboard'),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection("Citizens")
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.active) {
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  leading: CircleAvatar(
+                                    child: Text("${index + 1}"),
+                                  ),
+                                  title: Text(
+                                      "${snapshot.data!.docs[index]["firstName"]}"
+                                          " ${snapshot.data!.docs[index]["lastName"]}"),
+                                  subtitle: Text(
+                                      "${snapshot.data!.docs[index]["phoneNumber"]}"),
+                                );
+                              });
+                        }
+                      } else if (snapshot.hasError) {
+                        showToastMsg(snapshot.hasError.toString());
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      return const Center(child: CircularProgressIndicator());
+                    }),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

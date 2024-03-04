@@ -14,7 +14,6 @@ class UserRegistration {
   final DateTime registrationTime; // New field to store registration time
   final String deviceToken;
 
-
   UserRegistration({
     required this.firstName,
     required this.lastName,
@@ -33,7 +32,7 @@ class UserRegistration {
   }) : registrationTime =
             registrationTime ?? DateTime.now(); // Assign current time if null
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJsonCitizen() {
     return {
       'firstName': firstName,
       'lastName': lastName,

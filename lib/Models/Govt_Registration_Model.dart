@@ -37,7 +37,7 @@ class GovtRegistration {
   }) : registrationTime =
       registrationTime ?? DateTime.now(); // Assign current time if null
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJsonGovt() {
     return {
       'GovtAgencyName': GovtAgencyName,
       'GovtAgencyRegNo': GovtAgencyARegNo,

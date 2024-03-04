@@ -1185,7 +1185,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
 
                                   // Convert the object to JSON
                                   Map<String, dynamic> userDataJson =
-                                      userData.toJson();
+                                      userData.toJsonCitizen();
 
                                   // Store data in Firestore
                                   try {

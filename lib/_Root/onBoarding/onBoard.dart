@@ -5,7 +5,6 @@ import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../Components/Check for Internet/check_internet.dart';
-import '../../Components/Notification_related/notification_services.dart';
 import '../../Utils/themes/theme.dart';
 import '../type of user/select_user_type_screen.dart';
 
@@ -38,7 +37,6 @@ class liquidpages extends StatefulWidget {
 class _liquidpagesState extends State<liquidpages> {
   final lController = LiquidController();
   int currentPage = 0;
-  NotificationServices notificationServices = NotificationServices();
 
   @override
   //initState method
@@ -46,11 +44,11 @@ class _liquidpagesState extends State<liquidpages> {
     // TODO: implement initState
     super.initState();
     //for internet connection checkup
-    InternetPopup().initialize(context: context);
   }
 
   @override
   Widget build(BuildContext context) {
+    InternetPopup().initialize(context: context);
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
