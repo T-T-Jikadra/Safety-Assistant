@@ -103,6 +103,8 @@ class CustomTextFormField extends StatelessWidget {
 
   InputDecoration get decoration => InputDecoration(
         hintText: hintText ?? "",
+        hintStyle: const TextStyle(color: Colors.black),
+        // Text color
         prefixIcon: prefix,
         prefixIconConstraints: prefixConstraints,
         suffixIcon: suffix,
@@ -114,26 +116,28 @@ class CustomTextFormField extends StatelessWidget {
               right: 18,
               bottom: 18,
             ),
-        fillColor: fillColor,
-        filled: filled,
+        fillColor: Colors.white,
+        // Background color
+        filled: true,
+        // Ensure filled is set to true
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4),
           borderSide: const BorderSide(
-            // color: appTheme.gray500,
+            color: Colors.black, // Outline color
             width: 1,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4),
           borderSide: const BorderSide(
-            // color: appTheme.gray500,
+            color: Colors.black, // Outline color
             width: 1,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4),
           borderSide: const BorderSide(
-            // color: appTheme.gray500, // Use the same color as enabledBorder
+            color: Colors.black, // Outline color
             width: 1,
           ),
         ),

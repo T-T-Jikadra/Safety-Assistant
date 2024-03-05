@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:rive/rive.dart';
 import '../../../Components/Notification_related/message_screen.dart';
 import '../../../Components/Notification_related/notification_services.dart';
-import '../../../Components/location_services/fetch_current_location.dart';
+import '../citizen_request.dart';
 
 class commonbg extends StatefulWidget {
   const commonbg({super.key});
@@ -98,7 +98,7 @@ class _commonbgState extends State<commonbg> {
                               style: TextStyle(color: Colors.black)),
                           TextButton(
                               onPressed: () {
-                                Get.to(() => const fetch_Location());
+                                Get.to(() => const userRequest_Screen());
                               },
                               child: const Text("Request for and Emergency"))
                         ],

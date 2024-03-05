@@ -121,9 +121,8 @@ class _NgoListTileState extends State<NgoListTile>
                               'tel:${widget.contact}',
                             );
                           },
-                          child: Text('Contact now',
-                              style: TextStyle(
-                                  fontSize: 13, color: Colors.green.shade800)),
+                          child: Icon(Icons.call,
+                              size: 14, color: Colors.green.shade800),
                         ),
                       ],
                     ),

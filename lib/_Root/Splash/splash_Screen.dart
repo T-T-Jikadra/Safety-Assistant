@@ -22,7 +22,8 @@ class splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'CAS',
+      //title:'CAS',
+      title: 'Citizen Emergency & response system',
       debugShowCheckedModeBanner: false,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
@@ -152,15 +153,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   //function for animation
   Future startAnimationIn() async {
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 300));
     setState(() {
       animate = true;
     });
-    await Future.delayed(const Duration(milliseconds: 3500));
+    await Future.delayed(const Duration(milliseconds: 2700));
     setState(() {
       animate = false;
     });
-    await Future.delayed(const Duration(milliseconds: 1000));
+    await Future.delayed(const Duration(milliseconds: 900));
 
     final SharedPreferences sharedPref = await SharedPreferences.getInstance();
     var obtainedUserType = sharedPref.getString("userType");

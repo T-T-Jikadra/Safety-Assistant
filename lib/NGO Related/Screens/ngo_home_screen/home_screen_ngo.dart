@@ -4,8 +4,8 @@ import 'package:fff/NGO%20Related/Screens/ngo_home_screen/side_bar_ngo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
-import '../../../models/menu_btn.dart';
 import '../../../Utils/constants.dart';
+import '../../../Utils/other/menu_btn.dart';
 import 'menu_ngo.dart';
 
 // class entry extends StatelessWidget {

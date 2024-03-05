@@ -41,15 +41,6 @@ class _UserProfileState extends State<UserProfile> {
   String fetchedRegTime = "";
   DateTime birthDate = DateTime.now();
 
-  // Function to update user profile fields
-  void _updateProfile() {
-    // Implement your update logic here
-    // For simplicity, we're just changing the user's name and reloading the UI
-    setState(() {
-      // Update other fields as needed
-    });
-  }
-
   @override
   void initState() {
     // TODO: implement initState
@@ -82,36 +73,39 @@ class _UserProfileState extends State<UserProfile> {
                   backgroundImage: AssetImage("assets/images/123.png"),
                 ),
                 const SizedBox(height: 20),
-                TextFormField(
-                  initialValue: fetchedFname,
-                  enabled: false,
-                  decoration: const InputDecoration(labelText: "Fname"),
+                Text(
+                  'name: $fetchedFname $fetchedLname',
+                  style: const TextStyle(fontSize: 16),
                 ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  initialValue: fetchedLname,
-                  enabled: false,
-                ),
-                const SizedBox(height: 20),
                 TextFormField(
                   initialValue: fetchedGender,
-                  enabled: false,
+                  // enabled: false,
                 ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  initialValue: fetchedPhone,
-                  enabled: false,
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  initialValue: fetchedAge,
-                  enabled: false,
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  initialValue: fetchedState,
-                  enabled: false,
-                ),
+                // const SizedBox(height: 20),
+                // TextFormField(
+                //   initialValue: fetchedLname,
+                //   enabled: false,
+                // ),
+                // const SizedBox(height: 20),
+                // TextFormField(
+                //   initialValue: fetchedGender,
+                //   enabled: false,
+                // ),
+                // const SizedBox(height: 20),
+                // TextFormField(
+                //   initialValue: fetchedPhone,
+                //   enabled: false,
+                // ),
+                // const SizedBox(height: 20),
+                // TextFormField(
+                //   initialValue: fetchedAge,
+                //   enabled: false,
+                // ),
+                // const SizedBox(height: 20),
+                // TextFormField(
+                //   initialValue: fetchedState,
+                //   enabled: false,
+                // ),
                 const SizedBox(height: 20),
                 const Text(
                   "Profile Data for temsting ..",
@@ -165,20 +159,20 @@ class _UserProfileState extends State<UserProfile> {
                   'Reg Time  : $fetchedRegTime',
                   style: const TextStyle(fontSize: 16),
                 ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: _updateProfile,
-                  child: const Text('Update Profile'),
-                ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    // Implement logout logic here
-                    // For simplicity, navigate to the login screen
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Logout'),
-                ),
+                // const SizedBox(height: 24),
+                // ElevatedButton(
+                //   onPressed: _updateProfile,
+                //   child: const Text('Update Profile'),
+                // ),
+                // const SizedBox(height: 16),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     // Implement logout logic here
+                //     // For simplicity, navigate to the login screen
+                //     Navigator.of(context).pop();
+                //   },
+                //   child: const Text('Logout'),
+                // ),
               ],
             ),
           ),

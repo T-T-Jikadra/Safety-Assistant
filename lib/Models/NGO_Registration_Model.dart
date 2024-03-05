@@ -13,28 +13,27 @@ class NGORegistration {
   final String password;
   final String confirmPassword;
   final bool termsAccepted;
-  final DateTime registrationTime; // New field to store registration time
+  final DateTime registrationTime;
   final String deviceToken;
 
-  NGORegistration({
-    required this.ngoName,
-    required this.ngoRegNo,
-    required this.services,
-    required this.contactNumber,
-    required this.email,
-    required this.website,
-    required this.state,
-    required this.city,
-    required this.pinCode,
-    required this.fullAddress,
-    required this.password,
-    required this.confirmPassword,
-    required this.termsAccepted,
-    required this.deviceToken,
-    DateTime?
-    registrationTime, // Nullable DateTime to allow automatic assignment
-  }) : registrationTime =
-      registrationTime ?? DateTime.now(); // Assign current time if null
+  NGORegistration(
+      {required this.ngoName,
+      required this.ngoRegNo,
+      required this.services,
+      required this.contactNumber,
+      required this.email,
+      required this.website,
+      required this.state,
+      required this.city,
+      required this.pinCode,
+      required this.fullAddress,
+      required this.password,
+      required this.confirmPassword,
+      required this.termsAccepted,
+      required this.deviceToken,
+      DateTime? registrationTime})
+      : registrationTime =
+            registrationTime ?? DateTime.now();
 
   Map<String, dynamic> toJsonNGO() {
     return {
