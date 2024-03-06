@@ -5,8 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:rive/rive.dart';
 import '../../../Components/Notification_related/message_screen.dart';
 import '../../../Components/Notification_related/notification_services.dart';
 import '../citizen_request.dart';
@@ -39,20 +37,20 @@ class _commonbgState extends State<commonbg> {
         backgroundColor: Colors.white12,
         body: Stack(
           children: [
-            Positioned(
-                width: MediaQuery.of(context).size.width * 1.7,
-                bottom: 200,
-                left: 100,
-                child: Image.asset("assets/Backgrounds/Spline.png")),
+            // Positioned(
+            //     width: MediaQuery.of(context).size.width * 1.7,
+            //     bottom: 200,
+            //     left: 100,
+            //     child: Image.asset("assets/Backgrounds/Spline.png")),
+            // Positioned.fill(
+            //   child: BackdropFilter(
+            //     filter: ImageFilter.blur(sigmaX: 78, sigmaY: 78),
+            //   ),
+            // ),
+            // const Rive Animation.asset("assets/RiveAssets/shapes.riv"),
             Positioned.fill(
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 78, sigmaY: 78),
-              ),
-            ),
-            const RiveAnimation.asset("assets/RiveAssets/shapes.riv"),
-            Positioned.fill(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 78, sigmaY: 78),
+                filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
                 child: const SizedBox(),
               ),
             ),
@@ -98,22 +96,24 @@ class _commonbgState extends State<commonbg> {
                               style: TextStyle(color: Colors.black)),
                           TextButton(
                               onPressed: () {
-                                Get.to(() => const userRequest_Screen());
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const userRequest_Screen()));
                               },
-                              child: const Text("Request for and Emergency"))
+                              child: const Text("Request for and Emergency")),
+                          OutlinedButton(
+                            child: const Text("Request for and Emergency"),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const msgScreen()));
+                            },
+                          ),
                         ],
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 30),
-                ElevatedButton(
-                  child: const Text("Click"),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const msgScreen()));
-                  },
-                ),
               ],
             ),
           ],

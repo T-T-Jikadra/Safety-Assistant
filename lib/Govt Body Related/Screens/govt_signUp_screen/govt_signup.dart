@@ -409,43 +409,6 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                             ),
                           ),
                           const SizedBox(height: 12),
-                          // Pincode
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 5,
-                              right: 5,
-                            ),
-                            child: SizedBox(
-                              //height: 60,
-                              child: DropdownButtonFormField<String>(
-                                value: selectedPincode.isNotEmpty ? selectedPincode : null,
-                                items: dropdownItemPincode.map((String pincode) {
-                                  return DropdownMenuItem<String>(
-                                    value: pincode,
-                                    child: Text(pincode),
-                                  );
-                                }).toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedPincode = value!;
-                                  });
-                                },
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  hintText: "Select Pin code",
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Select Pin code';
-                                  }
-                                  return null; // Return null if the input is valid
-                                },
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-
-                          //pin
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(

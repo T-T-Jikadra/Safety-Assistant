@@ -242,7 +242,7 @@ class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
                                             "userType", "NGO");
                                         //success
                                         showToastMsg(
-                                            "Govt Agency Logged in successfully ..");
+                                            "NGO Logged in successfully ..");
                                         // Navigate to a new page upon success
                                         Navigator.of(context).push(
                                           PageRouteBuilder(

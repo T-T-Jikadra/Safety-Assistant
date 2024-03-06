@@ -130,49 +130,47 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
 
                           // showToastMsg("gey"),
                           // Navigate based on selected role
-                          if (_selectedRole!.contains("Citizen")) {
-                            Navigator.push(
+                          switch (_selectedRole) {
+                            case "I am Citizen":
+                              Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                    const CitizenLoginScreen()));
-                          } else if (_selectedRole!.contains("NGO")) {
-                            Navigator.push(
+                                MaterialPageRoute(builder: (context) => const CitizenLoginScreen()),
+                              );
+                              break;
+                            case "I am an NGO":
+                              Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                    const NGOLoginPageScreen()));
-                          } else if (_selectedRole!.contains("Gov")) {
-                            Navigator.push(
+                                MaterialPageRoute(builder: (context) => const NGOLoginPageScreen()),
+                              );
+                              break;
+                            case "I am Government Agency":
+                              Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                    const GovtLoginPageScreen()));
-                          } else if(_selectedRole!.isEmpty) {
-
-                            final snackBar = SnackBar(
-                              dismissDirection: DismissDirection.vertical,
-                              elevation: 35,
-                              padding: const EdgeInsets.all(7),
-                              content: const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text(
-                                    'Please select type of user first ..'),
-                              ),
-                              duration: const Duration(seconds: 3),
-                              // Duration for which SnackBar will be visible
-                              action: SnackBarAction(
-                                label: 'Undo',
-                                onPressed: () {
-                                  // Undo functionality
-                                  ScaffoldMessenger.of(context)
-                                      .hideCurrentSnackBar();
-                                },
-                              ),
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
+                                MaterialPageRoute(builder: (context) => const GovtLoginPageScreen()),
+                              );
+                              break;
+                            default:
+                              final snackBar = SnackBar(
+                                dismissDirection: DismissDirection.vertical,
+                                elevation: 35,
+                                padding: const EdgeInsets.all(7),
+                                content: const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('Please select type of user first ..'),
+                                ),
+                                duration: const Duration(seconds: 3),
+                                // Duration for which SnackBar will be visible
+                                action: SnackBarAction(
+                                  label: 'Undo',
+                                  onPressed: () {
+                                    // Undo functionality
+                                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                                  },
+                                ),
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           }
+
                         },
                         child: const Text("Continue .."))),
               ),
@@ -205,7 +203,7 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
               roleName = "I am an NGO";
               break;
             case 2:
-              roleName = "I am Government Agency \t 🏛️";
+              roleName = "I am Government Agency";
               break;
             default:
               roleName = "Unknown";

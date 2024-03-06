@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../Utils/constants.dart';
+import '../constants.dart';
 
-class GovtApplyForGrant extends StatefulWidget {
-  const GovtApplyForGrant({super.key});
+class ApplyForGrant extends StatefulWidget {
+  const ApplyForGrant({super.key});
 
   @override
-  State<GovtApplyForGrant> createState() => _GovtApplyForGrantState();
+  State<ApplyForGrant> createState() => _ApplyForGrantState();
 }
 
-class _GovtApplyForGrantState extends State<GovtApplyForGrant> {
+class _ApplyForGrantState extends State<ApplyForGrant> {
 
   @override
   Widget build(BuildContext context) {

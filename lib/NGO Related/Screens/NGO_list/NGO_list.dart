@@ -96,8 +96,8 @@ class _NGO_ListState extends State<NGO_List> {
           //city
           Padding(
             padding: const EdgeInsets.only(
-              left: 5,
-              right: 5,
+              left: 25,
+              right: 25,
             ),
             child: SizedBox(
               //height: 60,

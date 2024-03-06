@@ -1,12 +1,10 @@
 import 'dart:io';
 import 'package:app_settings/app_settings.dart';
-import 'package:fff/Components/Notification_related/show_details.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
-import 'navigate_to.dart';
+import '../../Utils/common_files/open_req.dart';
 
 // ignore: camel_case_types
 class NotificationServices {
@@ -67,12 +65,12 @@ class NotificationServices {
     await _flutterLocalNotificationsPlugin.initialize(initializationSetting,
         onDidReceiveNotificationResponse: (payload) async {
       handleMessage(context, message);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => secondScreen(id: message.data['type']),
-          ));
-        });
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) => const req_open(),
+      //     ));
+    });
   }
 
   void firebaseInit(BuildContext context) {
@@ -171,9 +169,14 @@ class NotificationServices {
 
   void handleMessage(BuildContext context, RemoteMessage message) {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ShowDetails(msg: message.data["type"]),
-        ));
+      context,
+      MaterialPageRoute(
+        builder: (context) => req_open(
+          title: message.data['title'],
+          add: message.data['address'],
+          pin: message.data['pincode'],
+        ),
+      ),
+    );
   }
 }

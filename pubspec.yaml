@@ -91,8 +91,8 @@ dependencies:
   stacked_bar_chart: ^1.1.0+2
   marquee: ^2.2.3
 
-  geolocator: ^11.0.0
-  geocoding: ^2.2.0
+  #geolocator: ^11.0.0
+  #geocoding: ^2.2.0
   flutter_spinkit: ^5.2.0
 
 
@@ -147,7 +147,7 @@ flutter:
         - asset: assets/Fonts/Inter-Regular.ttf
         - asset: assets/Fonts/Inter-SemiBold.ttf
           weight: 600
-    - family: Poppins
+    - family: Inter-SemiBold
       fonts:
         - asset: assets/Fonts/Poppins-Bold.ttf
           weight: 700

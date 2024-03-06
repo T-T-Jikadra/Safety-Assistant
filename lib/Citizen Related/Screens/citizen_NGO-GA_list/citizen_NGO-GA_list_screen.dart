@@ -48,8 +48,7 @@ class _NGO_GA_ListScreenState extends State<NGO_GA_ListScreen> {
                 borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(25),
                     bottomLeft: Radius.circular(25))),
-            title: const Text("$appbar_display_name - Req History Page",
-                style: TextStyle(color: Colors.black)),
+            title: const Text("$appbar_display_name - Req History Page"),
             bottom: const TabBar(
               tabs: [
                 Tab(text: 'NGO'), // First tab

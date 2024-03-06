@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../Utils/Utils.dart';
-
 class govtListTile extends StatefulWidget {
   final String index;
   final String regNo;
@@ -204,15 +202,7 @@ class _NgoListTileState extends State<govtListTile>
                           ),
                         ],
                       ),
-                      // Text(widget.pwd),
-                      SizedBox(
-                          // height: 30,
-                          // width: 50,
-                          child: TextButton(
-                              onPressed: () {
-                                showToastMsg(widget.govtAgencyName);
-                              },
-                              child: const Text("View More")))
+                      const SizedBox(height: 15)
                     ],
                   ),
                 ),

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../Utils/themes/theme.dart';
-import 'navigate_to.dart';
+import '../../Citizen Related/Screens/citizen_request.dart';
 import 'notification_services.dart';
 
 // void main() async {
@@ -105,15 +105,27 @@ class _msgScreenState extends State<msgScreen> {
       //           bottomLeft: Radius.circular(25))),
       // ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const secondScreen(id: '3'),
-                ));
-          },
-          child: const Text('Tap'),
+        child:  Padding(
+          padding: const EdgeInsets.only(right: 20, left: 20),
+          child: Container(
+            padding: const EdgeInsets.only(bottom: 15),
+            width: double.infinity,
+            child: ClipRRect(
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const userRequest_Screen(),
+                          ));
+                    },
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                                borderRadius:
+                                BorderRadius.circular(18)))),
+                    child: const Text("Proceed for a request"))),
+          ),
         ),
       ),
     );

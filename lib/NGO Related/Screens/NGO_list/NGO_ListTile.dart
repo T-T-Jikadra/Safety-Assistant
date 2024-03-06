@@ -1,6 +1,5 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, file_names, library_private_types_in_public_api
 
-import 'package:fff/Utils/Utils.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -204,17 +203,8 @@ class _NgoListTileState extends State<NgoListTile>
                           ),
                         ],
                       ),
-                      // Text(widget.pwd),
-                      SizedBox(
-                          // height: 30,
-                          // width: 50,
-                          child: OutlinedButton(
-                              onPressed: () {
-                                showToastMsg(widget.nameOfNGO);
-                              },
-                              child: const Text("View more",
-                                  style: TextStyle(color: Colors.black))))
-                    ],
+                      const SizedBox(height: 15)
+                     ],
                   ),
                 ),
               ),

@@ -8,9 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Components/Notification_related/message_screen.dart';
 import '../../../Utils/rive_utils.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
-import '../../Screens/citizen_FAQ_screen.dart';
+import '../../../Utils/common_files/FAQ_screen.dart';
 import '../citizen_NGO-GA_list/citizen_NGO-GA_list_screen.dart';
-import '../../Screens/citizen_about_us_screen.dart';
+import '../../../Utils/common_files/about_us_screen.dart';
 import '../../Screens/citizen_donation_history_screen.dart';
 import '../../Screens/citizen_req_history_screen.dart';
 import '../../Screens/citizen_profile_screen.dart';
@@ -83,7 +83,7 @@ class _SideBarState extends State<SideBar> {
                   },
                   child: InfoCard(
                     name: citizenName,
-                    bio: citizenMobile,
+                    mail: citizenMobile,
                   ),
                 ),
                 const SizedBox(height: 25),
