@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously
 
 import 'dart:async';
 import 'dart:convert';
@@ -265,7 +265,18 @@ class _userRequest_ScreenState extends State<userRequest_Screen>
                   width: double.infinity,
                   child: ClipRRect(
                       child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return const Center(
+                                  child: CircularProgressIndicator(color: Colors.white),
+                                );
+                              },
+                            );
+                            await Future.delayed(const Duration(milliseconds: 1200));
+                            Navigator.pop(context);
                             //sends request/alert to only NGO which are of the currents user's city
                             FirebaseFirestore.instance
                                 .collection('NGO')
