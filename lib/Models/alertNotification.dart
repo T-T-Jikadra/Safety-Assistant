@@ -7,7 +7,7 @@ class AlertNotificationRegistration {
   final String level;
   final String state;
   final String city;
-  final String dos_donts;
+  //final String dos_donts;
   final String senderToken;
   final DateTime sentTime;
 
@@ -16,7 +16,7 @@ class AlertNotificationRegistration {
       required this.typeofDisaster,
       required this.desc,
       required this.level,
-      required this.dos_donts,
+      //required this.dos_donts,
       required this.senderToken,
       required this.state,
       required this.city,
@@ -29,7 +29,7 @@ class AlertNotificationRegistration {
       'typeofDisaster': typeofDisaster,
       'description': desc,
       'level': level,
-      "do&don't": dos_donts,
+      //"do&don't": dos_donts,
       'senderToken': senderToken,
       'state': state,
       'city': city,

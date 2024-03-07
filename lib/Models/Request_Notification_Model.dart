@@ -1,15 +1,14 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, camel_case_types
 class Request_Notification {
   final String ngoName;
   final String ngoRegNo;
   final String services;
   final String contactNumber;
   final String email;
-  final String state;
-  final String city;
   final String pinCode;
-
-  final DateTime requestTime; // New field to store registration time
+  final String city;
+  final String state;
+  final DateTime requestTime;
   final String deviceToken;
 
   Request_Notification({
@@ -22,10 +21,8 @@ class Request_Notification {
     required this.city,
     required this.pinCode,
     required this.deviceToken,
-    DateTime?
-    requestTime, // Nullable DateTime to allow automatic assignment
-  }) : requestTime =
-      requestTime ?? DateTime.now(); // Assign current time if null
+    DateTime? requestTime,
+  }) : requestTime = requestTime ?? DateTime.now();
 
   Map<String, dynamic> toJson() {
     return {

@@ -580,7 +580,9 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                           now.day < birthDate.day)) {
                                     userAge--;
                                   }
-                                  print(userAge);
+                                  if (kDebugMode) {
+                                    print(userAge);
+                                  }
 
                                   //Storing data to database
                                   UserRegistration userData = UserRegistration(
