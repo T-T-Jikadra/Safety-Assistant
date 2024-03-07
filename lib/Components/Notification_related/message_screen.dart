@@ -63,10 +63,10 @@ class _msgScreenState extends State<msgScreen> {
     // notificationServices.requestNotificationPermission();
 
     //listen to  incoming msg...
-     notificationServices.firebaseInit(context);
+    //notificationServices.firebaseInit(context);
 
     //for  notification when background and terminated case of application
-    notificationServices.setupInteractMessage(context);
+    //notificationServices.setupInteractMessage(context);
 
     //for token refresh
     //notificationServices.isTokenRefresh();
@@ -74,8 +74,8 @@ class _msgScreenState extends State<msgScreen> {
     //for token mechanism
     notificationServices.getDeviceToken().then((value) {
       if (kDebugMode) {
-        print('Device token :');
-        print(value);
+        // print('Device token :');
+        //print(value);
       }
     });
   }
@@ -105,7 +105,7 @@ class _msgScreenState extends State<msgScreen> {
       //           bottomLeft: Radius.circular(25))),
       // ),
       body: Center(
-        child:  Padding(
+        child: Padding(
           padding: const EdgeInsets.only(right: 20, left: 20),
           child: Container(
             padding: const EdgeInsets.only(bottom: 15),
@@ -113,17 +113,32 @@ class _msgScreenState extends State<msgScreen> {
             child: ClipRRect(
                 child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const userRequest_Screen(),
-                          ));
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  const userRequest_Screen(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            var begin = const Offset(1.0, 0.0);
+                            var end = Offset.zero;
+                            var curve = Curves.ease;
+
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+                            var offsetAnimation = animation.drive(tween);
+
+                            return SlideTransition(
+                              position: offsetAnimation,
+                              child: child,
+                            );
+                          },
+                        ),
+                      );
                     },
                     style: ButtonStyle(
-                        shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.circular(18)))),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18)))),
                     child: const Text("Proceed for a request"))),
           ),
         ),

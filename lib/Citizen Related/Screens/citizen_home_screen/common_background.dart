@@ -1,5 +1,4 @@
 // ignore_for_file: camel_case_types
-
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../../Components/Notification_related/message_screen.dart';
 import '../../../Components/Notification_related/notification_services.dart';
-import '../citizen_request.dart';
 
 class commonbg extends StatefulWidget {
   const commonbg({super.key});
@@ -78,34 +76,59 @@ class _commonbgState extends State<commonbg> {
                 const SizedBox(height: 30),
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Container(
-                    height: 150,
+                    // height: 150,
                     width: double.infinity,
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                       color: Colors.black12,
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Text("Temsting",
-                              style: TextStyle(color: Colors.black)),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        const userRequest_Screen()));
-                              },
-                              child: const Text("Request for and Emergency")),
+                          const Text(
+                              "Need any help in any disaster ? \n TAP HERE ",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16)),
+                          const SizedBox(height: 20),
                           OutlinedButton(
-                            child: const Text("Request for and Emergency"),
+                            style: const ButtonStyle(
+                                enableFeedback: true,
+                                backgroundColor:
+                                    MaterialStatePropertyAll(Colors.white),
+                                foregroundColor:
+                                    MaterialStatePropertyAll(Colors.red)),
+                            child: const Text("Request for any Emergency"),
                             onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const msgScreen()));
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      const msgScreen(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                        animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
                             },
                           ),
                         ],

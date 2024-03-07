@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:app_settings/app_settings.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -15,7 +17,7 @@ class NotificationServices {
   AndroidNotificationChannel channel = const AndroidNotificationChannel(
       //Random.secure().nextInt(100000).toString(),
       "101",
-      'High Importance',
+      'Max Importance',
       importance: Importance.max);
 
   //To check the notification permission state
@@ -64,7 +66,9 @@ class NotificationServices {
 
     await _flutterLocalNotificationsPlugin.initialize(initializationSetting,
         onDidReceiveNotificationResponse: (payload) async {
-      handleMessage(context, message);
+      if (message.data['type'] == 'informative') {
+        handleMessage(context, message);
+      } else if (message.data['type'] == 'alert') {}
       // Navigator.push(
       //     context,
       //     MaterialPageRoute(
@@ -79,8 +83,9 @@ class NotificationServices {
         print(message.notification!.title.toString());
         print(message.notification!.body.toString());
         print(message.data.toString());
-        print(message.data['type']);
-        print(message.data['id']);
+        print(message.data['title']);
+        print(message.data['address']);
+        print(message.data['pincode']);
       }
       if (Platform.isAndroid) {
         //to open a specific page (doesn't works for now)
@@ -107,16 +112,35 @@ class NotificationServices {
     AndroidNotificationChannel channel = const AndroidNotificationChannel(
         //Random.secure().nextInt(100000).toString(),
         '101',
-        'High Importance',
+        'Max Importance',
         importance: Importance.max);
 
     //for android
     AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
-            channel.id.toString(), channel.name.toString(),
-            channelDescription: 'Your channel description',
-            importance: Importance.high,
-            ticker: 'ticker');
+      channel.id.toString(),
+      channel.name.toString(),
+      channelDescription: 'Your channel description',
+      importance: Importance.max,
+      //changes
+      ticker: 'Notification ticker',
+      priority: Priority.max,
+      visibility: NotificationVisibility.public,
+      ongoing: true,
+      //playSound: true,
+      enableVibration: true,
+      vibrationPattern: Int64List.fromList([1000, 500, 1000]),
+      //category: 'category',
+      //fullScreenIntent: true,
+      actions: [
+        const AndroidNotificationAction('V1', 'View request'),
+        const AndroidNotificationAction(
+          'R1',
+          'Dismiss',
+          cancelNotification: true,
+        ),
+      ],
+    );
 
     //for ios
     const DarwinNotificationDetails darwinNotificationDetails =
@@ -157,13 +181,23 @@ class NotificationServices {
         await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
-      // ignore: use_build_context_synchronously
-      handleMessage(context, initialMessage);
+      if (initialMessage.data['type'] == 'informative') {
+        handleMessage(context, initialMessage);
+      } else if (initialMessage.data['type'] == 'alert') {}
     }
+
+    //need to remove {opens the page as teh req sent}
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.data['type'] == 'informative') {
+        //handleMessage(context, message);
+      } else if (message.data['type'] == 'alert') {}
+    });
 
     //when app is in background ...
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
-      handleMessage(context, event);
+      if (event.data['type'] == 'informative') {
+        handleMessage(context, event);
+      } else if (event.data['type'] == 'alert') {}
     });
   }
 

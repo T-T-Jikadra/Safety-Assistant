@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fff/Citizen%20Related/Screens/citizen_DSG_screen.dart';
 import 'package:fff/Citizen%20Related/Screens/citizen_home_screen/side_menu.dart';
 import 'package:fff/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../Components/Notification_related/message_screen.dart';
+import '../../../Utils/common_files/alert_screen.dart';
+import '../../../Utils/common_files/notice_screen.dart';
 import '../../../Utils/rive_utils.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../../../Utils/common_files/FAQ_screen.dart';
@@ -103,30 +105,6 @@ class _SideBarState extends State<SideBar> {
                                 const Duration(milliseconds: 500));
 
                             if (menu.title.contains("Home")) {
-                              // ignore: use_build_context_synchronously
-                              Navigator.of(context).push(
-                                PageRouteBuilder(
-                                  pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
-                                      const msgScreen(),
-                                  transitionsBuilder: (context, animation,
-                                      secondaryAnimation, child) {
-                                    var begin = const Offset(1.0, 0.0);
-                                    var end = Offset.zero;
-                                    var curve = Curves.ease;
-
-                                    var tween = Tween(begin: begin, end: end)
-                                        .chain(CurveTween(curve: curve));
-                                    var offsetAnimation =
-                                        animation.drive(tween);
-
-                                    return SlideTransition(
-                                      position: offsetAnimation,
-                                      child: child,
-                                    );
-                                  },
-                                ),
-                              );
                             } else if (menu.title.contains("Profile")) {
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
@@ -152,7 +130,7 @@ class _SideBarState extends State<SideBar> {
                                   },
                                 ),
                               );
-                            } else if (menu.title.contains("NGO")) {
+                            } else if (menu.title.contains("Serving")) {
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
@@ -177,7 +155,7 @@ class _SideBarState extends State<SideBar> {
                                   },
                                 ),
                               );
-                            } else if (menu.title.contains("Req")) {
+                            } else if (menu.title.contains("Request")) {
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
@@ -227,6 +205,56 @@ class _SideBarState extends State<SideBar> {
                                   },
                                 ),
                               );
+                            } else if (menu.title.contains("Alert")) {
+                              //ignore: use_build_context_synchronously
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      const alert_Screen(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                        animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
+                            } else if (menu.title.contains("Notice")) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      const notice_Screen(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                        animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
                             }
                             //till above
                           },
@@ -258,7 +286,32 @@ class _SideBarState extends State<SideBar> {
                             await Future.delayed(
                                 const Duration(milliseconds: 500));
 
-                            if (menu.title.contains("FAQ")) {
+                            if (menu.title.contains("Digital")) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                      secondaryAnimation) =>
+                                  const Digital_Guide_Screen(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                    animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
+                            }else if (menu.title.contains("FAQ")) {
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(

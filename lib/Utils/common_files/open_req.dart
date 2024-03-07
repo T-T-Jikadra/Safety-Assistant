@@ -32,31 +32,40 @@ class _req_openState extends State<req_open> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            TextFormField(
-              keyboardType: TextInputType.text,
-              initialValue: widget.title,
-              decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.ac_unit_outlined)),
-            ),
-            TextFormField(
-              keyboardType: TextInputType.text,
-              initialValue: widget.add,
-              decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.account_balance_wallet)),
-            ),
-            TextFormField(
-              keyboardType: TextInputType.text,
-              initialValue: widget.pin,
-              decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.account_balance_wallet)),
-            ),
-            const Center(
-              child: Text("It's request sent Page "),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const SizedBox(height: 50),
+              TextFormField(
+                keyboardType: TextInputType.text,
+                initialValue: widget.title,
+                decoration: const InputDecoration(
+                    labelText: "Request Type",
+                    prefixIcon: Icon(Icons.ac_unit_outlined)),
+              ),
+              const SizedBox(height: 70),
+              TextFormField(
+                keyboardType: TextInputType.text,
+                initialValue: widget.add,
+                decoration: const InputDecoration(
+                    labelText: "Address",
+                    prefixIcon: Icon(Icons.account_balance_wallet)),
+              ),
+              const SizedBox(height: 70),
+              TextFormField(
+                keyboardType: TextInputType.text,
+                initialValue: widget.pin,
+                decoration: const InputDecoration(
+                    labelText: "Pin",
+                    prefixIcon: Icon(Icons.account_balance_wallet)),
+              ),
+              const SizedBox(height: 70),
+              const Center(
+                child: Text("It's request sent Page "),
+              ),
+            ],
+          ),
         ),
       ),
     );
