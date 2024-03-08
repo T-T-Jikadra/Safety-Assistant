@@ -4,8 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../../../Components/Notification_related/message_screen.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../../Components/Notification_related/notification_services.dart';
+import '../citizen_request.dart';
 
 class commonbg extends StatefulWidget {
   const commonbg({super.key});
@@ -18,14 +19,25 @@ class _commonbgState extends State<commonbg> {
   NotificationServices notificationServices = NotificationServices();
   String fetchedState = "";
   String fetchedCity = "";
+  bool isFetched = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     fetchCitizenData();
+    Future.delayed(const Duration(milliseconds: 1600), () {
+      setState(() {
+        isFetched = true;
+      });
+    });
     //for notification permission pop up
     notificationServices.requestNotificationPermission();
+    //listen to  incoming msg...
+    // notificationServices.firebaseInit(context);
+
+    //for  notification when background and terminated case of application
+    notificationServices.setupInteractMessage(context);
   }
 
   @override
@@ -63,12 +75,17 @@ class _commonbgState extends State<commonbg> {
                       const Icon(Icons.location_on_outlined,
                           color: Colors.redAccent, size: 18),
                       const SizedBox(width: 8),
+
+                      isFetched ?
                       Text(
                         "$fetchedCity, $fetchedState",
                         style: const TextStyle(
                             color: Colors.black,
                             fontSize: 16,
                             fontWeight: FontWeight.bold),
+                      ) : const SpinKitThreeBounce(
+                        color: Colors.blueGrey,
+                        size: 20,
                       ),
                     ],
                   ),
@@ -110,7 +127,7 @@ class _commonbgState extends State<commonbg> {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const msgScreen(),
+                                      const userRequest_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);

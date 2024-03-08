@@ -31,7 +31,7 @@ class CitizenReqRegistration {
     return {
       'RequestId': Rid,
       'neededService': neededService,
-      'services': userName,
+      'userName': userName,
       'contactNumber': contactNumber,
       'senderToken': senderToken,
       'state': state,
@@ -39,7 +39,7 @@ class CitizenReqRegistration {
       'pinCode': pinCode,
       'fullAddress': fullAddress,
       'isTransactionCompleted': isTransactionCompleted,
-      'registrationTime': requestTime.toString(),
+      'reqTime': requestTime.toString(),
     };
   }
 }

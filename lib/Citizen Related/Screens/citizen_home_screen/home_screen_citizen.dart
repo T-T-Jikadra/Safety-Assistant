@@ -3,6 +3,7 @@ import 'package:fff/Citizen%20Related/Screens/citizen_home_screen/side_bar.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
+import '../../../Components/Notification_related/notification_services.dart';
 import '../../../Utils/constants.dart';
 import '../../../Utils/other/menu_btn.dart';
 import 'common_background.dart';
@@ -33,6 +34,8 @@ class CitizenHomeScreen extends StatefulWidget {
 
 class _CitizenHomeScreenState extends State<CitizenHomeScreen>
     with SingleTickerProviderStateMixin {
+  NotificationServices notificationServices = NotificationServices();
+
   bool isSideBarOpen = false;
 
   Menu selectedSideMenu = sidebarMenus.first;
@@ -59,6 +62,11 @@ class _CitizenHomeScreenState extends State<CitizenHomeScreen>
     animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
         parent: _animationController, curve: Curves.fastOutSlowIn));
     super.initState();
+    //listen to  incoming msg...
+    notificationServices.firebaseInit(context);
+
+    //for  notification when background and terminated case of application
+    notificationServices.setupInteractMessage(context);
   }
 
   @override
@@ -69,6 +77,8 @@ class _CitizenHomeScreenState extends State<CitizenHomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setSystemUIOverlayStyle(
+    //     SystemUiOverlayStyle(statusBarColor: Colors.white.withOpacity(0.9)));
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
@@ -101,6 +111,7 @@ class _CitizenHomeScreenState extends State<CitizenHomeScreen>
                   curve: Curves.fastOutSlowIn,
                   left: isSideBarOpen ? 0 : -288,
                   top: 0,
+                  // DRAWER
                   child: const SideBar(),
                 ),
                 //To show the moving background
@@ -118,6 +129,7 @@ class _CitizenHomeScreenState extends State<CitizenHomeScreen>
                         borderRadius: BorderRadius.all(
                           Radius.circular(24),
                         ),
+                        //  HOME SCREEN
                         child: commonbg(),
                       ),
                     ),

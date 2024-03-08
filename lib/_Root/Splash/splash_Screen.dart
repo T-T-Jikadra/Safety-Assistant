@@ -21,8 +21,11 @@ class splash extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
     return GetMaterialApp(
       //title:'CAS',
+      navigatorKey: navigatorKey, // Set the global navigator key
       title: 'Citizen Emergency & response system',
       debugShowCheckedModeBanner: false,
       theme: TAppTheme.lightTheme,

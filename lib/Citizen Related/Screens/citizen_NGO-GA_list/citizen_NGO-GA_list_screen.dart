@@ -73,7 +73,7 @@ class _NGO_GA_ListScreenState extends State<NGO_GA_ListScreen> {
                             right: 25,
                           ),
                           child: SizedBox(
-                            //height: 60,
+                            height: 60,
                             child: DropdownButtonFormField<String>(
                               value: selectedState_ngo,
                               items: DropdownItems.dropdownItemState
@@ -118,7 +118,7 @@ class _NGO_GA_ListScreenState extends State<NGO_GA_ListScreen> {
                       right: 25,
                     ),
                     child: SizedBox(
-                      //height: 60,
+                      height: 60,
                       child: DropdownButtonFormField<String>(
                         value: selectedCity_ngo.isNotEmpty
                             ? selectedCity_ngo
@@ -137,12 +137,6 @@ class _NGO_GA_ListScreenState extends State<NGO_GA_ListScreen> {
                         decoration: const InputDecoration(
                           hintText: "Select your City",
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Select your City';
-                          }
-                          return null; // Return null if the input is valid
-                        },
                       ),
                     ),
                   ),
@@ -167,7 +161,7 @@ class _NGO_GA_ListScreenState extends State<NGO_GA_ListScreen> {
                             right: 25,
                           ),
                           child: SizedBox(
-                            //height: 60,
+                            height: 60,
                             child: DropdownButtonFormField<String>(
                               value: selectedState,
                               items: DropdownItems.dropdownItemState
@@ -192,12 +186,6 @@ class _NGO_GA_ListScreenState extends State<NGO_GA_ListScreen> {
                                 hintText: "Select your State",
                               ),
                               //hint: const Text("Select your State"), // Hint text displayed initially
-                              validator: (value) {
-                                if (value == "Select your state") {
-                                  return 'Select your State';
-                                }
-                                return null; // Return null if the input is valid
-                              },
                             ),
                           ),
                         ),
@@ -212,7 +200,7 @@ class _NGO_GA_ListScreenState extends State<NGO_GA_ListScreen> {
                       right: 25,
                     ),
                     child: SizedBox(
-                      //height: 60,
+                      height: 60,
                       child: DropdownButtonFormField<String>(
                         value: selectedCity.isNotEmpty ? selectedCity : null,
                         items: dropdownItemCity.map((String city) {
@@ -229,12 +217,6 @@ class _NGO_GA_ListScreenState extends State<NGO_GA_ListScreen> {
                         decoration: const InputDecoration(
                           hintText: "Select your City",
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Select your City';
-                          }
-                          return null; // Return null if the input is valid
-                        },
                       ),
                     ),
                   ),

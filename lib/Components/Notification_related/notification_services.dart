@@ -1,15 +1,31 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, no_leading_underscores_for_local_identifiers
 
 import 'dart:io';
 import 'package:app_settings/app_settings.dart';
+import 'package:fff/Utils/common_files/alert_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import '../../Utils/common_files/open_req.dart';
 
 // ignore: camel_case_types
 class NotificationServices {
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+
+  //temp /remove
+  void handleNotification(Map<String, dynamic> data) {
+    String routeName = data[
+        'type']; // Assuming you have a key 'route' in your notification data
+    if (routeName != null &&
+        navigatorKey.currentState != null &&
+        routeName == "alert") {
+      //navigatorKey.currentState!.pushNamed('/liquidpages');
+    }
+  }
+
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -67,8 +83,10 @@ class NotificationServices {
     await _flutterLocalNotificationsPlugin.initialize(initializationSetting,
         onDidReceiveNotificationResponse: (payload) async {
       if (message.data['type'] == 'informative') {
+        Get.to(() => const alert_Screen());
+      } else if (message.data['type'] == 'alert') {
         handleMessage(context, message);
-      } else if (message.data['type'] == 'alert') {}
+      }
       // Navigator.push(
       //     context,
       //     MaterialPageRoute(
@@ -80,12 +98,12 @@ class NotificationServices {
   void firebaseInit(BuildContext context) {
     FirebaseMessaging.onMessage.listen((message) {
       if (kDebugMode) {
-        print(message.notification!.title.toString());
-        print(message.notification!.body.toString());
-        print(message.data.toString());
-        print(message.data['title']);
-        print(message.data['address']);
-        print(message.data['pincode']);
+        // print(message.notification!.title.toString());
+        // print(message.notification!.body.toString());
+        // print(message.data.toString());
+        // print(message.data['title']);
+        // print(message.data['address']);
+        // print(message.data['pincode']);
       }
       if (Platform.isAndroid) {
         //to open a specific page (doesn't works for now)
@@ -100,10 +118,10 @@ class NotificationServices {
       //at 12 PM
 
       if (message.notification != null) {
-        if (kDebugMode) {
-          print(
-              'Message also contained a notification: ${message.notification}');
-        }
+        // if (kDebugMode) {
+        //   print(
+        //       'Message also contained a notification: ${message.notification}');
+        // }
       }
     });
   }
@@ -182,35 +200,62 @@ class NotificationServices {
 
     if (initialMessage != null) {
       if (initialMessage.data['type'] == 'informative') {
+        Get.to(() => const alert_Screen());
+      } else if (initialMessage.data['type'] == 'alert') {
         handleMessage(context, initialMessage);
-      } else if (initialMessage.data['type'] == 'alert') {}
+      }
     }
 
     //need to remove {opens the page as teh req sent}
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.data['type'] == 'informative') {
+        //Get.to(() => const alert_Screen());
+      } else if (message.data['type'] == 'alert') {
         //handleMessage(context, message);
-      } else if (message.data['type'] == 'alert') {}
+      }
     });
 
     //when app is in background ...
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
       if (event.data['type'] == 'informative') {
+        Get.to(() => const alert_Screen());
+      } else if (event.data['type'] == 'alert') {
         handleMessage(context, event);
-      } else if (event.data['type'] == 'alert') {}
+      }
     });
+
+    @pragma('vm:entry-point')
+    Future<void> _firebaseMessagingBackgroundHandle(RemoteMessage message) async {
+      if (message.data['type'] == 'informative') {
+        Get.to(() => const alert_Screen());
+
+      } else if (message.data['type'] == 'alert') {
+        Get.to(() => req_open(
+            title: message.data['title'],
+            add: message.data['address'],
+            pin: message.data['pincode']));
+      }
+
+      if (kDebugMode) {
+        print(message.notification!.title.toString());
+      }
+    }
   }
 
   void handleMessage(BuildContext context, RemoteMessage message) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => req_open(
-          title: message.data['title'],
-          add: message.data['address'],
-          pin: message.data['pincode'],
-        ),
-      ),
-    );
+    Get.to(() => req_open(
+        title: message.data['title'],
+        add: message.data['address'],
+        pin: message.data['pincode']));
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => req_open(
+    //       title: message.data['title'],
+    //       add: message.data['address'],
+    //       pin: message.data['pincode'],
+    //     ),
+    //   ),
+    // );
   }
 }

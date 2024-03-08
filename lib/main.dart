@@ -3,9 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/services.dart';
 import 'Components/Notification_related/message_screen.dart';
 import 'Components/Notification_related/notification_services.dart';
+import 'Utils/common_files/alert_screen.dart';
 import 'Utils/common_files/open_req.dart';
 import '_Root/Splash/splash_Screen.dart';
 import 'package:get/get.dart';
@@ -32,20 +32,23 @@ void main() async {
   // SystemChrome.setPreferredOrientations(
   //     [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   //Status color
-  SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.white12));
+  // SystemChrome.setSystemUIOverlayStyle(
+  //     const SystemUiOverlayStyle(statusBarColor: Colors.white12));
 }
 
 //top lvl function ...
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandle(RemoteMessage message) async {
-  await Firebase.initializeApp();
+  //await Firebase.initializeApp();
   if (message.data['type'] == 'informative') {
+    Get.to(() => const alert_Screen());
+
+  } else if (message.data['type'] == 'alert') {
     Get.to(() => req_open(
         title: message.data['title'],
         add: message.data['address'],
         pin: message.data['pincode']));
-  } else if (message.data['type'] == 'alert') {}
+  }
 
   if (kDebugMode) {
     print(message.notification!.title.toString());

@@ -341,11 +341,4 @@ class _OtpScreenState extends State<OtpScreen> {
       },
     );
   }
-
-// Method to check for errors
-// checkForAnError(onchnagedInputOtpfield) {
-//   if (onchnagedInputOtpfield == null || onchnagedInputOtpfield.isEmpty) {
-//     showAlertDialog(context, 'Code is empty');
-//   }
-// }
 }

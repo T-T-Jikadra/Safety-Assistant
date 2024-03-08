@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fff/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,6 @@ import '../../Utils/Utils.dart';
 import '../../Utils/dropdown_Items.dart';
 import '../../Components/Notification_related/notification_services.dart';
 import 'package:http/http.dart' as http;
-import 'citizen_home_screen/home_screen_citizen.dart';
 
 // ignore: camel_case_types
 class userRequest_Screen extends StatefulWidget {
@@ -25,12 +25,10 @@ class userRequest_Screen extends StatefulWidget {
 }
 
 // ignore: camel_case_types
-class _userRequest_ScreenState extends State<userRequest_Screen>
-    with SingleTickerProviderStateMixin {
+class _userRequest_ScreenState extends State<userRequest_Screen> {
   NotificationServices notificationServices = NotificationServices();
 
   //profile fields
-  String senderDeviceToken = "";
   String fetchedFname = "";
   String? fetchedPhone = "";
   String fetchedState = "";
@@ -38,6 +36,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen>
   String fetchedPinCode = "";
   String fetchedFullAddress = "";
   String selectedService = "";
+  String senderDeviceToken = "";
   int? selectedRadioAddress = 1;
   bool showTextField = false;
   bool isExpanded = false;
@@ -158,49 +157,89 @@ class _userRequest_ScreenState extends State<userRequest_Screen>
                         ),
                         const SizedBox(height: 20),
                         //Home address
-                        Row(
-                          children: [
-                            Radio(
-                              value: 1,
-                              groupValue: selectedRadioAddress,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedRadioAddress = value;
-                                  showTextField = false;
-                                  //_controller.forward();
-                                  // isExpanded = false;
-                                });
-                              },
-                            ),
-                            const Text('Registered Address'),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Row(
+                            children: [
+                              Radio(
+                                value: 1,
+                                groupValue: selectedRadioAddress,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedRadioAddress = value;
+                                    showTextField = false;
+                                    //_controller.forward();
+                                    // isExpanded = false;
+                                  });
+                                },
+                              ),
+                              const Text('Registered Address'),
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 10),
                         //new address
-                        Row(
-                          children: [
-                            Radio(
-                              value: 2,
-                              groupValue: selectedRadioAddress,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedRadioAddress = value;
-                                  showTextField = true;
-                                  isExpanded = true;
-                                  // _controller.reverse();
-                                });
-                              },
-                            ),
-                            const Text('New Address'),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Row(
+                            children: [
+                              Radio(
+                                value: 2,
+                                groupValue: selectedRadioAddress,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedRadioAddress = value;
+                                    showTextField = true;
+                                    isExpanded = true;
+                                    // _controller.reverse();
+                                  });
+                                },
+                              ),
+                              const Text('New Address'),
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 15),
                         if (selectedRadioAddress == 1)
                           isFetched
-                              ? Text(
-                                  "$fetchedFname \n $fetchedFullAddress \n $fetchedPinCode \n $fetchedCity \n $fetchedState ",
-                                  style: const TextStyle(fontSize: 14),
+                              ? Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 8),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(19.0),
+                                    border: Border.all(
+                                      color: Colors.grey,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  child: DataTable(
+                                    columnSpacing: 10.0,
+                                    columns: const [
+                                      DataColumn(
+                                          label: Text('Field',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: colorPrimary))),
+                                      DataColumn(
+                                          label: Text('Data',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: colorPrimary))),
+                                    ],
+                                    rows: [
+                                      buildDataRow('Name', fetchedFname),
+                                      buildDataRow(
+                                          'Address', fetchedFullAddress),
+                                      buildDataRow('Pin Code', fetchedPinCode),
+                                      buildDataRow('City', fetchedCity),
+                                      buildDataRow('State', fetchedState),
+                                    ],
+                                  ),
                                 )
+                              // Text(
+                              //         "$fetchedFname \n $fetchedFullAddress \n $fetchedPinCode \n $fetchedCity \n $fetchedState ",
+                              //         style: const TextStyle(fontSize: 14),
+                              //       )
                               : const SpinKitThreeBounce(
                                   color: Colors.blueGrey,
                                   size: 20,
@@ -271,11 +310,13 @@ class _userRequest_ScreenState extends State<userRequest_Screen>
                               barrierDismissible: false,
                               builder: (BuildContext context) {
                                 return const Center(
-                                  child: CircularProgressIndicator(color: Colors.white),
+                                  child: CircularProgressIndicator(
+                                      color: Colors.white),
                                 );
                               },
                             );
-                            await Future.delayed(const Duration(milliseconds: 1200));
+                            await Future.delayed(
+                                const Duration(milliseconds: 1400));
                             Navigator.pop(context);
                             //sends request/alert to only NGO which are of the currents user's city
                             FirebaseFirestore.instance
@@ -283,22 +324,12 @@ class _userRequest_ScreenState extends State<userRequest_Screen>
                                 .where('city', isEqualTo: 'Suratt')
                                 .get()
                                 .then((querySnapshot) {
-                              moveToDB();
+                              addReqToDatabase();
                               for (var doc in querySnapshot.docs) {
                                 String deviceToken = doc.data()['deviceToken'];
                                 sendNotificationToDevice(deviceToken);
                               }
-                            }).whenComplete(() {
-                              Timer(
-                                  const Duration(milliseconds: 800),
-                                  () => Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const CitizenHomeScreen()),
-                                      (route) => false));
                             });
-                            //moveToDB();
                           },
                           style: ButtonStyle(
                               shape: MaterialStateProperty.all(
@@ -372,7 +403,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen>
         'notification': {'notification_count': 23},
       },
       'data': {
-        'type': 'informative',
+        'type': 'alert',
         'title': selectedService,
         'address': selectedRadioAddress == 1
             ? fetchedFullAddress
@@ -395,33 +426,37 @@ class _userRequest_ScreenState extends State<userRequest_Screen>
     );
   }
 
-  void moveToDB() async {
+  void addReqToDatabase() async {
     //doc id
     CollectionReference citizenRequestCollection =
         FirebaseFirestore.instance.collection("Citizen Request");
 
-    DocumentReference newDocRef = await citizenRequestCollection.add({
-      // Add other fields here if necessary
-      'neededService': selectedService,
-      'userName': fetchedFname,
-      'contactNumber': fetchedPhone,
-      'state': fetchedState,
-      'city': fetchedCity,
-      'pinCode':
-          selectedRadioAddress == 1 ? fetchedPinCode : pincodeController.text,
-      'fullAddress': selectedRadioAddress == 1
-          ? fetchedFullAddress
-          : addressController.text,
-      'isTransactionCompleted': false,
-      'senderToken': senderDeviceToken,
-    });
-    String autoGeneratedDocId = newDocRef.id;
+    // DocumentReference newDocRef = await citizenRequestCollection.add({
+    //   // Add other fields here if necessary
+    //   'neededService': selectedService,
+    //   'userName': fetchedFname,
+    //   'contactNumber': fetchedPhone,
+    //   'state': fetchedState,
+    //   'city': fetchedCity,
+    //   'pinCode':
+    //       selectedRadioAddress == 1 ? fetchedPinCode : pincodeController.text,
+    //   'fullAddress': selectedRadioAddress == 1
+    //       ? fetchedFullAddress
+    //       : addressController.text,
+    //   'isTransactionCompleted': false,
+    //   'senderToken': senderDeviceToken,
+    // });
+
+    // Get the total count of documents in the collection
+    QuerySnapshot snapshot = await citizenRequestCollection.get();
+    int totalDocCount = snapshot.size;
+    totalDocCount++;
 
     //sender token
 
     //Storing data to database
     CitizenReqRegistration citizenReqData = CitizenReqRegistration(
-        Rid: autoGeneratedDocId,
+        Rid: "Req_${totalDocCount.toString()}",
         neededService: selectedService,
         userName: fetchedFname,
         contactNumber: fetchedPhone,
@@ -440,14 +475,29 @@ class _userRequest_ScreenState extends State<userRequest_Screen>
     try {
       await FirebaseFirestore.instance
           .collection("Citizen Request")
-          .doc(autoGeneratedDocId)
+          .doc("Req_${totalDocCount.toString()}")
           .set(UserReqJson);
-      showToastMsg("Citizen Requested successfully..");
+
+      Timer(const Duration(milliseconds: 800), () {
+        showMsgDialog(
+            context, 'Nearby NGOs or Govt Agency will contact you shortly ..');
+        showToastMsg("Citizen Requested successfully..");
+      });
     } catch (e) {
       // An error occurred
       if (kDebugMode) {
         print('Error adding citizen request  : $e');
       }
     }
+  }
+
+  DataRow buildDataRow(String field, String data) {
+    return DataRow(cells: [
+      DataCell(Text(
+        field,
+        style: const TextStyle(fontWeight: FontWeight.bold),
+      )),
+      DataCell(Text(data)),
+    ]);
   }
 }

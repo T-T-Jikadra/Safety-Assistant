@@ -17,6 +17,30 @@ void showToastMsg(String msg) {
       fontSize: 16.0);
 }
 
+void showMsgDialog(BuildContext context, String message) {
+  // Set up the AlertDialog
+  final CupertinoAlertDialog alert = CupertinoAlertDialog(
+    title: const Text('Alert : '),
+    content: Text('\n$message'),
+    actions: <Widget>[
+      CupertinoDialogAction(
+        isDefaultAction: true,
+        child: const Text('Okay'),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      )
+    ],
+  );
+  // Show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
 //for pwd validate
 String? validatePassword(String? value) {
   if (value == null || value.isEmpty) {
