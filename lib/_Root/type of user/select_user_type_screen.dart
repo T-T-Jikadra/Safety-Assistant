@@ -3,12 +3,14 @@
 import 'package:fff/Admin%20Related/Lower%20Level%20Admin/lowerAdmin.dart';
 import 'package:fff/_Root/type%20of%20user/typecolumnlist_item_widget.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../../Govt Body Related/Screens/govt_login_screen/govt_login.dart';
 import '../../../NGO Related/Screens/ngo_login_screen/ngo_login.dart';
 import '../../Citizen Related/Screens/citizen_login_screen/login_screen.dart';
 import '../../Components/Check for Internet/check_internet.dart';
 import '../../Components/Notification_related/notification_services.dart';
+import '../../Utils/Utils.dart';
 
 class SelectOptionPageScreen extends StatefulWidget {
   const SelectOptionPageScreen({Key? key}) : super(key: key);
@@ -24,13 +26,15 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
 
   @override
   void initState() {
-    print(_selectedRole);
+    if (kDebugMode) {
+      print(_selectedRole);
+    }
     // TODO: implement initState
     super.initState();
     InternetPopup().initialize(context: context);
     notificationServices.requestNotificationPermission();
-
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -92,7 +96,8 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                               fontWeight: FontWeight.w200, fontSize: 24)),
                     ),
                     const SizedBox(height: 50),
-                    _buildTypeColumnList(context), // Building the list of roles
+                    _buildTypeColumnList(context),
+                    // Building the list of roles
                     const SizedBox(height: 15),
                     // _selectedRole !=null
                     //     ? Text("Selected Role: $_selectedRole")
@@ -100,16 +105,14 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                     const SizedBox(
                       height: 30,
                     ),
-
                   ],
                 ),
               ),
             ),
-
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                padding: const EdgeInsets.only(bottom: 30,left: 20,right: 20),
+                padding: const EdgeInsets.only(bottom: 30, left: 20, right: 20),
                 width: double.infinity,
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(50),
@@ -120,11 +123,13 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                             barrierDismissible: false,
                             builder: (BuildContext context) {
                               return const Center(
-                                child: CircularProgressIndicator(color: Colors.white),
+                                child: CircularProgressIndicator(
+                                    color: Colors.white),
                               );
                             },
                           );
-                          await Future.delayed(const Duration(milliseconds: 400));
+                          await Future.delayed(
+                              const Duration(milliseconds: 400));
                           Navigator.pop(context);
                           //showErrorDialog(context, 'Mobile number can\'t be empty.');
 
@@ -134,43 +139,35 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                             case "I am Citizen":
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const CitizenLoginScreen()),
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const CitizenLoginScreen()),
                               );
                               break;
                             case "I am an NGO":
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const NGOLoginPageScreen()),
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const NGOLoginPageScreen()),
                               );
                               break;
                             case "I am Government Agency":
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const GovtLoginPageScreen()),
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const GovtLoginPageScreen()),
                               );
                               break;
                             default:
-                              final snackBar = SnackBar(
-                                dismissDirection: DismissDirection.vertical,
-                                elevation: 35,
-                                padding: const EdgeInsets.all(7),
-                                content: const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text('Please select type of user first ..'),
-                                ),
-                                duration: const Duration(seconds: 3),
-                                // Duration for which SnackBar will be visible
-                                action: SnackBarAction(
-                                  label: 'Undo',
-                                  onPressed: () {
-                                    // Undo functionality
-                                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                                  },
-                                ),
-                              );
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              final snackBar = TsnakeBar(
+                                  context,
+                                  "Please select type of user first ..",
+                                  "Undo");
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
                           }
-
                         },
                         child: const Text("Continue .."))),
               ),
@@ -230,7 +227,6 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
     // Dispose any resources here
     super.dispose();
     _selectedRole = null;
-
   }
 
   void showErrorDialog(BuildContext context, String message) {

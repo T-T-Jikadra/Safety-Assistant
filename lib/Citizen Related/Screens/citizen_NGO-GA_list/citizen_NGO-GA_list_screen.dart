@@ -42,7 +42,7 @@ class _NGO_GA_ListScreenState extends State<NGO_GA_ListScreen> {
           //backgroundColor: Colors.white,
           appBar: AppBar(
             elevation: 50,
-            backgroundColor: Colors.white12,
+            backgroundColor: Colors.black12,
             centerTitle: true,
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(

@@ -609,26 +609,10 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                               Navigator.pop(context);
 
                               if (!GovtTnC) {
-                                final tnCError = SnackBar(
-                                  dismissDirection: DismissDirection.vertical,
-                                  elevation: 35,
-                                  padding: const EdgeInsets.all(7),
-                                  content: const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                        'Please accept terms & conditions..'),
-                                  ),
-                                  duration: const Duration(seconds: 3),
-                                  // Duration for which SnackBar will be visible
-                                  action: SnackBarAction(
-                                    label: 'Hide',
-                                    onPressed: () {
-                                      // Undo functionality
-                                      ScaffoldMessenger.of(context)
-                                          .hideCurrentSnackBar();
-                                    },
-                                  ),
-                                );
+                                final tnCError = TsnakeBar(
+                                    context,
+                                    "Please accept terms & conditions..",
+                                    "Hide");
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(tnCError);
                               }

@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 import '../../Utils/constants.dart';
+
 //
 // class ProfileScreen extends StatefulWidget {
 //   const ProfileScreen({super.key});
@@ -27,11 +29,13 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+  TextEditingController ab = TextEditingController();
   //profile fields
   String fetchedFname = "";
   String fetchedLname = "";
   String fetchedGender = "";
   String? fetchedPhone = "";
+
   //String fetchedBirthDate = "";
   String fetchedAge = "";
   String fetchedState = "";
@@ -53,7 +57,7 @@ class _UserProfileState extends State<UserProfile> {
     return Scaffold(
       appBar: AppBar(
         elevation: 50,
-        backgroundColor: Colors.white24,
+        backgroundColor: Colors.black12,
         centerTitle: true,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -70,15 +74,20 @@ class _UserProfileState extends State<UserProfile> {
               children: [
                 const CircleAvatar(
                   radius: 50,
-                  backgroundImage: AssetImage("assets/images/123.png"),
+                  //backgroundImage: AssetImage("assets/images/123.png"),
                 ),
                 const SizedBox(height: 20),
                 Text(
                   'name: $fetchedFname $fetchedLname',
                   style: const TextStyle(fontSize: 16),
                 ),
+                // Iconsax
                 TextFormField(
-                  initialValue: fetchedGender,
+                  // controller: ab,
+                  initialValue: fetchedPhone,
+                  decoration: InputDecoration(
+                      prefixIcon: const Icon(Iconsax.location_add),
+                      hintText: fetchedFname),
                   // enabled: false,
                 ),
                 // const SizedBox(height: 20),
@@ -224,13 +233,13 @@ class _UserProfileState extends State<UserProfile> {
     }
   }
 
-  // int calculateAge(DateTime birthDate) {
-  //   final now = DateTime.now();
-  //   int age = now.year - birthDate.year;
-  //   if (now.month < birthDate.month ||
-  //       (now.month == birthDate.month && now.day < birthDate.day)) {
-  //     age--;
-  //   }
-  //   return age;
-  // }
+// int calculateAge(DateTime birthDate) {
+//   final now = DateTime.now();
+//   int age = now.year - birthDate.year;
+//   if (now.month < birthDate.month ||
+//       (now.month == birthDate.month && now.day < birthDate.day)) {
+//     age--;
+//   }
+//   return age;
+// }
 }

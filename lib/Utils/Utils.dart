@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, file_names
+// ignore_for_file: use_build_context_synchronously, file_names, non_constant_identifier_names
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,6 +17,29 @@ void showToastMsg(String msg) {
       fontSize: 16.0);
 }
 
+//snakebar
+SnackBar TsnakeBar(BuildContext context,String headingText ,String labelTxt) {
+  return SnackBar(
+    dismissDirection: DismissDirection.vertical,
+    elevation: 35,
+    padding: const EdgeInsets.all(7),
+    content:  Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(headingText),
+    ),
+    duration: const Duration(seconds: 3),
+    // Duration for which SnackBar will be visible
+    action: SnackBarAction(
+      label: labelTxt,
+      onPressed: () {
+        // Undo functionality
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      },
+    ),
+  );
+}
+
+//dialog
 void showMsgDialog(BuildContext context, String message) {
   // Set up the AlertDialog
   final CupertinoAlertDialog alert = CupertinoAlertDialog(
@@ -190,4 +213,15 @@ Future<void> showForgotPasswordDialog(BuildContext context) async {
       );
     },
   );
+}
+
+//for table data
+DataRow buildDataRow(String field, String data) {
+  return DataRow(cells: [
+    DataCell(Text(
+      field,
+      style: const TextStyle(fontWeight: FontWeight.bold),
+    )),
+    DataCell(Text(data)),
+  ]);
 }

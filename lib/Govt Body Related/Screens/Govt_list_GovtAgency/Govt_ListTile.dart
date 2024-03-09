@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, camel_case_types, file_names, deprecated_member_use
+// ignore_for_file: library_private_types_in_public_api, camel_case_types, file_names, deprecated_member_use, unused_field
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 

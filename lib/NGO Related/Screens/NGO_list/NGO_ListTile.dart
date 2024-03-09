@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use, file_names, library_private_types_in_public_api
+// ignore_for_file: deprecated_member_use, file_names, library_private_types_in_public_api, unused_field
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';

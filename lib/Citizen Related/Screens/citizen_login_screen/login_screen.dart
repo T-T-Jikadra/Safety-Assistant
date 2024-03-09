@@ -1,4 +1,3 @@
-
 import 'package:fff/Citizen%20Related/Screens/citizen_login_screen/widget/SignUp_header_widget.dart';
 import 'package:fff/Citizen%20Related/Screens/citizen_login_screen/widget/country_picker.dart';
 import 'package:fff/Citizen%20Related/Screens/citizen_login_screen/widget/custom_button.dart';
@@ -37,6 +36,7 @@ class _CitizenLoginScreenState extends State<CitizenLoginScreen> {
       }
     });
   }
+
   // Build method for UI Representation
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,8 @@ class _CitizenLoginScreenState extends State<CitizenLoginScreen> {
                           child: FormHeaderWidget(
                             image: splash_shape,
                             title: "Get on \nBoard !",
-                            subTitle: "Create Your Profile \nwith Mobile no ... ",
+                            subTitle:
+                                "Create Your Profile \nwith Mobile no ... ",
                           ),
                         ),
                         SizedBox(
@@ -69,13 +70,14 @@ class _CitizenLoginScreenState extends State<CitizenLoginScreen> {
                         ),
                         Container(
                           padding: const EdgeInsets.all(7.0),
-                          decoration:
-                              BoxDecoration(borderRadius: BorderRadius.circular(16.0)),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16.0)),
                           child: Column(
                             children: [
                               Container(
                                 margin: const EdgeInsets.all(8),
-                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0),
                                 height: 52,
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -98,6 +100,7 @@ class _CitizenLoginScreenState extends State<CitizenLoginScreen> {
                                     ),
                                     Expanded(
                                       child: TextField(
+                                        style: const TextStyle(fontSize: 14),
                                         cursorRadius: const Radius.circular(50),
                                         cursorWidth: 3,
                                         // Close keyboard on editing completed
@@ -109,8 +112,8 @@ class _CitizenLoginScreenState extends State<CitizenLoginScreen> {
                                           border: InputBorder.none,
                                           enabledBorder: InputBorder.none,
                                           focusedBorder: InputBorder.none,
-                                          contentPadding:
-                                              EdgeInsets.symmetric(vertical: 13.5),
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 13.5),
                                         ),
                                         controller: _contactEditingController,
                                         keyboardType: TextInputType.phone,

@@ -3,9 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'Citizen Related/Screens/open_response_screen.dart';
 import 'Components/Notification_related/message_screen.dart';
 import 'Components/Notification_related/notification_services.dart';
-import 'Utils/common_files/alert_screen.dart';
 import 'Utils/common_files/open_req.dart';
 import '_Root/Splash/splash_Screen.dart';
 import 'package:get/get.dart';
@@ -40,14 +40,18 @@ void main() async {
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandle(RemoteMessage message) async {
   //await Firebase.initializeApp();
-  if (message.data['type'] == 'informative') {
-    Get.to(() => const alert_Screen());
-
+  if (message.data['type'] == 'response') {
+    Get.to(() => const Open_Response_Screen());
   } else if (message.data['type'] == 'alert') {
     Get.to(() => req_open(
-        title: message.data['title'],
-        add: message.data['address'],
-        pin: message.data['pincode']));
+          title: message.data['title'],
+          add: message.data['address'],
+          pin: message.data['pincode'],
+          userName: message.data['username'],
+          city: message.data['city'],
+          rid: message.data['ReqId'],
+          contactNo: message.data['phoneNumber'],
+        ));
   }
 
   if (kDebugMode) {

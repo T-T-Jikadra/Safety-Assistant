@@ -2,29 +2,17 @@
 
 import 'dart:io';
 import 'package:app_settings/app_settings.dart';
-import 'package:fff/Utils/common_files/alert_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import '../../Citizen Related/Screens/open_response_screen.dart';
 import '../../Utils/common_files/open_req.dart';
 
 // ignore: camel_case_types
 class NotificationServices {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
-
-  //temp /remove
-  void handleNotification(Map<String, dynamic> data) {
-    String routeName = data[
-        'type']; // Assuming you have a key 'route' in your notification data
-    if (routeName != null &&
-        navigatorKey.currentState != null &&
-        routeName == "alert") {
-      //navigatorKey.currentState!.pushNamed('/liquidpages');
-    }
-  }
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
@@ -82,8 +70,8 @@ class NotificationServices {
 
     await _flutterLocalNotificationsPlugin.initialize(initializationSetting,
         onDidReceiveNotificationResponse: (payload) async {
-      if (message.data['type'] == 'informative') {
-        Get.to(() => const alert_Screen());
+      if (message.data['type'] == 'response') {
+        Get.to(() => const Open_Response_Screen());
       } else if (message.data['type'] == 'alert') {
         handleMessage(context, message);
       }
@@ -150,14 +138,14 @@ class NotificationServices {
       vibrationPattern: Int64List.fromList([1000, 500, 1000]),
       //category: 'category',
       //fullScreenIntent: true,
-      actions: [
-        const AndroidNotificationAction('V1', 'View request'),
-        const AndroidNotificationAction(
-          'R1',
-          'Dismiss',
-          cancelNotification: true,
-        ),
-      ],
+      // actions: [
+      //   const AndroidNotificationAction('V1', 'View request'),
+      //   const AndroidNotificationAction(
+      //     'R1',
+      //     'Dismiss',
+      //     cancelNotification: true,
+      //   ),
+      // ],
     );
 
     //for ios
@@ -199,8 +187,8 @@ class NotificationServices {
         await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
-      if (initialMessage.data['type'] == 'informative') {
-        Get.to(() => const alert_Screen());
+      if (initialMessage.data['type'] == 'response') {
+        Get.to(() => const Open_Response_Screen());
       } else if (initialMessage.data['type'] == 'alert') {
         handleMessage(context, initialMessage);
       }
@@ -208,7 +196,7 @@ class NotificationServices {
 
     //need to remove {opens the page as teh req sent}
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      if (message.data['type'] == 'informative') {
+      if (message.data['type'] == 'response') {
         //Get.to(() => const alert_Screen());
       } else if (message.data['type'] == 'alert') {
         //handleMessage(context, message);
@@ -217,23 +205,28 @@ class NotificationServices {
 
     //when app is in background ...
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
-      if (event.data['type'] == 'informative') {
-        Get.to(() => const alert_Screen());
+      if (event.data['type'] == 'response') {
+        Get.to(() => const Open_Response_Screen());
       } else if (event.data['type'] == 'alert') {
         handleMessage(context, event);
       }
     });
 
     @pragma('vm:entry-point')
-    Future<void> _firebaseMessagingBackgroundHandle(RemoteMessage message) async {
-      if (message.data['type'] == 'informative') {
-        Get.to(() => const alert_Screen());
-
+    Future<void> _firebaseMessagingBackgroundHandle(
+        RemoteMessage message) async {
+      if (message.data['type'] == 'response') {
+        Get.to(() => const Open_Response_Screen());
       } else if (message.data['type'] == 'alert') {
         Get.to(() => req_open(
-            title: message.data['title'],
-            add: message.data['address'],
-            pin: message.data['pincode']));
+              title: message.data['title'],
+              add: message.data['address'],
+              pin: message.data['pincode'],
+              userName: message.data['username'],
+              city: message.data['city'],
+              rid: message.data['ReqId'],
+              contactNo: message.data['phoneNumber'],
+            ));
       }
 
       if (kDebugMode) {
@@ -244,9 +237,14 @@ class NotificationServices {
 
   void handleMessage(BuildContext context, RemoteMessage message) {
     Get.to(() => req_open(
-        title: message.data['title'],
-        add: message.data['address'],
-        pin: message.data['pincode']));
+          title: message.data['title'],
+          add: message.data['address'],
+          pin: message.data['pincode'],
+          userName: message.data['username'],
+          city: message.data['city'],
+          rid: message.data['ReqId'],
+          contactNo: message.data['phoneNumber'],
+        ));
     // Navigator.push(
     //   context,
     //   MaterialPageRoute(

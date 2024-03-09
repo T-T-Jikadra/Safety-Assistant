@@ -13,6 +13,7 @@ const tFormHeight = 30.0;
 
 //Colors
 const Color colorPrimary = Color(0xFF7c4dff);
+const Color color_AppBar = Colors.black12;
 const Color Sidebar_BG = Color(0xFF17203A);
 const Color backgroundColorLight = Color(0xFFF2F6FF);
 const Color backgroundColorDark = Color(0xFF25254B);

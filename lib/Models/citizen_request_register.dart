@@ -2,6 +2,7 @@
 
 class CitizenReqRegistration {
   final String Rid;
+  final String RespondId;
   final String neededService;
   final String userName;
   final String? contactNumber;
@@ -9,12 +10,13 @@ class CitizenReqRegistration {
   final String city;
   final String pinCode;
   final String fullAddress;
-  final bool isTransactionCompleted;
+  final String isTransactionCompleted;
   final DateTime requestTime;
   final String senderToken;
 
   CitizenReqRegistration(
       {required this.Rid,
+      required this.RespondId,
       required this.neededService,
       required this.userName,
       required this.contactNumber,
@@ -30,6 +32,7 @@ class CitizenReqRegistration {
   Map<String, dynamic> toJsonReq() {
     return {
       'RequestId': Rid,
+      'RespondId': '',
       'neededService': neededService,
       'userName': userName,
       'contactNumber': contactNumber,

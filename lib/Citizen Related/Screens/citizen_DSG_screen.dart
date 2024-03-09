@@ -16,7 +16,7 @@ class _Digital_Guide_ScreenState extends State<Digital_Guide_Screen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 50,
-        backgroundColor: Colors.white24,
+        backgroundColor: Colors.black12,
         centerTitle: true,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(

@@ -1,43 +1,38 @@
 // ignore_for_file: file_names, camel_case_types
-class Request_Notification {
-  final String ngoName;
-  final String ngoRegNo;
-  final String services;
-  final String contactNumber;
-  final String email;
-  final String pinCode;
-  final String city;
-  final String state;
-  final DateTime requestTime;
+class Response_Registration {
+  final String respondId;
+  final String responderName;
+  final String responderRegNo;
+  final String responderAddress;
+  final String? responderContactNo;
+  final String responderEmail;
+  final String responderWebsite;
+  final DateTime respondTime;
   final String deviceToken;
 
-  Request_Notification({
-    required this.ngoName,
-    required this.ngoRegNo,
-    required this.services,
-    required this.contactNumber,
-    required this.email,
-    required this.state,
-    required this.city,
-    required this.pinCode,
+  Response_Registration({
+    required this.respondId,
+    required this.responderName,
+    required this.responderRegNo,
+    required this.responderAddress,
+    required this.responderContactNo,
+    required this.responderEmail,
+    required this.responderWebsite,
     required this.deviceToken,
-    DateTime? requestTime,
-  }) : requestTime = requestTime ?? DateTime.now();
+    DateTime? respondTime,
+  }) : respondTime = respondTime ?? DateTime.now();
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toRespondJson() {
     return {
-      // 'nameOfNGO': ngoName,
-      // 'NGORegNo': ngoRegNo,
-      // 'services': services,
-      // 'contactNumber': "+91$contactNumber",
-      // 'email': email,
-      // 'state': state,
-      // 'city': city,
-      // 'pinCode': pinCode,
-      // 'fullAddress': fullAddress,
-      // 'password': password,
-      // 'requestTime': requestTime.toString(),
-      // 'deviceToken': deviceToken,
+      'RespondId': respondId,
+      'ResponderName': responderName,
+      'ResponderRegNo': responderRegNo,
+      'ResponderAddress': responderAddress,
+      'ResponderContactNumber':responderContactNo,
+      'ResponderEmail':responderEmail,
+      'ResponderWebsite':responderWebsite,
+      'RespondTime': respondTime.toString(),
+      'deviceToken':deviceToken,
     };
   }
 }

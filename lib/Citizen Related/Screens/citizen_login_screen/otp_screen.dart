@@ -2,17 +2,15 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fff/Citizen%20Related/Screens/citizen_home_screen/home_screen_citizen.dart';
+import 'package:fff/Utils/Utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../citizen_signUp_screen/citizen_signup.dart';
 
 // ignore: must_be_immutable
@@ -202,24 +200,6 @@ class _OtpScreenState extends State<OtpScreen> {
         },
       );
     } catch (e) {
-      // Handle errors
-      Get.snackbar(
-        "Got an Error : ",
-        "$e",
-        duration: const Duration(milliseconds: 1400),
-        backgroundColor: const Color(0xFFf5f5dc),
-        titleText: const Text("Got an Error : "),
-        animationDuration: const Duration(milliseconds: 1500),
-        colorText: Colors.brown,
-        isDismissible: true,
-        mainButton: TextButton(
-            onPressed: () {
-              Get.back();
-            },
-            child: const Text("Cancel")),
-        showProgressIndicator: true,
-        maxWidth: 320,
-      );
       handleError(e as PlatformException);
     }
   }
@@ -261,14 +241,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
       //if its not empty
       if (isUserRegOrNot) {
-        Fluttertoast.showToast(
-            msg: "Citizen logged in successfully..",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
+        showToastMsg("Citizen logged in successfully..");
 
         Navigator.pushReplacement(
             context,
@@ -276,15 +249,7 @@ class _OtpScreenState extends State<OtpScreen> {
               builder: (context) => const CitizenHomeScreen(),
             ));
       } else {
-        Fluttertoast.showToast(
-            msg: "Complete your profile first ..",
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
-
+        showToastMsg("Complete your profile first ..");
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(

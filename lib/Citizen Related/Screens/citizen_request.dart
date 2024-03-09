@@ -71,6 +71,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
     //for  notification when background and terminated case of application
     notificationServices.setupInteractMessage(context);
     notificationServices.getDeviceToken().then((value) {
+      //print("token : ${value.toString()}");
       senderDeviceToken = value.toString();
     });
   }
@@ -80,7 +81,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 50,
-        backgroundColor: Colors.white24,
+        backgroundColor: Colors.black12,
         centerTitle: true,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -318,16 +319,28 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                             await Future.delayed(
                                 const Duration(milliseconds: 1400));
                             Navigator.pop(context);
+                            //For Rid
+                            CollectionReference citizenRequestCollection =
+                                FirebaseFirestore.instance
+                                    .collection("Citizen Request");
+
+                            QuerySnapshot snapshot =
+                                await citizenRequestCollection.get();
+                            int totalDocCount = snapshot.size;
+                            totalDocCount++;
                             //sends request/alert to only NGO which are of the currents user's city
                             FirebaseFirestore.instance
                                 .collection('NGO')
+                            //added new ***
+                                //.where('services', arrayContains: 'services')
                                 .where('city', isEqualTo: 'Suratt')
                                 .get()
                                 .then((querySnapshot) {
-                              addReqToDatabase();
+                              addReqToDatabase(totalDocCount);
                               for (var doc in querySnapshot.docs) {
                                 String deviceToken = doc.data()['deviceToken'];
-                                sendNotificationToDevice(deviceToken);
+                                sendNotificationToDevice(
+                                    deviceToken, totalDocCount);
                               }
                             });
                           },
@@ -390,7 +403,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
     }
   }
 
-  void sendNotificationToDevice(String deviceToken) async {
+  void sendNotificationToDevice(String deviceToken, int totalDocCount) async {
     var data = {
       'to': deviceToken,
       'priority': 'high',
@@ -410,6 +423,10 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
             : addressController.text,
         'pincode':
             selectedRadioAddress == 1 ? fetchedPinCode : pincodeController.text,
+        'username': fetchedFname,
+        'city': fetchedCity,
+        'phoneNumber': fetchedPhone,
+        'ReqId': totalDocCount.toString(),
         //'type': 'alert'
       }
     };
@@ -426,11 +443,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
     );
   }
 
-  void addReqToDatabase() async {
-    //doc id
-    CollectionReference citizenRequestCollection =
-        FirebaseFirestore.instance.collection("Citizen Request");
-
+  void addReqToDatabase(int totalDocCount) async {
     // DocumentReference newDocRef = await citizenRequestCollection.add({
     //   // Add other fields here if necessary
     //   'neededService': selectedService,
@@ -447,13 +460,6 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
     //   'senderToken': senderDeviceToken,
     // });
 
-    // Get the total count of documents in the collection
-    QuerySnapshot snapshot = await citizenRequestCollection.get();
-    int totalDocCount = snapshot.size;
-    totalDocCount++;
-
-    //sender token
-
     //Storing data to database
     CitizenReqRegistration citizenReqData = CitizenReqRegistration(
         Rid: "Req_${totalDocCount.toString()}",
@@ -467,8 +473,9 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
         fullAddress: selectedRadioAddress == 1
             ? fetchedFullAddress
             : addressController.text,
-        isTransactionCompleted: false,
-        senderToken: senderDeviceToken);
+        isTransactionCompleted: "false",
+        senderToken: senderDeviceToken,
+        RespondId: '');
 
     Map<String, dynamic> UserReqJson = citizenReqData.toJsonReq();
 
@@ -489,15 +496,5 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
         print('Error adding citizen request  : $e');
       }
     }
-  }
-
-  DataRow buildDataRow(String field, String data) {
-    return DataRow(cells: [
-      DataCell(Text(
-        field,
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      )),
-      DataCell(Text(data)),
-    ]);
   }
 }
