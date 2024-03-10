@@ -18,7 +18,7 @@ class _ApplyForGrantState extends State<ApplyForGrant> {
       child: Scaffold(
         appBar: AppBar(
           elevation: 50,
-          backgroundColor: Colors.white24,
+          backgroundColor: color_AppBar,
           centerTitle: true,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -28,7 +28,7 @@ class _ApplyForGrantState extends State<ApplyForGrant> {
         ),
         body: Column(
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             const Text(
                 'Apply online for any Grant-in-aid \n to any Ministry or Department',
                 style: TextStyle(fontSize: 20)),

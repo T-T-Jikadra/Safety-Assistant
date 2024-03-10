@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../Utils/constants.dart';
+import '../../Utils/constants.dart';
 
 // ignore: camel_case_types
 class NGO_Response_History_Screen extends StatefulWidget {

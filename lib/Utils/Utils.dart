@@ -17,13 +17,38 @@ void showToastMsg(String msg) {
       fontSize: 16.0);
 }
 
+//for circular progressbar
+Future<dynamic> showCircularProgressBar(BuildContext context) {
+  return showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return const Dialog(
+        child: Padding(
+          padding: EdgeInsets.all(35.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(color: Colors.blue),
+              SizedBox(height: 30),
+              Text('Processing ...')
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
 //snakebar
-SnackBar TsnakeBar(BuildContext context,String headingText ,String labelTxt) {
+SnackBar TsnakeBar(BuildContext context, String headingText, String labelTxt) {
   return SnackBar(
     dismissDirection: DismissDirection.vertical,
     elevation: 35,
     padding: const EdgeInsets.all(7),
-    content:  Padding(
+    content: Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(headingText),
     ),
@@ -57,6 +82,7 @@ void showMsgDialog(BuildContext context, String message) {
   );
   // Show the dialog
   showDialog(
+    barrierDismissible: false,
     context: context,
     builder: (BuildContext context) {
       return alert;
@@ -92,9 +118,6 @@ String? validatePassword(String? value) {
 
   return null; // Return null if the password passes all validations
 }
-
-//for circular progressbar
-Future<void> showCircularProgressBar(BuildContext context) async {}
 
 //for forgot pwd
 Future<void> showForgotPasswordDialog(BuildContext context) async {
@@ -149,9 +172,10 @@ Future<void> showForgotPasswordDialog(BuildContext context) async {
               await Future.delayed(const Duration(milliseconds: 800));
               Navigator.pop(context);
               if (isValidEmail) {
-                try{
-                  FirebaseAuth.instance.sendPasswordResetEmail(email: forgotPwdController.text.trim());
-                } on FirebaseAuthException catch(e){
+                try {
+                  FirebaseAuth.instance.sendPasswordResetEmail(
+                      email: forgotPwdController.text.trim());
+                } on FirebaseAuthException catch (e) {
                   showToastMsg(e.message!);
                 }
                 // Implement sending email logic here

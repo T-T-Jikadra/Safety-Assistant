@@ -37,12 +37,15 @@ class req_open extends StatefulWidget {
 }
 
 class _req_openState extends State<req_open> {
-
-  //userType
+  //to get userType
   String? finalUserType = "";
+  String iAmNGO = '';
+  String iAmGovt = '';
 
   //for Request
   String fetchedRid = "";
+  String fetchedIsNGOResponded = "";
+  String fetchedIsGovtResponded = "";
   String? fetchedService = "";
   String fetchedUsername = "";
   String fetchedCitizenContactNo = "";
@@ -51,30 +54,36 @@ class _req_openState extends State<req_open> {
   String fetchedReqAddress = "";
   String fetchedIsTnxComplete = "";
   int? selectedRadioAddress = 1;
-  bool isTrue = false;
 
   //NGO
-  String fetchedAuthorityName = "";
-  String? fetchedAuthorityPhone = "";
-  String fetchedAuthorityState = "";
-  String fetchedAuthorityCity = "";
-  // String fetchedPinCode = "";
-  String fetchedAuthorityAddress = "";
+  String fetchedNGOName = "";
+  String fetchedNGORegNo = "";
+  String? fetchedNGOPhone = "";
+  String fetchedNGOState = "";
+  String fetchedNGOCity = "";
+  String fetchedNGOAddress = "";
+  String fetchedNGOEmail = "";
+  String fetchedNGOWebsite = "";
 
   //Govt
-  // String fetchedGovtFname = "";
-  // String? fetchedGovtPhone = "";
-  // String fetchedGovtState = "";
-  // String fetchedGovtCity = "";
-  // // String fetchedPinCode = "";
-  // String fetchedGovtAddress = "";
+  String fetchedGovtName = "";
+  String fetchedGovtRegNo = "";
+  String? fetchedGovtPhone = "";
+  String fetchedGovtState = "";
+  String fetchedGovtCity = "";
+  String fetchedGovtAddress = "";
+  String fetchedGovtEmail = "";
+  String fetchedGovtWebsite = "";
+
+  bool notificationSent = false;
 
   @override
   void initState() {
     super.initState();
     //check if its NGO or Govt
     getUserType();
-    fetchCitizenReqData();
+    //get request information from database
+    fetchReqData();
   }
 
   @override
@@ -135,7 +144,7 @@ class _req_openState extends State<req_open> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 40),
+                    //const SizedBox(height: 40),
                     // Decorated TextFormField widgets
                     // TextFormField(
                     //   keyboardType: TextInputType.text,
@@ -220,7 +229,7 @@ class _req_openState extends State<req_open> {
                     //     //fillColor: Colors.grey[200],
                     //   ),
                     // ),
-                    const SizedBox(height: 25),
+                    //const SizedBox(height: 25),
                     // fetchedIsTnxComplete == "true"
                     //     ? const Text(
                     //         "Request Transaction completed",
@@ -252,7 +261,25 @@ class _req_openState extends State<req_open> {
                                   width: double.infinity,
                                   child: ClipRRect(
                                       child: ElevatedButton(
-                                          onPressed: () async {},
+                                          onPressed: () async {
+                                            showDialog(
+                                              context: context,
+                                              barrierDismissible: false,
+                                              builder: (BuildContext context) {
+                                                return const Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                          color: Colors.red),
+                                                );
+                                              },
+                                            );
+                                            await Future.delayed(const Duration(
+                                                milliseconds: 1200));
+                                            Navigator.pop(context);
+                                            showToastMsg(
+                                                "You've chosen not to respond the emergency ..");
+                                            Navigator.pop(context);
+                                          },
                                           style: ButtonStyle(
                                               backgroundColor:
                                                   const MaterialStatePropertyAll(
@@ -277,40 +304,76 @@ class _req_openState extends State<req_open> {
                                   child: ClipRRect(
                                     child: ElevatedButton(
                                       onPressed: () async {
+                                        //progress
                                         showDialog(
                                           context: context,
                                           barrierDismissible: false,
                                           builder: (BuildContext context) {
-                                            return const Center(
-                                              child: CircularProgressIndicator(
-                                                  color: Colors.white),
+                                            return const Dialog(
+                                              child: Padding(
+                                                padding: EdgeInsets.all(35.0),
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    CircularProgressIndicator(color: Colors.blue),
+                                                    SizedBox(height: 30),
+                                                    Text('Processing ...')
+                                                  ],
+                                                ),
+                                              ),
                                             );
                                           },
                                         );
                                         await Future.delayed(
-                                            const Duration(milliseconds: 1400));
+                                            const Duration(milliseconds: 1300));
                                         Navigator.pop(context);
-
-
-
-
-
-
-
-
-                                        FirebaseFirestore.instance
-                                            .collection('Citizen Request')
-                                            .where('RequestId', isEqualTo: 'Req_${widget.rid}')
-                                            .get()
-                                            .then((querySnapshot) {
-                                          addResponseToDatabase();
-                                          for (var doc in querySnapshot.docs) {
-
-                                            String deviceToken = doc.data()['senderToken'];
-                                            sendNotificationToDevice(
-                                                deviceToken, "${widget.rid}");
+                                        //if user is NGO and isResponded
+                                        if (iAmNGO == 'true' &&
+                                            fetchedIsNGOResponded == 'true') {
+                                          showMsgDialog(context,
+                                              'Other NGO has responded to this request ..');
+                                        }
+                                        //if user is Govt and isResponded
+                                        else if (iAmGovt == 'true' &&
+                                            fetchedIsGovtResponded == 'true') {
+                                          showMsgDialog(context,
+                                              'Other Govt department has responded to this request ..');
+                                        }
+                                        //else Responded to req
+                                        else {
+                                          if(!notificationSent){
+                                            //search and get token of request sender
+                                            FirebaseFirestore.instance
+                                                .collection('Citizen Request')
+                                                .where('RequestId',
+                                                isEqualTo:
+                                                'Req_${widget.rid}')
+                                                .get()
+                                                .then((querySnapshot) {
+                                              //add response data into database
+                                              addResponseToDatabase();
+                                              setState(() {
+                                                fetchReqData();
+                                              });
+                                              for (var doc
+                                              in querySnapshot.docs) {
+                                                String deviceToken =
+                                                doc.data()['senderToken'];
+                                                //send response to  req sender
+                                                sendNotificationToDevice(
+                                                    deviceToken, "${widget.rid}");
+                                              }
+                                            });
+                                            notificationSent = true;
                                           }
-                                        });
+                                          else{
+                                            showMsgDialog(context,
+                                                'You have already responded to this request '
+                                                    '\n Kindly reach to desired location immediately..');
+                                          }
+                                        }
                                       },
                                       style: ButtonStyle(
                                           backgroundColor:
@@ -343,6 +406,7 @@ class _req_openState extends State<req_open> {
                                   child: ClipRRect(
                                       child: ElevatedButton(
                                           onPressed: () {
+                                            //progress
                                             showDialog(
                                               context: context,
                                               barrierDismissible: false,
@@ -394,35 +458,38 @@ class _req_openState extends State<req_open> {
     setState(() {
       finalUserType = obtainedUserType;
       if (finalUserType == "NGO") {
+        iAmNGO = 'true';
         fetchNGOData();
       } else if (finalUserType == "Govt") {
+        iAmGovt = 'true';
         fetchGovtData();
       }
     });
   }
 
   //to fetch requested citizen details
-  Future<void> fetchCitizenReqData() async {
+  Future<void> fetchReqData() async {
     try {
       // Fetch data from Firestore
-      DocumentSnapshot citizenReqSnapshot = await FirebaseFirestore.instance
+      DocumentSnapshot ReqSnapshot = await FirebaseFirestore.instance
           .collection('Citizen Request')
           .doc("Req_${widget.rid}")
           .get();
 
       // Check if the document exists
-      if (citizenReqSnapshot.exists) {
+      if (ReqSnapshot.exists) {
         // Access the fields from the document
         setState(() {
-          fetchedRid = citizenReqSnapshot.get('RequestId');
-          fetchedService = citizenReqSnapshot.get('neededService');
-          fetchedUsername = citizenReqSnapshot.get('userName');
-          fetchedCitizenContactNo = citizenReqSnapshot.get('contactNumber');
-          fetchedCitizenState = citizenReqSnapshot.get('state');
-          fetchedCitizenCity = citizenReqSnapshot.get('city');
-          fetchedReqAddress = citizenReqSnapshot.get('fullAddress');
-          fetchedIsTnxComplete =
-              citizenReqSnapshot.get('isTransactionCompleted');
+          fetchedRid = ReqSnapshot.get('RequestId');
+          fetchedIsNGOResponded = ReqSnapshot.get('isNGOResponded');
+          fetchedIsGovtResponded = ReqSnapshot.get('isGovtResponded');
+          fetchedService = ReqSnapshot.get('neededService');
+          fetchedUsername = ReqSnapshot.get('userName');
+          fetchedCitizenContactNo = ReqSnapshot.get('contactNumber');
+          fetchedCitizenState = ReqSnapshot.get('state');
+          fetchedCitizenCity = ReqSnapshot.get('city');
+          fetchedReqAddress = ReqSnapshot.get('fullAddress');
+          fetchedIsTnxComplete = ReqSnapshot.get('isTransactionCompleted');
         });
       } else {
         if (kDebugMode) {
@@ -451,12 +518,14 @@ class _req_openState extends State<req_open> {
       if (NGOSnapshot.exists) {
         // Access the fields from the document
         setState(() {
-          fetchedAuthorityName = NGOSnapshot.get('nameOfNGO');
-          fetchedAuthorityPhone = user!.phoneNumber;
-          fetchedAuthorityState = NGOSnapshot.get('state');
-          fetchedAuthorityCity = NGOSnapshot.get('city');
-          // fetchedPinCode = NGOSnapshot.get('pinCode');
-          fetchedAuthorityAddress = NGOSnapshot.get('fullAddress');
+          fetchedNGOName = NGOSnapshot.get('nameOfNGO');
+          fetchedNGORegNo = NGOSnapshot.get('NGORegNo');
+          fetchedNGOPhone = NGOSnapshot.get('contactNumber');
+          fetchedNGOState = NGOSnapshot.get('state');
+          fetchedNGOCity = NGOSnapshot.get('city');
+          fetchedNGOAddress = NGOSnapshot.get('fullAddress');
+          fetchedGovtEmail = NGOSnapshot.get('email');
+          fetchedGovtWebsite = NGOSnapshot.get('website');
         });
       } else {
         if (kDebugMode) {
@@ -480,17 +549,21 @@ class _req_openState extends State<req_open> {
           .collection('Govt')
           .doc(user?.email)
           .get();
+      print(user!.email);
+      print(GovtSnapshot.get('GovtAgencyRegNo'));
 
       // Check if the document exists
       if (GovtSnapshot.exists) {
         // Access the fields from the document
         setState(() {
-          fetchedAuthorityName = GovtSnapshot.get('GovtAgencyName');
-          fetchedAuthorityPhone = user!.phoneNumber;
-          fetchedAuthorityState = GovtSnapshot.get('state');
-          fetchedAuthorityCity = GovtSnapshot.get('city');
-          // fetchedPinCode = GovtSnapshot.get('pinCode');
-          fetchedAuthorityAddress = GovtSnapshot.get('fullAddress');
+          fetchedGovtName = GovtSnapshot.get('GovtAgencyName');
+          fetchedGovtRegNo = GovtSnapshot.get('GovtAgencyRegNo');
+          fetchedGovtPhone = GovtSnapshot.get('contactNumber');
+          fetchedGovtState = GovtSnapshot.get('state');
+          fetchedGovtCity = GovtSnapshot.get('city');
+          fetchedGovtAddress = GovtSnapshot.get('fullAddress');
+          fetchedGovtEmail = GovtSnapshot.get('email');
+          fetchedGovtWebsite = GovtSnapshot.get('website');
         });
       } else {
         if (kDebugMode) {
@@ -505,7 +578,8 @@ class _req_openState extends State<req_open> {
   }
 
   //to send response notification to user
-  void sendNotificationToDevice(String deviceToken, String totalDocCount) async {
+  void sendNotificationToDevice(
+      String deviceToken, String totalDocCount) async {
     var data = {
       'to': deviceToken,
       'priority': 'high',
@@ -519,12 +593,12 @@ class _req_openState extends State<req_open> {
       'data': {
         'type': 'response',
         'title': "Got response for -$fetchedService",
-        'address': fetchedAuthorityAddress,
+        'address': iAmNGO == 'true' ? fetchedNGOAddress : fetchedGovtAddress,
         'pincode': "",
-        'username': fetchedAuthorityName,
+        'username': iAmNGO == 'true' ? fetchedNGOName : fetchedGovtName,
         'city': fetchedCitizenCity,
-        'phoneNumber': fetchedAuthorityPhone,
-        'ReqId': totalDocCount.toString(),
+        'phoneNumber': iAmNGO == 'true' ? fetchedNGOPhone : fetchedGovtPhone,
+        'ResponseId': totalDocCount.toString(),
         //'type': 'alert'
       }
     };
@@ -536,7 +610,7 @@ class _req_openState extends State<req_open> {
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization':
-        'key=AAAAqhgqKGQ:APA91bEi_iwrEhn8BbQOG7pfFwUikl3Kp0K1sKAoOadF9Evb8Off1U5EqwljkoMprm5uO-aS_wctndIRoJum30YbvyJIBA5W4TF-EBmL8DRTrY1kHTTsDXaW8wWPLBSrbcgPobzzm8No'
+            'key=AAAAqhgqKGQ:APA91bEi_iwrEhn8BbQOG7pfFwUikl3Kp0K1sKAoOadF9Evb8Off1U5EqwljkoMprm5uO-aS_wctndIRoJum30YbvyJIBA5W4TF-EBmL8DRTrY1kHTTsDXaW8wWPLBSrbcgPobzzm8No'
       },
     );
   }
@@ -545,14 +619,16 @@ class _req_openState extends State<req_open> {
   void addResponseToDatabase() async {
     //Storing data to database
     Response_Registration ResponseData = Response_Registration(
-        respondId: "Response_${widget.rid}",
-        responderName: fetchedAuthorityName,
-        responderRegNo: '',
-        responderAddress: fetchedAuthorityAddress,
-        responderContactNo: fetchedAuthorityPhone,
-        responderEmail: '',
-        responderWebsite: '',
-        deviceToken: '',
+      respondId: "Response_${widget.rid}",
+      responderName: iAmNGO == 'true' ? fetchedNGOName : fetchedGovtName,
+      responderRegNo: iAmNGO == 'true' ? fetchedNGORegNo : fetchedGovtRegNo,
+      responderAddress:
+          iAmNGO == 'true' ? fetchedNGOAddress : fetchedGovtAddress,
+      responderContactNo: iAmNGO == 'true' ? fetchedNGOPhone : fetchedGovtPhone,
+      responderEmail: iAmNGO == 'true' ? fetchedNGOEmail : fetchedGovtEmail,
+      responderWebsite:
+          iAmNGO == 'true' ? fetchedNGOWebsite : fetchedGovtWebsite,
+      // deviceToken: '',
     );
 
     Map<String, dynamic> respondJson = ResponseData.toRespondJson();
@@ -562,6 +638,22 @@ class _req_openState extends State<req_open> {
           .collection("Authority Respond")
           .doc("Response_${widget.rid}")
           .set(respondJson);
+
+      if (iAmNGO == 'true') {
+        await FirebaseFirestore.instance
+            .collection("Citizen Request")
+            .doc("Req_${widget.rid}")
+            .update({
+          'isNGOResponded': 'true',
+        });
+      }else if (iAmGovt == 'true') {
+        await FirebaseFirestore.instance
+            .collection("Citizen Request")
+            .doc("Req_${widget.rid}")
+            .update({
+          'isGovtResponded': 'true',
+        });
+      }
 
       Timer(const Duration(milliseconds: 800), () {
         showMsgDialog(context,

@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously
+// ignore_for_file: non_constant_identifier_names, use_build_context_synchronously, camel_case_types
 
 import 'dart:async';
 import 'dart:convert';
@@ -14,9 +14,7 @@ import '../../Utils/dropdown_Items.dart';
 import '../../Components/Notification_related/notification_services.dart';
 import 'package:http/http.dart' as http;
 
-// ignore: camel_case_types
 class userRequest_Screen extends StatefulWidget {
-  // final String id;
 
   const userRequest_Screen({super.key});
 
@@ -24,7 +22,6 @@ class userRequest_Screen extends StatefulWidget {
   State<userRequest_Screen> createState() => _userRequest_ScreenState();
 }
 
-// ignore: camel_case_types
 class _userRequest_ScreenState extends State<userRequest_Screen> {
   NotificationServices notificationServices = NotificationServices();
 
@@ -42,9 +39,6 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
   bool isExpanded = false;
   bool isFetched = false;
 
-  //late AnimationController _controller;
-  //late Animation<double> _heightAnimation;
-
   TextEditingController addressController = TextEditingController();
   TextEditingController pincodeController = TextEditingController();
 
@@ -56,22 +50,17 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
         isFetched = true;
       });
     });
-    // _controller = AnimationController(
-    //   vsync: this,
-    //   duration: const Duration(milliseconds: 300),
-    // );
-    // _heightAnimation = Tween<double>(begin: 0, end: 100).animate(
-    //   CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn),
-    // );
     super.initState();
     selectedService = DropdownItems.dropdownItemRequestTypes.first;
     //listen to  incoming msg...
     notificationServices.firebaseInit(context);
 
-    //for  notification when background and terminated case of application
+    //for notification when background and terminated case of application
     notificationServices.setupInteractMessage(context);
     notificationServices.getDeviceToken().then((value) {
-      //print("token : ${value.toString()}");
+      if (kDebugMode) {
+        print("token : ${value.toString()}");
+      }
       senderDeviceToken = value.toString();
     });
   }
@@ -101,15 +90,15 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 25),
                     padding: const EdgeInsets.only(
-                        //for fields that are covered under keyboard
+                        //for fields that are covered under keyboard ..
                         // bottom: MediaQuery.of(context).viewInsets.bottom,
                         left: 2,
                         right: 2),
                     child: Column(
                       children: [
                         const SizedBox(height: 25),
-                        const Text("Request by filling up form : ",
-                            style: TextStyle(fontSize: 16)),
+                        const Text("Request by filling up your details : ",
+                            style: TextStyle(fontSize: 17)),
                         const SizedBox(height: 25),
                         //service list
                         Flex(
@@ -159,7 +148,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                         const SizedBox(height: 20),
                         //Home address
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          padding: const EdgeInsets.symmetric(horizontal: 18),
                           child: Row(
                             children: [
                               Radio(
@@ -306,43 +295,40 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                   child: ClipRRect(
                       child: ElevatedButton(
                           onPressed: () async {
-                            showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (BuildContext context) {
-                                return const Center(
-                                  child: CircularProgressIndicator(
-                                      color: Colors.white),
-                                );
-                              },
-                            );
-                            await Future.delayed(
-                                const Duration(milliseconds: 1400));
-                            Navigator.pop(context);
+                            showCircularProgressBar(context);
                             //For Rid
                             CollectionReference citizenRequestCollection =
                                 FirebaseFirestore.instance
                                     .collection("Citizen Request");
-
-                            QuerySnapshot snapshot =
-                                await citizenRequestCollection.get();
-                            int totalDocCount = snapshot.size;
-                            totalDocCount++;
-                            //sends request/alert to only NGO which are of the currents user's city
-                            FirebaseFirestore.instance
-                                .collection('NGO')
-                            //added new ***
-                                //.where('services', arrayContains: 'services')
-                                .where('city', isEqualTo: 'Suratt')
-                                .get()
-                                .then((querySnapshot) {
-                              addReqToDatabase(totalDocCount);
-                              for (var doc in querySnapshot.docs) {
-                                String deviceToken = doc.data()['deviceToken'];
-                                sendNotificationToDevice(
-                                    deviceToken, totalDocCount);
+                            try {
+                              QuerySnapshot snapshot =
+                                  await citizenRequestCollection.get();
+                              int totalDocCount = snapshot.size;
+                              totalDocCount++;
+                              //sends request/alert to only NGO which are of the currents user's city
+                              FirebaseFirestore.instance
+                                  .collection('NGO')
+                                  //added new ***
+                                  //.where('services', arrayContains: 'services')
+                                  .where('city', isEqualTo: 'Suratt')
+                                  .get()
+                                  .then((querySnapshot) {
+                                addReqToDatabase(totalDocCount);
+                                for (var doc in querySnapshot.docs) {
+                                  String deviceToken =
+                                      doc.data()['deviceToken'];
+                                  sendNotificationToDevice(
+                                      deviceToken, totalDocCount);
+                                }
+                              });
+                            } catch (e) {
+                              if (kDebugMode) {
+                                print(
+                                    'Error while sending citizen request : $e');
                               }
-                            });
+                            } finally {
+                              Navigator.pop(context);
+                            }
                           },
                           style: ButtonStyle(
                               shape: MaterialStateProperty.all(
@@ -444,25 +430,12 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
   }
 
   void addReqToDatabase(int totalDocCount) async {
-    // DocumentReference newDocRef = await citizenRequestCollection.add({
-    //   // Add other fields here if necessary
-    //   'neededService': selectedService,
-    //   'userName': fetchedFname,
-    //   'contactNumber': fetchedPhone,
-    //   'state': fetchedState,
-    //   'city': fetchedCity,
-    //   'pinCode':
-    //       selectedRadioAddress == 1 ? fetchedPinCode : pincodeController.text,
-    //   'fullAddress': selectedRadioAddress == 1
-    //       ? fetchedFullAddress
-    //       : addressController.text,
-    //   'isTransactionCompleted': false,
-    //   'senderToken': senderDeviceToken,
-    // });
-
     //Storing data to database
     CitizenReqRegistration citizenReqData = CitizenReqRegistration(
         Rid: "Req_${totalDocCount.toString()}",
+        RespondId: '',
+        isNGOResponded: 'true',
+        isGovtResponded: 'false',
         neededService: selectedService,
         userName: fetchedFname,
         contactNumber: fetchedPhone,
@@ -474,8 +447,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
             ? fetchedFullAddress
             : addressController.text,
         isTransactionCompleted: "false",
-        senderToken: senderDeviceToken,
-        RespondId: '');
+        senderToken: senderDeviceToken);
 
     Map<String, dynamic> UserReqJson = citizenReqData.toJsonReq();
 
@@ -493,7 +465,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
     } catch (e) {
       // An error occurred
       if (kDebugMode) {
-        print('Error adding citizen request  : $e');
+        print('Error adding citizen request : $e');
       }
     }
   }

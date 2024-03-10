@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../../../Citizen Related/Screens/citizen_request.dart';
 import '../../../Components/Notification_related/notification_services.dart';
 
 class commonbg_ngo extends StatefulWidget {
@@ -95,8 +96,8 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
               child: ElevatedButton(
                 child: const Text("It's NGO Home Page"),
                 onPressed: () {
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (context) => const msgScreen()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const userRequest_Screen()));
                 },
               ),
             ),

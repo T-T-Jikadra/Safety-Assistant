@@ -606,9 +606,9 @@ class _commonbgState extends State<commonbg> {
           child: ElevatedButton(
             child: const Text("Click"),
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const msgScreen())
-              );
+              // Navigator.of(context).push(MaterialPageRoute(
+              //     builder: (context) => const msgScreen())
+              // );
             },
           ),
         ),

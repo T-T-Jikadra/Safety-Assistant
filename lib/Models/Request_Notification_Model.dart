@@ -8,7 +8,7 @@ class Response_Registration {
   final String responderEmail;
   final String responderWebsite;
   final DateTime respondTime;
-  final String deviceToken;
+  // final String deviceToken;
 
   Response_Registration({
     required this.respondId,
@@ -18,7 +18,7 @@ class Response_Registration {
     required this.responderContactNo,
     required this.responderEmail,
     required this.responderWebsite,
-    required this.deviceToken,
+    // required this.deviceToken,
     DateTime? respondTime,
   }) : respondTime = respondTime ?? DateTime.now();
 
@@ -32,7 +32,7 @@ class Response_Registration {
       'ResponderEmail':responderEmail,
       'ResponderWebsite':responderWebsite,
       'RespondTime': respondTime.toString(),
-      'deviceToken':deviceToken,
+      // 'deviceToken':deviceToken,
     };
   }
 }

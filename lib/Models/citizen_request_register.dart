@@ -11,6 +11,8 @@ class CitizenReqRegistration {
   final String pinCode;
   final String fullAddress;
   final String isTransactionCompleted;
+  final String isNGOResponded;
+  final String isGovtResponded;
   final DateTime requestTime;
   final String senderToken;
 
@@ -25,6 +27,8 @@ class CitizenReqRegistration {
       required this.pinCode,
       required this.fullAddress,
       required this.isTransactionCompleted,
+      required this.isNGOResponded,
+      required this.isGovtResponded,
       required this.senderToken,
       DateTime? requestTime})
       : requestTime = requestTime ?? DateTime.now();
@@ -33,6 +37,8 @@ class CitizenReqRegistration {
     return {
       'RequestId': Rid,
       'RespondId': '',
+      'isNGOResponded': isNGOResponded,
+      'isGovtResponded': isGovtResponded,
       'neededService': neededService,
       'userName': userName,
       'contactNumber': contactNumber,

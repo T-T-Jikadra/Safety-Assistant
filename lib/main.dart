@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Citizen Related/Screens/open_response_screen.dart';
-import 'Components/Notification_related/message_screen.dart';
 import 'Components/Notification_related/notification_services.dart';
 import 'Utils/common_files/open_req.dart';
 import '_Root/Splash/splash_Screen.dart';
@@ -140,11 +139,11 @@ class _MyAppState extends State<MyApp> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MessageScreen(),
-                        ));
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => const MessageScreen(),
+                    //     ));
                   },
                   child: const Text("Next screen")),
             ],

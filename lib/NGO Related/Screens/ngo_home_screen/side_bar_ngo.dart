@@ -15,9 +15,9 @@ import '../../../Utils/rive_utils.dart';
 import '../../../Components/info_card.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../NGO_list/NGO_list.dart';
-import 'NGO_donation_history.dart';
-import 'NGO_profile.dart';
-import 'NGO_respond_history.dart';
+import '../NGO_donation_history.dart';
+import '../NGO_profile.dart';
+import '../NGO_respond_history.dart';
 import 'menu_ngo.dart';
 
 class SideBar_ngo extends StatefulWidget {
