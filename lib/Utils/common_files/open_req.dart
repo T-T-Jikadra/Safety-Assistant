@@ -313,11 +313,15 @@ class _req_openState extends State<req_open> {
                                               child: Padding(
                                                 padding: EdgeInsets.all(35.0),
                                                 child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
                                                   children: [
-                                                    CircularProgressIndicator(color: Colors.blue),
+                                                    CircularProgressIndicator(
+                                                        color: Colors.blue),
                                                     SizedBox(height: 30),
                                                     Text('Processing ...')
                                                   ],
@@ -343,13 +347,13 @@ class _req_openState extends State<req_open> {
                                         }
                                         //else Responded to req
                                         else {
-                                          if(!notificationSent){
+                                          if (!notificationSent) {
                                             //search and get token of request sender
                                             FirebaseFirestore.instance
                                                 .collection('Citizen Request')
                                                 .where('RequestId',
-                                                isEqualTo:
-                                                'Req_${widget.rid}')
+                                                    isEqualTo:
+                                                        'Req_${widget.rid}')
                                                 .get()
                                                 .then((querySnapshot) {
                                               //add response data into database
@@ -358,20 +362,21 @@ class _req_openState extends State<req_open> {
                                                 fetchReqData();
                                               });
                                               for (var doc
-                                              in querySnapshot.docs) {
+                                                  in querySnapshot.docs) {
                                                 String deviceToken =
-                                                doc.data()['senderToken'];
+                                                    doc.data()['senderToken'];
                                                 //send response to  req sender
                                                 sendNotificationToDevice(
-                                                    deviceToken, "${widget.rid}");
+                                                    deviceToken,
+                                                    "${widget.rid}");
                                               }
                                             });
                                             notificationSent = true;
-                                          }
-                                          else{
-                                            showMsgDialog(context,
+                                          } else {
+                                            showMsgDialog(
+                                                context,
                                                 'You have already responded to this request '
-                                                    '\n Kindly reach to desired location immediately..');
+                                                '\n Kindly reach to desired location immediately..');
                                           }
                                         }
                                       },
@@ -524,8 +529,8 @@ class _req_openState extends State<req_open> {
           fetchedNGOState = NGOSnapshot.get('state');
           fetchedNGOCity = NGOSnapshot.get('city');
           fetchedNGOAddress = NGOSnapshot.get('fullAddress');
-          fetchedGovtEmail = NGOSnapshot.get('email');
-          fetchedGovtWebsite = NGOSnapshot.get('website');
+          fetchedNGOEmail = NGOSnapshot.get('email');
+          fetchedNGOWebsite = NGOSnapshot.get('website');
         });
       } else {
         if (kDebugMode) {
@@ -549,8 +554,8 @@ class _req_openState extends State<req_open> {
           .collection('Govt')
           .doc(user?.email)
           .get();
-      print(user!.email);
-      print(GovtSnapshot.get('GovtAgencyRegNo'));
+      //print(user!.email);
+      //print(GovtSnapshot.get('GovtAgencyRegNo'));
 
       // Check if the document exists
       if (GovtSnapshot.exists) {
@@ -618,44 +623,68 @@ class _req_openState extends State<req_open> {
   // to add response data in DB
   void addResponseToDatabase() async {
     //Storing data to database
-    Response_Registration ResponseData = Response_Registration(
-      respondId: "Response_${widget.rid}",
-      responderName: iAmNGO == 'true' ? fetchedNGOName : fetchedGovtName,
-      responderRegNo: iAmNGO == 'true' ? fetchedNGORegNo : fetchedGovtRegNo,
-      responderAddress:
-          iAmNGO == 'true' ? fetchedNGOAddress : fetchedGovtAddress,
-      responderContactNo: iAmNGO == 'true' ? fetchedNGOPhone : fetchedGovtPhone,
-      responderEmail: iAmNGO == 'true' ? fetchedNGOEmail : fetchedGovtEmail,
-      responderWebsite:
-          iAmNGO == 'true' ? fetchedNGOWebsite : fetchedGovtWebsite,
-      // deviceToken: '',
-    );
+    NGO_Response_Registration ResponseNGOData = NGO_Response_Registration(
+        respondId: "Response_${widget.rid}",
+        responderNGOName: fetchedNGOName,
+        responderNGORegNo: fetchedNGORegNo,
+        responderNGOAddress: fetchedNGOAddress,
+        responderNGOContactNo: fetchedNGOPhone,
+        responderNGOEmail: fetchedNGOEmail,
+        responderNGOWebsite: fetchedNGOWebsite);
 
-    Map<String, dynamic> respondJson = ResponseData.toRespondJson();
+    Govt_Response_Registration ResponseGovtData = Govt_Response_Registration(
+        respondId: "Response_${widget.rid}",
+        responderGovtName: fetchedGovtName,
+        responderGovtRegNo: fetchedGovtRegNo,
+        responderGovtAddress: fetchedGovtAddress,
+        responderGovtContactNo: fetchedGovtPhone,
+        responderGovtEmail: fetchedGovtEmail,
+        responderGovtWebsite: fetchedGovtWebsite);
+
+    Map<String, dynamic> respondNGOJson = ResponseNGOData.toNGORespondJson();
+    Map<String, dynamic> respondGovtJson = ResponseGovtData.toGovtRespondJson();
 
     try {
+      //add respond Id into request doc
       await FirebaseFirestore.instance
-          .collection("Authority Respond")
-          .doc("Response_${widget.rid}")
-          .set(respondJson);
+          .collection("Citizen Request")
+          .doc("Req_${widget.rid}")
+          .update({
+        'RespondId': "Response_${widget.rid}",
+      });
 
       if (iAmNGO == 'true') {
+        //update responded state to true
         await FirebaseFirestore.instance
             .collection("Citizen Request")
             .doc("Req_${widget.rid}")
             .update({
           'isNGOResponded': 'true',
         });
-      }else if (iAmGovt == 'true') {
+
+        //sets NGO response data
+        await FirebaseFirestore.instance
+            .collection("Authority Respond")
+            .doc("Response_${widget.rid}")
+            .set(respondNGOJson);
+      }
+      //update responded state to true
+      else if (iAmGovt == 'true') {
         await FirebaseFirestore.instance
             .collection("Citizen Request")
             .doc("Req_${widget.rid}")
             .update({
           'isGovtResponded': 'true',
         });
+
+        //sets Govt response data
+        await FirebaseFirestore.instance
+            .collection("Authority Respond")
+            .doc("Response_${widget.rid}")
+            .set(respondGovtJson);
       }
 
-      Timer(const Duration(milliseconds: 800), () {
+      Timer(const Duration(milliseconds: 300), () {
         showMsgDialog(context,
             'You are requested to reach emergency place as soon as possible ..');
         showToastMsg("Responded successfully ..");

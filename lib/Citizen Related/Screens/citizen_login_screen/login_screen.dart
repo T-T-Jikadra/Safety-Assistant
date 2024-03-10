@@ -83,9 +83,11 @@ class _CitizenLoginScreenState extends State<CitizenLoginScreen> {
                                   border: Border.all(
                                     color: Colors.deepPurple.shade400,
                                   ),
-                                  borderRadius: BorderRadius.circular(36),
+                                  borderRadius: BorderRadius.circular(27),
                                 ),
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     // Country picker widget
                                     CountryPicker(
@@ -99,34 +101,40 @@ class _CitizenLoginScreenState extends State<CitizenLoginScreen> {
                                       width: screenWidth * 0.02,
                                     ),
                                     Expanded(
-                                      child: TextField(
-                                        style: const TextStyle(fontSize: 14),
-                                        cursorRadius: const Radius.circular(50),
-                                        cursorWidth: 3,
-                                        // Close keyboard on editing completed
-                                        onEditingComplete: () {
-                                          FocusScope.of(context).unfocus();
-                                        },
-                                        decoration: const InputDecoration(
-                                          hintText: 'Mobile Number',
-                                          border: InputBorder.none,
-                                          enabledBorder: InputBorder.none,
-                                          focusedBorder: InputBorder.none,
-                                          contentPadding: EdgeInsets.symmetric(
-                                              vertical: 13.5),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(bottom: 10),
+                                        child: TextField(
+                                          style: const TextStyle(fontSize: 15),
+                                          cursorRadius: const Radius.circular(50),
+                                          cursorWidth: 3,
+                                          onChanged: (String value){
+                                            if(value.length == 10){
+                                              FocusScope.of(context).unfocus();
+                                            }
+                                          },
+                                          // Close keyboard on editing completed
+                                          onEditingComplete: () {
+                                            FocusScope.of(context).unfocus();
+                                          },
+                                          decoration: const InputDecoration(
+                                            focusColor: Colors.grey,
+                                            hintText: 'Mobile Number',
+                                            border: InputBorder.none,
+                                            enabledBorder: InputBorder.none,
+                                            focusedBorder: InputBorder.none,
+                                            contentPadding: EdgeInsets.symmetric(
+                                                vertical: 10),
+                                          ),
+                                          controller: _contactEditingController,
+                                          keyboardType: TextInputType.phone,
+                                          inputFormatters: [
+                                            LengthLimitingTextInputFormatter(10)
+                                          ],
                                         ),
-                                        controller: _contactEditingController,
-                                        keyboardType: TextInputType.phone,
-                                        inputFormatters: [
-                                          LengthLimitingTextInputFormatter(10)
-                                        ],
                                       ),
                                     ),
                                   ],
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 0,
                               ),
                             ],
                           ),

@@ -98,7 +98,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     height: screenHeight * 0.01,
                   ),
                   Text(
-                    'Enter 6 digit number that was \nsent to : ${widget._contact}',
+                    'Enter 6 digit OTP that was \nsent to : ${widget._contact}',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 18,

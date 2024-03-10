@@ -309,7 +309,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                               FirebaseFirestore.instance
                                   .collection('NGO')
                                   //added new ***
-                                  //.where('services', arrayContains: 'services')
+                                 // .where('services', whereIn: selectedServiceWords)
                                   .where('city', isEqualTo: 'Suratt')
                                   .get()
                                   .then((querySnapshot) {
@@ -434,7 +434,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
     CitizenReqRegistration citizenReqData = CitizenReqRegistration(
         Rid: "Req_${totalDocCount.toString()}",
         RespondId: '',
-        isNGOResponded: 'true',
+        isNGOResponded: 'false',
         isGovtResponded: 'false',
         neededService: selectedService,
         userName: fetchedFname,

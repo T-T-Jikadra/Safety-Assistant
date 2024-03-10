@@ -1,38 +1,74 @@
 // ignore_for_file: file_names, camel_case_types
-class Response_Registration {
+
+class NGO_Response_Registration {
   final String respondId;
-  final String responderName;
-  final String responderRegNo;
-  final String responderAddress;
-  final String? responderContactNo;
-  final String responderEmail;
-  final String responderWebsite;
-  final DateTime respondTime;
-  // final String deviceToken;
+  final String responderNGOName;
+  final String responderNGORegNo;
+  final String responderNGOAddress;
+  final String? responderNGOContactNo;
+  final String responderNGOEmail;
+  final String responderNGOWebsite;
+  final DateTime respondNGOTime;
 
-  Response_Registration({
+  NGO_Response_Registration({
     required this.respondId,
-    required this.responderName,
-    required this.responderRegNo,
-    required this.responderAddress,
-    required this.responderContactNo,
-    required this.responderEmail,
-    required this.responderWebsite,
-    // required this.deviceToken,
-    DateTime? respondTime,
-  }) : respondTime = respondTime ?? DateTime.now();
+    required this.responderNGOName,
+    required this.responderNGORegNo,
+    required this.responderNGOAddress,
+    required this.responderNGOContactNo,
+    required this.responderNGOEmail,
+    required this.responderNGOWebsite,
+    DateTime? respondNGOTime,
+  }) : respondNGOTime = respondNGOTime ?? DateTime.now();
 
-  Map<String, dynamic> toRespondJson() {
+  Map<String, dynamic> toNGORespondJson() {
     return {
       'RespondId': respondId,
-      'ResponderName': responderName,
-      'ResponderRegNo': responderRegNo,
-      'ResponderAddress': responderAddress,
-      'ResponderContactNumber':responderContactNo,
-      'ResponderEmail':responderEmail,
-      'ResponderWebsite':responderWebsite,
-      'RespondTime': respondTime.toString(),
-      // 'deviceToken':deviceToken,
+      'ResponderNGOName': responderNGOName,
+      'ResponderNGORegNo': responderNGORegNo,
+      'ResponderNGOAddress': responderNGOAddress,
+      'ResponderNGOContactNumber': responderNGOContactNo,
+      'ResponderNGOEmail': responderNGOEmail,
+      'ResponderNGOWebsite': responderNGOWebsite,
+      'RespondNGOTime': respondNGOTime.toString(),
+    };
+  }
+}
+
+class Govt_Response_Registration {
+  final String respondId;
+  final String responderGovtName;
+  final String responderGovtRegNo;
+  final String responderGovtAddress;
+  final String? responderGovtContactNo;
+  final String responderGovtEmail;
+  final String responderGovtWebsite;
+  final DateTime respondGovtTime;
+
+  // final String deviceToken;
+
+  Govt_Response_Registration({
+    required this.respondId,
+    required this.responderGovtName,
+    required this.responderGovtRegNo,
+    required this.responderGovtAddress,
+    required this.responderGovtContactNo,
+    required this.responderGovtEmail,
+    required this.responderGovtWebsite,
+    // required this.deviceToken,
+    DateTime? respondGovtTime,
+  }) : respondGovtTime = respondGovtTime ?? DateTime.now();
+
+  Map<String, dynamic> toGovtRespondJson() {
+    return {
+      'RespondId': respondId,
+      'ResponderGovtName': responderGovtRegNo,
+      'ResponderGovtRegNo': responderGovtRegNo,
+      'ResponderGovtAddress': responderGovtAddress,
+      'ResponderGovtContactNumber': responderGovtContactNo,
+      'ResponderGovtEmail': responderGovtEmail,
+      'ResponderGovtWebsite': responderGovtWebsite,
+      'RespondGovtTime': respondGovtTime.toString(),
     };
   }
 }
