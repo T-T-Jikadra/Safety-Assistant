@@ -311,7 +311,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
                                           builder: (BuildContext context) {
                                             return const Dialog(
                                               child: Padding(
-                                                padding: EdgeInsets.all(35.0),
+                                                padding: EdgeInsets.only(top: 35, bottom: 25, left: 20, right: 20),
                                                 child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.min,
@@ -320,8 +320,8 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    CircularProgressIndicator(
-                                                        color: Colors.blue),
+                                                    SizedBox(height: 15),
+                                                    CircularProgressIndicator(color: Colors.blue),
                                                     SizedBox(height: 30),
                                                     Text('Processing ...')
                                                   ],

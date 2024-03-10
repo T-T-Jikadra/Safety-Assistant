@@ -15,7 +15,6 @@ import '../../Components/Notification_related/notification_services.dart';
 import 'package:http/http.dart' as http;
 
 class userRequest_Screen extends StatefulWidget {
-
   const userRequest_Screen({super.key});
 
   @override
@@ -38,6 +37,8 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
   bool showTextField = false;
   bool isExpanded = false;
   bool isFetched = false;
+
+  bool notificationSent = false;
 
   TextEditingController addressController = TextEditingController();
   TextEditingController pincodeController = TextEditingController();
@@ -80,266 +81,306 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
       ),
       body: SizedBox(
         width: double.infinity,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Container(
-                    margin: const EdgeInsets.only(bottom: 25),
-                    padding: const EdgeInsets.only(
-                        //for fields that are covered under keyboard ..
-                        // bottom: MediaQuery.of(context).viewInsets.bottom,
-                        left: 2,
-                        right: 2),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 25),
-                        const Text("Request by filling up your details : ",
-                            style: TextStyle(fontSize: 17)),
-                        const SizedBox(height: 25),
-                        //service list
-                        Flex(
-                          direction: Axis.horizontal,
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 20,
-                                  right: 20,
-                                ),
-                                child: SizedBox(
-                                  height: 60,
-                                  child: DropdownButtonFormField<String>(
-                                    value: selectedService,
-                                    items: DropdownItems
-                                        .dropdownItemRequestTypes
-                                        .map((String state) {
-                                      return DropdownMenuItem<String>(
-                                        // alignment: AlignmentDirectional.topStart,
-                                        value: state,
-                                        child: Text(state),
-                                      );
-                                    }).toList(),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        selectedService = value!;
-                                        // Update city list based on the selected state
-                                      });
-                                    },
-                                    decoration: const InputDecoration(
-                                      // border: OutlineInputBorder(),
-                                      hintText: "Select your service",
+        child: RefreshIndicator(
+          onRefresh: _refreshData,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      margin: const EdgeInsets.only(bottom: 25),
+                      padding: const EdgeInsets.only(
+                          //for fields that are covered under keyboard ..
+                          // bottom: MediaQuery.of(context).viewInsets.bottom,
+                          left: 2,
+                          right: 2),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 25),
+                          const Text("Request by filling up your details : ",
+                              style: TextStyle(fontSize: 17)),
+                          const SizedBox(height: 25),
+                          //service list
+                          Flex(
+                            direction: Axis.horizontal,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 20,
+                                    right: 20,
+                                  ),
+                                  child: SizedBox(
+                                    height: 60,
+                                    child: DropdownButtonFormField<String>(
+                                      value: selectedService,
+                                      items: DropdownItems
+                                          .dropdownItemRequestTypes
+                                          .map((String state) {
+                                        return DropdownMenuItem<String>(
+                                          // alignment: AlignmentDirectional.topStart,
+                                          value: state,
+                                          child: Text(state),
+                                        );
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          selectedService = value!;
+                                          // Update city list based on the selected state
+                                        });
+                                      },
+                                      decoration: const InputDecoration(
+                                        // border: OutlineInputBorder(),
+                                        hintText: "Select your service",
+                                      ),
+                                      validator: (value) {
+                                        if (value == "Select Govt Agency State") {
+                                          return 'Select Govt Agency State';
+                                        }
+                                        return null; // Return null if the input is valid
+                                      },
                                     ),
-                                    validator: (value) {
-                                      if (value == "Select Govt Agency State") {
-                                        return 'Select Govt Agency State';
-                                      }
-                                      return null; // Return null if the input is valid
-                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          //Home address
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                            child: Row(
+                              children: [
+                                Radio(
+                                  value: 1,
+                                  groupValue: selectedRadioAddress,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedRadioAddress = value;
+                                      showTextField = false;
+                                      //_controller.forward();
+                                      // isExpanded = false;
+                                    });
+                                  },
+                                ),
+                                const Text('Registered Address'),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          //new address
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Row(
+                              children: [
+                                Radio(
+                                  value: 2,
+                                  groupValue: selectedRadioAddress,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedRadioAddress = value;
+                                      showTextField = true;
+                                      isExpanded = true;
+                                      // _controller.reverse();
+                                    });
+                                  },
+                                ),
+                                const Text('New Address'),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          if (selectedRadioAddress == 1)
+                            isFetched
+                                ? Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 8),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(19.0),
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    child: DataTable(
+                                      columnSpacing: 10.0,
+                                      columns: const [
+                                        DataColumn(
+                                            label: Text('Field',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: colorPrimary))),
+                                        DataColumn(
+                                            label: Text('Data',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: colorPrimary))),
+                                      ],
+                                      rows: [
+                                        buildDataRow('Name', fetchedFname),
+                                        buildDataRow(
+                                            'Address', fetchedFullAddress),
+                                        buildDataRow('Pin Code', fetchedPinCode),
+                                        buildDataRow('City', fetchedCity),
+                                        buildDataRow('State', fetchedState),
+                                      ],
+                                    ),
+                                  )
+                                // Text(
+                                //         "$fetchedFname \n $fetchedFullAddress \n $fetchedPinCode \n $fetchedCity \n $fetchedState ",
+                                //         style: const TextStyle(fontSize: 14),
+                                //       )
+                                : const SpinKitThreeBounce(
+                                    color: Colors.blueGrey,
+                                    size: 20,
+                                  ),
+                          if (selectedRadioAddress == 2)
+                            AnimatedSize(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                              //vsync: this,
+                              child: SizedBox(
+                                //height: isExpanded ? null : 0,
+                                child: AnimatedOpacity(
+                                  opacity: showTextField ? 1.0 : 0.0,
+                                  duration: const Duration(milliseconds: 300),
+                                  child: Column(
+                                    children: [
+                                      const Text(
+                                          "Enter your new address location : ",
+                                          style: TextStyle(fontSize: 15)),
+                                      const SizedBox(height: 20),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15.0),
+                                        child: TextFormField(
+                                          controller: addressController,
+                                          decoration: const InputDecoration(
+                                              hintText: 'Enter full Address',
+                                              prefixIcon:
+                                                  Icon(Icons.location_history),
+                                              labelText: 'Address'),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15.0),
+                                        child: TextFormField(
+                                          controller: pincodeController,
+                                          decoration: const InputDecoration(
+                                              prefixIcon:
+                                                  Icon(Icons.pin_drop_outlined),
+                                              hintText: 'Enter Pincode',
+                                              labelText: "Pincode"),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+                                    ],
                                   ),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        //Home address
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-                          child: Row(
-                            children: [
-                              Radio(
-                                value: 1,
-                                groupValue: selectedRadioAddress,
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedRadioAddress = value;
-                                    showTextField = false;
-                                    //_controller.forward();
-                                    // isExpanded = false;
-                                  });
-                                },
-                              ),
-                              const Text('Registered Address'),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        //new address
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Row(
-                            children: [
-                              Radio(
-                                value: 2,
-                                groupValue: selectedRadioAddress,
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedRadioAddress = value;
-                                    showTextField = true;
-                                    isExpanded = true;
-                                    // _controller.reverse();
-                                  });
-                                },
-                              ),
-                              const Text('New Address'),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 15),
-                        if (selectedRadioAddress == 1)
-                          isFetched
-                              ? Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 8),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(19.0),
-                                    border: Border.all(
-                                      color: Colors.grey,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  child: DataTable(
-                                    columnSpacing: 10.0,
-                                    columns: const [
-                                      DataColumn(
-                                          label: Text('Field',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: colorPrimary))),
-                                      DataColumn(
-                                          label: Text('Data',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: colorPrimary))),
-                                    ],
-                                    rows: [
-                                      buildDataRow('Name', fetchedFname),
-                                      buildDataRow(
-                                          'Address', fetchedFullAddress),
-                                      buildDataRow('Pin Code', fetchedPinCode),
-                                      buildDataRow('City', fetchedCity),
-                                      buildDataRow('State', fetchedState),
-                                    ],
-                                  ),
-                                )
-                              // Text(
-                              //         "$fetchedFname \n $fetchedFullAddress \n $fetchedPinCode \n $fetchedCity \n $fetchedState ",
-                              //         style: const TextStyle(fontSize: 14),
-                              //       )
-                              : const SpinKitThreeBounce(
-                                  color: Colors.blueGrey,
-                                  size: 20,
-                                ),
-                        if (selectedRadioAddress == 2)
-                          AnimatedSize(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                            //vsync: this,
-                            child: SizedBox(
-                              //height: isExpanded ? null : 0,
-                              child: AnimatedOpacity(
-                                opacity: showTextField ? 1.0 : 0.0,
-                                duration: const Duration(milliseconds: 300),
-                                child: Column(
-                                  children: [
-                                    const Text(
-                                        "Enter your new address location : ",
-                                        style: TextStyle(fontSize: 15)),
-                                    const SizedBox(height: 20),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15.0),
-                                      child: TextFormField(
-                                        controller: addressController,
-                                        decoration: const InputDecoration(
-                                            hintText: 'Enter full Address',
-                                            prefixIcon:
-                                                Icon(Icons.location_history),
-                                            labelText: 'Address'),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 20),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15.0),
-                                      child: TextFormField(
-                                        controller: pincodeController,
-                                        decoration: const InputDecoration(
-                                            prefixIcon:
-                                                Icon(Icons.pin_drop_outlined),
-                                            hintText: 'Enter Pincode',
-                                            labelText: "Pincode"),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 20),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.only(right: 20, left: 20),
-                child: Container(
-                  padding: const EdgeInsets.only(bottom: 15),
-                  width: double.infinity,
-                  child: ClipRRect(
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            showCircularProgressBar(context);
-                            //For Rid
-                            CollectionReference citizenRequestCollection =
-                                FirebaseFirestore.instance
-                                    .collection("Citizen Request");
-                            try {
-                              QuerySnapshot snapshot =
-                                  await citizenRequestCollection.get();
-                              int totalDocCount = snapshot.size;
-                              totalDocCount++;
-                              //sends request/alert to only NGO which are of the currents user's city
-                              FirebaseFirestore.instance
-                                  .collection('NGO')
-                                  //added new ***
-                                 // .where('services', whereIn: selectedServiceWords)
-                                  .where('city', isEqualTo: 'Suratt')
-                                  .get()
-                                  .then((querySnapshot) {
-                                addReqToDatabase(totalDocCount);
-                                for (var doc in querySnapshot.docs) {
-                                  String deviceToken =
-                                      doc.data()['deviceToken'];
-                                  sendNotificationToDevice(
-                                      deviceToken, totalDocCount);
+                const SizedBox(height: 12),
+                Padding(
+                  padding: const EdgeInsets.only(right: 20, left: 20),
+                  child: Container(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    width: double.infinity,
+                    child: ClipRRect(
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              //progress
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return const Dialog(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(top: 35, bottom: 25, left: 20, right: 20),
+                                      child: Column(
+                                        mainAxisSize:
+                                        MainAxisSize.min,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(height: 15),
+                                          CircularProgressIndicator(color: Colors.blue),
+                                          SizedBox(height: 30),
+                                          Text('Processing ...')
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                              await Future.delayed(
+                                  const Duration(milliseconds: 1300));
+                              //For Rid
+                              if (!notificationSent) {
+                                CollectionReference citizenRequestCollection =
+                                    FirebaseFirestore.instance
+                                        .collection("Citizen Request");
+                                try {
+                                  QuerySnapshot snapshot =
+                                      await citizenRequestCollection.get();
+                                  int totalDocCount = snapshot.size;
+                                  totalDocCount++;
+                                  //sends request/alert to only NGO which are of the currents user's city
+                                  FirebaseFirestore.instance
+                                      .collection('NGO')
+                                      //added new ***
+                                      // .where('services', whereIn: selectedServiceWords)
+                                      .where('city', isEqualTo: 'Suratt')
+                                      .get()
+                                      .then((querySnapshot) {
+                                    addReqToDatabase(totalDocCount);
+                                    for (var doc in querySnapshot.docs) {
+                                      String deviceToken =
+                                          doc.data()['deviceToken'];
+                                      sendNotificationToDevice(
+                                          deviceToken, totalDocCount);
+                                    }
+                                  });
+                                } catch (e) {
+                                  if (kDebugMode) {
+                                    print(
+                                        'Error while sending citizen request : $e');
+                                  }
+                                } finally {
+                                  Navigator.pop(context);
                                 }
-                              });
-                            } catch (e) {
-                              if (kDebugMode) {
-                                print(
-                                    'Error while sending citizen request : $e');
+                                notificationSent = true;
+                              } else {
+                                Navigator.pop(context);
+                                showMsgDialog(
+                                    context,
+                                    'You have already requested for your request'
+                                    '\n Nearby authority will contact you soon ');
+
                               }
-                            } finally {
-                              Navigator.pop(context);
-                            }
-                          },
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(18)))),
-                          child: const Text("Request now"))),
+                            },
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(18)))),
+                            child: const Text("Request now"))),
+                  ),
                 ),
-              ),
-              // scanning ? SpinKitThreeBounce(color: myColor, size: 20) : Text(coordinates, style: const TextStyle(fontSize: 16)),
-            ],
+                // scanning ? SpinKitThreeBounce(color: myColor, size: 20) : Text(coordinates, style: const TextStyle(fontSize: 16)),
+              ],
+            ),
           ),
         ),
       ),
@@ -468,5 +509,16 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
         print('Error adding citizen request : $e');
       }
     }
+  }
+
+  Future<void> _refreshData() async {
+    // Simulate a delay for refreshing data
+    await Future.delayed(const Duration(milliseconds: 1200));
+    setState(() {
+      selectedService = DropdownItems.dropdownItemRequestTypes.first;
+      addressController.clear();
+      pincodeController.clear();
+      notificationSent = false;
+    });
   }
 }

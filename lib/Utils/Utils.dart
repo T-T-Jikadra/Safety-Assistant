@@ -25,12 +25,13 @@ Future<dynamic> showCircularProgressBar(BuildContext context) {
     builder: (BuildContext context) {
       return const Dialog(
         child: Padding(
-          padding: EdgeInsets.all(35.0),
+          padding: EdgeInsets.only(top: 35, bottom: 25, left: 20, right: 20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(height: 15),
               CircularProgressIndicator(color: Colors.blue),
               SizedBox(height: 30),
               Text('Processing ...')
