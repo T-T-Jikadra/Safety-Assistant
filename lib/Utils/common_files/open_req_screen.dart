@@ -13,7 +13,7 @@ import '../Utils.dart';
 import '../constants.dart';
 import 'package:http/http.dart' as http;
 
-class req_open extends StatefulWidget {
+class Open_Req_Screen extends StatefulWidget {
   final String title;
   final String add;
   final String pin;
@@ -22,7 +22,7 @@ class req_open extends StatefulWidget {
   final String? rid;
   final String contactNo;
 
-  const req_open(
+  const Open_Req_Screen(
       {super.key,
       required this.title,
       required this.add,
@@ -33,10 +33,10 @@ class req_open extends StatefulWidget {
       this.rid});
 
   @override
-  State<req_open> createState() => _req_openState();
+  State<Open_Req_Screen> createState() => _Open_Req_ScreenState();
 }
 
-class _req_openState extends State<req_open> {
+class _Open_Req_ScreenState extends State<Open_Req_Screen> {
   //to get userType
   String? finalUserType = "";
   String iAmNGO = '';
@@ -597,14 +597,15 @@ class _req_openState extends State<req_open> {
       },
       'data': {
         'type': 'response',
-        'title': "Got response for -$fetchedService",
+        'service': fetchedService,
+        'authorityName': iAmNGO == 'true' ? fetchedNGOName : fetchedGovtName,
+        'regNo': iAmNGO == 'true' ? fetchedNGORegNo : fetchedGovtRegNo,
         'address': iAmNGO == 'true' ? fetchedNGOAddress : fetchedGovtAddress,
-        'pincode': "",
-        'username': iAmNGO == 'true' ? fetchedNGOName : fetchedGovtName,
+        'phone': iAmNGO == 'true' ? fetchedNGOPhone : fetchedGovtPhone,
+        'email': iAmNGO == 'true' ? fetchedNGOEmail : fetchedGovtEmail,
         'city': fetchedCitizenCity,
-        'phoneNumber': iAmNGO == 'true' ? fetchedNGOPhone : fetchedGovtPhone,
+        'website': iAmNGO == 'true' ? fetchedNGOWebsite : fetchedGovtWebsite,
         'ResponseId': totalDocCount.toString(),
-        //'type': 'alert'
       }
     };
 

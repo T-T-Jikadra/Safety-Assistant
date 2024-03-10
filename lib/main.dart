@@ -5,7 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Citizen Related/Screens/open_response_screen.dart';
 import 'Components/Notification_related/notification_services.dart';
-import 'Utils/common_files/open_req.dart';
+import 'Utils/common_files/open_req_screen.dart';
 import '_Root/Splash/splash_Screen.dart';
 import 'package:get/get.dart';
 
@@ -40,9 +40,18 @@ void main() async {
 Future<void> _firebaseMessagingBackgroundHandle(RemoteMessage message) async {
   //await Firebase.initializeApp();
   if (message.data['type'] == 'response') {
-    Get.to(() => const Open_Response_Screen());
+    Get.to(() => Open_Response_Screen(
+          selectedService: message.data['service'],
+          authorityName: message.data['authorityName'],
+          regNo: message.data['regNo'],
+          address: message.data['address'],
+          phone: message.data['phone'],
+          email: message.data['email'],
+          city: message.data['city'],
+          website: message.data['website'],
+        ));
   } else if (message.data['type'] == 'alert') {
-    Get.to(() => req_open(
+    Get.to(() => Open_Req_Screen(
           title: message.data['title'],
           add: message.data['address'],
           pin: message.data['pincode'],

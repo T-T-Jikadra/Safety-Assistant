@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import '../../Citizen Related/Screens/open_response_screen.dart';
-import '../../Utils/common_files/open_req.dart';
+import '../../Utils/common_files/open_req_screen.dart';
 
 // ignore: camel_case_types
 class NotificationServices {
@@ -71,9 +71,9 @@ class NotificationServices {
     await _flutterLocalNotificationsPlugin.initialize(initializationSetting,
         onDidReceiveNotificationResponse: (payload) async {
       if (message.data['type'] == 'response') {
-        Get.to(() => const Open_Response_Screen());
+        handleResponse(context, message);
       } else if (message.data['type'] == 'alert') {
-        handleMessage(context, message);
+        handleRequest(context, message);
       }
       // Navigator.push(
       //     context,
@@ -188,9 +188,9 @@ class NotificationServices {
 
     if (initialMessage != null) {
       if (initialMessage.data['type'] == 'response') {
-        Get.to(() => const Open_Response_Screen());
+        handleResponse(context, initialMessage);
       } else if (initialMessage.data['type'] == 'alert') {
-        handleMessage(context, initialMessage);
+        handleRequest(context, initialMessage);
       }
     }
 
@@ -206,9 +206,9 @@ class NotificationServices {
     //when app is in background ...
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
       if (event.data['type'] == 'response') {
-        Get.to(() => const Open_Response_Screen());
+        handleResponse(context, event);
       } else if (event.data['type'] == 'alert') {
-        handleMessage(context, event);
+        handleRequest(context, event);
       }
     });
 
@@ -216,17 +216,9 @@ class NotificationServices {
     Future<void> _firebaseMessagingBackgroundHandle(
         RemoteMessage message) async {
       if (message.data['type'] == 'response') {
-        Get.to(() => const Open_Response_Screen());
+        handleResponse(context, message);
       } else if (message.data['type'] == 'alert') {
-        Get.to(() => req_open(
-              title: message.data['title'],
-              add: message.data['address'],
-              pin: message.data['pincode'],
-              userName: message.data['username'],
-              city: message.data['city'],
-              rid: message.data['ReqId'],
-              contactNo: message.data['phoneNumber'],
-            ));
+        handleRequest(context, message);
       }
 
       if (kDebugMode) {
@@ -235,8 +227,9 @@ class NotificationServices {
     }
   }
 
-  void handleMessage(BuildContext context, RemoteMessage message) {
-    Get.to(() => req_open(
+  // opens page for sent request
+  void handleRequest(BuildContext context, RemoteMessage message) {
+    Get.to(() => Open_Req_Screen(
           title: message.data['title'],
           add: message.data['address'],
           pin: message.data['pincode'],
@@ -245,15 +238,19 @@ class NotificationServices {
           rid: message.data['ReqId'],
           contactNo: message.data['phoneNumber'],
         ));
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => req_open(
-    //       title: message.data['title'],
-    //       add: message.data['address'],
-    //       pin: message.data['pincode'],
-    //     ),
-    //   ),
-    // );
+  }
+
+  //opens page for response got
+  void handleResponse(BuildContext context, RemoteMessage message) {
+    Get.to(() => Open_Response_Screen(
+          selectedService: message.data['service'],
+          authorityName: message.data['authorityName'],
+          regNo: message.data['regNo'],
+          address: message.data['address'],
+          phone: message.data['phone'],
+          email: message.data['email'],
+          city: message.data['city'],
+          website: message.data['website'],
+        ));
   }
 }
