@@ -11,7 +11,6 @@ import '../../../Utils/common_files/about_us_screen.dart';
 import '../../../Utils/common_files/alert_screen.dart';
 import '../../../Utils/common_files/apply_grant_screen.dart';
 import '../../../Utils/common_files/notice_screen.dart';
-import '../../../Utils/rive_utils.dart';
 import '../../../Components/info_card.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../NGO_list/NGO_list.dart';
@@ -97,7 +96,7 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
 
                           //on tap routes ..
                           press: () async {
-                            RiveUtils.chnageSMIBoolState(menu_ngo.rive.status!);
+                            //RiveUtils.chnageSMIBoolState(menu_ngo.rive.status!);
                             setState(() {
                               selectedSideMenu = menu_ngo;
                             });
@@ -309,10 +308,10 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                             }
                             //till above
                           },
-                          riveOnInit: (artboard) {
-                            menu_ngo.rive.status = RiveUtils.getRiveInput(artboard,
-                                stateMachineName: menu_ngo.rive.stateMachineName);
-                          },
+                          // riveOnInit: (artboard) {
+                          //   menu_ngo.rive.status = RiveUtils.getRiveInput(artboard,
+                          //       stateMachineName: menu_ngo.rive.stateMachineName);
+                          // },
                         ))
                     .toList(),
                 Padding(
@@ -330,7 +329,7 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                           menu: menu_ngo,
                           selectedMenu: selectedSideMenu,
                           press: () async {
-                            RiveUtils.chnageSMIBoolState(menu_ngo.rive.status!);
+                            //RiveUtils.chnageSMIBoolState(menu_ngo.rive.status!);
                             setState(() {
                               selectedSideMenu = menu_ngo;
                             });
@@ -402,10 +401,10 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                               );
                             }
                           },
-                          riveOnInit: (artboard) {
-                            menu_ngo.rive.status = RiveUtils.getRiveInput(artboard,
-                                stateMachineName: menu_ngo.rive.stateMachineName);
-                          },
+                          // riveOnInit: (artboard) {
+                          //   menu_ngo.rive.status = RiveUtils.getRiveInput(artboard,
+                          //       stateMachineName: menu_ngo.rive.stateMachineName);
+                          // },
                         ))
                     .toList(),
                 const SizedBox(height: 50)

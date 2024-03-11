@@ -26,6 +26,13 @@ class GovtSignupPageScreen extends StatefulWidget {
 
 class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FocusNode _nameFocusNode = FocusNode();
+  final FocusNode _regNoFocusNode = FocusNode();
+  final FocusNode _servicesFocusNode = FocusNode();
+  final FocusNode _contactNoFocusNode = FocusNode();
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _websiteFocusNode = FocusNode();
+
   TextEditingController nameOfGovtTextController = TextEditingController();
   TextEditingController regNoGovtTextController = TextEditingController();
   TextEditingController serviceGovtTextController = TextEditingController();
@@ -113,6 +120,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
+                              focusNode: _nameFocusNode,
                               textCapitalization: TextCapitalization.sentences,
                               controller: nameOfGovtTextController,
                               decoration: const InputDecoration(
@@ -127,9 +135,12 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
+                                  _nameFocusNode.requestFocus();
                                   return 'Enter Govt Agency name';
+
                                 }
                                 if (value.isNotEmpty && value.length < 3) {
+                                  _nameFocusNode.requestFocus();
                                   return 'Minimum 3 Characters required';
                                 }
                                 return null; // Return null if the input is valid
@@ -145,6 +156,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
+                              focusNode: _regNoFocusNode,
                               controller: regNoGovtTextController,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.app_registration,
@@ -161,9 +173,11 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                               keyboardType: TextInputType.phone,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
+                                  _regNoFocusNode.requestFocus();
                                   return 'Enter Registration No';
                                 }
                                 if (value.isNotEmpty && value.length < 3) {
+                                  _regNoFocusNode.requestFocus();
                                   return 'Minimum 3 Characters required';
                                 }
                                 return null; // Return null if the input is valid
@@ -182,6 +196,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                               right: 5,
                             ),
                             child: TextFormField(
+                              focusNode: _servicesFocusNode,
                               onTap: () {
                                 _showCupertinoDialog(context);
                               },
@@ -215,6 +230,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                               right: 5,
                             ),
                             child: TextFormField(
+                              focusNode: _contactNoFocusNode,
                               maxLength: 10,
                               controller: contactNoGovtTextController,
                               decoration: InputDecoration(
@@ -236,9 +252,11 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                               keyboardType: TextInputType.phone,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
+                                  _contactNoFocusNode.requestFocus();
                                   return 'Enter Contact number';
                                 }
                                 if (value.isNotEmpty && value.length < 10) {
+                                  _contactNoFocusNode.requestFocus();
                                   return 'Contact no should be of 10 digits';
                                 }
                                 return null; // Return null if the input is valid
@@ -254,6 +272,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
+                              focusNode: _emailFocusNode,
                               controller: emailIdGovtTextController,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.email_outlined,
@@ -267,12 +286,14 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
+                                  _emailFocusNode.requestFocus();
                                   return 'Enter an email address';
                                 }
                                 // Regular expression for validating an email address
                                 final emailRegex =
                                     RegExp(r'^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$');
                                 if (!emailRegex.hasMatch(value)) {
+                                  _emailFocusNode.requestFocus();
                                   return 'Enter valid email address';
                                 }
                                 return null; // Return null if the input is valid
@@ -288,6 +309,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
+                              focusNode: _websiteFocusNode,
                               controller: websiteURLGovtTextController,
                               decoration: const InputDecoration(
                                 prefixIcon:
@@ -300,6 +322,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
+                                  _websiteFocusNode.requestFocus();
                                   return 'Enter website URL';
                                 }
                                 // Regular expression for validating a URL
@@ -310,6 +333,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                   caseSensitive: false,
                                 );
                                 if (!urlRegex.hasMatch(value)) {
+                                  _websiteFocusNode.requestFocus();
                                   return 'Enter valid URL';
                                 }
                                 return null; // Return null if the input is valid
@@ -611,6 +635,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                   const Duration(milliseconds: 1200));
                               Navigator.pop(context);
 
+
                               if (!GovtTnC) {
                                 final tnCError = TsnakeBar(
                                     context,
@@ -680,7 +705,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                     if (existingDoc.exists) {
                                       // Document already exists, do not add user to the database
                                       showToastMsg(
-                                          "Account with the same email id already exists \n you can login ..");
+                                          "Account with the same email id already exists ..");
                                       return; // Exit the function
                                     } else {
                                       // DocumentReference docRef =await FirebaseFirestore.instance.collection("Govt").add(GovtDataJson);
@@ -749,6 +774,13 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                         "Govt Agency Stored and Registered successfully [(:-==-:)]");
                                   }
                                 }
+                              } else {
+                                // Focus on the first invalid field
+                                // if (!_nameFocusNode.hasFocus && !_regNoFocusNode.hasFocus) {
+                                //   _nameFocusNode.requestFocus();
+                                // } else if (!_regNoFocusNode.hasFocus) {
+                                //   _regNoFocusNode.requestFocus();
+                                // }
                               }
                             },
                             style: ButtonStyle(

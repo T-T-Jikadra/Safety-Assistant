@@ -11,7 +11,6 @@ import '../../../Utils/common_files/FAQ_screen.dart';
 import '../../../Utils/common_files/about_us_screen.dart';
 import '../../../Utils/common_files/alert_screen.dart';
 import '../../../Utils/common_files/notice_screen.dart';
-import '../../../Utils/rive_utils.dart';
 import '../../../Components/info_card.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../Govt_list_GovtAgency/Govt_list.dart';
@@ -97,7 +96,7 @@ class _SideBar_govtState extends State<SideBar_govt> {
 
                           //on tap routes ..
                           press: () async {
-                            RiveUtils.chnageSMIBoolState(menu_govt.rive.status!);
+                            //RiveUtils.chnageSMIBoolState(menu_govt.rive.status!);
                             setState(() {
                               selectedSideMenu = menu_govt;
                             });
@@ -285,10 +284,10 @@ class _SideBar_govtState extends State<SideBar_govt> {
                             //till above
                           },
 
-                          riveOnInit: (artboard) {
-                            menu_govt.rive.status = RiveUtils.getRiveInput(artboard,
-                                stateMachineName: menu_govt.rive.stateMachineName);
-                          },
+                          // riveOnInit: (artboard) {
+                          //   menu_govt.rive.status = RiveUtils.getRiveInput(artboard,
+                          //       stateMachineName: menu_govt.rive.stateMachineName);
+                          // },
                         ))
                     .toList(),
                 Padding(
@@ -306,7 +305,7 @@ class _SideBar_govtState extends State<SideBar_govt> {
                           menu: menu_govt,
                           selectedMenu: selectedSideMenu,
                           press: () async {
-                            RiveUtils.chnageSMIBoolState(menu_govt.rive.status!);
+                            //RiveUtils.chnageSMIBoolState(menu_govt.rive.status!);
                             setState(() {
                               selectedSideMenu = menu_govt;
                             });
@@ -378,10 +377,10 @@ class _SideBar_govtState extends State<SideBar_govt> {
                               );
                             }
                           },
-                          riveOnInit: (artboard) {
-                            menu_govt.rive.status = RiveUtils.getRiveInput(artboard,
-                                stateMachineName: menu_govt.rive.stateMachineName);
-                          },
+                          // riveOnInit: (artboard) {
+                          //   menu_govt.rive.status = RiveUtils.getRiveInput(artboard,
+                          //       stateMachineName: menu_govt.rive.stateMachineName);
+                          // },
                         ))
                     .toList(),
                 const SizedBox(height: 50)

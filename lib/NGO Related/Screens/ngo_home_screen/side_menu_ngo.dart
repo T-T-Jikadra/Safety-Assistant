@@ -1,6 +1,5 @@
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
-import 'package:rive/rive.dart';
 import 'menu_ngo.dart';
 
 class SideMenu_ngo extends StatelessWidget {
@@ -8,12 +7,12 @@ class SideMenu_ngo extends StatelessWidget {
       {super.key,
       required this.menu,
       required this.press,
-      required this.riveOnInit,
+      //required this.riveOnInit,
       required this.selectedMenu});
 
   final Menu_ngo menu;
   final VoidCallback press;
-  final ValueChanged<Artboard> riveOnInit;
+  //final ValueChanged<Artboard> riveOnInit;
   final Menu_ngo selectedMenu;
 
   @override
@@ -56,11 +55,7 @@ class SideMenu_ngo extends StatelessWidget {
               leading: SizedBox(
                 height: 36,
                 width: 36,
-                child: RiveAnimation.asset(
-                  menu.rive.src,
-                  artboard: menu.rive.artboard,
-                  onInit: riveOnInit,
-                ),
+                child: Icon(menu.icon,color: Colors.grey.shade400)
               ),
               title: Text(
                 menu.title,

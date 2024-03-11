@@ -1,100 +1,60 @@
 //for menu items in drawer
 // ignore_for_file: camel_case_types
-import 'package:fff/Components/rive_model.dart';
+import 'package:flutter/material.dart';
 
 class Menu_ngo {
   final String title;
-  final RiveModel rive;
+  final IconData icon;
 
-  Menu_ngo({required this.title, required this.rive});
+  Menu_ngo({required this.title, required this.icon});
 }
 
 List<Menu_ngo> sidebarMenus = [
   Menu_ngo(
     title: "Home",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "HOME",
-        stateMachineName: "HOME_interactivity"),
+    icon: Icons.home,
   ),
   Menu_ngo(
     title: "NGO Profile",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "SEARCH",
-        stateMachineName: "SEARCH_Interactivity"),
+    icon: Icons.person_2,
   ),
   Menu_ngo(
     title: "Other serving NGOs",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity"),
+    icon: Icons.temple_hindu_rounded,
   ),
   Menu_ngo(
     title: "Response History",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "LIKE/STAR",
-        stateMachineName: "STAR_Interactivity"),
+    icon: Icons.history,
   ),
   Menu_ngo(
     title: "Donation History",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity"),
+    icon: Icons.history_sharp,
   ),
   Menu_ngo(
     title: "Alerts",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity"),
+    icon: Icons.crisis_alert,
   ),
   Menu_ngo(
     title: "Apply for Grant",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity"),
+    icon: Icons.local_activity_outlined,
   ),
   Menu_ngo(
     title: "Notices",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity"),
+    icon: Icons.circle_notifications,
   ),
 ];
 
 List<Menu_ngo> sidebarMenus2 = [
   Menu_ngo(
     title: "FAQ",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "TIMER",
-        stateMachineName: "TIMER_Interactivity"),
+    icon: Icons.question_answer_outlined,
   ),
   Menu_ngo(
     title: "About Us",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "BELL",
-        stateMachineName: "BELL_Interactivity"),
+    icon: Icons.info_rounded,
   ),
   Menu_ngo(
     title: "Logout",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity"),
+    icon: Icons.logout_rounded,
   ),
-  // Menu_ngo(
-  //   title: "---",
-  //   rive: RiveModel(
-  //       src: "assets/RiveAssets/icons.riv",
-  //       artboard: "CHAT",
-  //       stateMachineName: "CHAT_Interactivity"),
-  // ),
 ];

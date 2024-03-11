@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Utils/common_files/alert_screen.dart';
 import '../../../Utils/common_files/notice_screen.dart';
-import '../../../Utils/rive_utils.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../../../Utils/common_files/FAQ_screen.dart';
 import '../citizen_NGO-GA_list/citizen_NGO-GA_list_screen.dart';
@@ -96,7 +95,7 @@ class _SideBarState extends State<SideBar> {
 
                           //on tap routes ..
                           press: () async {
-                            RiveUtils.chnageSMIBoolState(menu.rive.status!);
+                            //RiveUtils.chnageSMIBoolState(menu.rive.status!);
                             setState(() {
                               selectedSideMenu = menu;
                             });
@@ -258,10 +257,10 @@ class _SideBarState extends State<SideBar> {
                             }
                             //till above
                           },
-                          riveOnInit: (artboard) {
-                            menu.rive.status = RiveUtils.getRiveInput(artboard,
-                                stateMachineName: menu.rive.stateMachineName);
-                          },
+                          // riveOnInit: (artboard) {
+                          //   menu.rive.status = RiveUtils.getRiveInput(artboard,
+                          //       stateMachineName: menu.rive.stateMachineName);
+                          // },
                         ))
                     .toList(),
                 Padding(
@@ -279,7 +278,7 @@ class _SideBarState extends State<SideBar> {
                           menu: menu,
                           selectedMenu: selectedSideMenu,
                           press: () async {
-                            RiveUtils.chnageSMIBoolState(menu.rive.status!);
+                            //RiveUtils.chnageSMIBoolState(menu.rive.status!);
                             setState(() {
                               selectedSideMenu = menu;
                             });
@@ -377,10 +376,10 @@ class _SideBarState extends State<SideBar> {
                               );
                             }
                           },
-                          riveOnInit: (artboard) {
-                            menu.rive.status = RiveUtils.getRiveInput(artboard,
-                                stateMachineName: menu.rive.stateMachineName);
-                          },
+                          // riveOnInit: (artboard) {
+                          //   menu.rive.status = RiveUtils.getRiveInput(artboard,
+                          //       stateMachineName: menu.rive.stateMachineName);
+                          // },
                         ))
                     .toList(),
                 const SizedBox(height: 50)

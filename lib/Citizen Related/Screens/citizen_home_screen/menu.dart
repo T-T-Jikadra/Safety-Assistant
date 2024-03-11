@@ -1,138 +1,61 @@
 //for menu items in drawer
-import 'package:fff/Components/rive_model.dart';
+import 'package:flutter/material.dart';
 
 class Menu {
   final String title;
-  final RiveModel rive;
+  final IconData icon;
 
-  Menu({required this.title, required this.rive});
+  Menu({required this.title, required this.icon});
 }
 
 List<Menu> sidebarMenus = [
   Menu(
     title: "Home",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "HOME",
-        stateMachineName: "HOME_interactivity"),
+    icon: Icons.home,
   ),
   Menu(
     title: "User Profile",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "SEARCH",
-        stateMachineName: "SEARCH_Interactivity"),
+    icon: Icons.person_2,
   ),
   Menu(
     title: "Serving NGO / Government Body",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity"),
+    icon: Icons.temple_hindu_rounded,
   ),
   Menu(
     title: "Request History",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "LIKE/STAR",
-        stateMachineName: "STAR_Interactivity"),
+    icon: Icons.history,
   ),
   Menu(
     title: "Donation History",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity"),
+    icon: Icons.money_rounded,
   ),
   Menu(
     title: "Alerts",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity"),
+    icon: Icons.crisis_alert,
   ),
   Menu(
     title: "Notices",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity"),
+    icon: Icons.circle_notifications,
   ),
 ];
 
 List<Menu> sidebarMenus2 = [
   Menu(
     title: "Digital Survival Guide",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "TIMER",
-        stateMachineName: "TIMER_Interactivity"),
+    icon: Icons.cabin,
   ),
   Menu(
     title: "FAQ",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "TIMER",
-        stateMachineName: "TIMER_Interactivity"),
+    icon: Icons.question_answer_outlined,
   ),
   Menu(
     title: "About Us",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "BELL",
-        stateMachineName: "BELL_Interactivity"),
+    icon: Icons.info_rounded,
   ),
   Menu(
     title: "Logout",
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity"),
+    icon: Icons.logout_rounded,
   ),
-  // Menu(
-  //   title: "---",
-  //   rive: RiveModel(
-  //       src: "assets/RiveAssets/icons.riv",
-  //       artboard: "CHAT",
-  //       stateMachineName: "CHAT_Interactivity"),
-  // ),
 ];
 
-//for navigation bar which is not gonna use
-// List<Menu> bottomNavItems = [
-//   Menu(
-//     title: "Chat",
-//     rive: RiveModel(
-//         src: "assets/RiveAssets/icons.riv",
-//         artboard: "CHAT",
-//         stateMachineName: "CHAT_Interactivity"),
-//   ),
-//   Menu(
-//     title: "Search",
-//     rive: RiveModel(
-//         src: "assets/RiveAssets/icons.riv",
-//         artboard: "SEARCH",
-//         stateMachineName: "SEARCH_Interactivity"),
-//   ),
-//   Menu(
-//     title: "Timer",
-//     rive: RiveModel(
-//         src: "assets/RiveAssets/icons.riv",
-//         artboard: "TIMER",
-//         stateMachineName: "TIMER_Interactivity"),
-//   ),
-//   Menu(
-//     title: "Notification",
-//     rive: RiveModel(
-//         src: "assets/RiveAssets/icons.riv",
-//         artboard: "BELL",
-//         stateMachineName: "BELL_Interactivity"),
-//   ),
-//   Menu(
-//     title: "Profile",
-//     rive: RiveModel(
-//         src: "assets/RiveAssets/icons.riv",
-//         artboard: "USER",
-//         stateMachineName: "USER_Interactivity"),
-//   ),
-// ];
+

@@ -31,13 +31,14 @@ class CitizenSignupPageScreen extends StatefulWidget {
 
 class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FocusNode _fnameFocusNode = FocusNode();
+  final FocusNode _lnameFocusNode = FocusNode();
+
   TextEditingController fnameTextController = TextEditingController();
   TextEditingController lnameTextController = TextEditingController();
   TextEditingController pinCodeTextController = TextEditingController();
   TextEditingController fullAddressTextController = TextEditingController();
   TextEditingController birthDateTextController = TextEditingController();
-
-  //TextEditingController phoneTextController = TextEditingController();
 
   String? genderRadio;
   bool showErrorTnC = false;
@@ -120,6 +121,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(right: 5),
                                     child: TextFormField(
+                                      focusNode: _fnameFocusNode,
                                       textCapitalization:
                                           TextCapitalization.sentences,
                                       controller: fnameTextController,
@@ -133,10 +135,12 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                       ),
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
+                                          _fnameFocusNode.requestFocus();
                                           return 'Enter first name';
                                         }
                                         if (value.isNotEmpty &&
                                             value.length < 3) {
+                                          _fnameFocusNode.requestFocus();
                                           return "Minimum 3 Characters required";
                                         }
                                         return null; // Return null if the input is valid
@@ -152,6 +156,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                   child: Padding(
                                     padding: const EdgeInsets.only(right: 5),
                                     child: TextFormField(
+                                      focusNode: _lnameFocusNode,
                                       textCapitalization:
                                           TextCapitalization.sentences,
                                       controller: lnameTextController,
@@ -165,10 +170,12 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                       ),
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
+                                          _lnameFocusNode.requestFocus();
                                           return 'Enter last name';
                                         }
                                         if (value.isNotEmpty &&
                                             value.length < 3) {
+                                          _lnameFocusNode.requestFocus();
                                           return 'Minimum 3 Characters';
                                         }
                                         return null; // Return null if the input is valid

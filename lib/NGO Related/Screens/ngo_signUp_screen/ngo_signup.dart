@@ -26,6 +26,12 @@ class NGOSignupPageScreen extends StatefulWidget {
 
 class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FocusNode _nameFocusNode = FocusNode();
+  final FocusNode _regNoFocusNode = FocusNode();
+  // final FocusNode _servicesFocusNode = FocusNode();
+  final FocusNode _contactNoFocusNode = FocusNode();
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _websiteFocusNode = FocusNode();
   TextEditingController nameOfNGOTextController = TextEditingController();
   TextEditingController regNoTextController = TextEditingController();
   TextEditingController servicesTextController = TextEditingController();
@@ -101,6 +107,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
+                              focusNode: _nameFocusNode,
                               textCapitalization: TextCapitalization.sentences,
                               controller: nameOfNGOTextController,
                               decoration: const InputDecoration(
@@ -115,9 +122,11 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
+                                  _nameFocusNode.requestFocus();
                                   return 'Enter name of NGO';
                                 }
                                 if (value.isNotEmpty && value.length < 3) {
+                                  _nameFocusNode.requestFocus();
                                   return 'Minimum 3 Characters required';
                                 }
                                 return null; // Return null if the input is valid
@@ -133,6 +142,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
+                              focusNode: _regNoFocusNode,
                               controller: regNoTextController,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.app_registration,
@@ -148,9 +158,11 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               keyboardType: TextInputType.phone,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
+                                  _regNoFocusNode.requestFocus();
                                   return 'Enter Registration No';
                                 }
                                 if (value.isNotEmpty && value.length < 3) {
+                                  _regNoFocusNode.requestFocus();
                                   return 'Minimum 3 Characters required';
                                 }
                                 return null; // Return null if the input is valid
@@ -208,6 +220,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               right: 5,
                             ),
                             child: TextFormField(
+                              focusNode: _contactNoFocusNode,
                               maxLength: 10,
                               controller: contactNoTextController,
                               decoration: InputDecoration(
@@ -229,9 +242,11 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               keyboardType: TextInputType.phone,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
+                                  _contactNoFocusNode.requestFocus();
                                   return 'Enter Contact number';
                                 }
                                 if (value.isNotEmpty && value.length < 10) {
+                                  _contactNoFocusNode.requestFocus();
                                   return 'Contact no should be of 10 digits';
                                 }
                                 return null; // Return null if the input is valid
@@ -247,6 +262,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
+                              focusNode: _emailFocusNode,
                               controller: emailIdTextController,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.email_outlined,
@@ -260,12 +276,14 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
+                                  _emailFocusNode.requestFocus();
                                   return 'Enter an email address';
                                 }
                                 // Regular expression for validating an email address
                                 final emailRegex =
                                     RegExp(r'^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$');
                                 if (!emailRegex.hasMatch(value)) {
+                                  _emailFocusNode.requestFocus();
                                   return 'Enter valid email address';
                                 }
                                 return null; // Return null if the input is valid
@@ -281,6 +299,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
+                              focusNode: _websiteFocusNode,
                               controller: websiteURLTextController,
                               decoration: const InputDecoration(
                                 prefixIcon:
@@ -293,6 +312,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
+                                  _websiteFocusNode.requestFocus();
                                   return 'Enter website URL';
                                 }
                                 // Regular expression for validating a URL
@@ -303,6 +323,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                   caseSensitive: false,
                                 );
                                 if (!urlRegex.hasMatch(value)) {
+                                  _websiteFocusNode.requestFocus();
                                   return 'Enter valid URL';
                                 }
                                 return null; // Return null if the input is valid
@@ -655,7 +676,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                     if (existingDoc.exists) {
                                       // Document already exists, do not add user to the database
                                       showToastMsg(
-                                          "Account with the same email id already exists \n you can login ..");
+                                          "Account with the same email id already exists ..");
                                       return; // Exit the function
                                     } else {
                                       await FirebaseFirestore.instance
