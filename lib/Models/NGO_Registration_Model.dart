@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 class NGORegistration {
+  final String nid;
   final String ngoName;
   final String ngoRegNo;
   final String services;
@@ -11,13 +12,12 @@ class NGORegistration {
   final String pinCode;
   final String fullAddress;
   final String password;
-  final String confirmPassword;
-  final bool termsAccepted;
   final DateTime registrationTime;
   final String deviceToken;
 
   NGORegistration(
-      {required this.ngoName,
+      {required this.nid,
+      required this.ngoName,
       required this.ngoRegNo,
       required this.services,
       required this.contactNumber,
@@ -28,15 +28,13 @@ class NGORegistration {
       required this.pinCode,
       required this.fullAddress,
       required this.password,
-      required this.confirmPassword,
-      required this.termsAccepted,
       required this.deviceToken,
       DateTime? registrationTime})
-      : registrationTime =
-            registrationTime ?? DateTime.now();
+      : registrationTime = registrationTime ?? DateTime.now();
 
   Map<String, dynamic> toJsonNGO() {
     return {
+      'nid':nid,
       'nameOfNGO': ngoName,
       'NGORegNo': ngoRegNo,
       'services': services,
@@ -48,8 +46,6 @@ class NGORegistration {
       'pinCode': pinCode,
       'fullAddress': fullAddress,
       'password': password,
-      'confirmPassword': confirmPassword,
-      'termsAccepted': termsAccepted,
       'registrationTime': registrationTime.toString(),
       'deviceToken': deviceToken,
     };

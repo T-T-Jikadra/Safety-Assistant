@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../Utils/Utils.dart';
 import '../../../Utils/constants.dart';
 import '../../../Utils/dropdown_Items.dart';
-import 'NGO_ListTile.dart';
+import 'NGO_listtile.dart';
 
 class NGO_List extends StatefulWidget {
   const NGO_List({Key? key}) : super(key: key);
@@ -151,7 +151,7 @@ class _ngo_list_widgetState extends State<ngo_list_widget> {
           onRefresh: _refreshData,
           child: StreamBuilder(
             stream: FirebaseFirestore.instance
-                .collection("NGO")
+                .collection("clc_ngo")
                 .where("state", isEqualTo: widget.selectedState)
                 .where("city", isEqualTo: widget.selectedCity)
                 .snapshots(),

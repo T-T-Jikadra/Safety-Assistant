@@ -31,7 +31,7 @@ List<Menu_govt> sidebarMenus = [
         stateMachineName: "CHAT_Interactivity"),
   ),
   Menu_govt(
-    title: "Respond History",
+    title: "Response History",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "LIKE/STAR",

@@ -111,7 +111,7 @@ class _commonbg_govtState extends State<commonbg_govt> {
 
       // Fetch data from Firestore
       DocumentSnapshot GovtSnapshot = await FirebaseFirestore.instance
-          .collection('Govt')
+          .collection('clc_govt')
           .doc(user?.email)
           .get();
 

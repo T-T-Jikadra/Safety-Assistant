@@ -74,7 +74,8 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.app_registration,
                                     color: Colors.deepPurple),
-                                hintText: "Enter registration no of Govt. Agency",
+                                hintText:
+                                    "Enter registration no of Govt. Agency",
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -101,7 +102,8 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.email_outlined,
                                     color: Colors.deepPurple),
-                                hintText: "Enter authorized mail id of Govt. Agency",
+                                hintText:
+                                    "Enter authorized mail id of Govt. Agency",
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -112,7 +114,8 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                                   return 'Enter an email address';
                                 }
                                 // Regular expression for validating an email address
-                                final emailRegex = RegExp(r'^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$');
+                                final emailRegex =
+                                    RegExp(r'^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$');
                                 if (!emailRegex.hasMatch(value)) {
                                   return 'Enter valid email address';
                                 }
@@ -152,19 +155,21 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                                 ),
                               ),
                               validator: validatePassword,
-
                             ),
                           ),
                           //forgot pwd
-                          Align(alignment:
-                          Alignment.topRight,
+                          Align(
+                            alignment: Alignment.topRight,
                             child: Padding(
                               padding: const EdgeInsets.only(right: 5, left: 5),
                               child: TextButton(
-                                onPressed: (){
-                                  showForgotPasswordDialog(context);
-                                },
-                                  child: const Text("Forget password ? ",style: TextStyle(fontSize: 14),)),
+                                  onPressed: () {
+                                    showForgotPasswordDialog(context);
+                                  },
+                                  child: const Text(
+                                    "Forget password ? ",
+                                    style: TextStyle(fontSize: 14),
+                                  )),
                             ),
                           ),
                         ],
@@ -188,54 +193,68 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                                 barrierDismissible: false,
                                 builder: (BuildContext context) {
                                   return const Center(
-                                    child: CircularProgressIndicator(color: Colors.white),
+                                    child: CircularProgressIndicator(
+                                        color: Colors.white),
                                   );
                                 },
                               );
-                              await Future.delayed(const Duration(milliseconds: 800));
+                              await Future.delayed(
+                                  const Duration(milliseconds: 800));
                               Navigator.pop(context);
 
                               if (_formKey.currentState!.validate()) {
-
-                                String emailValue = loginEmailGovtTextController.text.trim();
+                                String emailValue =
+                                    loginEmailGovtTextController.text.trim();
 
                                 try {
                                   DocumentReference govtRef = FirebaseFirestore
                                       .instance
-                                      .collection("Govt")
+                                      .collection("clc_govt")
                                       .doc(emailValue);
                                   final DocumentSnapshot govtSnapshot =
                                       await govtRef.get();
 
                                   if (govtSnapshot.exists) {
-                                    try{
+                                    try {
                                       // Sign in the user with email and password
                                       FirebaseAuth.instance
                                           .signInWithEmailAndPassword(
-                                        email: loginEmailGovtTextController.text.trim(),
-                                        password: loginPwdGovtTextController.text.trim(),
-                                      ).then((value) async {
+                                        email: loginEmailGovtTextController.text
+                                            .trim(),
+                                        password: loginPwdGovtTextController
+                                            .text
+                                            .trim(),
+                                      )
+                                          .then((value) async {
                                         //SharedPreferences
-                                        final SharedPreferences sharedPref = await SharedPreferences.getInstance();
-                                        sharedPref.setString("userType", "Govt");
+                                        final SharedPreferences sharedPref =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        sharedPref.setString(
+                                            "userType", "Govt");
                                         //success
-                                        showToastMsg("Govt Agency Logged in successfully ..");
+                                        showToastMsg(
+                                            "Govt Agency Logged in successfully ..");
                                         // Navigate to a new page upon success
                                         Navigator.of(context).push(
                                           PageRouteBuilder(
                                             pageBuilder: (context, animation,
-                                                secondaryAnimation) =>
-                                            const GovtHomeScreen(),
-                                            transitionsBuilder: (context, animation,
-                                                secondaryAnimation, child) {
-                                              var begin = const Offset(1.0, 0.0);
+                                                    secondaryAnimation) =>
+                                                const GovtHomeScreen(),
+                                            transitionsBuilder: (context,
+                                                animation,
+                                                secondaryAnimation,
+                                                child) {
+                                              var begin =
+                                                  const Offset(1.0, 0.0);
                                               var end = Offset.zero;
                                               var curve = Curves.ease;
                                               var tween = Tween(
-                                                  begin: begin, end: end)
-                                                  .chain(CurveTween(curve: curve));
+                                                      begin: begin, end: end)
+                                                  .chain(
+                                                      CurveTween(curve: curve));
                                               var offsetAnimation =
-                                              animation.drive(tween);
+                                                  animation.drive(tween);
                                               //slight fade effect
                                               //var opacityAnimation = animation.drive(tween);
                                               return SlideTransition(
@@ -249,8 +268,7 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                                         debugPrint(error.toString());
                                         showToastMsg(error.toString());
                                       });
-                                    }
-                                    catch(e){
+                                    } catch (e) {
                                       debugPrint("Error signing in : $e");
                                     }
                                     // try{

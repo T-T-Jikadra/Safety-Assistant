@@ -8,7 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '../../Models/citizen_request_register.dart';
+import '../../Models/citizen_request_register_model.dart';
 import '../../Utils/Utils.dart';
 import '../../Utils/dropdown_Items.dart';
 import '../../Components/Notification_related/notification_services.dart';
@@ -330,7 +330,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                               if (!notificationSent) {
                                 CollectionReference citizenRequestCollection =
                                     FirebaseFirestore.instance
-                                        .collection("Citizen Request");
+                                        .collection("clc_request");
                                 try {
                                   QuerySnapshot snapshot =
                                       await citizenRequestCollection.get();
@@ -338,7 +338,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                   totalDocCount++;
                                   //sends request/alert to only NGO which are of the currents user's city
                                   FirebaseFirestore.instance
-                                      .collection('NGO')
+                                      .collection('clc_ngo')
                                       //added new ***
                                       // .where('services', whereIn: selectedServiceWords)
                                       .where('city', isEqualTo: 'Suratt')
@@ -393,7 +393,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
 
       // Fetch data from Firestore
       DocumentSnapshot citizenSnapshot = await FirebaseFirestore.instance
-          .collection('Citizens')
+          .collection('clc_citizen')
           .doc(user?.phoneNumber)
           .get();
 
@@ -494,7 +494,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
 
     try {
       await FirebaseFirestore.instance
-          .collection("Citizen Request")
+          .collection("clc_request")
           .doc("Req_${totalDocCount.toString()}")
           .set(UserReqJson);
 

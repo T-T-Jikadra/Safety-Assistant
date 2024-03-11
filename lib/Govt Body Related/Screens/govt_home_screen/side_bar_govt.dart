@@ -399,7 +399,7 @@ class _SideBar_govtState extends State<SideBar_govt> {
 
       // Fetch data from Firestore
       DocumentSnapshot GovtSnapshot = await FirebaseFirestore.instance
-          .collection('Govt')
+          .collection('clc_govt')
           .doc(user?.email)
           .get();
 

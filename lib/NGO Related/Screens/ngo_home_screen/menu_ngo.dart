@@ -32,7 +32,7 @@ List<Menu_ngo> sidebarMenus = [
         stateMachineName: "CHAT_Interactivity"),
   ),
   Menu_ngo(
-    title: "Respond History",
+    title: "Response History",
     rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "LIKE/STAR",

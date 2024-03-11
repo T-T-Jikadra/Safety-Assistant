@@ -171,29 +171,6 @@ class _SplashScreenState extends State<SplashScreen> {
     setState(() {
       finalUserType = obtainedUserType;
     });
-
-    // FirebaseAuth auth = FirebaseAuth.instance;
-    // User? user = auth.currentUser;
-    //String? emailOfUser = auth.currentUser!.email;
-
-    // if (user != null) {
-    //   // User is signed in.
-    //   // Navigate to the home screen.
-    //   Navigator.pushReplacement(
-    //       context,
-    //       MaterialPageRoute(
-    //         builder: (context) => const GovtHomeScreen(),
-    //       ));
-    //   //CitizenHomeScreen
-    // } else {
-    //   // User is not signed in.
-    //   // Navigate to the login screen.
-    //   Navigator.pushReplacement(
-    //       context,
-    //       MaterialPageRoute(
-    //         builder: (context) => const liquidpages(),
-    //       ));
-    // }
   }
 
   void navigateToPageBasedOnUserType(String? userType) {
@@ -271,12 +248,4 @@ class _SplashScreenState extends State<SplashScreen> {
           ));
     }
   }
-
-//function for animation
-// Future startAnimationOut() async {
-//   await Future.delayed(const Duration(milliseconds: 500));
-//   setState(() {
-//     animate = true;
-//   });
-// }
 }

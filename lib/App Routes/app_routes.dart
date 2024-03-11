@@ -1,11 +1,11 @@
-import 'package:fff/Admin%20Related/Lower%20Level%20Admin/lowerAdmin.dart';
+import 'package:fff/Admin%20Related/Lower%20Level%20Admin/lower_admin.dart';
 import 'package:flutter/material.dart';
 import '../_Root/onBoarding/onBoard.dart';
 
 class AppRoutes {
 
   // ignore: constant_identifier_names
-  static const String Lower_Admin = '/lowerAdmin.dart';
+  static const String Lower_Admin = '/lower_admin.dart';
 
   //static const String splash = '/splash_page.dart';
 

@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import '../../../Components/Notification_related/notification_services.dart';
-import '../../../Models/User_Registration_Model.dart';
+import '../../../Models/user_registration_model.dart';
 import '../../../Utils/constants.dart';
 import '../../../Utils/dropdown_Items.dart';
 import 'custom_checkbox_button.dart';
@@ -557,32 +557,40 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                       birthDateTextController.text;
                                   DateTime birthDate = DateFormat('MMM d, yyyy')
                                       .parse(dateString);
-                                  final now = DateTime.now();
-                                  int userAge = now.year - birthDate.year;
-                                  if (now.month < birthDate.month ||
-                                      (now.month == birthDate.month &&
-                                          now.day < birthDate.day)) {
-                                    userAge--;
-                                  }
-                                  if (kDebugMode) {
-                                    print(userAge);
-                                  }
-
+                                  // final now = DateTime.now();
+                                  // int userAge = now.year - birthDate.year;
+                                  // if (now.month < birthDate.month ||
+                                  //     (now.month == birthDate.month &&
+                                  //         now.day < birthDate.day)) {
+                                  //   userAge--;
+                                  // }
+                                  // if (kDebugMode) {
+                                  //   print(userAge);
+                                  // }
+                                  CollectionReference citizenRequestCollection =
+                                  FirebaseFirestore.instance
+                                      .collection("clc_citizen");
+                                  //for id
+                                  QuerySnapshot snapshot =
+                                  await citizenRequestCollection.get();
+                                  int totalDocCount = snapshot.size;
+                                  totalDocCount++;
                                   //Storing data to database
                                   UserRegistration userData = UserRegistration(
+                                      cid: "c$totalDocCount",
                                       firstName: fnameTextController.text,
                                       lastName: lnameTextController.text,
                                       gender: genderRadio ?? "",
                                       // Assuming genderRadio is nullable String
                                       phoneNumber: widget.contactNumber,
                                       birthDate: birthDate,
-                                      userAge: userAge.toString(),
+                                      //userAge: userAge.toString(),
                                       state: selectedState,
                                       city: selectedCity,
                                       pinCode: pinCodeTextController.text,
                                       fullAddress:
                                           fullAddressTextController.text,
-                                      termsAccepted: CitizenTnC,
+                                      //termsAccepted: CitizenTnC,
                                       deviceToken: deviceTokenFound);
 
                                   // Convert the object to JSON
@@ -592,7 +600,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                   // Store data in Firestore
                                   try {
                                     await FirebaseFirestore.instance
-                                        .collection("Citizens")
+                                        .collection("clc_citizen")
                                         .doc(widget.contactNumber)
                                         .set(userDataJson);
                                     // .add(userDataJson);

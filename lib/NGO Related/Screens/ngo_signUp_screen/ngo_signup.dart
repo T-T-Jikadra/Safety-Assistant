@@ -178,8 +178,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(4),
                                 ),
-                                hintText:
-                                    "Select the Services NGO can provide",
+                                hintText: "Select the Services NGO can provide",
                                 prefixIcon: Container(
                                   margin:
                                       const EdgeInsets.fromLTRB(20, 16, 12, 16),
@@ -328,10 +327,11 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                   child: SizedBox(
                                     //height: 60,
                                     child: DropdownButtonFormField<String>(
-                                        value: selectedState,
-                                        items: DropdownItems.dropdownItemState.map((String state) {
-                                          return DropdownMenuItem<String>(
-                                            // alignment: AlignmentDirectional.topStart,
+                                      value: selectedState,
+                                      items: DropdownItems.dropdownItemState
+                                          .map((String state) {
+                                        return DropdownMenuItem<String>(
+                                          // alignment: AlignmentDirectional.topStart,
                                           value: state,
                                           child: Text(state),
                                         );
@@ -609,8 +609,17 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                 if (!NGOTnC) {
                                   return;
                                 } else {
+                                  CollectionReference citizenRequestCollection =
+                                      FirebaseFirestore.instance
+                                          .collection("clc_ngo");
+                                  //for id
+                                  QuerySnapshot snapshot =
+                                      await citizenRequestCollection.get();
+                                  int totalDocCount = snapshot.size;
+                                  totalDocCount++;
                                   //Storing data to database
                                   NGORegistration NGOData = NGORegistration(
+                                      nid: "n$totalDocCount",
                                       ngoName: nameOfNGOTextController.text,
                                       ngoRegNo: regNoTextController.text,
                                       services: servicesTextController.text,
@@ -624,9 +633,8 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                       fullAddress:
                                           fullAddressTextController.text,
                                       password: pwdTextController.text,
-                                      confirmPassword:
-                                          confirmPwdTextController.text,
-                                      termsAccepted: NGOTnC,
+                                      // confirmPassword: confirmPwdTextController.text,
+                                      // termsAccepted: NGOTnC,
                                       deviceToken: deviceTokenFound);
 
                                   // Convert the object to JSON
@@ -635,53 +643,73 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
 
                                   // Store data in Firestore
                                   try {
-                                    await FirebaseFirestore.instance
-                                        .collection("NGO")
-                                        .doc(emailIdTextController.text.trim())
-                                        .set(NGODataJson);
+                                    String emailId = emailIdTextController.text;
 
-                                    FirebaseAuth.instance
-                                        .createUserWithEmailAndPassword(
-                                      email: emailIdTextController.text,
-                                      password: pwdTextController.text,
-                                    );
+                                    // Check if a document with the same email ID exists
+                                    var existingDoc = await FirebaseFirestore
+                                        .instance
+                                        .collection("clc_ngo")
+                                        .doc(emailId)
+                                        .get();
 
-                                    // Document successfully added
-                                    if (kDebugMode) {
-                                      print(
-                                          'Document added with ID: ${emailIdTextController.text}');
+                                    if (existingDoc.exists) {
+                                      // Document already exists, do not add user to the database
+                                      showToastMsg(
+                                          "Account with the same email id already exists \n you can login ..");
+                                      return; // Exit the function
+                                    } else {
+                                      await FirebaseFirestore.instance
+                                          .collection("clc_ngo")
+                                          .doc(
+                                              emailIdTextController.text.trim())
+                                          .set(NGODataJson);
+
+                                      FirebaseAuth.instance
+                                          .createUserWithEmailAndPassword(
+                                        email: emailIdTextController.text,
+                                        password: pwdTextController.text,
+                                      );
+
+                                      // Document successfully added
+                                      if (kDebugMode) {
+                                        print(
+                                            'Document added with ID: ${emailIdTextController.text}');
+                                      }
+                                      // Show a toast message upon success
+                                      showToastMsg(
+                                          "NGO registered successfully..");
+
+                                      // Navigate to a new page upon success
+                                      Navigator.of(context).push(
+                                        PageRouteBuilder(
+                                          pageBuilder: (context, animation,
+                                                  secondaryAnimation) =>
+                                              const NGOLoginPageScreen(),
+                                          transitionsBuilder: (context,
+                                              animation,
+                                              secondaryAnimation,
+                                              child) {
+                                            var begin = const Offset(1.0, 0.0);
+                                            var end = Offset.zero;
+                                            var curve = Curves.ease;
+
+                                            var tween = Tween(
+                                                    begin: begin, end: end)
+                                                .chain(
+                                                    CurveTween(curve: curve));
+                                            var offsetAnimation =
+                                                animation.drive(tween);
+                                            //slight fade effect
+                                            //var opacityAnimation = animation.drive(tween);
+
+                                            return SlideTransition(
+                                              position: offsetAnimation,
+                                              child: child,
+                                            );
+                                          },
+                                        ),
+                                      );
                                     }
-                                    // Show a toast message upon success
-                                    showToastMsg(
-                                        "NGO registered successfully..");
-
-                                    // Navigate to a new page upon success
-                                    Navigator.of(context).push(
-                                      PageRouteBuilder(
-                                        pageBuilder: (context, animation,
-                                                secondaryAnimation) =>
-                                            const NGOLoginPageScreen(),
-                                        transitionsBuilder: (context, animation,
-                                            secondaryAnimation, child) {
-                                          var begin = const Offset(1.0, 0.0);
-                                          var end = Offset.zero;
-                                          var curve = Curves.ease;
-
-                                          var tween = Tween(
-                                                  begin: begin, end: end)
-                                              .chain(CurveTween(curve: curve));
-                                          var offsetAnimation =
-                                              animation.drive(tween);
-                                          //slight fade effect
-                                          //var opacityAnimation = animation.drive(tween);
-
-                                          return SlideTransition(
-                                            position: offsetAnimation,
-                                            child: child,
-                                          );
-                                        },
-                                      ),
-                                    );
                                   } catch (e) {
                                     // An error occurred
                                     if (kDebugMode) {
@@ -750,8 +778,8 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
   }
 
   void _showCupertinoDialog(BuildContext context) {
-
-    List<bool> checked = List.filled(DropdownItems.dropdownItemListofServices.length, false);
+    List<bool> checked =
+        List.filled(DropdownItems.dropdownItemListofServices.length, false);
 
     showDialog(
       context: context,
@@ -771,7 +799,8 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                     });
                   },
                   child: ListTile(
-                    title: Text(DropdownItems.dropdownItemListofServices[index]),
+                    title:
+                        Text(DropdownItems.dropdownItemListofServices[index]),
                     trailing: CupertinoSwitch(
                       value: checked[index],
                       onChanged: (bool value) {
@@ -795,9 +824,12 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
             TextButton(
               onPressed: () {
                 String selectedOptions = '';
-                for (int i = 0; i < DropdownItems.dropdownItemListofServices.length; i++) {
+                for (int i = 0;
+                    i < DropdownItems.dropdownItemListofServices.length;
+                    i++) {
                   if (checked[i]) {
-                    selectedOptions += '${DropdownItems.dropdownItemListofServices[i]}, ';
+                    selectedOptions +=
+                        '${DropdownItems.dropdownItemListofServices[i]}, ';
                   }
                 }
                 if (selectedOptions.isNotEmpty) {

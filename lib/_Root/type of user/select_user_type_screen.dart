@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:fff/Admin%20Related/Lower%20Level%20Admin/lowerAdmin.dart';
+import 'package:fff/Admin%20Related/Lower%20Level%20Admin/lower_admin.dart';
 import 'package:fff/_Root/type%20of%20user/typecolumnlist_item_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';

@@ -196,7 +196,7 @@ class _UserProfileState extends State<UserProfile> {
 
       // Fetch data from Firestore
       DocumentSnapshot citizenSnapshot = await FirebaseFirestore.instance
-          .collection('Citizens')
+          .collection('tbl_citizen')
           .doc(user?.phoneNumber)
           .get();
 
@@ -208,7 +208,7 @@ class _UserProfileState extends State<UserProfile> {
           fetchedLname = citizenSnapshot.get('lastName');
           fetchedGender = citizenSnapshot.get('gender');
           fetchedPhone = user!.phoneNumber;
-          fetchedAge = citizenSnapshot.get('userAge');
+          //fetchedAge = citizenSnapshot.get('userAge');
           fetchedState = citizenSnapshot.get('state');
           fetchedCity = citizenSnapshot.get('city');
           fetchedPinCode = citizenSnapshot.get('pinCode');

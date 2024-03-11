@@ -82,7 +82,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   SizedBox(
                     height: screenHeight * 0.01,
                   ),
-                  const Text("Check Your Inbox ... (●'◡'●)",
+                  const Text("Check Your Inbox ...\n (●'◡'●)",
                       style:
                           TextStyle(fontSize: 37, fontWeight: FontWeight.w600)),
                   const SizedBox(
@@ -173,7 +173,7 @@ class _OtpScreenState extends State<OtpScreen> {
     try {
       // Check if the mobile number exists in the citizen collection
       final DocumentReference citizenRef =
-          FirebaseFirestore.instance.collection('Citizens').doc(contact);
+          FirebaseFirestore.instance.collection('clc_citizen').doc(contact);
       // Get the document snapshot
       final DocumentSnapshot citizenSnapshot = await citizenRef.get();
 

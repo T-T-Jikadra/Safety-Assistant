@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, non_constant_identifier_names
 class GovtRegistration {
+  final String gid;
   final String GovtAgencyName;
   final String GovtAgencyARegNo;
   final String services;
@@ -11,13 +12,12 @@ class GovtRegistration {
   final String pinCode;
   final String fullAddress;
   final String password;
-  final String confirmPassword;
-  final bool termsAccepted;
   final DateTime registrationTime;
   final String deviceToken;
 
   GovtRegistration(
-      {required this.GovtAgencyName,
+      {required this.gid,
+        required this.GovtAgencyName,
       required this.GovtAgencyARegNo,
       required this.services,
       required this.contactNumber,
@@ -28,14 +28,13 @@ class GovtRegistration {
       required this.pinCode,
       required this.fullAddress,
       required this.password,
-      required this.confirmPassword,
-      required this.termsAccepted,
       required this.deviceToken,
       DateTime? registrationTime})
       : registrationTime = registrationTime ?? DateTime.now();
 
   Map<String, dynamic> toJsonGovt() {
     return {
+      'gid':gid,
       'GovtAgencyName': GovtAgencyName,
       'GovtAgencyRegNo': GovtAgencyARegNo,
       'services': services,
@@ -47,8 +46,6 @@ class GovtRegistration {
       'pinCode': pinCode,
       'fullAddress': fullAddress,
       'password': password,
-      'confirmPassword': confirmPassword,
-      'termsAccepted': termsAccepted,
       'registrationTime': registrationTime.toString(),
       'deviceToken': deviceToken,
     };

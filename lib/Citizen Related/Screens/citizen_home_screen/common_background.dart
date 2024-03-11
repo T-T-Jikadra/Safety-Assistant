@@ -168,7 +168,7 @@ class _commonbgState extends State<commonbg> {
 
       // Fetch data from Firestore
       DocumentSnapshot citizenSnapshot = await FirebaseFirestore.instance
-          .collection('Citizens')
+          .collection('clc_citizen')
           .doc(user?.phoneNumber)
           .get();
 

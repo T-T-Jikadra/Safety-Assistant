@@ -113,7 +113,7 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
 
       // Fetch data from Firestore
       DocumentSnapshot GovtSnapshot = await FirebaseFirestore.instance
-          .collection('NGO')
+          .collection('clc_ngo')
           .doc(user?.email)
           .get();
 

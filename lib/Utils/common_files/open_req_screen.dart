@@ -2,13 +2,12 @@
 
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../Models/Request_Notification_Model.dart';
+import '../../Models/notification_response_model.dart';
 import '../Utils.dart';
 import '../constants.dart';
 import 'package:http/http.dart' as http;
@@ -311,7 +310,11 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
                                           builder: (BuildContext context) {
                                             return const Dialog(
                                               child: Padding(
-                                                padding: EdgeInsets.only(top: 35, bottom: 25, left: 20, right: 20),
+                                                padding: EdgeInsets.only(
+                                                    top: 35,
+                                                    bottom: 25,
+                                                    left: 20,
+                                                    right: 20),
                                                 child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.min,
@@ -321,7 +324,8 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     SizedBox(height: 15),
-                                                    CircularProgressIndicator(color: Colors.blue),
+                                                    CircularProgressIndicator(
+                                                        color: Colors.blue),
                                                     SizedBox(height: 30),
                                                     Text('Processing ...')
                                                   ],
@@ -350,7 +354,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
                                           if (!notificationSent) {
                                             //search and get token of request sender
                                             FirebaseFirestore.instance
-                                                .collection('Citizen Request')
+                                                .collection('clc_request')
                                                 .where('RequestId',
                                                     isEqualTo:
                                                         'Req_${widget.rid}')
@@ -477,7 +481,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
     try {
       // Fetch data from Firestore
       DocumentSnapshot ReqSnapshot = await FirebaseFirestore.instance
-          .collection('Citizen Request')
+          .collection('clc_request')
           .doc("Req_${widget.rid}")
           .get();
 
@@ -515,7 +519,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
 
       // Fetch data from Firestore
       DocumentSnapshot NGOSnapshot = await FirebaseFirestore.instance
-          .collection('NGO')
+          .collection('clc_ngo')
           .doc(user?.email)
           .get();
 
@@ -551,7 +555,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
 
       // Fetch data from Firestore
       DocumentSnapshot GovtSnapshot = await FirebaseFirestore.instance
-          .collection('Govt')
+          .collection('clc_govt')
           .doc(user?.email)
           .get();
       //print(user!.email);
@@ -648,7 +652,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
     try {
       //add respond Id into request doc
       await FirebaseFirestore.instance
-          .collection("Citizen Request")
+          .collection("clc_request")
           .doc("Req_${widget.rid}")
           .update({
         'RespondId': "Response_${widget.rid}",
@@ -657,7 +661,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
       if (iAmNGO == 'true') {
         //update responded state to true
         await FirebaseFirestore.instance
-            .collection("Citizen Request")
+            .collection("clc_request")
             .doc("Req_${widget.rid}")
             .update({
           'isNGOResponded': 'true',
@@ -665,14 +669,14 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
 
         //sets NGO response data
         await FirebaseFirestore.instance
-            .collection("Authority Respond")
+            .collection("clc_response")
             .doc("Response_${widget.rid}")
             .set(respondNGOJson);
       }
       //update responded state to true
       else if (iAmGovt == 'true') {
         await FirebaseFirestore.instance
-            .collection("Citizen Request")
+            .collection("clc_request")
             .doc("Req_${widget.rid}")
             .update({
           'isGovtResponded': 'true',
@@ -680,7 +684,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
 
         //sets Govt response data
         await FirebaseFirestore.instance
-            .collection("Authority Respond")
+            .collection("clc_response")
             .doc("Response_${widget.rid}")
             .set(respondGovtJson);
       }

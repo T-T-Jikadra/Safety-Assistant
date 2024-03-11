@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Citizen Related/Screens/open_response_screen.dart';
 import 'Components/Notification_related/notification_services.dart';
 import 'Utils/common_files/open_req_screen.dart';
-import '_Root/Splash/splash_Screen.dart';
+import '_Root/Splash/splash_screen.dart';
 import 'package:get/get.dart';
 
 //void main

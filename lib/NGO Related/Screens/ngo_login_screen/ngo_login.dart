@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -214,16 +213,16 @@ class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
 
                               if (_formKey.currentState!.validate()) {
                                 String emailValue =
-                                    loginEmailNGOTextController.text.trim();
+                                    loginEmailNGOTextController.text;
                                 try {
-                                  DocumentReference govtRef = FirebaseFirestore
+                                  DocumentReference ngoRef = FirebaseFirestore
                                       .instance
-                                      .collection("NGO")
+                                      .collection("clc_ngo")
                                       .doc(emailValue);
-                                  final DocumentSnapshot govtSnapshot =
-                                      await govtRef.get();
+                                  final DocumentSnapshot ngoSnapshot =
+                                      await ngoRef.get();
 
-                                  if (govtSnapshot.exists) {
+                                  if (ngoSnapshot.exists) {
                                     try {
                                       // Sign in the user with email and password
                                       FirebaseAuth.instance

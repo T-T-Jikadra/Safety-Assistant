@@ -423,7 +423,7 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
 
       // Fetch data from Firestore
       DocumentSnapshot GovtSnapshot = await FirebaseFirestore.instance
-          .collection('NGO')
+          .collection('clc_ngo')
           .doc(user?.email)
           .get();
 
