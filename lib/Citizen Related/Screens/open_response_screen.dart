@@ -1,10 +1,12 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, deprecated_member_use
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fff/Utils/constants.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // ignore: camel_case_types
 class Open_Response_Screen extends StatefulWidget {
@@ -37,6 +39,42 @@ class Open_Response_Screen extends StatefulWidget {
 
 // ignore: camel_case_types
 class _Open_Response_ScreenState extends State<Open_Response_Screen> {
+  bool isLoading = true;
+
+  //ngo
+  bool hasNGOResponded = false;
+  String fetchedNid = '';
+  String fetchedNGOName = '';
+  String fetchedNGORegNo = '';
+  String fetchedNGOAddress = '';
+  String fetchedNGOContact = '';
+  String fetchedNGOEmail = '';
+  String fetchedNGOWebsite = '';
+  String fetchedNGORespondTime = '';
+
+  //govt
+  bool hasGovtResponded = false;
+  String fetchedGid = '';
+  String fetchedGovtName = '';
+  String fetchedGovtRegNo = '';
+  String fetchedGovtAddress = '';
+  String fetchedGovtContact = '';
+  String fetchedGovtEmail = '';
+  String fetchedGovtWebsite = '';
+  String fetchedGovtRespondTime = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchNGOResponseDetails();
+    // Start loading
+    Future.delayed(const Duration(milliseconds: 1100), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,9 +86,11 @@ class _Open_Response_ScreenState extends State<Open_Response_Screen> {
               borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(25),
                   bottomLeft: Radius.circular(25))),
-          title: const Text("$appbar_display_name - Open Response"),
+          title: const Text("$appbar_display_name - Request details"),
         ),
-        body: SizedBox(
+        body: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : SizedBox(
           child: Padding(
             padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
             child: SingleChildScrollView(
@@ -58,6 +98,13 @@ class _Open_Response_ScreenState extends State<Open_Response_Screen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(height: 10),
+                  //show Req details
+                  const Text("Your Request Details : ",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 19,
+                          color: Colors.blueGrey)),
                   const SizedBox(height: 20),
                   Container(
                     width: double.infinity,
@@ -94,7 +141,8 @@ class _Open_Response_ScreenState extends State<Open_Response_Screen> {
                           const SizedBox(height: 8),
                           const Divider(height: 2),
                           const SizedBox(height: 8),
-                          const Text("City :", style: TextStyle(fontSize: 13)),
+                          const Text("City :",
+                              style: TextStyle(fontSize: 13)),
                           const SizedBox(height: 4),
                           Text(widget.documentSnapshot['city'],
                               style: const TextStyle(fontSize: 16)),
@@ -130,74 +178,280 @@ class _Open_Response_ScreenState extends State<Open_Response_Screen> {
                           const SizedBox(height: 4),
                           Text(
                               DateFormat('dd-MM-yyyy , HH:mm').format(
-                                  DateTime.parse(
-                                      widget.documentSnapshot['reqTime'])),
+                                  DateTime.parse(widget
+                                      .documentSnapshot['reqTime'])),
                               style: const TextStyle(fontSize: 16))
                         ],
                       ),
                     ),
                   ),
-                  const SizedBox(height: 40),
-                  const Text("Your selected Service :",
-                      style: TextStyle(color: Colors.deepPurple, fontSize: 17),
-                      textAlign: TextAlign.start),
-                  Text(widget.selectedService,
-                      style: const TextStyle(fontSize: 14)),
                   const SizedBox(height: 25),
-                  const Text("Responded authority name  :",
-                      style: TextStyle(color: Colors.deepPurple, fontSize: 17)),
-                  Text(widget.authorityName,
-                      style: const TextStyle(fontSize: 14)),
-                  const SizedBox(height: 25),
-                  const Text("Responded authority Register number :",
-                      style: TextStyle(color: Colors.deepPurple, fontSize: 17)),
-                  Text(widget.regNo, style: const TextStyle(fontSize: 14)),
-                  const SizedBox(height: 25),
-                  const Text("Responder authority address :",
-                      style: TextStyle(color: Colors.deepPurple, fontSize: 17)),
-                  Text(widget.address, style: const TextStyle(fontSize: 14)),
-                  const SizedBox(height: 25),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                  //NGO
+                  const Text("NGO Details : ",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 17)),
+                  const SizedBox(height: 20),
+                  //NGO respond
+                  if (hasNGOResponded) Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.grey.withOpacity(0.1),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 15),
+                      child: Column(
+                        crossAxisAlignment:
+                        CrossAxisAlignment.start,
                         children: [
-                          const Text("Responder contact number :",
-                              style: TextStyle(
-                                  color: Colors.deepPurple, fontSize: 17)),
-                          Text(widget.phone,
-                              style: const TextStyle(fontSize: 14)),
+                          const Text("NGO Id  :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(fetchedNid,
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          const Text("NGO Name :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(fetchedNGOName,
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          const Text("NGO register no :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(fetchedNGORegNo,
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          const Text("Address :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(fetchedNGOAddress,
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment:
+                            CrossAxisAlignment.center,
+                            children: [
+                              Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                MainAxisAlignment.start,
+                                children: [
+                                  const Text("Contact no :",
+                                      style:
+                                      TextStyle(fontSize: 13)),
+                                  const SizedBox(height: 4),
+                                  Text(fetchedNGOContact,
+                                      style: const TextStyle(
+                                          fontSize: 16)),
+                                ],
+                              ),
+                              IconButton(
+                                  icon: const Icon(Iconsax.call,color: Colors.deepPurple),
+                                  onPressed: () {
+                                    launch(
+                                      'tel:$fetchedNGOContact',
+                                    );
+                                  })
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          const Text("City :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(fetchedNGOEmail,
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment:
+                            CrossAxisAlignment.center,
+                            children: [
+                              Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                MainAxisAlignment.start,
+                                children: [
+                                  const Text("Website :",
+                                      style:
+                                      TextStyle(fontSize: 13)),
+                                  const SizedBox(height: 4),
+                                  Text(fetchedNGOWebsite,
+                                      style: const TextStyle(
+                                          fontSize: 16)),
+                                ],
+                              ),
+                              IconButton(
+                                icon: const Icon(Iconsax.global,color: Colors.deepPurple), onPressed:(){
+                                _launchWebURL("https://$fetchedNGOWebsite");
+
+                              },)
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          const Text("Response time :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(
+                              DateFormat('dd-MM-yyyy , HH:mm')
+                                  .format(DateTime.parse(
+                                  fetchedNGORespondTime)),
+                              style: const TextStyle(fontSize: 16))
                         ],
                       ),
-                      const Icon(Iconsax.call)
-                    ],
+                    ),
+                  ) else Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.grey.withOpacity(0.1)),
+                    child: const Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 25, vertical: 15),
+                        child: Text(
+                            "No NGOs has responded to your request yet !!")),
                   ),
+
+                  //Govt
                   const SizedBox(height: 25),
-                  const Text("Responder Email :",
-                      style: TextStyle(color: Colors.deepPurple, fontSize: 17)),
-                  Text(widget.email, style: const TextStyle(fontSize: 14)),
-                  const SizedBox(height: 25),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                  const Text("Govt Details : ",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 17)),
+                  const SizedBox(height: 20),
+                  //NGO respond
+                  hasGovtResponded
+                      ? Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.grey.withOpacity(0.1),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 15),
+                      child: Column(
+                        crossAxisAlignment:
+                        CrossAxisAlignment.start,
                         children: [
+                          const Text("Govt agency Id  :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(fetchedGid,
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          const Text("Govt agency Name :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(fetchedGovtName,
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          const Text("Govt agency register no :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(fetchedGovtRegNo,
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          const Text("Address :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(fetchedGovtAddress,
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                MainAxisAlignment.start,
+                                children: [
+                                  const Text("Contact no :",
+                                      style:
+                                      TextStyle(fontSize: 13)),
+                                  const SizedBox(height: 4),
+                                  Text(fetchedGovtContact,
+                                      style: const TextStyle(
+                                          fontSize: 16)),
+                                ],
+                              ),
+                              const Icon(Iconsax.global)
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          const Text("City :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(fetchedGovtEmail,
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
                           const Text("Website :",
-                              style: TextStyle(
-                                  color: Colors.deepPurple, fontSize: 17)),
-                          Text(widget.website,
-                              style: const TextStyle(fontSize: 14)),
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(fetchedGovtWebsite,
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          const Text("Response time :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(
+                              DateFormat('dd-MM-yyyy , HH:mm')
+                                  .format(DateTime.parse(
+                                  fetchedGovtRespondTime)),
+                              style: const TextStyle(fontSize: 16))
                         ],
                       ),
-                      const Icon(Iconsax.global),
-                    ],
+                    ),
+                  )
+                      : Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.grey.withOpacity(0.1)),
+                    child: const Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 25, vertical: 15),
+                        child: Text(
+                            "No Govt agency has responded to your request yet!!")),
                   ),
+                  const SizedBox(height: 20)
                 ],
               ),
             ),
@@ -205,8 +459,8 @@ class _Open_Response_ScreenState extends State<Open_Response_Screen> {
         ));
   }
 
-  List<Widget> _buildTextContainers(
-      String label1, String text1, String label2, String text2) {
+  List<Widget> _buildTextContainers(String label1, String text1, String label2,
+      String text2) {
     return [
       Container(
         width: double.infinity,
@@ -220,7 +474,7 @@ class _Open_Response_ScreenState extends State<Open_Response_Screen> {
             children: [
               Text(label1,
                   style:
-                      const TextStyle(color: Colors.deepPurple, fontSize: 16)),
+                  const TextStyle(color: Colors.deepPurple, fontSize: 16)),
               Text(text1, style: const TextStyle(fontSize: 13)),
             ],
           ),
@@ -248,4 +502,89 @@ class _Open_Response_ScreenState extends State<Open_Response_Screen> {
       const SizedBox(height: 25),
     ];
   }
-}
+
+  Future<void> fetchNGOResponseDetails() async {
+    try {
+      // Fetch data from Firestore
+      DocumentSnapshot NGOResponseSnapshot = await FirebaseFirestore.instance
+          .collection('clc_response')
+          .doc(widget.documentSnapshot['RespondId'])
+          .collection("ngo")
+          .doc("ngo_details")
+          .get();
+      //print(user!.email);
+      //print(GovtSnapshot.get('GovtAgencyRegNo'));
+
+      // Check if the document exists
+      if (NGOResponseSnapshot.exists) {
+        // Access the fields from the document
+        setState(() {
+          hasNGOResponded = true;
+          fetchedNid = NGOResponseSnapshot.get('nid');
+          fetchedNGOName = NGOResponseSnapshot.get('ResponderNGOName');
+          fetchedNGORegNo = NGOResponseSnapshot.get('ResponderNGORegNo');
+          fetchedNGOAddress = NGOResponseSnapshot.get('ResponderNGOAddress');
+          fetchedNGOContact =
+              NGOResponseSnapshot.get('ResponderNGOContactNumber');
+          fetchedNGOEmail = NGOResponseSnapshot.get('ResponderNGOEmail');
+          fetchedNGOWebsite = NGOResponseSnapshot.get('ResponderNGOWebsite');
+          fetchedNGORespondTime = NGOResponseSnapshot.get('RespondNGOTime');
+        });
+      } else {
+        if (kDebugMode) {
+          print('NGO response Document does not exist');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching NGO response data: $e');
+      }
+    }
+  }
+
+  Future<void> fetchGovtResponseDetails() async {
+    try {
+      // Fetch data from Firestore
+      DocumentSnapshot NGOResponseSnapshot = await FirebaseFirestore.instance
+          .collection('clc_response')
+          .doc(widget.documentSnapshot['RespondId'])
+          .collection("govt")
+          .doc("govt_details")
+          .get();
+      //print(user!.email);
+      //print(GovtSnapshot.get('GovtAgencyRegNo'));
+
+      // Check if the document exists
+      if (NGOResponseSnapshot.exists) {
+        // Access the fields from the document
+        setState(() {
+          hasGovtResponded = true;
+          fetchedGid = NGOResponseSnapshot.get('gid');
+          fetchedGovtName = NGOResponseSnapshot.get('ResponderGovtName');
+          fetchedGovtRegNo = NGOResponseSnapshot.get('ResponderGovtRegNo');
+          fetchedGovtAddress = NGOResponseSnapshot.get('ResponderGovtAddress');
+          fetchedGovtContact =
+              NGOResponseSnapshot.get('ResponderGovtContactNumber');
+          fetchedGovtEmail = NGOResponseSnapshot.get('ResponderGovtEmail');
+          fetchedGovtWebsite = NGOResponseSnapshot.get('ResponderGovtWebsite');
+          fetchedGovtRespondTime = NGOResponseSnapshot.get('RespondGovtTime');
+        });
+      } else {
+        if (kDebugMode) {
+          print('NGO response Document does not exist');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching NGO response data: $e');
+      }
+    }
+  }
+
+  void _launchWebURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }}
