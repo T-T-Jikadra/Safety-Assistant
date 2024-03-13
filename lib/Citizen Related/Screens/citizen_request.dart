@@ -25,6 +25,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
   NotificationServices notificationServices = NotificationServices();
 
   //profile fields
+  String fetchedCid = "";
   String fetchedFname = "";
   String? fetchedPhone = "";
   String fetchedState = "";
@@ -137,7 +138,8 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                         hintText: "Select your service",
                                       ),
                                       validator: (value) {
-                                        if (value == "Select Govt Agency State") {
+                                        if (value ==
+                                            "Select Govt Agency State") {
                                           return 'Select Govt Agency State';
                                         }
                                         return null; // Return null if the input is valid
@@ -223,7 +225,8 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                         buildDataRow('Name', fetchedFname),
                                         buildDataRow(
                                             'Address', fetchedFullAddress),
-                                        buildDataRow('Pin Code', fetchedPinCode),
+                                        buildDataRow(
+                                            'Pin Code', fetchedPinCode),
                                         buildDataRow('City', fetchedCity),
                                         buildDataRow('State', fetchedState),
                                       ],
@@ -305,17 +308,21 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                 builder: (BuildContext context) {
                                   return const Dialog(
                                     child: Padding(
-                                      padding: EdgeInsets.only(top: 35, bottom: 25, left: 20, right: 20),
+                                      padding: EdgeInsets.only(
+                                          top: 35,
+                                          bottom: 25,
+                                          left: 20,
+                                          right: 20),
                                       child: Column(
-                                        mainAxisSize:
-                                        MainAxisSize.min,
+                                        mainAxisSize: MainAxisSize.min,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                         mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                         children: [
                                           SizedBox(height: 15),
-                                          CircularProgressIndicator(color: Colors.blue),
+                                          CircularProgressIndicator(
+                                              color: Colors.blue),
                                           SizedBox(height: 30),
                                           Text('Processing ...')
                                         ],
@@ -337,21 +344,37 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                   int totalDocCount = snapshot.size;
                                   totalDocCount++;
                                   //sends request/alert to only NGO which are of the currents user's city
-                                  FirebaseFirestore.instance
+                                  var ngoQuerySnapshot = await FirebaseFirestore
+                                      .instance
                                       .collection('clc_ngo')
                                       //added new ***
                                       // .where('services', whereIn: selectedServiceWords)
-                                      .where('city', isEqualTo: 'Suratt')
-                                      .get()
-                                      .then((querySnapshot) {
-                                    addReqToDatabase(totalDocCount);
-                                    for (var doc in querySnapshot.docs) {
-                                      String deviceToken =
-                                          doc.data()['deviceToken'];
-                                      sendNotificationToDevice(
-                                          deviceToken, totalDocCount);
-                                    }
-                                  });
+                                      .where('city', isEqualTo: 'Surat')
+                                      .get();
+
+                                  for (var ngoDoc in ngoQuerySnapshot.docs) {
+                                    String deviceToken =
+                                        ngoDoc.data()['deviceToken'];
+                                    sendNotificationToDevice(
+                                        deviceToken, totalDocCount);
+                                  }
+
+                                  var govtQuerySnapshot =
+                                      await FirebaseFirestore.instance
+                                          .collection('clc_govt')
+                                          .where('city', isEqualTo: 'Surat')
+                                          .get();
+
+                                  //.then((querySnapshot) {
+
+                                  for (var doc in govtQuerySnapshot.docs) {
+                                    String deviceToken =
+                                        doc.data()['deviceToken'];
+                                    sendNotificationToDevice(
+                                        deviceToken, totalDocCount);
+                                  }
+                                  // });
+                                  addReqToDatabase(totalDocCount);
                                 } catch (e) {
                                   if (kDebugMode) {
                                     print(
@@ -365,9 +388,8 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                 Navigator.pop(context);
                                 showMsgDialog(
                                     context,
-                                    'You have already requested for your request'
+                                    'You have already requested for your request ,'
                                     '\n Nearby authority will contact you soon ');
-
                               }
                             },
                             style: ButtonStyle(
@@ -401,6 +423,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
       if (citizenSnapshot.exists) {
         // Access the fields from the document
         setState(() {
+          fetchedCid = citizenSnapshot.get('cid');
           fetchedFname = citizenSnapshot.get('firstName') +
               " " +
               citizenSnapshot.get('lastName');
@@ -443,7 +466,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
         'notification': {'notification_count': 23},
       },
       'data': {
-        'type': 'alert',
+        'type': 'request',
         'title': selectedService,
         'address': selectedRadioAddress == 1
             ? fetchedFullAddress
@@ -475,8 +498,9 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
     CitizenReqRegistration citizenReqData = CitizenReqRegistration(
         Rid: "Req_${totalDocCount.toString()}",
         RespondId: '',
-        isNGOResponded: 'false',
-        isGovtResponded: 'false',
+        cid: fetchedCid,
+        hasNGOResponded: 'false',
+        hasGovtResponded: 'false',
         neededService: selectedService,
         userName: fetchedFname,
         contactNumber: fetchedPhone,

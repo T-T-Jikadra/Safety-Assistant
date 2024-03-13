@@ -91,6 +91,33 @@ void showMsgDialog(BuildContext context, String message) {
   );
 }
 
+//special dialog for back
+void showDialogAlert(BuildContext context, String message) {
+  // Set up the AlertDialog
+  final CupertinoAlertDialog alert = CupertinoAlertDialog(
+    title: const Text('Alert : '),
+    content: Text('\n$message'),
+    actions: <Widget>[
+      CupertinoDialogAction(
+        isDefaultAction: true,
+        child: const Text('Okay'),
+        onPressed: () {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+        },
+      )
+    ],
+  );
+  // Show the dialog
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
 //for pwd validate
 String? validatePassword(String? value) {
   if (value == null || value.isEmpty) {

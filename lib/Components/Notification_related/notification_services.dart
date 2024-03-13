@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import '../../Citizen Related/Screens/open_response_screen.dart';
+import '../../Citizen Related/Screens/citizen_req_history_screen.dart';
 import '../../Utils/common_files/open_req_screen.dart';
 
 // ignore: camel_case_types
@@ -72,7 +72,7 @@ class NotificationServices {
         onDidReceiveNotificationResponse: (payload) async {
       if (message.data['type'] == 'response') {
         handleResponse(context, message);
-      } else if (message.data['type'] == 'alert') {
+      } else if (message.data['type'] == 'request') {
         handleRequest(context, message);
       }
       // Navigator.push(
@@ -189,7 +189,7 @@ class NotificationServices {
     if (initialMessage != null) {
       if (initialMessage.data['type'] == 'response') {
         handleResponse(context, initialMessage);
-      } else if (initialMessage.data['type'] == 'alert') {
+      } else if (initialMessage.data['type'] == 'request') {
         handleRequest(context, initialMessage);
       }
     }
@@ -198,7 +198,7 @@ class NotificationServices {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.data['type'] == 'response') {
         //Get.to(() => const alert_Screen());
-      } else if (message.data['type'] == 'alert') {
+      } else if (message.data['type'] == 'request') {
         //handleMessage(context, message);
       }
     });
@@ -207,7 +207,7 @@ class NotificationServices {
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
       if (event.data['type'] == 'response') {
         handleResponse(context, event);
-      } else if (event.data['type'] == 'alert') {
+      } else if (event.data['type'] == 'request') {
         handleRequest(context, event);
       }
     });
@@ -217,7 +217,7 @@ class NotificationServices {
         RemoteMessage message) async {
       if (message.data['type'] == 'response') {
         handleResponse(context, message);
-      } else if (message.data['type'] == 'alert') {
+      } else if (message.data['type'] == 'request') {
         handleRequest(context, message);
       }
 
@@ -242,15 +242,16 @@ class NotificationServices {
 
   //opens page for response got
   void handleResponse(BuildContext context, RemoteMessage message) {
-    Get.to(() => Open_Response_Screen(
-          selectedService: message.data['service'],
-          authorityName: message.data['authorityName'],
-          regNo: message.data['regNo'],
-          address: message.data['address'],
-          phone: message.data['phone'],
-          email: message.data['email'],
-          city: message.data['city'],
-          website: message.data['website'],
-        ));
+    Get.to(() =>const Request_History_Screen());
+    // Get.to(() => Open_Response_Screen(
+    //       selectedService: message.data['service'],
+    //       authorityName: message.data['authorityName'],
+    //       regNo: message.data['regNo'],
+    //       address: message.data['address'],
+    //       phone: message.data['phone'],
+    //       email: message.data['email'],
+    //       city: message.data['city'],
+    //       website: message.data['website'],
+    //     ));
   }
 }

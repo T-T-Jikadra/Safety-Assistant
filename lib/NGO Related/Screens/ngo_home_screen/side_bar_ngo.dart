@@ -179,7 +179,7 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                                   },
                                 ),
                               );
-                            } else if (menu_ngo.title.contains("Respond")) {
+                            } else if (menu_ngo.title.contains("Response")) {
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(

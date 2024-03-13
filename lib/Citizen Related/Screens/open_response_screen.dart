@@ -1,9 +1,14 @@
+// ignore_for_file: depend_on_referenced_packages
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fff/Utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 
 // ignore: camel_case_types
 class Open_Response_Screen extends StatefulWidget {
+  final DocumentSnapshot<Object?> documentSnapshot;
   final String selectedService;
   final String authorityName;
   final String regNo;
@@ -23,6 +28,7 @@ class Open_Response_Screen extends StatefulWidget {
     required this.email,
     required this.city,
     required this.website,
+    required this.documentSnapshot,
   });
 
   @override
@@ -46,36 +52,90 @@ class _Open_Response_ScreenState extends State<Open_Response_Screen> {
         ),
         body: SizedBox(
           child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 25, top: 5),
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 20),
-                  ..._buildTextContainers(
-                    "Your selected Service :",
-                    widget.selectedService,
-                    "Responded authority name :",
-                    widget.authorityName,
-                  ),
-                  ..._buildTextContainers(
-                    "Responded authority Register no :",
-                    widget.regNo,
-                    "Responder authority address :",
-                    widget.address,
-                  ),
-                  ..._buildTextContainers(
-                    "Responder contact number :",
-                    widget.phone,
-                    "Responder Email :",
-                    widget.email,
-                  ),
-                  ..._buildTextContainers(
-                    "Website :",
-                    widget.website,
-                    "",
-                    "",
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.green.withOpacity(0.1)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text("Request Id  :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(widget.documentSnapshot['RequestId'],
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          const Text("Needed Service :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(widget.documentSnapshot['neededService'],
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          const Text("Citizen id :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(widget.documentSnapshot['cid'],
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          const Text("City :", style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(widget.documentSnapshot['city'],
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          const Text("Address :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(widget.documentSnapshot['fullAddress'],
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          const Text("Pin code :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(widget.documentSnapshot['pinCode'],
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          const Text("Phone no :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(widget.documentSnapshot['contactNumber'],
+                              style: const TextStyle(fontSize: 16)),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          const Text("Request time :",
+                              style: TextStyle(fontSize: 13)),
+                          const SizedBox(height: 4),
+                          Text(
+                              DateFormat('dd-MM-yyyy , HH:mm').format(
+                                  DateTime.parse(
+                                      widget.documentSnapshot['reqTime'])),
+                              style: const TextStyle(fontSize: 16))
+                        ],
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 40),
                   const Text("Your selected Service :",
@@ -125,8 +185,8 @@ class _Open_Response_ScreenState extends State<Open_Response_Screen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           const Text("Website :",
                               style: TextStyle(
@@ -138,105 +198,6 @@ class _Open_Response_ScreenState extends State<Open_Response_Screen> {
                       const Icon(Iconsax.global),
                     ],
                   ),
-                  const SizedBox(height: 25),
-                  TextFormField(
-                    keyboardType: TextInputType.text,
-                    initialValue: widget.selectedService,
-                    decoration: InputDecoration(
-                      labelText: "selectedService",
-                      prefixIcon: const Icon(Icons.account_balance_wallet),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      filled: true,
-                      //fillColor: Colors.grey[200],
-                    ),
-                  ),
-                  const SizedBox(height: 25),
-                  TextFormField(
-                    keyboardType: TextInputType.text,
-                    initialValue: widget.authorityName,
-                    decoration: InputDecoration(
-                      labelText: "authorityName",
-                      prefixIcon: const Icon(Icons.ac_unit_outlined),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      filled: true,
-                      //fillColor: Colors.grey[200],
-                    ),
-                  ),
-                  const SizedBox(height: 25),
-                  TextFormField(
-                    keyboardType: TextInputType.text,
-                    initialValue: widget.regNo,
-                    decoration: InputDecoration(
-                      labelText: "regNo",
-                      prefixIcon: const Icon(Icons.location_on),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      filled: true,
-                      //fillColor: Colors.grey[200],
-                    ),
-                  ),
-                  const SizedBox(height: 25),
-                  TextFormField(
-                    keyboardType: TextInputType.text,
-                    initialValue: widget.address,
-                    decoration: InputDecoration(
-                      labelText: "address",
-                      prefixIcon: const Icon(Icons.lock),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      filled: true,
-                      //fillColor: Colors.grey[200],
-                    ),
-                  ),
-                  const SizedBox(height: 25),
-                  TextFormField(
-                    keyboardType: TextInputType.text,
-                    initialValue: widget.phone,
-                    decoration: InputDecoration(
-                      labelText: "phone",
-                      prefixIcon: const Icon(Icons.person),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      filled: true,
-                      //fillColor: Colors.grey[200],
-                    ),
-                  ),
-                  const SizedBox(height: 25),
-                  TextFormField(
-                    keyboardType: TextInputType.text,
-                    initialValue: widget.email,
-                    decoration: InputDecoration(
-                      labelText: "email",
-                      prefixIcon: const Icon(Icons.location_city),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      filled: true,
-                      //fillColor: Colors.grey[200],
-                    ),
-                  ),
-                  const SizedBox(height: 25),
-                  TextFormField(
-                    keyboardType: TextInputType.text,
-                    initialValue: widget.website,
-                    decoration: InputDecoration(
-                      labelText: "website",
-                      prefixIcon: const Icon(Icons.location_city),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      filled: true,
-                      //fillColor: Colors.grey[200],
-                    ),
-                  ),
-                  const SizedBox(height: 25)
                 ],
               ),
             ),

@@ -43,8 +43,8 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
 
   //for Request
   String fetchedRid = "";
-  String fetchedIsNGOResponded = "";
-  String fetchedIsGovtResponded = "";
+  String fetchedHasNGOResponded = "";
+  String fetchedHasGovtResponded = "";
   String? fetchedService = "";
   String fetchedUsername = "";
   String fetchedCitizenContactNo = "";
@@ -55,6 +55,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
   int? selectedRadioAddress = 1;
 
   //NGO
+  String fetchedNid = "";
   String fetchedNGOName = "";
   String fetchedNGORegNo = "";
   String? fetchedNGOPhone = "";
@@ -65,6 +66,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
   String fetchedNGOWebsite = "";
 
   //Govt
+  String fetchedGid = "";
   String fetchedGovtName = "";
   String fetchedGovtRegNo = "";
   String? fetchedGovtPhone = "";
@@ -245,214 +247,209 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
               ),
               Padding(
                   padding: const EdgeInsets.only(right: 15, left: 15),
-                  child: fetchedIsTnxComplete == "false"
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          // Align buttons to the sides
-                          children: [
-                            //Decline
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 5),
-                                child: Container(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 15, top: 10),
-                                  width: double.infinity,
-                                  child: ClipRRect(
-                                      child: ElevatedButton(
-                                          onPressed: () async {
-                                            showDialog(
-                                              context: context,
-                                              barrierDismissible: false,
-                                              builder: (BuildContext context) {
-                                                return const Center(
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                          color: Colors.red),
-                                                );
-                                              },
-                                            );
-                                            await Future.delayed(const Duration(
-                                                milliseconds: 1200));
-                                            Navigator.pop(context);
-                                            showToastMsg(
-                                                "You've chosen not to respond the emergency ..");
-                                            Navigator.pop(context);
-                                          },
-                                          style: ButtonStyle(
-                                              backgroundColor:
-                                                  const MaterialStatePropertyAll(
-                                                      Colors.deepOrangeAccent),
-                                              shape: MaterialStateProperty.all(
-                                                  RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              18)))),
-                                          child: const Text("Decline"))),
-                                ),
+                  child:
+                      // fetchedIsTnxComplete == "false"
+                      //     ?
+                      Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // Align buttons to the sides
+                    children: [
+                      //Decline
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 5),
+                          child: Container(
+                            padding: const EdgeInsets.only(bottom: 15, top: 10),
+                            width: double.infinity,
+                            child: ClipRRect(
+                                child: ElevatedButton(
+                                    onPressed: () async {
+                                      showDialog(
+                                        context: context,
+                                        barrierDismissible: false,
+                                        builder: (BuildContext context) {
+                                          return const Center(
+                                            child: CircularProgressIndicator(
+                                                color: Colors.red),
+                                          );
+                                        },
+                                      );
+                                      await Future.delayed(
+                                          const Duration(milliseconds: 1200));
+                                      Navigator.pop(context);
+                                      showToastMsg(
+                                          "You've chosen not to respond the emergency ..");
+                                      Navigator.pop(context);
+                                    },
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            const MaterialStatePropertyAll(
+                                                Colors.deepOrangeAccent),
+                                        shape: MaterialStateProperty.all(
+                                            RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        18)))),
+                                    child: const Text("Decline"))),
+                          ),
+                        ),
+                      ),
+                      //Accept
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Container(
+                            padding: const EdgeInsets.only(bottom: 15, top: 10),
+                            width: double.infinity,
+                            child: ClipRRect(
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  //progress
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return const Dialog(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 35,
+                                              bottom: 25,
+                                              left: 20,
+                                              right: 20),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(height: 15),
+                                              CircularProgressIndicator(
+                                                  color: Colors.blue),
+                                              SizedBox(height: 30),
+                                              Text('Processing ...')
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                  await Future.delayed(
+                                      const Duration(milliseconds: 1300));
+                                  Navigator.pop(context);
+                                  //if user is NGO and isResponded
+                                  if (iAmNGO == 'true' &&
+                                      fetchedHasNGOResponded == 'true') {
+                                    showMsgDialog(context,
+                                        'Other NGO has responded to this request ..');
+                                  }
+                                  //if user is Govt and isResponded
+                                  else if (iAmGovt == 'true' &&
+                                      fetchedHasGovtResponded == 'true') {
+                                    showMsgDialog(context,
+                                        'Other Govt department has responded to this request ..');
+                                  }
+                                  //else Responded to req
+                                  else {
+                                    if (!notificationSent) {
+                                      //search and get token of request sender
+                                      FirebaseFirestore.instance
+                                          .collection('clc_request')
+                                          .where('RequestId',
+                                              isEqualTo: 'Req_${widget.rid}')
+                                          .get()
+                                          .then((querySnapshot) {
+                                        //add response data into database
+                                        addResponseToDatabase();
+                                        setState(() {
+                                          fetchReqData();
+                                        });
+                                        for (var doc in querySnapshot.docs) {
+                                          String deviceToken =
+                                              doc.data()['senderToken'];
+                                          //send response to  req sender
+                                          sendNotificationToDevice(
+                                              deviceToken, "${widget.rid}");
+                                        }
+                                      });
+                                      notificationSent = true;
+                                    } else {
+                                      showDialogAlert(
+                                          context,
+                                          'You have already responded to this request '
+                                          '\n Kindly reach to desired location immediately..');
+                                    }
+                                  }
+                                },
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        const MaterialStatePropertyAll(
+                                            Colors.green),
+                                    shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(18)))),
+                                child: const Text("Accept"),
                               ),
                             ),
-                            //Accept
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 5),
-                                child: Container(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 15, top: 10),
-                                  width: double.infinity,
-                                  child: ClipRRect(
-                                    child: ElevatedButton(
-                                      onPressed: () async {
-                                        //progress
-                                        showDialog(
-                                          context: context,
-                                          barrierDismissible: false,
-                                          builder: (BuildContext context) {
-                                            return const Dialog(
-                                              child: Padding(
-                                                padding: EdgeInsets.only(
-                                                    top: 35,
-                                                    bottom: 25,
-                                                    left: 20,
-                                                    right: 20),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    SizedBox(height: 15),
-                                                    CircularProgressIndicator(
-                                                        color: Colors.blue),
-                                                    SizedBox(height: 30),
-                                                    Text('Processing ...')
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                        await Future.delayed(
-                                            const Duration(milliseconds: 1300));
-                                        Navigator.pop(context);
-                                        //if user is NGO and isResponded
-                                        if (iAmNGO == 'true' &&
-                                            fetchedIsNGOResponded == 'true') {
-                                          showMsgDialog(context,
-                                              'Other NGO has responded to this request ..');
-                                        }
-                                        //if user is Govt and isResponded
-                                        else if (iAmGovt == 'true' &&
-                                            fetchedIsGovtResponded == 'true') {
-                                          showMsgDialog(context,
-                                              'Other Govt department has responded to this request ..');
-                                        }
-                                        //else Responded to req
-                                        else {
-                                          if (!notificationSent) {
-                                            //search and get token of request sender
-                                            FirebaseFirestore.instance
-                                                .collection('clc_request')
-                                                .where('RequestId',
-                                                    isEqualTo:
-                                                        'Req_${widget.rid}')
-                                                .get()
-                                                .then((querySnapshot) {
-                                              //add response data into database
-                                              addResponseToDatabase();
-                                              setState(() {
-                                                fetchReqData();
-                                              });
-                                              for (var doc
-                                                  in querySnapshot.docs) {
-                                                String deviceToken =
-                                                    doc.data()['senderToken'];
-                                                //send response to  req sender
-                                                sendNotificationToDevice(
-                                                    deviceToken,
-                                                    "${widget.rid}");
-                                              }
-                                            });
-                                            notificationSent = true;
-                                          } else {
-                                            showMsgDialog(
-                                                context,
-                                                'You have already responded to this request '
-                                                '\n Kindly reach to desired location immediately..');
-                                          }
-                                        }
-                                      },
-                                      style: ButtonStyle(
-                                          backgroundColor:
-                                              const MaterialStatePropertyAll(
-                                                  Colors.green),
-                                          shape: MaterialStateProperty.all(
-                                              RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          18)))),
-                                      child: const Text("Accept"),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      //Tnx Completed
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 7.5),
-                                child: Container(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 15, top: 10),
-                                  width: double.infinity,
-                                  child: ClipRRect(
-                                      child: ElevatedButton(
-                                          onPressed: () {
-                                            //progress
-                                            showDialog(
-                                              context: context,
-                                              barrierDismissible: false,
-                                              builder: (BuildContext context) {
-                                                return const Center(
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                          color: Colors.white),
-                                                );
-                                              },
-                                            );
-                                            Future.delayed(const Duration(
-                                                milliseconds: 1400));
-                                            Navigator.pop(context);
-                                            final snackBar = TsnakeBar(
-                                                context,
-                                                "Request has been responded by other authority ..",
-                                                "hide");
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(snackBar);
-                                          },
-                                          style: ButtonStyle(
-                                              backgroundColor:
-                                                  const MaterialStatePropertyAll(
-                                                      Colors.grey),
-                                              shape: MaterialStateProperty.all(
-                                                  RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              18)))),
-                                          child: const Text(
-                                              "Request Completed !"))),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                  //Tnx Completed
+                  // : Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Expanded(
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.only(right: 7.5),
+                  //           child: Container(
+                  //             padding:
+                  //                 const EdgeInsets.only(bottom: 15, top: 10),
+                  //             width: double.infinity,
+                  //             child: ClipRRect(
+                  //                 child: ElevatedButton(
+                  //                     onPressed: () {
+                  //                       //progress
+                  //                       showDialog(
+                  //                         context: context,
+                  //                         barrierDismissible: false,
+                  //                         builder: (BuildContext context) {
+                  //                           return const Center(
+                  //                             child:
+                  //                                 CircularProgressIndicator(
+                  //                                     color: Colors.white),
+                  //                           );
+                  //                         },
+                  //                       );
+                  //                       Future.delayed(const Duration(
+                  //                           milliseconds: 1400));
+                  //                       Navigator.pop(context);
+                  //                       final snackBar = TsnakeBar(
+                  //                           context,
+                  //                           "Request has been responded by other authority ..",
+                  //                           "hide");
+                  //                       ScaffoldMessenger.of(context)
+                  //                           .showSnackBar(snackBar);
+                  //                     },
+                  //                     style: ButtonStyle(
+                  //                         backgroundColor:
+                  //                             const MaterialStatePropertyAll(
+                  //                                 Colors.grey),
+                  //                         shape: MaterialStateProperty.all(
+                  //                             RoundedRectangleBorder(
+                  //                                 borderRadius:
+                  //                                     BorderRadius.circular(
+                  //                                         18)))),
+                  //                     child:
+                  //                         const Text("Request Completed !"))),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  ),
             ],
           ),
         ),
@@ -490,8 +487,8 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
         // Access the fields from the document
         setState(() {
           fetchedRid = ReqSnapshot.get('RequestId');
-          fetchedIsNGOResponded = ReqSnapshot.get('isNGOResponded');
-          fetchedIsGovtResponded = ReqSnapshot.get('isGovtResponded');
+          fetchedHasNGOResponded = ReqSnapshot.get('hasNGOResponded');
+          fetchedHasGovtResponded = ReqSnapshot.get('hasGovtResponded');
           fetchedService = ReqSnapshot.get('neededService');
           fetchedUsername = ReqSnapshot.get('userName');
           fetchedCitizenContactNo = ReqSnapshot.get('contactNumber');
@@ -527,6 +524,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
       if (NGOSnapshot.exists) {
         // Access the fields from the document
         setState(() {
+          fetchedNid = NGOSnapshot.get('nid');
           fetchedNGOName = NGOSnapshot.get('nameOfNGO');
           fetchedNGORegNo = NGOSnapshot.get('NGORegNo');
           fetchedNGOPhone = NGOSnapshot.get('contactNumber');
@@ -565,6 +563,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
       if (GovtSnapshot.exists) {
         // Access the fields from the document
         setState(() {
+          fetchedGid = GovtSnapshot.get('gid');
           fetchedGovtName = GovtSnapshot.get('GovtAgencyName');
           fetchedGovtRegNo = GovtSnapshot.get('GovtAgencyRegNo');
           fetchedGovtPhone = GovtSnapshot.get('contactNumber');
@@ -627,9 +626,14 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
 
   // to add response data in DB
   void addResponseToDatabase() async {
+    var responseDocRef = FirebaseFirestore.instance
+        .collection("clc_response")
+        .doc("Response_${widget.rid}");
+
     //Storing data to database
     NGO_Response_Registration ResponseNGOData = NGO_Response_Registration(
         respondId: "Response_${widget.rid}",
+        nid: fetchedNid,
         responderNGOName: fetchedNGOName,
         responderNGORegNo: fetchedNGORegNo,
         responderNGOAddress: fetchedNGOAddress,
@@ -638,6 +642,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
         responderNGOWebsite: fetchedNGOWebsite);
 
     Govt_Response_Registration ResponseGovtData = Govt_Response_Registration(
+        gid: fetchedGid,
         respondId: "Response_${widget.rid}",
         responderGovtName: fetchedGovtName,
         responderGovtRegNo: fetchedGovtRegNo,
@@ -668,10 +673,15 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
         });
 
         //sets NGO response data
-        await FirebaseFirestore.instance
-            .collection("clc_response")
-            .doc("Response_${widget.rid}")
+        await responseDocRef
+            .collection('ngo')
+            .doc("ngo_details")
             .set(respondNGOJson);
+
+        // await FirebaseFirestore.instance
+        //     .collection("clc_response")
+        //     .doc("Response_${widget.rid}")
+        //     .set(respondNGOJson);
       }
       //update responded state to true
       else if (iAmGovt == 'true') {
@@ -683,14 +693,19 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
         });
 
         //sets Govt response data
-        await FirebaseFirestore.instance
-            .collection("clc_response")
-            .doc("Response_${widget.rid}")
+        await responseDocRef
+            .collection('govt')
+            .doc("govt_details")
             .set(respondGovtJson);
+
+        // await FirebaseFirestore.instance
+        //     .collection("clc_response")
+        //     .doc("Response_${widget.rid}")
+        //     .set(respondGovtJson);
       }
 
       Timer(const Duration(milliseconds: 300), () {
-        showMsgDialog(context,
+        showDialogAlert(context,
             'You are requested to reach emergency place as soon as possible ..');
         showToastMsg("Responded successfully ..");
       });

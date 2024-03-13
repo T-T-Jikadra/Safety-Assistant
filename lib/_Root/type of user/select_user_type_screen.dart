@@ -54,17 +54,17 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         //left btn
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5, top: 15),
-                          child: TextButton(
-                            onPressed: () {
-                              // Functionality for Local Authority button
-                            },
-                            child: const Text('Local \nAuthority',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 14)),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 5, top: 15),
+                        //   child: TextButton(
+                        //     onPressed: () {
+                        //       // Functionality for Local Authority button
+                        //     },
+                        //     child: const Text('Local \nAuthority',
+                        //         textAlign: TextAlign.center,
+                        //         style: TextStyle(fontSize: 14)),
+                        //   ),
+                        // ),
                         //right btn
                         Padding(
                           padding: const EdgeInsets.only(right: 7, top: 15),

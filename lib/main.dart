@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'Citizen Related/Screens/open_response_screen.dart';
+import 'Citizen Related/Screens/citizen_req_history_screen.dart';
 import 'Components/Notification_related/notification_services.dart';
 import 'Utils/common_files/open_req_screen.dart';
 import '_Root/Splash/splash_screen.dart';
@@ -40,17 +40,18 @@ void main() async {
 Future<void> _firebaseMessagingBackgroundHandle(RemoteMessage message) async {
   //await Firebase.initializeApp();
   if (message.data['type'] == 'response') {
-    Get.to(() => Open_Response_Screen(
-          selectedService: message.data['service'],
-          authorityName: message.data['authorityName'],
-          regNo: message.data['regNo'],
-          address: message.data['address'],
-          phone: message.data['phone'],
-          email: message.data['email'],
-          city: message.data['city'],
-          website: message.data['website'],
-        ));
-  } else if (message.data['type'] == 'alert') {
+    Get.to(() =>const Request_History_Screen());
+    // Get.to(() => Open_Response_Screen(
+    //       selectedService: message.data['service'],
+    //       authorityName: message.data['authorityName'],
+    //       regNo: message.data['regNo'],
+    //       address: message.data['address'],
+    //       phone: message.data['phone'],
+    //       email: message.data['email'],
+    //       city: message.data['city'],
+    //       website: message.data['website'],
+    //     ));
+  } else if (message.data['type'] == 'request') {
     Get.to(() => Open_Req_Screen(
           title: message.data['title'],
           add: message.data['address'],

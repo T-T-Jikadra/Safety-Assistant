@@ -160,11 +160,11 @@ class _SplashScreenState extends State<SplashScreen> {
     setState(() {
       animate = true;
     });
-    await Future.delayed(const Duration(milliseconds: 2700));
-    setState(() {
-      animate = false;
-    });
-    await Future.delayed(const Duration(milliseconds: 900));
+    // await Future.delayed(const Duration(milliseconds: 2700));
+    // setState(() {
+    //   animate = false;
+    // });
+    await Future.delayed(const Duration(milliseconds: 2000));
 
     final SharedPreferences sharedPref = await SharedPreferences.getInstance();
     var obtainedUserType = sharedPref.getString("userType");
