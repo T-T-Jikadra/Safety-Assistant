@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../Utils/Utils.dart';
 import '../../Utils/constants.dart';
 import 'package:intl/intl.dart';
-import 'open_response_screen.dart';
+import 'request_details_screen.dart';
 
 class Request_History_Screen extends StatefulWidget {
   const Request_History_Screen({super.key});
@@ -89,27 +89,23 @@ class _req_history_list_widgetState extends State<req_history_list_widget> {
                                   onTap: () {
                                     Navigator.of(context).push(
                                       PageRouteBuilder(
-                                        pageBuilder: (context, animation, secondaryAnimation) => Open_Response_Screen(
-                                          selectedService: 'a',
-                                          authorityName: 's',
-                                          regNo: 'f',
-                                          address: 'g',
-                                          phone: 'h',
-                                          email: 'j',
-                                          city: 'k',
-                                          website: 'l',
+                                        pageBuilder: (context, animation,
+                                                secondaryAnimation) =>
+                                            Request_Details_Screen(
                                           documentSnapshot:
-                                          snapshot.data!.docs[index],
+                                              snapshot.data!.docs[index],
                                         ),
-                                        transitionsBuilder:
-                                            (context, animation, secondaryAnimation, child) {
+                                        transitionsBuilder: (context, animation,
+                                            secondaryAnimation, child) {
                                           var begin = const Offset(1.0, 0.0);
                                           var end = Offset.zero;
                                           var curve = Curves.ease;
 
-                                          var tween = Tween(begin: begin, end: end)
+                                          var tween = Tween(
+                                                  begin: begin, end: end)
                                               .chain(CurveTween(curve: curve));
-                                          var offsetAnimation = animation.drive(tween);
+                                          var offsetAnimation =
+                                              animation.drive(tween);
 
                                           return SlideTransition(
                                             position: offsetAnimation,
@@ -154,7 +150,8 @@ class _req_history_list_widgetState extends State<req_history_list_widget> {
                                                   children: [
                                                     const Text(
                                                         "Requested service : ",
-                                                        style: TextStyle(fontSize: 13)),
+                                                        style: TextStyle(
+                                                            fontSize: 13)),
                                                     const SizedBox(height: 3),
                                                     Text(
                                                         snapshot.data!
@@ -198,22 +195,22 @@ class _req_history_list_widgetState extends State<req_history_list_widget> {
                                               // ),
                                               const SizedBox(height: 2),
                                               Padding(
-                                                padding:
-                                                    const EdgeInsets.only(
-                                                        left: 15,top: 5),
+                                                padding: const EdgeInsets.only(
+                                                    left: 15, top: 5),
                                                 child: Row(
                                                   children: [
-                                                    const Text("City : ",
-),
+                                                    const Text(
+                                                      "City : ",
+                                                    ),
                                                     Text(
                                                         snapshot.data!
                                                                 .docs[index]
                                                             ['city'],
                                                         style: const TextStyle(
-                                                            color:
-                                                                Colors.black,fontWeight:
-                                                        FontWeight
-                                                            .bold)),
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold)),
                                                   ],
                                                 ),
                                               ),

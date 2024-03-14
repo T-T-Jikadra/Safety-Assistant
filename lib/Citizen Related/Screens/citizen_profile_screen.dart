@@ -29,7 +29,10 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+  bool isLoading = true;
+
   TextEditingController ab = TextEditingController();
+
   //profile fields
   String fetchedFname = "";
   String fetchedLname = "";
@@ -37,7 +40,6 @@ class _UserProfileState extends State<UserProfile> {
   String? fetchedPhone = "";
 
   //String fetchedBirthDate = "";
-  String fetchedAge = "";
   String fetchedState = "";
   String fetchedCity = "";
   String fetchedPinCode = "";
@@ -47,9 +49,14 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchCitizenData();
+    // Simulate a delay to show the progress indicators
+    Future.delayed(const Duration(milliseconds: 1100), () {
+      setState(() {
+        isLoading = false; // Set to false to hide the progress indicators
+      });
+    });
   }
 
   @override
@@ -65,128 +72,170 @@ class _UserProfileState extends State<UserProfile> {
                 bottomLeft: Radius.circular(25))),
         title: const Text("$appbar_display_name - Profile  Page"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const CircleAvatar(
-                  radius: 50,
-                  //backgroundImage: AssetImage("assets/images/123.png"),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'name: $fetchedFname $fetchedLname',
-                  style: const TextStyle(fontSize: 16),
-                ),
-                // Iconsax
-                TextFormField(
-                  // controller: ab,
-                  initialValue: fetchedPhone,
-                  decoration: InputDecoration(
-                      prefixIcon: const Icon(Iconsax.location_add),
-                      hintText: fetchedFname),
-                  // enabled: false,
-                ),
-                // const SizedBox(height: 20),
-                // TextFormField(
-                //   initialValue: fetchedLname,
-                //   enabled: false,
-                // ),
-                // const SizedBox(height: 20),
-                // TextFormField(
-                //   initialValue: fetchedGender,
-                //   enabled: false,
-                // ),
-                // const SizedBox(height: 20),
-                // TextFormField(
-                //   initialValue: fetchedPhone,
-                //   enabled: false,
-                // ),
-                // const SizedBox(height: 20),
-                // TextFormField(
-                //   initialValue: fetchedAge,
-                //   enabled: false,
-                // ),
-                // const SizedBox(height: 20),
-                // TextFormField(
-                //   initialValue: fetchedState,
-                //   enabled: false,
-                // ),
-                const SizedBox(height: 20),
-                const Text(
-                  "Profile Data for temsting ..",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900,
+      body: isLoading
+          ? const Center(
+              // Display circular progress indicators
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                ],
+              ),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const CircleAvatar(
+                        radius: 30,
+                        //backgroundImage: AssetImage("assets/images/123.png"),
+                      ),
+                      const SizedBox(height: 20),
+                      //name
+                      SizedBox(
+                        height: 50,
+                        child: TextFormField(
+                          // controller: ab,
+                          decoration: InputDecoration(
+                              prefixIcon: const Icon(Iconsax.location_add),
+                              hintText: "$fetchedFname $fetchedLname"),
+                          // enabled: false,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      //gender
+                      SizedBox(
+                        height: 50,
+                        child: TextFormField(
+                          // controller: ab,
+                          decoration: InputDecoration(
+                              prefixIcon: const Icon(Iconsax.location_add),
+                              hintText: fetchedGender),
+                          // enabled: false,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      //phone
+                      SizedBox(
+                        height: 50,
+                        child: TextFormField(
+                          // controller: ab,
+                          decoration: InputDecoration(
+                              prefixIcon: const Icon(Iconsax.location_add),
+                              hintText: fetchedPhone),
+                          // enabled: false,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      //address
+                      SizedBox(
+                        height: 50,
+                        child: TextFormField(
+                          // controller: ab,
+                          decoration: InputDecoration(
+                              prefixIcon: const Icon(Iconsax.location_add),
+                              hintText: fetchedFullAddress),
+                          // enabled: false,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      //state
+                      SizedBox(
+                        height: 50,
+                        child: TextFormField(
+                          // controller: ab,
+                          decoration: InputDecoration(
+                              prefixIcon: const Icon(Iconsax.location_add),
+                              hintText: fetchedState),
+                          // enabled: false,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      //city
+                      SizedBox(
+                        height: 50,
+                        child: TextFormField(
+                          // controller: ab,
+                          decoration: InputDecoration(
+                              prefixIcon: const Icon(Iconsax.location_add),
+                              hintText: fetchedCity),
+                          // enabled: false,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      //pin
+                      SizedBox(
+                        height: 50,
+                        child: TextFormField(
+                          // controller: ab,
+                          decoration: InputDecoration(
+                              prefixIcon: const Icon(Iconsax.location_add),
+                              hintText: fetchedPinCode),
+                          // enabled: false,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      //reg time
+                      SizedBox(
+                        height: 50,
+                        child: TextFormField(
+                          // controller: ab,
+                          decoration: InputDecoration(
+                              prefixIcon: const Icon(Iconsax.location_add),
+                              hintText: fetchedRegTime),
+                          // enabled: false,
+                        ),
+                      ),
+
+                      // const SizedBox(height: 20),
+                      // TextFormField(
+                      //   initialValue: fetchedLname,
+                      //   enabled: false,
+                      // ),
+                      // const SizedBox(height: 20),
+                      // TextFormField(
+                      //   initialValue: fetchedGender,
+                      //   enabled: false,
+                      // ),
+                      // const SizedBox(height: 20),
+                      // TextFormField(
+                      //   initialValue: fetchedPhone,
+                      //   enabled: false,
+                      // ),
+                      // const SizedBox(height: 20),
+                      // TextFormField(
+                      //   initialValue: fetchedAge,
+                      //   enabled: false,
+                      // ),
+                      // const SizedBox(height: 20),
+                      // TextFormField(
+                      //   initialValue: fetchedState,
+                      //   enabled: false,
+                      // ),
+                      const SizedBox(height: 20),
+
+                      // const SizedBox(height: 24),
+                      // ElevatedButton(
+                      //   onPressed: _updateProfile,
+                      //   child: const Text('Update Profile'),
+                      // ),
+                      // const SizedBox(height: 16),
+                      // ElevatedButton(
+                      //   onPressed: () {
+                      //     // Implement logout logic here
+                      //     // For simplicity, navigate to the login screen
+                      //     Navigator.of(context).pop();
+                      //   },
+                      //   child: const Text('Logout'),
+                      // ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 30),
-                Text(
-                  'name: $fetchedFname $fetchedLname',
-                  style: const TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Gender: $fetchedGender',
-                  style: const TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Mobile No: $fetchedPhone',
-                  style: const TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Address: $fetchedFullAddress ',
-                  style: const TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 24),
-                Text(
-                  'Age: $fetchedAge',
-                  style: const TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 24),
-                Text(
-                  'State : $fetchedState',
-                  style: const TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 24),
-                Text(
-                  'City : $fetchedCity',
-                  style: const TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 24),
-                Text(
-                  'PinCode : $fetchedPinCode',
-                  style: const TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 24),
-                Text(
-                  'Reg Time  : $fetchedRegTime',
-                  style: const TextStyle(fontSize: 16),
-                ),
-                // const SizedBox(height: 24),
-                // ElevatedButton(
-                //   onPressed: _updateProfile,
-                //   child: const Text('Update Profile'),
-                // ),
-                // const SizedBox(height: 16),
-                // ElevatedButton(
-                //   onPressed: () {
-                //     // Implement logout logic here
-                //     // For simplicity, navigate to the login screen
-                //     Navigator.of(context).pop();
-                //   },
-                //   child: const Text('Logout'),
-                // ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 
@@ -208,7 +257,6 @@ class _UserProfileState extends State<UserProfile> {
           fetchedLname = citizenSnapshot.get('lastName');
           fetchedGender = citizenSnapshot.get('gender');
           fetchedPhone = user!.phoneNumber;
-          //fetchedAge = citizenSnapshot.get('userAge');
           fetchedState = citizenSnapshot.get('state');
           fetchedCity = citizenSnapshot.get('city');
           fetchedPinCode = citizenSnapshot.get('pinCode');

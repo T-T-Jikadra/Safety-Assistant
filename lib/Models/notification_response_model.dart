@@ -3,6 +3,7 @@
 class NGO_Response_Registration {
   final String respondId;
   final String nid;
+  final String fid;
   final String responderNGOName;
   final String responderNGORegNo;
   final String responderNGOAddress;
@@ -13,6 +14,7 @@ class NGO_Response_Registration {
 
   NGO_Response_Registration({
     required this.respondId,
+    required this.fid,
     required this.nid,
     required this.responderNGOName,
     required this.responderNGORegNo,
@@ -27,6 +29,7 @@ class NGO_Response_Registration {
     return {
       'RespondId': respondId,
       'nid': nid,
+      'fid': fid,
       'ResponderNGOName': responderNGOName,
       'ResponderNGORegNo': responderNGORegNo,
       'ResponderNGOAddress': responderNGOAddress,
@@ -41,6 +44,7 @@ class NGO_Response_Registration {
 class Govt_Response_Registration {
   final String respondId;
   final String gid;
+  final String fid;
   final String responderGovtName;
   final String responderGovtRegNo;
   final String responderGovtAddress;
@@ -54,6 +58,7 @@ class Govt_Response_Registration {
   Govt_Response_Registration({
     required this.respondId,
     required this.gid,
+    required this.fid,
     required this.responderGovtName,
     required this.responderGovtRegNo,
     required this.responderGovtAddress,
@@ -68,7 +73,8 @@ class Govt_Response_Registration {
     return {
       'RespondId': respondId,
       'gid': gid,
-      'ResponderGovtName': responderGovtRegNo,
+      'fid': fid,
+      'ResponderGovtName': responderGovtName,
       'ResponderGovtRegNo': responderGovtRegNo,
       'ResponderGovtAddress': responderGovtAddress,
       'ResponderGovtContactNumber': responderGovtContactNo,
@@ -78,7 +84,6 @@ class Govt_Response_Registration {
     };
   }
 }
-
 
 // class Combined_Response {
 //   final String respondId;
@@ -178,4 +183,3 @@ class Govt_Response_Registration {
 //     };
 //   }
 // }
-

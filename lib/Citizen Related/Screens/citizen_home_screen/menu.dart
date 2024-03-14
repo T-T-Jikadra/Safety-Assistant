@@ -1,5 +1,6 @@
 //for menu items in drawer
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 class Menu {
   final String title;
@@ -54,7 +55,7 @@ List<Menu> sidebarMenus2 = [
   ),
   Menu(
     title: "Logout",
-    icon: Icons.logout_rounded,
+    icon: Iconsax.logout5,
   ),
 ];
 

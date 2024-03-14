@@ -56,6 +56,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
 
   //NGO
   String fetchedNid = "";
+  String fetchedNGOFid = "";
   String fetchedNGOName = "";
   String fetchedNGORegNo = "";
   String? fetchedNGOPhone = "";
@@ -67,6 +68,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
 
   //Govt
   String fetchedGid = "";
+  String fetchedGovtFid = "";
   String fetchedGovtName = "";
   String fetchedGovtRegNo = "";
   String? fetchedGovtPhone = "";
@@ -634,6 +636,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
     NGO_Response_Registration ResponseNGOData = NGO_Response_Registration(
         respondId: "Response_${widget.rid}",
         nid: fetchedNid,
+        fid: '',
         responderNGOName: fetchedNGOName,
         responderNGORegNo: fetchedNGORegNo,
         responderNGOAddress: fetchedNGOAddress,
@@ -642,8 +645,9 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
         responderNGOWebsite: fetchedNGOWebsite);
 
     Govt_Response_Registration ResponseGovtData = Govt_Response_Registration(
-        gid: fetchedGid,
         respondId: "Response_${widget.rid}",
+        gid: fetchedGid,
+        fid: '',
         responderGovtName: fetchedGovtName,
         responderGovtRegNo: fetchedGovtRegNo,
         responderGovtAddress: fetchedGovtAddress,
@@ -697,11 +701,6 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
             .collection('govt')
             .doc("govt_details")
             .set(respondGovtJson);
-
-        // await FirebaseFirestore.instance
-        //     .collection("clc_response")
-        //     .doc("Response_${widget.rid}")
-        //     .set(respondGovtJson);
       }
 
       Timer(const Duration(milliseconds: 300), () {

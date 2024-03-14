@@ -352,7 +352,7 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                                       "Sign Up First ! ..",
                                       // selectionColor: Colors.blueGrey,
                                     ))),
-                            SvgPicture.asset(svg_for_line, width: 110),
+                            SvgPicture.asset(svg_for_line, width: 100),
                           ],
                         ),
                       ),

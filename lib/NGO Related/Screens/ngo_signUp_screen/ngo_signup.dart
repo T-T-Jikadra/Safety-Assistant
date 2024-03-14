@@ -28,10 +28,12 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FocusNode _nameFocusNode = FocusNode();
   final FocusNode _regNoFocusNode = FocusNode();
+
   // final FocusNode _servicesFocusNode = FocusNode();
   final FocusNode _contactNoFocusNode = FocusNode();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _websiteFocusNode = FocusNode();
+
   TextEditingController nameOfNGOTextController = TextEditingController();
   TextEditingController regNoTextController = TextEditingController();
   TextEditingController servicesTextController = TextEditingController();
@@ -182,15 +184,15 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                             ),
                             child: TextFormField(
                               onTap: () {
-                                _showCupertinoDialog(context);
+                                _showCupertinoDialog(
+                                  context,
+                                );
                               },
                               controller: servicesTextController,
                               readOnly: true,
                               decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                hintText: "Select the Services NGO can provide",
+                                hintText:
+                                    "Select Services your NGO can provide",
                                 prefixIcon: Container(
                                   margin:
                                       const EdgeInsets.fromLTRB(20, 16, 12, 16),
@@ -201,9 +203,6 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                 if (value == null || value.isEmpty) {
                                   return 'Select your serving Services from list';
                                 }
-                                // if (value.isNotEmpty && value.length < 2) {
-                                //   return 'Minimum 3 Characters';
-                                // }
                                 return null; // Return null if the input is valid
                               },
                               onEditingComplete: () {
@@ -798,74 +797,67 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
     );
   }
 
-  void _showCupertinoDialog(BuildContext context) {
-    List<bool> checked =
-        List.filled(DropdownItems.dropdownItemListofServices.length, false);
+  final List<bool> _checked =
+      List.filled(DropdownItems.dropdownItemListofServices.length, false);
 
+  void _showCupertinoDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Select your services from the list :'),
-          content: SizedBox(
-            width: double.maxFinite,
-            height: 300, // Adjust the height as needed
-            child: ListView.builder(
-              itemCount: DropdownItems.dropdownItemListofServices.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      checked[index] = !checked[index];
-                    });
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: const Text('Select your services from the list :'),
+              content: SizedBox(
+                width: double.maxFinite,
+                height: 300, // Adjust the height as needed
+                child: ListView.builder(
+                  itemCount: DropdownItems.dropdownItemListofServices.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title:
+                          Text(DropdownItems.dropdownItemListofServices[index]),
+                      trailing: CupertinoSwitch(
+                        value: _checked[index],
+                        onChanged: (bool value) {
+                          setState(() {
+                            _checked[index] = value;
+                          });
+
+                          // Update the text field whenever a toggle is changed
+                          _updateTextField(_checked);
+                        },
+                      ),
+                    );
                   },
-                  child: ListTile(
-                    title:
-                        Text(DropdownItems.dropdownItemListofServices[index]),
-                    trailing: CupertinoSwitch(
-                      value: checked[index],
-                      onChanged: (bool value) {
-                        setState(() {
-                          checked[index] = value;
-                        });
-                      },
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                String selectedOptions = '';
-                for (int i = 0;
-                    i < DropdownItems.dropdownItemListofServices.length;
-                    i++) {
-                  if (checked[i]) {
-                    selectedOptions +=
-                        '${DropdownItems.dropdownItemListofServices[i]}, ';
-                  }
-                }
-                if (selectedOptions.isNotEmpty) {
-                  selectedOptions =
-                      selectedOptions.substring(0, selectedOptions.length - 2);
-                }
-                servicesTextController.text = selectedOptions;
-                Navigator.of(context).pop();
-              },
-              child: const Text('OK'),
-            ),
-          ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Cancel',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                TextButton(
+                  onPressed: () {
+                    // Dismiss the dialog
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+              ],
+            );
+          },
         );
       },
-    );
+    ).then((value) {
+      // This code block executes after the dialog is dismissed
+      // You can use this to update the text field when the dialog is dismissed
+      _updateTextField(_checked);
+    });
   }
 
   void updateCityList(String state) {
@@ -874,309 +866,17 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
     });
   }
 
-// void _showCupertinoDialog(BuildContext context) {
-//   List<String> options = ['Option 1', 'Option 2', 'Option 3']; // Your list of options
-//   List<bool> checked = List.filled(options.length, false);
-//
-//   showCupertinoModalPopup(
-//     context: context,
-//     builder: (BuildContext context) {
-//       return CupertinoAlertDialog(
-//         title: const Text('Select Options'),
-//         content: Column(
-//           children: List.generate(
-//             options.length,
-//                 (index) {
-//               return CheckboxListTile(
-//                 title: Text(options[index]),
-//                 value: checked[index],
-//                 onChanged: (bool? value) {
-//                   if (value != null) {
-//                     checked[index] = value;
-//                   }
-//                   setState(() {}); // Update dialog to reflect changes
-//                 },
-//               );
-//             },
-//           ),
-//         ),
-//         actions: <Widget>[
-//           CupertinoDialogAction(
-//             child: const Text('Cancel'),
-//             onPressed: () {
-//               Navigator.of(context).pop();
-//             },
-//           ),
-//           CupertinoDialogAction(
-//             child: const Text('OK'),
-//             onPressed: () {
-//               String selectedOptions = '';
-//               for (int i = 0; i < options.length; i++) {
-//                 if (checked[i]) {
-//                   selectedOptions += options[i] + ', ';
-//                 }
-//               }
-//               if (selectedOptions.isNotEmpty) {
-//                 selectedOptions = selectedOptions.substring(0, selectedOptions.length - 2);
-//               }
-//               dateEditTextController.text = selectedOptions;
-//               Navigator.of(context).pop();
-//             },
-//           ),
-//         ],
-//       );
-//     },
-//   );
-// }
-
-// Future<void> _selectDate(BuildContext context) async {
-//   final DateTime? pickedDate = await showDatePicker(
-//     context: context,
-//     initialDate: DateTime.now(),
-//     firstDate: DateTime(1900),
-//     lastDate: DateTime.now(),
-//     builder: (BuildContext context, Widget? child) {
-//       return Theme(
-//         data: ThemeData.light().copyWith(
-//           colorScheme: const ColorScheme.light(
-//             primary: Colors.blue, // Header background color
-//             onPrimary: Colors.white, // Header text color
-//             onSurface: Colors.black, // Body text color
-//           ),
-//           textButtonTheme: TextButtonThemeData(
-//             style: TextButton.styleFrom(
-//               foregroundColor: Colors.blue, // Button text color
-//             ),
-//           ),
-//         ),
-//         child: child!,
-//       );
-//     },
-//   );
-//   // ignore: unrelated_type_equality_checks
-//   if (pickedDate != null && pickedDate != dateEditTextController.text) {
-//     final formattedDate = DateFormat.yMMMd()
-//         .format(pickedDate); // Format date to show day, month, year
-//     setState(() {
-//       dateEditTextController.text = formattedDate;
-//     });
-//   }
-// }
-
-// /// Section Widget
-// Widget _buildGroup38RadioGroup(BuildContext context) {
-//   return Padding(
-//     padding: EdgeInsets.only(left: 8.h, right: 11.h),
-//     child: Row(
-//       children: [
-//         Padding(
-//           padding: EdgeInsets.only(bottom: 2.v),
-//           child: CustomRadioButton(
-//             text: "male",
-//             value: radioList[0],
-//             groupValue: radioGroup,
-//             padding: EdgeInsets.symmetric(vertical: 1.v),
-//             onChange: (value) {
-//               // Update the state when a radio button is selected
-//               setState(() {
-//                 radioGroup = value;
-//               });
-//             },
-//           ),
-//         ),
-//         Padding(
-//           padding: EdgeInsets.only(left: 24.h, bottom: 2.v),
-//           child: CustomRadioButton(
-//             text: "female",
-//             value: radioList[1],
-//             groupValue: radioGroup,
-//             padding: EdgeInsets.symmetric(vertical: 1.v),
-//             onChange: (value) {
-//               // Update the state when a radio button is selected
-//               setState(() {
-//                 radioGroup = value;
-//               });
-//             },
-//           ),
-//         ),
-//         Padding(
-//           padding: EdgeInsets.only(left: 28.h, top: 2.v),
-//           child: CustomRadioButton(
-//             text: "others",
-//             value: radioList[2],
-//             groupValue: radioGroup,
-//             padding: EdgeInsets.symmetric(vertical: 1.v),
-//             onChange: (value) {
-//               // Update the state when a radio button is selected
-//               setState(() {
-//                 radioGroup = value;
-//               });
-//             },
-//           ),
-//         ),
-//       ],
-//     ),
-//   );
-// }
-//
-// /// Section Widget
-// Widget _buildPhoneNumberEditText(BuildContext context) {
-//   return Padding(
-//     padding: EdgeInsets.only(
-//       left: 3.h,
-//       right: 5.h,
-//     ),
-//     child: CustomTextFormField(
-//       controller: phoneNumberEditTextController,
-//       hintText: "Phone Number",
-//       textInputType: TextInputType.phone,
-//       prefix: Container(
-//         margin: EdgeInsets.fromLTRB(20.h, 16.v, 12.h, 16.v),
-//         child: CustomImageView(
-//           imagePath: ImageConstant.imgCall,
-//           height: 24.adaptSize,
-//           width: 24.adaptSize,
-//         ),
-//       ),
-//       prefixConstraints: BoxConstraints(
-//         maxHeight: 56.v,
-//       ),
-//     ),
-//   );
-// }
-
-// // Section Widget
-// Widget _buildDateEditText(BuildContext context) {
-//   return Padding(
-//     padding: EdgeInsets.only(
-//       left: 3,
-//       right: 5,
-//     ),
-//     child: GestureDetector(
-//       onTap: () {
-//         _selectDate(context);
-//       },
-//       child: AbsorbPointer(
-//         child: TextFormField(
-//           controller: dateEditTextController,
-//           readOnly: true,
-//           decoration: InputDecoration(
-//             border: OutlineInputBorder(
-//               borderRadius: BorderRadius.circular(4.h),
-//               borderSide: BorderSide(
-//                 color: appTheme.gray500,
-//                 width: 1,
-//               ),
-//             ),
-//             hintText: "Birthdate",
-//             prefixIcon: Container(
-//               margin: EdgeInsets.fromLTRB(20.h, 16.v, 12.h, 16.v),
-//               child: SvgPicture.asset(ImageConstant.imgCalendar),
-//             ),
-//           ),
-//         ),
-//       ),
-//     ),
-//   );
-// }
-// /// Section Widget
-// Widget _buildZipcodeEditText(BuildContext context) {
-//   return Padding(
-//     padding: EdgeInsets.only(
-//       left: 3.h,
-//       right: 4.h,
-//     ),
-//     child: CustomTextFormField(
-//       controller: zipcodeEditTextController,
-//       hintText: "Zip Code",
-//       textInputType: TextInputType.number,
-//       contentPadding: EdgeInsets.symmetric(
-//         horizontal: 20.h,
-//         vertical: 18.v,
-//       ),
-//     ),
-//   );
-// }
-// /// Section Widget
-// Widget _buildFieldsColumn(BuildContext context) {
-//   return Padding(
-//     padding: EdgeInsets.only(
-//       left: 0,
-//       right: 0,
-//     ),
-//     child: Column(
-//       children: [
-//         _buildAddressEditText(context),
-//       ],
-//     ),
-//   );
-// }
-// /// Section Widget
-// Widget _buildAddressEditText(BuildContext context) {
-//   return CustomTextFormField(
-//     controller: addressEditTextController,
-//     hintText: "Address",
-//     textInputAction: TextInputAction.done,
-//     suffix: Container(
-//       margin: EdgeInsets.only(
-//         left: 30,
-//         top: 30,
-//       ),
-//       child: CustomImageView(
-//         imagePath: ImageConstant.imgSettings,
-//         height: 24.adaptSize,
-//         width: 24.adaptSize,
-//       ),
-//     ),
-//     suffixConstraints: BoxConstraints(
-//       maxHeight: 120,
-//     ),
-//     maxLines: 3,
-//     contentPadding: EdgeInsets.symmetric(
-//       horizontal: 20,
-//       vertical: 18,
-//     ),
-//   );
-// }
-// // Section Widget
-// Widget _buildCheckboxCheckBox(BuildContext context) {
-//   return Align(
-//     alignment: Alignment.centerLeft,
-//     child: Padding(
-//       padding: EdgeInsets.only(
-//         left: 3.h,
-//         right: 67.h,
-//       ),
-//       child: CustomCheckboxButton(
-//         alignment: Alignment.centerLeft,
-//         text: "I accept term & conditions",
-//         value: checkboxCheckBox,
-//         padding: EdgeInsets.symmetric(vertical: 1.v),
-//         onChange: (value) {
-//           checkboxCheckBox = value;
-//         },
-//       ),
-//     ),
-//   );
-// }
-// // Section Widget
-// Widget _buildSignUpButton(BuildContext context) {
-//   return ElevatedButton(
-//     onPressed: () {
-//       // if (_formKey.currentState!.validate()) {
-//       //   // Form is valid, do something
-//       // } else {
-//       //   // Find the first field with an error and move focus to it
-//       //   if (_firstNameFocusNode.hasFocus &&
-//       //       createCitizenAccountTextController.text.isEmpty) {
-//       //     FocusScope.of(context).requestFocus(_firstNameFocusNode);
-//       //   } else if (_lastNameFocusNode.hasFocus &&
-//       //       connectWithYourTextController.text.isEmpty) {
-//       //     FocusScope.of(context).requestFocus(_lastNameFocusNode);
-//       //   }
-//       // }
-//     },
-//     child: Text('Submit'),
-//   );
-// }
+  void _updateTextField(List<bool> checked) {
+    String selectedOptions = '';
+    for (int i = 0; i < DropdownItems.dropdownItemListofServices.length; i++) {
+      if (checked[i]) {
+        selectedOptions += '${DropdownItems.dropdownItemListofServices[i]}, ';
+      }
+    }
+    if (selectedOptions.isNotEmpty) {
+      selectedOptions =
+          selectedOptions.substring(0, selectedOptions.length - 2);
+    }
+    servicesTextController.text = selectedOptions;
+  }
 }

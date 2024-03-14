@@ -359,7 +359,7 @@ class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
                                       "Sign Up First ! ..",
                                       // selectionColor: Colors.blueGrey,
                                     ))),
-                            SvgPicture.asset(svg_for_line, width: 110),
+                            SvgPicture.asset(svg_for_line, width: 100),
                           ],
                         ),
                       ),

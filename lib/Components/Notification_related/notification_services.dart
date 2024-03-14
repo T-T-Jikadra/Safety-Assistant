@@ -57,7 +57,7 @@ class NotificationServices {
   void initLocalNotification(
       BuildContext context, RemoteMessage message) async {
     var androidInitialization =
-        const AndroidInitializationSettings('@mipmap/ic_launcher');
+        const AndroidInitializationSettings('@mipmap/splash_svg');
     var iosInitialization = const DarwinInitializationSettings();
 
     var initializationSetting = InitializationSettings(
@@ -124,8 +124,10 @@ class NotificationServices {
     //for android
     AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
+          //'channel id',
       channel.id.toString(),
-      channel.name.toString(),
+      //    'channel name',
+       channel.name.toString(),
       channelDescription: 'Your channel description',
       importance: Importance.max,
       //changes
