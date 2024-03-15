@@ -7,7 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../Models/notification_response_model.dart';
+import '../../Models/authority_response_model.dart';
+import '../../Models/request_opened_model.dart';
 import '../Utils.dart';
 import '../constants.dart';
 import 'package:http/http.dart' as http;
@@ -40,6 +41,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
   String? finalUserType = "";
   String iAmNGO = '';
   String iAmGovt = '';
+  String authority_id = '';
 
   //for Request
   String fetchedRid = "";
@@ -467,10 +469,10 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
       finalUserType = obtainedUserType;
       if (finalUserType == "NGO") {
         iAmNGO = 'true';
-        fetchNGOData();
+        fetchNGOData().then((value) => addReqOpenedToDatabase());
       } else if (finalUserType == "Govt") {
         iAmGovt = 'true';
-        fetchGovtData();
+        fetchGovtData().then((value) => addReqOpenedToDatabase());
       }
     });
   }
@@ -526,7 +528,8 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
       if (NGOSnapshot.exists) {
         // Access the fields from the document
         setState(() {
-          fetchedNid = NGOSnapshot.get('nid');
+          authority_id = fetchedNid = NGOSnapshot.get('nid');
+//          authority_id = NGOSnapshot.get('nid');
           fetchedNGOName = NGOSnapshot.get('nameOfNGO');
           fetchedNGORegNo = NGOSnapshot.get('NGORegNo');
           fetchedNGOPhone = NGOSnapshot.get('contactNumber');
@@ -565,7 +568,8 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
       if (GovtSnapshot.exists) {
         // Access the fields from the document
         setState(() {
-          fetchedGid = GovtSnapshot.get('gid');
+          authority_id = fetchedGid = GovtSnapshot.get('gid');
+          // authority_id = GovtSnapshot.get('gid');
           fetchedGovtName = GovtSnapshot.get('GovtAgencyName');
           fetchedGovtRegNo = GovtSnapshot.get('GovtAgencyRegNo');
           fetchedGovtPhone = GovtSnapshot.get('contactNumber');
@@ -712,6 +716,35 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
       // An error occurred
       if (kDebugMode) {
         print('Error adding citizen request  : $e');
+      }
+    }
+  }
+
+  //Storing req open data to database
+  void addReqOpenedToDatabase() async {
+    //for unique doc numbering
+    CollectionReference RequestOpenCollection =
+        FirebaseFirestore.instance.collection("clc_opened_requests");
+
+    QuerySnapshot snapshot = await RequestOpenCollection.get();
+    int totalDocCount = snapshot.size;
+    totalDocCount++;
+
+    var ReqOpenDocRef = FirebaseFirestore.instance
+        .collection("clc_opened_requests")
+        .doc("Req_Open_$totalDocCount");
+
+    Request_Opened_Registration ReqOpenData = Request_Opened_Registration(
+        req_open_Id: "Req_Open_$totalDocCount", authority_id: authority_id);
+
+    Map<String, dynamic> ReqOpenJson = ReqOpenData.toJsonOpenReq();
+
+    try {
+      await ReqOpenDocRef.set(ReqOpenJson);
+    } catch (e) {
+      // An error occurred
+      if (kDebugMode) {
+        print('Error adding request open document : $e');
       }
     }
   }

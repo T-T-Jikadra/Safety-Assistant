@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../Citizen Related/Screens/citizen_signUp_screen/custom_checkbox_button.dart';
 import '../../../Components/Notification_related/notification_services.dart';
-import '../../../Models/NGO_Registration_Model.dart';
+import '../../../Models/ngo_registration_model.dart';
 import '../../../Utils/Utils.dart';
 import '../../../Utils/constants.dart';
 import '../../../Utils/dropdown_Items.dart';

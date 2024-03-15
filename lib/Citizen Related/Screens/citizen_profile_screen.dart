@@ -37,7 +37,7 @@ class _UserProfileState extends State<UserProfile> {
   //profile fields
   String fetchedFname = "";
   String fetchedLname = "";
-  String fetchedGender = "";
+  String? fetchedGender = "";
   String? fetchedPhone = "";
   String fetchedState = "";
   String fetchedCity = "";
@@ -47,7 +47,14 @@ class _UserProfileState extends State<UserProfile> {
   late Timestamp fetchedBirthDate;
 
   int userAge = 0;
+
+  TextEditingController fnameTextController = TextEditingController();
+  TextEditingController lnameTextController = TextEditingController();
   TextEditingController birthDateTextController = TextEditingController();
+  TextEditingController addressTextController = TextEditingController();
+  TextEditingController stateTextController = TextEditingController();
+  TextEditingController cityTextController = TextEditingController();
+  TextEditingController pincodeTextController = TextEditingController();
 
   @override
   void initState() {
@@ -109,7 +116,7 @@ class _UserProfileState extends State<UserProfile> {
                                 child: SizedBox(
                                   height: 55,
                                   child: TextFormField(
-                                    // controller: ab,
+                                    controller: fnameTextController,
                                     decoration: InputDecoration(
                                         prefixIcon:
                                             const Icon(Iconsax.location_add),
@@ -123,7 +130,7 @@ class _UserProfileState extends State<UserProfile> {
                                 child: SizedBox(
                                   height: 55,
                                   child: TextFormField(
-                                    // controller: ab,
+                                    controller: lnameTextController,
                                     decoration: InputDecoration(
                                         prefixIcon:
                                             const Icon(Iconsax.location_add),
@@ -140,6 +147,49 @@ class _UserProfileState extends State<UserProfile> {
                             padding: EdgeInsets.only(left: 10, bottom: 3),
                             child: Text("Gender :"),
                           ),
+
+                          SizedBox(
+                            //height: 55,
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Radio(
+                                      value: 'Male',
+                                      groupValue: fetchedGender,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          fetchedGender = value;
+                                        });
+                                      },
+                                    ),
+                                    const Text('Male'),
+                                    Radio(
+                                      value: 'Female',
+                                      groupValue: fetchedGender,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          fetchedGender = value;
+                                        });
+                                      },
+                                    ),
+                                    const Text('Female'),
+                                    Radio(
+                                      value: 'Other',
+                                      groupValue: fetchedGender,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          fetchedGender = value;
+                                        });
+                                      },
+                                    ),
+                                    const Text('Other'),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+
                           SizedBox(
                             height: 55,
                             child: TextFormField(
@@ -150,8 +200,6 @@ class _UserProfileState extends State<UserProfile> {
                               // enabled: false,
                             ),
                           ),
-                          //phone
-
                           const SizedBox(height: 10),
                           //BirthDate
                           const Padding(
@@ -198,6 +246,7 @@ class _UserProfileState extends State<UserProfile> {
                             ),
                           ),
                           const SizedBox(height: 10),
+                          //phone
                           const Padding(
                             padding: EdgeInsets.only(left: 10, bottom: 3),
                             child: Text("Phone number :"),
@@ -206,7 +255,6 @@ class _UserProfileState extends State<UserProfile> {
                             height: 55,
                             child: TextFormField(
                               enabled: false,
-                              // controller: ab,
                               decoration: InputDecoration(
                                   prefixIcon: const Icon(Iconsax.location_add),
                                   hintText: fetchedPhone),
@@ -214,51 +262,27 @@ class _UserProfileState extends State<UserProfile> {
                             ),
                           ),
                           const SizedBox(height: 10),
+                          //address
                           const Padding(
                             padding: EdgeInsets.only(left: 10, bottom: 3),
                             child: Text("Full Address :"),
                           ), //address
                           SizedBox(
-                            height: 55,
+                            //height: 55,
                             child: TextFormField(
-                              // controller: ab,
+                              maxLength: 100,
+                              minLines: 2,
+                              maxLines: 4,
+                              controller: addressTextController,
                               decoration: InputDecoration(
                                   prefixIcon: const Icon(Iconsax.location_add),
                                   hintText: fetchedFullAddress),
                               // enabled: false,
                             ),
                           ),
+
                           const SizedBox(height: 10),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10, bottom: 3),
-                            child: Text("State :"),
-                          ), //state
-                          SizedBox(
-                            height: 55,
-                            child: TextFormField(
-                              // controller: ab,
-                              decoration: InputDecoration(
-                                  prefixIcon: const Icon(Iconsax.location_add),
-                                  hintText: fetchedState),
-                              // enabled: false,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 10, bottom: 3),
-                            child: Text("City :"),
-                          ), //city
-                          SizedBox(
-                            height: 55,
-                            child: TextFormField(
-                              // controller: ab,
-                              decoration: InputDecoration(
-                                  prefixIcon: const Icon(Iconsax.location_add),
-                                  hintText: fetchedCity),
-                              // enabled: false,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
+                          //pincode
                           const Padding(
                             padding: EdgeInsets.only(left: 10, bottom: 3),
                             child: Text("Pincode :"),
@@ -266,14 +290,47 @@ class _UserProfileState extends State<UserProfile> {
                           SizedBox(
                             height: 55,
                             child: TextFormField(
-                              // controller: ab,
+                              controller: pincodeTextController,
                               decoration: InputDecoration(
                                   prefixIcon: const Icon(Iconsax.location_add),
                                   hintText: fetchedPinCode),
                               // enabled: false,
                             ),
                           ),
-                          const SizedBox(height: 15),
+                          const SizedBox(height: 10),
+                          //city
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10, bottom: 3),
+                            child: Text("City :"),
+                          ), //city
+                          SizedBox(
+                            height: 55,
+                            child: TextFormField(
+                              controller: cityTextController,
+                              decoration: InputDecoration(
+                                  prefixIcon: const Icon(Iconsax.location_add),
+                                  hintText: fetchedCity),
+                              // enabled: false,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          //state
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10, bottom: 3),
+                            child: Text("State :"),
+                          ), //state
+                          SizedBox(
+                            height: 55,
+                            child: TextFormField(
+                              controller: stateTextController,
+                              decoration: InputDecoration(
+                                  prefixIcon: const Icon(Iconsax.location_add),
+                                  hintText: fetchedState),
+                              // enabled: false,
+                            ),
+                          ),
+
+                          const SizedBox(height: 20),
                           Align(
                             alignment: AlignmentDirectional.center,
                             child: Container(
@@ -294,7 +351,7 @@ class _UserProfileState extends State<UserProfile> {
                                   Text("User registered at  : $fetchedRegTime",
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w600)),
-                                  const SizedBox(height: 10),
+                                  const SizedBox(height: 15),
                                 ],
                               ),
                             ),
@@ -318,7 +375,7 @@ class _UserProfileState extends State<UserProfile> {
                                       RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(18)))),
-                              child: const Text("Update"))),
+                              child: const Text("Update Profile"))),
                     ),
                   ),
                 ],
@@ -350,7 +407,7 @@ class _UserProfileState extends State<UserProfile> {
           fetchedPinCode = citizenSnapshot.get('pinCode');
           fetchedFullAddress = citizenSnapshot.get('fullAddress');
           fetchedRegTime = citizenSnapshot.get('registrationTime');
-          fetchedRegTime = fetchedRegTime.substring(0, 10);
+          fetchedRegTime = fetchedRegTime.substring(0, 20);
           fetchedBirthDate = citizenSnapshot.get('birthDate');
           DateTime birthDate = fetchedBirthDate.toDate();
           DateTime currentDate = DateTime.now();
