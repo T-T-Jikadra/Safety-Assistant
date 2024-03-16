@@ -49,6 +49,12 @@ class _NGO_ProfileState extends State<NGO_Profile> {
     super.initState();
     fetchNGOData().then((_) {
       setState(() {
+        for (int i = 0; i < DropdownItems.dropdownItemListofServices.length; i++) {
+          if (fetchedServices
+              .contains(DropdownItems.dropdownItemListofServices[i])) {
+            _checked[i] = true;
+          }
+        }
         isLoading = false;
       });
     });
@@ -456,14 +462,6 @@ class _NGO_ProfileState extends State<NGO_Profile> {
   );
 
   void _showCupertinoDialog(BuildContext context) {
-
-    for (int i = 0; i < DropdownItems.dropdownItemListofServices.length; i++) {
-      if (fetchedServices
-          .contains(DropdownItems.dropdownItemListofServices[i])) {
-        _checked[i] = true;
-      }
-    }
-
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -534,6 +532,6 @@ class _NGO_ProfileState extends State<NGO_Profile> {
       selectedOptions =
           selectedOptions.substring(0, selectedOptions.length - 2);
     }
-    serviceGovtTextController.text = selectedOptions;
+    fetchedServices = serviceGovtTextController.text = selectedOptions;
   }
 }
