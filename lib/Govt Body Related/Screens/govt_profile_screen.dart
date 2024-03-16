@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
+
 // import 'package:intl/intl.dart';
 import '../../Utils/Utils.dart';
 import '../../Utils/constants.dart';
@@ -20,6 +21,7 @@ class Govt_Profile extends StatefulWidget {
 }
 
 class _Govt_ProfileState extends State<Govt_Profile> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isLoading = true;
   bool isEditing = false;
 
@@ -38,6 +40,7 @@ class _Govt_ProfileState extends State<Govt_Profile> {
 
   TextEditingController nameTextController = TextEditingController();
   TextEditingController serviceGovtTextController = TextEditingController();
+  TextEditingController phoneTextController = TextEditingController();
   TextEditingController websiteTextController = TextEditingController();
   TextEditingController addressTextController = TextEditingController();
   TextEditingController pincodeTextController = TextEditingController();
@@ -49,7 +52,9 @@ class _Govt_ProfileState extends State<Govt_Profile> {
     super.initState();
     fetchGovtData().then((_) {
       setState(() {
-        for (int i = 0; i < DropdownItems.dropdownItemListofServices.length; i++) {
+        for (int i = 0;
+            i < DropdownItems.dropdownItemListofServices.length;
+            i++) {
           if (fetchedServices
               .contains(DropdownItems.dropdownItemListofServices[i])) {
             _checked[i] = true;
@@ -101,215 +106,262 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AbsorbPointer(
-                            absorbing: !isEditing,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 25,left: 10, bottom: 3),
-                                  child: Text("Name of Govt Agency :"),
-                                ),
-                                //username
-                                SizedBox(
-                                  height: 55,
-                                  child: TextFormField(
-                                    controller: nameTextController,
-                                    decoration: InputDecoration(
-                                      prefixIcon: const Icon(Icons.person),
-                                      hintText: fetchedGovtName,
-                                    ),
-                                    enabled: isEditing,
+                          Form(
+                            key: _formKey,
+                            child: AbsorbPointer(
+                              absorbing: !isEditing,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 25, left: 10, bottom: 3),
+                                    child: Text("Name of Govt Agency :"),
                                   ),
-                                ),
-                                const SizedBox(height: 12),
-                                //reg no
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10, bottom: 3),
-                                  child: Text("Registration Number :"),
-                                ),
-                                SizedBox(
-                                  height: 55,
-                                  child: TextFormField(
-                                    enabled: false,
-                                    decoration: InputDecoration(
-                                      prefixIcon:
-                                          const Icon(Iconsax.location_add),
-                                      hintText: fetchedGovtRegNo,
+                                  //username
+                                  SizedBox(
+                                    height: 55,
+                                    child: TextFormField(
+                                      controller: nameTextController,
+                                      decoration: InputDecoration(
+                                        prefixIcon: const Icon(Icons.person),
+                                        hintText: fetchedGovtName,
+                                      ),
+                                      enabled: isEditing,
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 12),
-                                //service
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10, bottom: 3),
-                                  child: Text("Services :"),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 5,
-                                    right: 5,
+                                  const SizedBox(height: 12),
+                                  //reg no
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, bottom: 3),
+                                    child: Text("Registration Number :"),
                                   ),
-                                  child: TextFormField(
-                                    enabled: isEditing,
-                                    onTap: () {
-                                      _showCupertinoDialog(
-                                        context,
-                                      );
-                                    },
-                                    controller: serviceGovtTextController,
-                                    readOnly: true,
-                                    decoration: InputDecoration(
-                                      hintText: fetchedServices.isEmpty
-                                          ? "Select Services Govt. can provide"
-                                          : fetchedServices,
-                                      prefixIcon: Container(
-                                        margin: const EdgeInsets.fromLTRB(
-                                            20, 16, 12, 16),
-                                        child:
-                                            SvgPicture.asset(svg_for_calendar),
+                                  SizedBox(
+                                    height: 55,
+                                    child: TextFormField(
+                                      enabled: false,
+                                      decoration: InputDecoration(
+                                        prefixIcon:
+                                            const Icon(Iconsax.location_add),
+                                        hintText: fetchedGovtRegNo,
                                       ),
                                     ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Select your serving Services from list';
-                                      }
-                                      return null; // Return null if the input is valid
-                                    },
-                                    onEditingComplete: () {
-                                      // Move focus to the next field when "Enter" is pressed
-                                      FocusScope.of(context).nextFocus();
-                                    },
                                   ),
-                                ),
-                                const SizedBox(height: 12),
-                                //contact
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10, bottom: 3),
-                                  child: Text("Contact Number :"),
-                                ),
-                                //contact
-                                SizedBox(
-                                  height: 55,
-                                  child: TextFormField(
-                                    enabled: isEditing,
-                                    decoration: InputDecoration(
-                                      prefixIcon:
-                                          const Icon(Iconsax.location_add),
-                                      hintText: fetchedContactNo,
+                                  const SizedBox(height: 12),
+                                  //service
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, bottom: 3),
+                                    child: Text("Services :"),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 5,
+                                      right: 5,
+                                    ),
+                                    child: TextFormField(
+                                      enabled: isEditing,
+                                      onTap: () {
+                                        _showCupertinoDialog(
+                                          context,
+                                        );
+                                      },
+                                      controller: serviceGovtTextController,
+                                      readOnly: true,
+                                      decoration: InputDecoration(
+                                        hintText: fetchedServices.isEmpty
+                                            ? "Select Services Govt. can provide"
+                                            : fetchedServices,
+                                        prefixIcon: Container(
+                                          margin: const EdgeInsets.fromLTRB(
+                                              20, 16, 12, 16),
+                                          child: SvgPicture.asset(
+                                              svg_for_calendar),
+                                        ),
+                                      ),
+                                      onEditingComplete: () {
+                                        FocusScope.of(context).nextFocus();
+                                      },
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 12),
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10, bottom: 3),
-                                  child: Text("Email Address :"),
-                                ),
-                                //email
-                                SizedBox(
-                                  height: 55,
-                                  child: TextFormField(
-                                    enabled: false,
-                                    decoration: InputDecoration(
-                                      prefixIcon:
-                                          const Icon(Iconsax.location_add),
-                                      hintText: fetchedEmail,
+                                  const SizedBox(height: 12),
+                                  //contact
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, bottom: 3),
+                                    child: Text("Contact Number :"),
+                                  ),
+                                  //contact
+                                  SizedBox(
+                                    child: TextFormField(
+                                      controller: phoneTextController,
+                                      enabled: isEditing,
+                                      decoration: InputDecoration(
+                                        prefixIcon:
+                                            const Icon(Iconsax.location_add),
+                                        hintText: fetchedContactNo,
+                                      ),
+                                      validator: (value) {
+                                        if (value!.isNotEmpty &&
+                                            value.length < 13) {
+                                          //_contactNoFocusNode.requestFocus();
+                                          return 'Contact no should be of 10 digits + country code';
+                                        }
+                                        return null; // Return null if the input is valid
+                                      },
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 12),
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10, bottom: 3),
-                                  child: Text("Website :"),
-                                ),
-                                //website
-                                SizedBox(
-                                  height: 55,
-                                  child: TextFormField(
-                                    controller: cityTextController,
-                                    decoration: InputDecoration(
-                                      prefixIcon:
-                                      const Icon(Iconsax.location_add),
-                                      hintText: fetchedWebsite,
-                                    ),
-                                    enabled: isEditing,
+                                  const SizedBox(height: 12),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, bottom: 3),
+                                    child: Text("Email Address :"),
                                   ),
-                                ),
-                                const SizedBox(height: 12),
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10, bottom: 3),
-                                  child: Text("Full Address :"),
-                                ),
-                                //address
-                                SizedBox(
-                                  child: TextFormField(
-                                    maxLength: 100,
-                                    minLines: 2,
-                                    maxLines: 4,
-                                    controller: addressTextController,
-                                    decoration: InputDecoration(
-                                      prefixIcon:
-                                          const Icon(Iconsax.location_add),
-                                      hintText: fetchedFullAddress,
+                                  //email
+                                  SizedBox(
+                                    height: 55,
+                                    child: TextFormField(
+                                      enabled: false,
+                                      decoration: InputDecoration(
+                                        prefixIcon:
+                                            const Icon(Iconsax.location_add),
+                                        hintText: fetchedEmail,
+                                      ),
                                     ),
-                                    enabled: isEditing,
                                   ),
-                                ),
-                                const SizedBox(height: 12),
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10, bottom: 3),
-                                  child: Text("Pincode :"),
-                                ),
-                                //pincode
-                                SizedBox(
-                                  height: 55,
-                                  child: TextFormField(
-                                    controller: pincodeTextController,
-                                    decoration: InputDecoration(
-                                      prefixIcon:
-                                          const Icon(Iconsax.location_add),
-                                      hintText: fetchedPinCode,
+                                  const SizedBox(height: 12),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, bottom: 3),
+                                    child: Text("Website :"),
+                                  ),
+                                  //website
+                                  SizedBox(
+                                    child: TextFormField(
+                                      controller: websiteTextController,
+                                      decoration: InputDecoration(
+                                        prefixIcon:
+                                            const Icon(Iconsax.location_add),
+                                        hintText: fetchedWebsite,
+                                      ),
+                                      enabled: isEditing,
+                                      validator: (value) {
+                                        // Regular expression for validating a URL
+                                        final urlRegex = RegExp(
+                                          r'^(https?://)?'
+                                          r'([a-z0-9-]+\.)*[a-z0-9-]+'
+                                          r'\.[a-z]{2,}(\/\S*)?$',
+                                          caseSensitive: false,
+                                        );
+                                        if (websiteTextController
+                                                .text.isNotEmpty &&
+                                            !urlRegex.hasMatch(value!)) {
+                                          // _websiteFocusNode.requestFocus();
+                                          return 'Enter valid URL';
+                                        }
+                                        return null; // Return null if the input is valid
+                                      },
                                     ),
-                                    enabled: isEditing,
                                   ),
-                                ),
-                                const SizedBox(height: 12),
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10, bottom: 3),
-                                  child: Text("City :"),
-                                ),
-                                //city
-                                SizedBox(
-                                  height: 55,
-                                  child: TextFormField(
-                                    controller: cityTextController,
-                                    decoration: InputDecoration(
-                                      prefixIcon:
-                                          const Icon(Iconsax.location_add),
-                                      hintText: fetchedCity,
+                                  const SizedBox(height: 12),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, bottom: 3),
+                                    child: Text("Full Address :"),
+                                  ),
+                                  //address
+                                  SizedBox(
+                                    child: TextFormField(
+                                      maxLength: 100,
+                                      minLines: 2,
+                                      maxLines: 4,
+                                      controller: addressTextController,
+                                      decoration: InputDecoration(
+                                        prefixIcon:
+                                            const Icon(Iconsax.location_add),
+                                        hintText: fetchedFullAddress,
+                                      ),
+                                      enabled: isEditing,
+                                      validator: (value) {
+                                        if (value!.isNotEmpty &&
+                                            value.length < 10) {
+                                          return "Too short address ..";
+                                        }
+                                        return null;
+                                      },
                                     ),
-                                    enabled: isEditing,
                                   ),
-                                ),
-                                const SizedBox(height: 12),
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10, bottom: 3),
-                                  child: Text("State :"),
-                                ),
-                                //state
-                                SizedBox(
-                                  height: 55,
-                                  child: TextFormField(
-                                    controller: stateTextController,
-                                    decoration: InputDecoration(
-                                      prefixIcon:
-                                          const Icon(Iconsax.location_add),
-                                      hintText: fetchedState,
+                                  const SizedBox(height: 12),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, bottom: 3),
+                                    child: Text("Pincode :"),
+                                  ),
+                                  //pincode
+                                  SizedBox(
+                                    child: TextFormField(
+                                      controller: pincodeTextController,
+                                      decoration: InputDecoration(
+                                        prefixIcon:
+                                            const Icon(Iconsax.location_add),
+                                        hintText: fetchedPinCode,
+                                      ),
+                                      enabled: isEditing,
+                                      validator: (value) {
+                                        if (value!.isNotEmpty &&
+                                            value.length < 6) {
+                                          return "Enter 6 digits Pin code ..";
+                                        }
+                                        return null;
+                                      },
                                     ),
-                                    enabled: isEditing,
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(height: 12),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, bottom: 3),
+                                    child: Text("City :"),
+                                  ),
+                                  //city
+                                  SizedBox(
+                                    child: TextFormField(
+                                      controller: cityTextController,
+                                      decoration: InputDecoration(
+                                        prefixIcon:
+                                            const Icon(Iconsax.location_add),
+                                        hintText: fetchedCity,
+                                      ),
+                                      enabled: isEditing,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, bottom: 3),
+                                    child: Text("State :"),
+                                  ),
+                                  //state
+                                  SizedBox(
+                                    child: TextFormField(
+                                      controller: stateTextController,
+                                      decoration: InputDecoration(
+                                        prefixIcon:
+                                            const Icon(Iconsax.location_add),
+                                        hintText: fetchedState,
+                                      ),
+                                      enabled: isEditing,
+                                      validator: (value) {
+                                        if (value!.isNotEmpty &&
+                                            value.length < 4) {
+                                          return "Enter valid state ..";
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           const SizedBox(height: 20),
@@ -355,7 +407,9 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                   "Enable editing to edit Govt Agency profile ..",
                                   "Okay");
                             } else {
-                              //updateGovtProfile();
+                              if (_formKey.currentState!.validate()) {
+                                updateGovtProfile();
+                              }
                             }
                           },
                           style: ButtonStyle(
@@ -416,10 +470,18 @@ class _Govt_ProfileState extends State<Govt_Profile> {
   Future<void> updateGovtProfile() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
+      //print(fetchedServices);
+      //print(serviceGovtTextController.text);
 
       Map<String, dynamic> updatedData = {
         if (nameTextController.text.isNotEmpty)
-          'firstName': nameTextController.text,
+          'GovtAgencyName': nameTextController.text,
+        if (fetchedServices != serviceGovtTextController.text)
+          'services': serviceGovtTextController.text,
+        if (phoneTextController.text.isNotEmpty)
+          'contactNumber': phoneTextController.text,
+        if (websiteTextController.text.isNotEmpty)
+          'website': websiteTextController.text,
         if (stateTextController.text.isNotEmpty)
           'state': stateTextController.text,
         if (cityTextController.text.isNotEmpty) 'city': cityTextController.text,
@@ -528,6 +590,6 @@ class _Govt_ProfileState extends State<Govt_Profile> {
       selectedOptions =
           selectedOptions.substring(0, selectedOptions.length - 2);
     }
-    fetchedServices = serviceGovtTextController.text = selectedOptions;
+    serviceGovtTextController.text = selectedOptions;
   }
 }
