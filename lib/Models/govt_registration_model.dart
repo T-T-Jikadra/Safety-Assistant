@@ -17,7 +17,7 @@ class GovtRegistration {
 
   GovtRegistration(
       {required this.gid,
-        required this.GovtAgencyName,
+      required this.GovtAgencyName,
       required this.GovtAgencyARegNo,
       required this.services,
       required this.contactNumber,
@@ -34,7 +34,7 @@ class GovtRegistration {
 
   Map<String, dynamic> toJsonGovt() {
     return {
-      'gid':gid,
+      'gid': gid,
       'GovtAgencyName': GovtAgencyName,
       'GovtAgencyRegNo': GovtAgencyARegNo,
       'services': services,

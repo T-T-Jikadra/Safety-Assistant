@@ -65,6 +65,20 @@ SnackBar TsnakeBar(BuildContext context, String headingText, String labelTxt) {
   );
 }
 
+void showSnakeBar(BuildContext context, String message, String actionLabel) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message),
+      action: SnackBarAction(
+        label: actionLabel,
+        onPressed: () {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        },
+      ),
+    ),
+  );
+}
+
 //dialog
 void showMsgDialog(BuildContext context, String message) {
   // Set up the AlertDialog

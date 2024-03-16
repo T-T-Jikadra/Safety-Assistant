@@ -15,8 +15,8 @@ import '../../../Components/info_card.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../Govt_list_GovtAgency/Govt_list.dart';
 import '../../../Utils/common_files/apply_grant_screen.dart';
-import '../govt_profile.dart';
-import '../govt_respnd_history.dart';
+import '../govt_profile_screen.dart';
+import '../govt_respnd_history_screen.dart';
 import 'menu_govt.dart';
 
 class SideBar_govt extends StatefulWidget {
