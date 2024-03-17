@@ -55,247 +55,248 @@ class _Alert_Manage_ScreenState extends State<Alert_Manage_Screen> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : SizedBox(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 10),
-                const Text("Alert Details : ",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 18,
-                        color: Colors.blueGrey)),
-                const SizedBox(height: 20),
-                //show alert details
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.blueGrey.withOpacity(0.1)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 25, vertical: 15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(Iconsax.card),
-                            const SizedBox(width: 12),
-                            Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                const Text("Alert Id  :",
-                                    style: TextStyle(fontSize: 13)),
-                                const SizedBox(height: 4),
-                                Text(widget.documentSnapshot['AlertId'],
-                                    style: const TextStyle(fontSize: 16)),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        const Divider(height: 2),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const Icon(Iconsax.hierarchy_square),
-                            const SizedBox(width: 12),
-                            Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                const Text("type of Disaster :",
-                                    style: TextStyle(fontSize: 13)),
-                                const SizedBox(height: 4),
-                                Text(
-                                    widget.documentSnapshot[
-                                    'typeofDisaster'],
-                                    style: const TextStyle(fontSize: 16)),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        const Divider(height: 2),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const Icon(Iconsax.call),
-                            const SizedBox(width: 12),
-                            Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                const Text("Description :",
-                                    style: TextStyle(fontSize: 13)),
-                                const SizedBox(height: 4),
-                                Text(
-                                    widget
-                                        .documentSnapshot['description'],
-                                    style: const TextStyle(fontSize: 16)),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        const Divider(height: 2),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const Icon(Iconsax.buildings),
-                            const SizedBox(width: 12),
-                            Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width:
-                                  MediaQuery.of(context).size.width *
-                                      0.6,
-                                  child: const Text("Alert Level :",
-                                      style: TextStyle(fontSize: 13)),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(widget.documentSnapshot['level'],
-                                    style: const TextStyle(fontSize: 16)),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        const Divider(height: 2),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const Icon(Iconsax.building_3),
-                            const SizedBox(width: 12),
-                            Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                const Text("City :",
-                                    style: TextStyle(fontSize: 13)),
-                                const SizedBox(height: 4),
-                                Text(widget.documentSnapshot['city'],
-                                    style: const TextStyle(fontSize: 16)),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                const Text("Alert time :",
-                                    style: TextStyle(
-                                        fontSize: 11,
-                                        color: Colors.grey)),
-                                const SizedBox(width: 4),
-                                Text(
-                                    DateFormat('dd-MM-yyyy , HH:mm')
-                                        .format(DateTime.parse(
-                                        widget.documentSnapshot[
-                                        'sentTime'])),
-                                    style: const TextStyle(
-                                        fontSize: 11,
-                                        color: Colors.grey)),
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 25),
-
-                //dos
-                const Text("Dos & Dont's  : ",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 17)),
-                const SizedBox(height: 20),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.green.withOpacity(0.3),
-                  ),
-                  child:  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 15),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 10),
+                      const Text("Alert Details : ",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 18,
+                              color: Colors.blueGrey)),
+                      const SizedBox(height: 20),
+                      //show alert details
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.blueGrey.withOpacity(0.1)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 25, vertical: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Icon(Iconsax.tick_circle4),
-                              const SizedBox(width: 5),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width *
-                                    0.7, // Adjust the width as needed
-                                child:  Text(
-                                  fetchedDos,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                              Row(
+                                children: [
+                                  const Icon(Iconsax.card),
+                                  const SizedBox(width: 12),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text("Alert Id  :",
+                                          style: TextStyle(fontSize: 13)),
+                                      const SizedBox(height: 4),
+                                      Text(widget.documentSnapshot['AlertId'],
+                                          style: const TextStyle(fontSize: 16)),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              const Divider(height: 2),
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  const Icon(Iconsax.hierarchy_square),
+                                  const SizedBox(width: 12),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text("type of Disaster :",
+                                          style: TextStyle(fontSize: 13)),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                          widget.documentSnapshot[
+                                              'typeofDisaster'],
+                                          style: const TextStyle(fontSize: 16)),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              const Divider(height: 2),
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  const Icon(Iconsax.call),
+                                  const SizedBox(width: 12),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text("Description :",
+                                          style: TextStyle(fontSize: 13)),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                          widget
+                                              .documentSnapshot['description'],
+                                          style: const TextStyle(fontSize: 16)),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              const Divider(height: 2),
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  const Icon(Iconsax.buildings),
+                                  const SizedBox(width: 12),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.6,
+                                        child: const Text("Alert Level :",
+                                            style: TextStyle(fontSize: 13)),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(widget.documentSnapshot['level'],
+                                          style: const TextStyle(fontSize: 16)),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              const Divider(height: 2),
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  const Icon(Iconsax.building_3),
+                                  const SizedBox(width: 12),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text("City :",
+                                          style: TextStyle(fontSize: 13)),
+                                      const SizedBox(height: 4),
+                                      Text(widget.documentSnapshot['city'],
+                                          style: const TextStyle(fontSize: 16)),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text("Alert time :",
+                                          style: TextStyle(
+                                              fontSize: 11,
+                                              color: Colors.grey)),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                          DateFormat('dd-MM-yyyy , HH:mm')
+                                              .format(DateTime.parse(
+                                                  widget.documentSnapshot[
+                                                      'sentTime'])),
+                                          style: const TextStyle(
+                                              fontSize: 11,
+                                              color: Colors.grey)),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 25),
+
+                      //dos
+                      const Text("Dos & Dont's  : ",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 17)),
+                      const SizedBox(height: 20),
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.green.withOpacity(0.3),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(Iconsax.tick_circle4),
+                                    const SizedBox(width: 5),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.7, // Adjust the width as needed
+                                      child: Text(
+                                        fetchedDos,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
+                      ),
+                      const SizedBox(height: 20),
 
-                //donts
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.red.withOpacity(0.3)),
-                  child: Padding(
-                    padding:  const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 15),
-                    child: Row(
-                      children: [
-                        Expanded(
+                      //donts
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.red.withOpacity(0.3)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Icon(Iconsax.shield_cross),
-                              const SizedBox(width: 5),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width *
-                                    0.7, // Adjust the width as needed
-                                child:  Text(
-                                  fetchedDonts,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                              Expanded(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(Iconsax.shield_cross),
+                                    const SizedBox(width: 5),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.7, // Adjust the width as needed
+                                      child: Text(
+                                        fetchedDonts,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
+
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 
@@ -309,7 +310,6 @@ class _Alert_Manage_ScreenState extends State<Alert_Manage_Screen> {
         if (dosSnap.exists) {
           fetchedDos = dosSnap.get("dos");
           fetchedDonts = dosSnap.get("donts");
-
         } else {
           if (kDebugMode) {
             print('Dos document does not exist');

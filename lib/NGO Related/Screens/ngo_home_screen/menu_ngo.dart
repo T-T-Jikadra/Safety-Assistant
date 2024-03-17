@@ -1,6 +1,7 @@
 //for menu items in drawer
 // ignore_for_file: camel_case_types
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 class Menu_ngo {
   final String title;
@@ -55,6 +56,6 @@ List<Menu_ngo> sidebarMenus2 = [
   ),
   Menu_ngo(
     title: "Logout",
-    icon: Icons.logout_rounded,
+    icon: Iconsax.logout5,
   ),
 ];

@@ -58,5 +58,3 @@ List<Menu> sidebarMenus2 = [
     icon: Iconsax.logout5,
   ),
 ];
-
-

@@ -147,7 +147,9 @@ class _alert_history_list_widgetState extends State<alert_history_list_widget> {
                                                 const Text(
                                                     "Type of disaster : ",
                                                     style: TextStyle(
-                                                        fontSize: 13)),
+                                                          fontSize: 13,
+                                                          color: Colors.black,
+                                                        )),
                                                 const SizedBox(height: 3),
                                                 Text(
                                                     snapshot.data!
