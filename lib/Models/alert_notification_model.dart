@@ -8,7 +8,6 @@ class AlertNotificationRegistration {
   final String level;
   final String state;
   final String city;
-  final String senderToken;
   final DateTime sentTime;
 
   AlertNotificationRegistration(
@@ -17,20 +16,18 @@ class AlertNotificationRegistration {
       required this.typeofDisaster,
       required this.desc,
       required this.level,
-      required this.senderToken,
       required this.state,
       required this.city,
       DateTime? sentTime})
       : sentTime = sentTime ?? DateTime.now();
 
-  Map<String, dynamic> toJsonGovt() {
+  Map<String, dynamic> toJsonAlert() {
     return {
       'AlertId': AlertId,
       'did':did,
       'typeofDisaster': typeofDisaster,
       'description': desc,
       'level': level,
-      'senderToken': senderToken,
       'state': state,
       'city': city,
       'sentTime': sentTime.toString(),

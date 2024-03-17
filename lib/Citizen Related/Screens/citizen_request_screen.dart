@@ -137,13 +137,13 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                         // border: OutlineInputBorder(),
                                         hintText: "Select your service",
                                       ),
-                                      validator: (value) {
-                                        if (value ==
-                                            "Select Govt Agency State") {
-                                          return 'Select Govt Agency State';
-                                        }
-                                        return null; // Return null if the input is valid
-                                      },
+                                      // validator: (value) {
+                                      //   if (value ==
+                                      //       "Select Govt Agency State") {
+                                      //     return 'Select Govt Agency State';
+                                      //   }
+                                      //   return null; // Return null if the input is valid
+                                      // },
                                     ),
                                   ),
                                 ),
@@ -477,7 +477,6 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
         'city': fetchedCity,
         'phoneNumber': fetchedPhone,
         'ReqId': totalDocCount.toString(),
-        //'type': 'alert'
       }
     };
 

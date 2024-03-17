@@ -149,103 +149,6 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
                         ],
                       ),
                     ),
-                    //const SizedBox(height: 40),
-                    // Decorated TextFormField widgets
-                    // TextFormField(
-                    //   keyboardType: TextInputType.text,
-                    //   initialValue: widget.userName,
-                    //   decoration: InputDecoration(
-                    //     labelText: "User Name",
-                    //     prefixIcon: const Icon(Icons.account_balance_wallet),
-                    //     border: OutlineInputBorder(
-                    //       borderRadius: BorderRadius.circular(10),
-                    //     ),
-                    //     filled: true,
-                    //     //fillColor: Colors.grey[200],
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 25),
-                    // TextFormField(
-                    //   keyboardType: TextInputType.text,
-                    //   initialValue: widget.title,
-                    //   decoration: InputDecoration(
-                    //     labelText: "Request Type",
-                    //     prefixIcon: const Icon(Icons.ac_unit_outlined),
-                    //     border: OutlineInputBorder(
-                    //       borderRadius: BorderRadius.circular(10),
-                    //     ),
-                    //     filled: true,
-                    //     //fillColor: Colors.grey[200],
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 25),
-                    // TextFormField(
-                    //   keyboardType: TextInputType.text,
-                    //   initialValue: widget.add,
-                    //   decoration: InputDecoration(
-                    //     labelText: "Address",
-                    //     prefixIcon: const Icon(Icons.location_on),
-                    //     border: OutlineInputBorder(
-                    //       borderRadius: BorderRadius.circular(10),
-                    //     ),
-                    //     filled: true,
-                    //     //fillColor: Colors.grey[200],
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 25),
-                    // TextFormField(
-                    //   keyboardType: TextInputType.text,
-                    //   initialValue: widget.pin,
-                    //   decoration: InputDecoration(
-                    //     labelText: "Pincode",
-                    //     prefixIcon: const Icon(Icons.lock),
-                    //     border: OutlineInputBorder(
-                    //       borderRadius: BorderRadius.circular(10),
-                    //     ),
-                    //     filled: true,
-                    //     //fillColor: Colors.grey[200],
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 25),
-                    // TextFormField(
-                    //   keyboardType: TextInputType.text,
-                    //   initialValue: widget.city,
-                    //   decoration: InputDecoration(
-                    //     labelText: "City",
-                    //     prefixIcon: const Icon(Icons.person),
-                    //     border: OutlineInputBorder(
-                    //       borderRadius: BorderRadius.circular(10),
-                    //     ),
-                    //     filled: true,
-                    //     //fillColor: Colors.grey[200],
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 25),
-                    // TextFormField(
-                    //   keyboardType: TextInputType.text,
-                    //   initialValue: widget.contactNo,
-                    //   decoration: InputDecoration(
-                    //     labelText: "Contact Number",
-                    //     prefixIcon: const Icon(Icons.location_city),
-                    //     border: OutlineInputBorder(
-                    //       borderRadius: BorderRadius.circular(10),
-                    //     ),
-                    //     filled: true,
-                    //     //fillColor: Colors.grey[200],
-                    //   ),
-                    // ),
-                    //const SizedBox(height: 25),
-                    // fetchedIsTnxComplete == "true"
-                    //     ? const Text(
-                    //         "Request Transaction completed",
-                    //         style: TextStyle(fontSize: 20),
-                    //       )
-                    //     : const Text(
-                    //         "Transaction not completed",
-                    //         style: TextStyle(fontSize: 20),
-                    //       ),
-                    // const SizedBox(height: 25),
-                    // ElevatedButton(onPressed: () {}, child: Text("a")),
                   ],
                 ),
               ),
@@ -735,7 +638,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
         .doc("Req_Open_$totalDocCount");
 
     Request_Opened_Registration ReqOpenData = Request_Opened_Registration(
-        req_open_Id: "Req_Open_$totalDocCount", authority_id: authority_id);
+        req_open_Id: "Req_Open_$totalDocCount",req_Id: 'Req_${widget.rid}', authority_id: authority_id);
 
     Map<String, dynamic> ReqOpenJson = ReqOpenData.toJsonOpenReq();
 

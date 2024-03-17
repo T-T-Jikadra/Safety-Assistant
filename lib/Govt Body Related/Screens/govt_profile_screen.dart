@@ -52,6 +52,7 @@ class _Govt_ProfileState extends State<Govt_Profile> {
     super.initState();
     fetchGovtData().then((_) {
       setState(() {
+        serviceGovtTextController.text = fetchedServices;
         for (int i = 0;
             i < DropdownItems.dropdownItemListofServices.length;
             i++) {
@@ -470,8 +471,6 @@ class _Govt_ProfileState extends State<Govt_Profile> {
   Future<void> updateGovtProfile() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      //print(fetchedServices);
-      //print(serviceGovtTextController.text);
 
       Map<String, dynamic> updatedData = {
         if (nameTextController.text.isNotEmpty)
@@ -563,7 +562,6 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                 ),
                 TextButton(
                   onPressed: () {
-                    // Dismiss the dialog
                     Navigator.of(context).pop();
                   },
                   child: const Text('OK',

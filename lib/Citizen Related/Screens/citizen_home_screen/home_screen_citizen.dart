@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:fff/Citizen%20Related/Screens/citizen_home_screen/side_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
 import '../../../Components/Notification_related/notification_services.dart';
 import '../../../Utils/constants.dart';
@@ -82,8 +81,17 @@ class _CitizenHomeScreenState extends State<CitizenHomeScreen>
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
-        SystemNavigator.pop();
-        return false;
+        if (isSideBarOpen) {
+          // If the sidebar is open, close it and return false to prevent exiting the app
+          setState(() {
+            isSideBarOpen = false;
+          });
+          _animationController.reverse();
+          return false;
+        } else {
+          // If the sidebar is not open, show the exit confirmation dialog
+          return _showExitConfirmationDialog(context);
+        }
       },
       child: SafeArea(
         child: Scaffold(
@@ -143,7 +151,7 @@ class _CitizenHomeScreenState extends State<CitizenHomeScreen>
                   top: 05,
                   child: MenuBtn(
                     press: () {
-                      isMenuOpenInput.value = !isMenuOpenInput.value;
+                      //isMenuOpenInput.value = !isMenuOpenInput.value;
 
                       if (_animationController.value == 0) {
                         _animationController.forward();
@@ -176,5 +184,27 @@ class _CitizenHomeScreenState extends State<CitizenHomeScreen>
         ),
       ),
     );
+  }
+
+  Future<bool> _showExitConfirmationDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Exit App?"),
+          content: const Text("Do you want to close the app?"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text("No"),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text("Yes"),
+            ),
+          ],
+        );
+      },
+    ).then((value) => value ?? false);
   }
 }

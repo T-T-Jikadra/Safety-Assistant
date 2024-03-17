@@ -131,7 +131,7 @@ class _NGOHomeScreenState extends State<NGOHomeScreen>
                   top: 05,
                   child: MenuBtn(
                     press: () {
-                      isMenuOpenInput.value = !isMenuOpenInput.value;
+                      //isMenuOpenInput.value = !isMenuOpenInput.value;
 
                       if (_animationController.value == 0) {
                         _animationController.forward();

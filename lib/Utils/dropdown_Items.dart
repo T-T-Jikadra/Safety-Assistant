@@ -2,7 +2,7 @@
 // ignore_for_file: file_names
 
 class DropdownItems {
-  //
+  //request type [1]
   static List<String> dropdownItemRequestTypes = [
     "Human Rescue",
     "Temporary shelter / Relocation",
@@ -15,6 +15,7 @@ class DropdownItems {
     "Animal Rescue"
   ];
 
+  //req type [2]
   static List<String> dropdownItemListofServices = [
     "Mass Human Rescue",
     "Provision Temporary Shelter / Relocation",
@@ -27,6 +28,28 @@ class DropdownItems {
     "Animal Rescue"
   ];
 
+  //alert list
+  static List<String> dropdownItemTypeOfDisaster = [
+    "Earthquake",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+  ];
+
+  static final List<String> _levels = [
+    "Lower",
+    "Low-Medium",
+    "Medium",
+    "High-Medium",
+    "Higher"
+  ];
+
+  //state
   static List<String> dropdownItemState = [
     "Select your state",
     "Andaman & Nicobar Islands",
@@ -66,6 +89,7 @@ class DropdownItems {
     "West Bengal",
   ];
 
+  //city
   static Map<String, List<String>> cityMap = {
     "Andaman & Nicobar Islands": ["Port Blair"],
     "Andhra Pradesh": [

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import '../../Citizen Related/Screens/citizen_req_history_screen.dart';
+import '../../Utils/common_files/open_alert_screen.dart';
 import '../../Utils/common_files/open_req_screen.dart';
 
 // ignore: camel_case_types
@@ -74,6 +75,8 @@ class NotificationServices {
         handleResponse(context, message);
       } else if (message.data['type'] == 'request') {
         handleRequest(context, message);
+      } else if (message.data['type'] == 'alert') {
+        handleAlert(context, message);
       }
       // Navigator.push(
       //     context,
@@ -124,10 +127,10 @@ class NotificationServices {
     //for android
     AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
-          //'channel id',
+      //'channel id',
       channel.id.toString(),
       //    'channel name',
-       channel.name.toString(),
+      channel.name.toString(),
       channelDescription: 'Your channel description',
       importance: Importance.max,
       //changes
@@ -193,6 +196,8 @@ class NotificationServices {
         handleResponse(context, initialMessage);
       } else if (initialMessage.data['type'] == 'request') {
         handleRequest(context, initialMessage);
+      } else if (initialMessage.data['type'] == 'alert') {
+        handleAlert(context, initialMessage);
       }
     }
 
@@ -202,7 +207,10 @@ class NotificationServices {
         //Get.to(() => const alert_Screen());
       } else if (message.data['type'] == 'request') {
         //handleMessage(context, message);
+      } else if (message.data['type'] == 'alert') {
+        // handleAlert(context, message);
       }
+
     });
 
     //when app is in background ...
@@ -211,6 +219,8 @@ class NotificationServices {
         handleResponse(context, event);
       } else if (event.data['type'] == 'request') {
         handleRequest(context, event);
+      } else if (event.data['type'] == 'alert') {
+        handleAlert(context, event);
       }
     });
 
@@ -221,6 +231,8 @@ class NotificationServices {
         handleResponse(context, message);
       } else if (message.data['type'] == 'request') {
         handleRequest(context, message);
+      } else if (message.data['type'] == 'alert') {
+        handleAlert(context, message);
       }
 
       if (kDebugMode) {
@@ -244,7 +256,7 @@ class NotificationServices {
 
   //opens page for response got
   void handleResponse(BuildContext context, RemoteMessage message) {
-    Get.to(() =>const Request_History_Screen());
+    Get.to(() => const Request_History_Screen());
     // Get.to(() => Open_Response_Screen(
     //       selectedService: message.data['service'],
     //       authorityName: message.data['authorityName'],
@@ -255,5 +267,17 @@ class NotificationServices {
     //       city: message.data['city'],
     //       website: message.data['website'],
     //     ));
+  }
+
+  // opens page for sent alert
+  void handleAlert(BuildContext context, RemoteMessage message) {
+    Get.to(() => Open_Alert_Screen(
+          alertId: message.data['AlertId'],
+          title: message.data['title'],
+          desc: message.data['desc'],
+          level: message.data['level'],
+          dos: message.data['dos'],
+          donts: message.data['donts'],
+        ));
   }
 }

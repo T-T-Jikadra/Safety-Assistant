@@ -1,11 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:fff/Admin%20Related/Lower%20Level%20Admin/lower_admin.dart';
 import 'package:fff/_Root/type%20of%20user/typecolumnlist_item_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../Govt Body Related/Screens/govt_login_screen/govt_login.dart';
 import '../../../NGO Related/Screens/ngo_login_screen/ngo_login.dart';
+import '../../Admin Related/alert/alert_history_screen.dart';
 import '../../Citizen Related/Screens/citizen_login_screen/login_screen.dart';
 import '../../Components/Check for Internet/check_internet.dart';
 import '../../Components/Notification_related/notification_services.dart';
@@ -74,9 +74,9 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const Ad_Lower()));
+                                    builder: (context) => const Alert_History_Screen()));
                           },
-                          child: const Text('Sub Admin',
+                          child: const Text('Admin',
                               textAlign: TextAlign.center,
                               style: TextStyle(fontSize: 14)),
                         ),

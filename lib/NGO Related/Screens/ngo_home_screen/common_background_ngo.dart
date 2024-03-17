@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../../../Citizen Related/Screens/citizen_request.dart';
+import '../../../Citizen Related/Screens/citizen_request_screen.dart';
 import '../../../Components/Notification_related/notification_services.dart';
 
 class commonbg_ngo extends StatefulWidget {

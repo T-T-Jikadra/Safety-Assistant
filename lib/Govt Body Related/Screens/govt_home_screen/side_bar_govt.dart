@@ -7,16 +7,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../Admin Related/alert/alert_history_screen.dart';
 import '../../../Utils/common_files/FAQ_screen.dart';
 import '../../../Utils/common_files/about_us_screen.dart';
-import '../../../Utils/common_files/alert_screen.dart';
 import '../../../Utils/common_files/notice_screen.dart';
 import '../../../Components/info_card.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../Govt_list_GovtAgency/Govt_list.dart';
 import '../../../Utils/common_files/apply_grant_screen.dart';
 import '../govt_profile_screen.dart';
-import '../govt_respnd_history_screen.dart';
+import '../govt_respond_history_screen.dart';
 import 'menu_govt.dart';
 
 class SideBar_govt extends StatefulWidget {
@@ -210,7 +210,7 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const alert_Screen(),
+                                      const Alert_History_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);

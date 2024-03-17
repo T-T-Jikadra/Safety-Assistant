@@ -52,6 +52,7 @@ class _NGO_ProfileState extends State<NGO_Profile> {
     super.initState();
     fetchNGOData().then((_) {
       setState(() {
+        serviceTextController.text = fetchedServices;
         for (int i = 0;
             i < DropdownItems.dropdownItemListofServices.length;
             i++) {
@@ -524,6 +525,9 @@ class _NGO_ProfileState extends State<NGO_Profile> {
   );
 
   void _showCupertinoDialog(BuildContext context) {
+    List<bool> initialChecked =
+        List.from(_checked); // Make a copy of the initial state
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -546,9 +550,6 @@ class _NGO_ProfileState extends State<NGO_Profile> {
                           setState(() {
                             _checked[index] = value;
                           });
-
-                          // Update the text field whenever a toggle is changed
-                          _updateTextField(_checked);
                         },
                       ),
                     );
@@ -577,7 +578,10 @@ class _NGO_ProfileState extends State<NGO_Profile> {
         );
       },
     ).then((value) {
-      _updateTextField(_checked);
+      // Check if the selection has changed before updating text field
+      if (!listEquals(initialChecked, _checked)) {
+        _updateTextField(_checked);
+      }
     });
   }
 
