@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../Components/Check for Internet/check_internet.dart';
+import '../../Components/check_for_internet/check_internet.dart';
 import '../../Utils/themes/theme.dart';
 import '../type of user/select_user_type_screen.dart';
 

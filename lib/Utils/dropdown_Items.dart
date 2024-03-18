@@ -30,24 +30,19 @@ class DropdownItems {
 
   //alert list
   static List<String> dropdownItemTypeOfDisaster = [
-    "Earthquake",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
+    "Cold Wave",
+    "Tsunami",
+    "Cyclone",
+    "Fire",
+    "Flood",
+    "Landslide",
+    "Heat Cove",
+    "Air Pollution",
+    "Thunderstorm",
+    //"Gas & Chemical leakage",
   ];
 
-  static final List<String> _levels = [
-    "Lower",
-    "Low-Medium",
-    "Medium",
-    "High-Medium",
-    "Higher"
-  ];
+  final List<String> _levels = ["Low", "Severe", "Critical"];
 
   //state
   static List<String> dropdownItemState = [

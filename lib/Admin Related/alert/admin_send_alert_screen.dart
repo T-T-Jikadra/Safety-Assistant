@@ -51,11 +51,9 @@ class _Admin_Send_Alert_ScreenState extends State<Admin_Send_Alert_Screen> {
   double _value = 0.0;
 
   final List<String> _levels = [
-    "Lower",
-    "Low-Medium",
-    "Medium",
-    "High-Medium",
-    "Higher"
+    "Low",
+    "Severe",
+    "Critical"
   ];
 
   @override
@@ -182,8 +180,8 @@ class _Admin_Send_Alert_ScreenState extends State<Admin_Send_Alert_Screen> {
                                       child: Slider(
                                         value: _value,
                                         min: 0.0,
-                                        max: 4.0,
-                                        divisions: 4,
+                                        max: 2.0,
+                                        divisions: 2,
                                         activeColor: _getColorForValue(_value),
                                         onChanged: (newValue) {
                                           setState(() {
@@ -354,41 +352,41 @@ class _Admin_Send_Alert_ScreenState extends State<Admin_Send_Alert_Screen> {
                             ),
                             const SizedBox(height: 15),
                             //city
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                left: 10,
-                                right: 10,
-                              ),
-                              child: SizedBox(
-                                //height: 60,
-                                child: DropdownButtonFormField<String>(
-                                  value: selectedCity.isNotEmpty
-                                      ? selectedCity
-                                      : null,
-                                  items: dropdownItemCity.map((String city) {
-                                    return DropdownMenuItem<String>(
-                                      value: city,
-                                      child: Text(city),
-                                    );
-                                  }).toList(),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedCity = value!;
-                                    });
-                                  },
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintText: "Select your City",
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Select City';
-                                    }
-                                    return null; // Return null if the input is valid
-                                  },
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(
+                            //     left: 10,
+                            //     right: 10,
+                            //   ),
+                            //   child: SizedBox(
+                            //     //height: 60,
+                            //     child: DropdownButtonFormField<String>(
+                            //       value: selectedCity.isNotEmpty
+                            //           ? selectedCity
+                            //           : null,
+                            //       items: dropdownItemCity.map((String city) {
+                            //         return DropdownMenuItem<String>(
+                            //           value: city,
+                            //           child: Text(city),
+                            //         );
+                            //       }).toList(),
+                            //       onChanged: (value) {
+                            //         setState(() {
+                            //           selectedCity = value!;
+                            //         });
+                            //       },
+                            //       decoration: const InputDecoration(
+                            //         border: OutlineInputBorder(),
+                            //         hintText: "Select your City",
+                            //       ),
+                            //       validator: (value) {
+                            //         if (value == null || value.isEmpty) {
+                            //           return 'Select City';
+                            //         }
+                            //         return null; // Return null if the input is valid
+                            //       },
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -459,13 +457,30 @@ class _Admin_Send_Alert_ScreenState extends State<Admin_Send_Alert_Screen> {
                                 if (!alertSent) {
 
                                   try {
+
+                                    //sends alert to citizen
+                                    var citizenQuerySnapshot =
+                                    await FirebaseFirestore
+                                        .instance
+                                        .collection('clc_citizen')
+                                        .where('state',
+                                        isEqualTo: selectedState)
+                                        .get();
+
+                                    for (var doc in citizenQuerySnapshot.docs) {
+                                      String deviceToken =
+                                      doc.data()['deviceToken'];
+                                      broadcastAlert(
+                                          deviceToken, totalDocCount);
+                                    }
+
                                     //sends alert to only NGO
                                     var ngoQuerySnapshot = await FirebaseFirestore
                                         .instance
                                         .collection('clc_ngo')
                                         //added new ***
                                         // .where('services', whereIn: selectedServiceWords)
-                                        .where('city', isEqualTo: selectedCity)
+                                        .where('state', isEqualTo: selectedState)
                                         .get();
 
                                     for (var ngoDoc in ngoQuerySnapshot.docs) {
@@ -479,8 +494,8 @@ class _Admin_Send_Alert_ScreenState extends State<Admin_Send_Alert_Screen> {
                                         await FirebaseFirestore
                                             .instance
                                             .collection('clc_govt')
-                                            .where('city',
-                                                isEqualTo: selectedCity)
+                                            .where('state',
+                                                isEqualTo: selectedState)
                                             .get();
 
                                     for (var doc in govtQuerySnapshot.docs) {
@@ -494,7 +509,7 @@ class _Admin_Send_Alert_ScreenState extends State<Admin_Send_Alert_Screen> {
                                   } catch (e) {
                                     if (kDebugMode) {
                                       print(
-                                          'Error while sending citizen request : $e');
+                                          'Error while sending alert : $e');
                                     }
                                   } finally {
                                     //Navigator.pop(context);
@@ -656,14 +671,12 @@ class _Admin_Send_Alert_ScreenState extends State<Admin_Send_Alert_Screen> {
   Color _getColorForValue(double value) {
     // Define color transitions based on the slider value
     if (value < 1.0) {
-      return Colors.green;
-    } else if (value < 2.0) {
-      return Colors.lightGreen;
-    } else if (value < 3.0) {
       return Colors.yellow;
-    } else if (value < 4.0) {
+    } else if (value < 2.0) {
       return Colors.orange;
-    } else {
+    } else if (value < 3.0) {
+      return Colors.red;
+    }else{
       return Colors.red;
     }
   }

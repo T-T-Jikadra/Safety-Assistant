@@ -7,7 +7,7 @@ import '../../../Govt Body Related/Screens/govt_login_screen/govt_login.dart';
 import '../../../NGO Related/Screens/ngo_login_screen/ngo_login.dart';
 import '../../Admin Related/alert/admin_send_alert_screen.dart';
 import '../../Citizen Related/Screens/citizen_login_screen/login_screen.dart';
-import '../../Components/Check for Internet/check_internet.dart';
+import '../../Components/check_for_internet/check_internet.dart';
 import '../../Components/Notification_related/notification_services.dart';
 import '../../Utils/Utils.dart';
 

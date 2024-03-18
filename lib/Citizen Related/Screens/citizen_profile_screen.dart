@@ -50,6 +50,12 @@ class _UserProfileState extends State<UserProfile> {
     fetchCitizenData().then((_) {
       setState(() {
         isLoading = false;
+        fnameTextController.text = fetchedFname.trim();
+        lnameTextController.text = fetchedLname.trim();
+        addressTextController.text = fetchedFullAddress.trim();
+        pincodeTextController.text = fetchedPinCode.trim();
+        stateTextController.text = fetchedState.trim();
+        cityTextController.text = fetchedCity.trim();
       });
     });
   }
@@ -223,7 +229,7 @@ class _UserProfileState extends State<UserProfile> {
                                       }
                                     },
                                     child: AbsorbPointer(
-                                      absorbing: !isEditing,
+                                      //absorbing: !isEditing,
                                       child: TextFormField(
                                         controller: birthDateTextController,
                                         readOnly: true,
@@ -232,9 +238,9 @@ class _UserProfileState extends State<UserProfile> {
                                             borderRadius: BorderRadius.circular(
                                                 20), // Make it round
                                           ),
-                                          hintText: DateFormat('MMMM dd, yyyy')
-                                              .format(
-                                                  fetchedBirthDate.toDate()),
+                                          // hintText: DateFormat('MMMM dd, yyyy')
+                                          //     .format(
+                                          //         fetchedBirthDate.toDate()),
                                           prefixIcon: Container(
                                             margin: const EdgeInsets.fromLTRB(
                                                 20, 16, 12, 16),
@@ -265,8 +271,7 @@ class _UserProfileState extends State<UserProfile> {
                                   child: TextFormField(
                                     enabled: false,
                                     decoration: InputDecoration(
-                                      prefixIcon:
-                                          const Icon(Iconsax.location_add),
+                                      prefixIcon: const Icon(Iconsax.call5),
                                       hintText: fetchedPhone,
                                     ),
                                   ),
@@ -284,8 +289,7 @@ class _UserProfileState extends State<UserProfile> {
                                     maxLines: 4,
                                     controller: addressTextController,
                                     decoration: InputDecoration(
-                                      prefixIcon:
-                                          const Icon(Iconsax.location_add),
+                                      prefixIcon: const Icon(Iconsax.location),
                                       hintText: fetchedFullAddress,
                                     ),
                                     enabled: isEditing,
@@ -471,35 +475,37 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Colors.blue,
-              onPrimary: Colors.white,
-              onSurface: Colors.black,
-            ),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.blue,
+    if (isEditing) {
+      final DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: fetchedBirthDate.toDate(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime.now(),
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: ThemeData.light().copyWith(
+              colorScheme: const ColorScheme.light(
+                primary: Colors.blue,
+                onPrimary: Colors.white,
+                onSurface: Colors.black,
+              ),
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.blue,
+                ),
               ),
             ),
-          ),
-          child: child!,
-        );
-      },
-    );
-    if (pickedDate != null) {
-      final formattedDate = DateFormat('MMMM dd, yyyy').format(pickedDate);
-      setState(() {
-        fetchedBirthDate = Timestamp.fromDate(pickedDate);
-        birthDateTextController.text = formattedDate;
-      });
+            child: child!,
+          );
+        },
+      );
+      if (pickedDate != null) {
+        final formattedDate = DateFormat('MMMM dd, yyyy').format(pickedDate);
+        setState(() {
+          //fetchedBirthDate = Timestamp.fromDate(pickedDate);
+          birthDateTextController.text = formattedDate;
+        });
+      }
     }
   }
 
@@ -509,24 +515,29 @@ class _UserProfileState extends State<UserProfile> {
       DateTime birthDate = DateFormat('MMMM dd, yyyy').parse(dateString);
 
       User? user = FirebaseAuth.instance.currentUser;
+      print(birthDate);
+      print(fetchedBirthDate.toDate());
 
       Map<String, dynamic> updatedData = {
-        if (fnameTextController.text.isNotEmpty)
+        if (fnameTextController.text != fetchedFname)
           'firstName': fnameTextController.text,
-        if (lnameTextController.text.isNotEmpty)
+        if (lnameTextController.text != fetchedLname)
           'lastName': lnameTextController.text,
         if (fetchedGender != selectedGender) 'gender': selectedGender,
+
+        // Include birth date in updated data if it's different from fetched value
         if (birthDate != fetchedBirthDate.toDate()) 'birthDate': birthDate,
-        if (stateTextController.text.isNotEmpty)
+        if (stateTextController.text != fetchedState)
           'state': stateTextController.text,
-        if (cityTextController.text.isNotEmpty) 'city': cityTextController.text,
-        if (pincodeTextController.text.isNotEmpty)
+        if (cityTextController.text != fetchedCity)
+          'city': cityTextController.text,
+        if (pincodeTextController.text != fetchedPinCode)
           'pinCode': pincodeTextController.text,
-        if (addressTextController.text.isNotEmpty)
+        if (addressTextController.text != fetchedFullAddress)
           'fullAddress': addressTextController.text,
       };
 
-      // Check if any field is edited
+      // Check if any field is edited, including birth date
       if (updatedData.isNotEmpty) {
         // Update data in Firestore only for non-empty fields
         await FirebaseFirestore.instance
@@ -540,7 +551,7 @@ class _UserProfileState extends State<UserProfile> {
         showSnakeBar(context, "user profile updated successfully .. ", "Okay");
       } else {
         // setState(() {isEditing = false;});
-        showSnakeBar(context, "No profile data edited !", "Okay");
+        showSnakeBar(context, "No profile data edited !", "Close");
       }
     } catch (e) {
       if (kDebugMode) {
@@ -549,5 +560,4 @@ class _UserProfileState extends State<UserProfile> {
       showSnakeBar(context, "$e!", "Okay");
     }
   }
-
 }

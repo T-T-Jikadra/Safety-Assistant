@@ -8,7 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Citizen Related/Screens/citizen_login_screen/otp_screen.dart';
-import '../../Components/Check for Internet/check_internet.dart';
+import '../../Components/check_for_internet/check_internet.dart';
 import '../../Govt Body Related/Screens/govt_home_screen/home_screen_govt.dart';
 import '../../NGO Related/Screens/ngo_home_screen/home_screen_ngo.dart';
 import '../../Utils/themes/theme.dart';

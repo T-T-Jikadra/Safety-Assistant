@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../citizen_signUp_screen/citizen_signup.dart';
@@ -243,19 +244,12 @@ class _OtpScreenState extends State<OtpScreen> {
       if (isUserRegOrNot) {
         showToastMsg("Citizen logged in successfully..");
 
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const CitizenHomeScreen(),
-            ));
+        Get.offAll(() => const CitizenHomeScreen());
       } else {
         showToastMsg("Complete your profile first ..");
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  CitizenSignupPageScreen(contactNumber: widget._contact),
-            ));
+        Get.offAll(
+          () => CitizenSignupPageScreen(contactNumber: widget._contact),
+        );
       }
     } on PlatformException catch (e) {
       handleError(e);

@@ -27,9 +27,9 @@ class _Govt_ProfileState extends State<Govt_Profile> {
 
   String fetchedGid = "";
   String fetchedGovtName = "";
-  String? fetchedGovtRegNo = "";
+  String fetchedGovtRegNo = "";
   String fetchedServices = '';
-  String? fetchedContactNo = "";
+  String fetchedContactNo = "";
   String fetchedWebsite = '';
   String fetchedEmail = '';
   String fetchedState = "";
@@ -52,6 +52,15 @@ class _Govt_ProfileState extends State<Govt_Profile> {
     super.initState();
     fetchGovtData().then((_) {
       setState(() {
+        nameTextController.text = fetchedGovtName.trim();
+        serviceGovtTextController.text = fetchedServices;
+        phoneTextController.text = fetchedContactNo.trim();
+        websiteTextController.text = fetchedWebsite.trim();
+        addressTextController.text = fetchedFullAddress.trim();
+        pincodeTextController.text = fetchedPinCode.trim();
+        cityTextController.text = fetchedCity.trim();
+        stateTextController.text = fetchedState.trim();
+
         serviceGovtTextController.text = fetchedServices;
         for (int i = 0;
             i < DropdownItems.dropdownItemListofServices.length;
@@ -473,21 +482,22 @@ class _Govt_ProfileState extends State<Govt_Profile> {
       User? user = FirebaseAuth.instance.currentUser;
 
       Map<String, dynamic> updatedData = {
-        if (nameTextController.text.isNotEmpty)
-          'GovtAgencyName': nameTextController.text,
-        if (fetchedServices != serviceGovtTextController.text)
-          'services': serviceGovtTextController.text,
-        if (phoneTextController.text.isNotEmpty)
+        if (nameTextController.text.trim() != fetchedGovtName)
+          'nameOfNGO': nameTextController.text.trim(),
+        if (fetchedServices != serviceGovtTextController.text.trim())
+          'services': serviceGovtTextController.text.trim(),
+        if (phoneTextController.text.trim() != fetchedContactNo)
           'contactNumber': phoneTextController.text,
-        if (websiteTextController.text.isNotEmpty)
-          'website': websiteTextController.text,
-        if (stateTextController.text.isNotEmpty)
-          'state': stateTextController.text,
-        if (cityTextController.text.isNotEmpty) 'city': cityTextController.text,
-        if (pincodeTextController.text.isNotEmpty)
-          'pinCode': pincodeTextController.text,
-        if (addressTextController.text.isNotEmpty)
-          'fullAddress': addressTextController.text,
+        if (websiteTextController.text.trim() != fetchedWebsite)
+          'website': websiteTextController.text.trim(),
+        if (stateTextController.text.trim() != fetchedState)
+          'state': stateTextController.text.trim(),
+        if (cityTextController.text.trim() != fetchedCity)
+          'city': cityTextController.text,
+        if (pincodeTextController.text != fetchedPinCode)
+          'pinCode': pincodeTextController.text.trim(),
+        if (addressTextController.text.trim() != fetchedFullAddress)
+          'fullAddress': addressTextController.text.trim(),
       };
 
       // Check if any field is edited
@@ -501,10 +511,10 @@ class _Govt_ProfileState extends State<Govt_Profile> {
         setState(() {
           isEditing = false;
         });
-        showSnakeBar(context, "Govt profile updated successfully .. ", "Okay");
+        showSnakeBar(context, "Govt profile updated successfully .. ", "okay");
       } else {
         // setState(() {isEditing = false;});
-        showSnakeBar(context, "No Govt profile data edited !", "Okay");
+        showSnakeBar(context, "No Govt profile data edited !", "close");
       }
     } catch (e) {
       if (kDebugMode) {

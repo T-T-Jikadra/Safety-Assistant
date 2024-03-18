@@ -72,8 +72,17 @@ class _NGOHomeScreenState extends State<NGOHomeScreen>
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
-        SystemNavigator.pop();
-        return false;
+        if (isSideBarOpen) {
+          // If the sidebar is open, close it and return false to prevent exiting the app
+          setState(() {
+            isSideBarOpen = false;
+          });
+          _animationController.reverse();
+          return false;
+        } else {
+          // If the sidebar is not open, show the exit confirmation dialog
+          return _showExitConfirmationDialog(context);
+        }
       },
       child: SafeArea(
         child: Scaffold(
@@ -164,5 +173,27 @@ class _NGOHomeScreenState extends State<NGOHomeScreen>
         ),
       ),
     );
+  }
+
+  Future<bool> _showExitConfirmationDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Exit App?"),
+          content: const Text("Do you want to close the app?"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text("No"),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text("Yes"),
+            ),
+          ],
+        );
+      },
+    ).then((value) => value ?? false);
   }
 }
