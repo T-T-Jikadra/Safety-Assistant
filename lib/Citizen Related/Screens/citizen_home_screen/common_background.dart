@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../../Components/Notification_related/notification_services.dart';
-import '../citizen_request_screen.dart';
+import '../citizen_request_screen/citizen_request_screen.dart';
 
 class commonbg extends StatefulWidget {
   const commonbg({super.key});

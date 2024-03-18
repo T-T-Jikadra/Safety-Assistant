@@ -13,7 +13,7 @@ import '../../../Utils/common_files/FAQ_screen.dart';
 import '../citizen_NGO-GA_list/citizen_NGO-GA_list_screen.dart';
 import '../../../Utils/common_files/about_us_screen.dart';
 import '../../Screens/citizen_donation_history_screen.dart';
-import '../../Screens/citizen_req_history_screen.dart';
+import '../citizen_request_screen/citizen_req_history_screen.dart';
 import '../../Screens/citizen_profile_screen.dart';
 import '../../../Components/info_card.dart';
 import 'menu.dart';

@@ -8,10 +8,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '../../Models/citizen_request_model.dart';
-import '../../Utils/Utils.dart';
-import '../../Utils/dropdown_Items.dart';
-import '../../Components/Notification_related/notification_services.dart';
+import '../../../Models/citizen_request_model.dart';
+import '../../../Utils/Utils.dart';
+import '../../../Utils/dropdown_Items.dart';
+import '../../../Components/Notification_related/notification_services.dart';
 import 'package:http/http.dart' as http;
 
 class userRequest_Screen extends StatefulWidget {
@@ -364,8 +364,6 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                           .collection('clc_govt')
                                           .where('city', isEqualTo: 'Surat')
                                           .get();
-
-                                  //.then((querySnapshot) {
 
                                   for (var doc in govtQuerySnapshot.docs) {
                                     String deviceToken =

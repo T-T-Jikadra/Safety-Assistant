@@ -154,7 +154,6 @@ class _alert_history_list_widgetState extends State<alert_history_list_widget> {
                                                           color: Colors.black,
                                                         )),
                                                     const SizedBox(height: 3),
-
                                                     Text(
                                                         snapshot.data!
                                                                 .docs[index]
