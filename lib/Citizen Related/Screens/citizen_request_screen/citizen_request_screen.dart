@@ -23,6 +23,7 @@ class userRequest_Screen extends StatefulWidget {
 
 class _userRequest_ScreenState extends State<userRequest_Screen> {
   NotificationServices notificationServices = NotificationServices();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   //profile fields
   String fetchedCid = "";
@@ -245,44 +246,69 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.easeInOut,
                               //vsync: this,
-                              child: SizedBox(
-                                //height: isExpanded ? null : 0,
-                                child: AnimatedOpacity(
-                                  opacity: showTextField ? 1.0 : 0.0,
-                                  duration: const Duration(milliseconds: 300),
-                                  child: Column(
-                                    children: [
-                                      const Text(
-                                          "Enter your new address location : ",
-                                          style: TextStyle(fontSize: 15)),
-                                      const SizedBox(height: 20),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15.0),
-                                        child: TextFormField(
-                                          controller: addressController,
-                                          decoration: const InputDecoration(
-                                              hintText: 'Enter full Address',
-                                              prefixIcon:
-                                                  Icon(Icons.location_history),
-                                              labelText: 'Address'),
+                              child: Form(
+                                key: _formKey,
+                                child: SizedBox(
+                                  //height: isExpanded ? null : 0,
+                                  child: AnimatedOpacity(
+                                    opacity: showTextField ? 1.0 : 0.0,
+                                    duration: const Duration(milliseconds: 300),
+                                    child: Column(
+                                      children: [
+                                        const Text(
+                                            "Enter your new address location : ",
+                                            style: TextStyle(fontSize: 15)),
+                                        const SizedBox(height: 20),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 15.0),
+                                          child: TextFormField(
+                                            controller: addressController,
+                                            decoration: const InputDecoration(
+                                                hintText: 'Enter full Address',
+                                                prefixIcon: Icon(
+                                                    Icons.location_history),
+                                                labelText: 'Address'),
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Enter full address';
+                                              }
+                                              if (value.isNotEmpty &&
+                                                  value.length < 3) {
+                                                return 'T=Entered too short address';
+                                              }
+                                              return null; // Return null if the input is valid
+                                            },
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(height: 20),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15.0),
-                                        child: TextFormField(
-                                          controller: pincodeController,
-                                          decoration: const InputDecoration(
-                                              prefixIcon:
-                                                  Icon(Icons.pin_drop_outlined),
-                                              hintText: 'Enter Pincode',
-                                              labelText: "Pincode"),
+                                        const SizedBox(height: 20),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 15.0),
+                                          child: TextFormField(
+                                            controller: pincodeController,
+                                            decoration: const InputDecoration(
+                                                prefixIcon: Icon(
+                                                    Icons.pin_drop_outlined),
+                                                hintText: 'Enter Pincode',
+                                                labelText: "Pincode"),
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Enter pin code';
+                                              }
+                                              if (value.isNotEmpty &&
+                                                  value.length < 6) {
+                                                return 'Enter 6 digit pin code';
+                                              }
+                                              return null; // Return null if the input is valid
+                                            },
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(height: 20),
-                                    ],
+                                        const SizedBox(height: 20),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -334,60 +360,65 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                               await Future.delayed(
                                   const Duration(milliseconds: 1300));
                               //For Rid
-                              if (!notificationSent) {
-                                CollectionReference citizenRequestCollection =
-                                    FirebaseFirestore.instance
-                                        .collection("clc_request");
-                                try {
-                                  QuerySnapshot snapshot =
-                                      await citizenRequestCollection.get();
-                                  int totalDocCount = snapshot.size;
-                                  totalDocCount++;
-                                  //sends request/alert to only NGO which are of the currents user's city
-                                  var ngoQuerySnapshot = await FirebaseFirestore
-                                      .instance
-                                      .collection('clc_ngo')
-                                      //added new ***
-                                      // .where('services', whereIn: selectedServiceWords)
-                                      .where('city', isEqualTo: 'Surat')
-                                      .get();
 
-                                  for (var ngoDoc in ngoQuerySnapshot.docs) {
-                                    String deviceToken =
-                                        ngoDoc.data()['deviceToken'];
-                                    sendNotificationToDevice(
-                                        deviceToken, totalDocCount);
-                                  }
+                              if (_formKey.currentState!.validate()) {
+                                if (!notificationSent) {
+                                  CollectionReference citizenRequestCollection =
+                                      FirebaseFirestore.instance
+                                          .collection("clc_request");
+                                  try {
+                                    QuerySnapshot snapshot =
+                                        await citizenRequestCollection.get();
+                                    int totalDocCount = snapshot.size;
+                                    totalDocCount++;
+                                    //sends request/alert to only NGO which are of the currents user's city
+                                    var ngoQuerySnapshot = await FirebaseFirestore
+                                        .instance
+                                        .collection('clc_ngo')
+                                        //added new ***
+                                        // .where('services', whereIn: selectedServiceWords)
+                                        .where('city', isEqualTo: 'Surat')
+                                        .get();
 
-                                  var govtQuerySnapshot =
-                                      await FirebaseFirestore.instance
-                                          .collection('clc_govt')
-                                          .where('city', isEqualTo: 'Surat')
-                                          .get();
+                                    for (var ngoDoc in ngoQuerySnapshot.docs) {
+                                      String deviceToken =
+                                          ngoDoc.data()['deviceToken'];
+                                      sendNotificationToDevice(
+                                          deviceToken, totalDocCount);
+                                    }
 
-                                  for (var doc in govtQuerySnapshot.docs) {
-                                    String deviceToken =
-                                        doc.data()['deviceToken'];
-                                    sendNotificationToDevice(
-                                        deviceToken, totalDocCount);
+                                    var govtQuerySnapshot =
+                                        await FirebaseFirestore.instance
+                                            .collection('clc_govt')
+                                            .where('city', isEqualTo: 'Surat')
+                                            .get();
+
+                                    for (var doc in govtQuerySnapshot.docs) {
+                                      String deviceToken =
+                                          doc.data()['deviceToken'];
+                                      sendNotificationToDevice(
+                                          deviceToken, totalDocCount);
+                                    }
+                                    // });
+                                    addReqToDatabase(totalDocCount);
+                                  } catch (e) {
+                                    if (kDebugMode) {
+                                      print(
+                                          'Error while sending citizen request : $e');
+                                    }
+                                  } finally {
+                                    Navigator.pop(context);
                                   }
-                                  // });
-                                  addReqToDatabase(totalDocCount);
-                                } catch (e) {
-                                  if (kDebugMode) {
-                                    print(
-                                        'Error while sending citizen request : $e');
-                                  }
-                                } finally {
+                                  notificationSent = true;
+                                } else {
                                   Navigator.pop(context);
+                                  showMsgDialog(
+                                      context,
+                                      'You have already requested for your request ,'
+                                      '\n Nearby authority will contact you soon ');
                                 }
-                                notificationSent = true;
                               } else {
                                 Navigator.pop(context);
-                                showMsgDialog(
-                                    context,
-                                    'You have already requested for your request ,'
-                                    '\n Nearby authority will contact you soon ');
                               }
                             },
                             style: ButtonStyle(
