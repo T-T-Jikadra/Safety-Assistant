@@ -269,17 +269,9 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                                 prefixIcon: Icon(
                                                     Icons.location_history),
                                                 labelText: 'Address'),
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'Enter full address';
-                                              }
-                                              if (value.isNotEmpty &&
-                                                  value.length < 3) {
-                                                return 'T=Entered too short address';
-                                              }
-                                              return null; // Return null if the input is valid
-                                            },
+                                            validator: selectedRadioAddress != 1
+                                                ? addressValidator
+                                                : null,
                                           ),
                                         ),
                                         const SizedBox(height: 20),
@@ -293,17 +285,9 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                                     Icons.pin_drop_outlined),
                                                 hintText: 'Enter Pincode',
                                                 labelText: "Pincode"),
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'Enter pin code';
-                                              }
-                                              if (value.isNotEmpty &&
-                                                  value.length < 6) {
-                                                return 'Enter 6 digit pin code';
-                                              }
-                                              return null; // Return null if the input is valid
-                                            },
+                                            validator: selectedRadioAddress != 1
+                                                ? pincodeValidator
+                                                : null,
                                           ),
                                         ),
                                         const SizedBox(height: 20),
@@ -327,6 +311,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                     child: ClipRRect(
                         child: ElevatedButton(
                             onPressed: () async {
+                              int totalDocCount = 0;
                               //progress
                               showDialog(
                                 context: context,
@@ -361,23 +346,35 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                   const Duration(milliseconds: 1300));
                               //For Rid
 
-                              if (_formKey.currentState!.validate()) {
+                              if (selectedRadioAddress == 1) {
                                 if (!notificationSent) {
-                                  CollectionReference citizenRequestCollection =
-                                      FirebaseFirestore.instance
-                                          .collection("clc_request");
                                   try {
-                                    QuerySnapshot snapshot =
-                                        await citizenRequestCollection.get();
-                                    int totalDocCount = snapshot.size;
-                                    totalDocCount++;
+                                    await FirebaseFirestore.instance
+                                        .runTransaction((transaction) async {
+                                      // Get the current count of requests
+                                      DocumentSnapshot snapshot =
+                                          await transaction.get(
+                                              FirebaseFirestore.instance
+                                                  .collection("clc_request")
+                                                  .doc("request_count"));
+                                      totalDocCount = (snapshot.exists)
+                                          ? snapshot.get('count')
+                                          : 0;
+                                      totalDocCount++;
+
+                                      transaction.set(
+                                          FirebaseFirestore.instance
+                                              .collection("clc_request")
+                                              .doc("request_count"),
+                                          {'count': totalDocCount});
+                                    });
                                     //sends request/alert to only NGO which are of the currents user's city
                                     var ngoQuerySnapshot = await FirebaseFirestore
                                         .instance
                                         .collection('clc_ngo')
                                         //added new ***
                                         // .where('services', whereIn: selectedServiceWords)
-                                        .where('city', isEqualTo: 'Surat')
+                                        .where('city', isEqualTo: fetchedCity)
                                         .get();
 
                                     for (var ngoDoc in ngoQuerySnapshot.docs) {
@@ -390,7 +387,8 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                     var govtQuerySnapshot =
                                         await FirebaseFirestore.instance
                                             .collection('clc_govt')
-                                            .where('city', isEqualTo: 'Surat')
+                                            .where('city',
+                                                isEqualTo: fetchedCity)
                                             .get();
 
                                     for (var doc in govtQuerySnapshot.docs) {
@@ -418,7 +416,68 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                       '\n Nearby authority will contact you soon ');
                                 }
                               } else {
-                                Navigator.pop(context);
+                                if (_formKey.currentState!.validate()) {
+                                  if (!notificationSent) {
+                                    CollectionReference
+                                        citizenRequestCollection =
+                                        FirebaseFirestore.instance
+                                            .collection("clc_request");
+                                    try {
+                                      QuerySnapshot snapshot =
+                                          await citizenRequestCollection.get();
+                                      int totalDocCount = snapshot.size;
+                                      totalDocCount++;
+                                      //sends request/alert to only NGO which are of the currents user's city
+                                      var ngoQuerySnapshot = await FirebaseFirestore
+                                          .instance
+                                          .collection('clc_ngo')
+                                          //added new ***
+                                          // .where('services', whereIn: selectedServiceWords)
+                                          .where('city', isEqualTo: fetchedCity)
+                                          .get();
+
+                                      for (var ngoDoc
+                                          in ngoQuerySnapshot.docs) {
+                                        String deviceToken =
+                                            ngoDoc.data()['deviceToken'];
+                                        sendNotificationToDevice(
+                                            deviceToken, totalDocCount);
+                                      }
+
+                                      var govtQuerySnapshot =
+                                          await FirebaseFirestore.instance
+                                              .collection('clc_govt')
+                                              .where('city',
+                                                  isEqualTo: fetchedCity)
+                                              .get();
+
+                                      for (var doc in govtQuerySnapshot.docs) {
+                                        String deviceToken =
+                                            doc.data()['deviceToken'];
+                                        sendNotificationToDevice(
+                                            deviceToken, totalDocCount);
+                                      }
+                                      // });
+                                      addReqToDatabase(totalDocCount);
+                                    } catch (e) {
+                                      if (kDebugMode) {
+                                        print(
+                                            'Error while sending citizen request : $e');
+                                      }
+                                    } finally {
+                                      Navigator.pop(context);
+                                    }
+                                    notificationSent = true;
+                                  } else {
+                                    Navigator.pop(context);
+                                    showMsgDialog(
+                                        context,
+                                        'You have already requested for your request ,'
+                                        '\n Nearby authority will contact you soon ');
+                                  }
+                                } else {
+                                  Navigator.pop(context);
+                                }
                               }
                             },
                             style: ButtonStyle(
@@ -573,4 +632,24 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
       notificationSent = false;
     });
   }
+}
+
+String? addressValidator(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Enter full address';
+  }
+  if (value.isNotEmpty && value.length < 3) {
+    return 'Entered too short address';
+  }
+  return null; // Return null if the input is valid
+}
+
+String? pincodeValidator(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Enter pin code';
+  }
+  if (value.isNotEmpty && value.length < 6) {
+    return 'Enter 6 digit pin code';
+  }
+  return null; // Return null if the input is valid
 }

@@ -151,6 +151,7 @@ class _req_history_list_widgetState extends State<req_history_list_widget> {
                                                     const Text(
                                                         "Requested service : ",
                                                         style: TextStyle(
+                                                            color: Colors.black,
                                                             fontSize: 13)),
                                                     const SizedBox(height: 3),
                                                     Text(

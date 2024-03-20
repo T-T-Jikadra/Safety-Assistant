@@ -9,6 +9,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import '../../Utils/Utils.dart';
 import '../../Utils/constants.dart';
+import '../../Utils/dropdown_Items.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
@@ -18,6 +19,7 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isLoading = true;
   bool isMale = true;
   bool isEditing = false;
@@ -25,6 +27,7 @@ class _UserProfileState extends State<UserProfile> {
   String fetchedFname = "";
   String fetchedLname = "";
   String? fetchedGender = "";
+  late Timestamp fetchedBirthDate = Timestamp.now();
   String? fetchedPhone = "";
   String fetchedState = "";
   String fetchedCity = "";
@@ -32,9 +35,12 @@ class _UserProfileState extends State<UserProfile> {
   String fetchedFullAddress = "";
   String fetchedRegTime = "";
   String selectedGender = '';
-  late Timestamp fetchedBirthDate = Timestamp.now();
 
   int userAge = 0;
+
+  String selectedState = '';
+  String selectedCity = '';
+  List<String> dropdownItemCity = [];
 
   TextEditingController fnameTextController = TextEditingController();
   TextEditingController lnameTextController = TextEditingController();
@@ -56,6 +62,10 @@ class _UserProfileState extends State<UserProfile> {
         pincodeTextController.text = fetchedPinCode.trim();
         stateTextController.text = fetchedState.trim();
         cityTextController.text = fetchedCity.trim();
+
+        selectedState = fetchedState.trim();
+        selectedCity = fetchedCity.trim();
+        updateCityList(selectedState);
       });
     });
   }
@@ -98,292 +108,407 @@ class _UserProfileState extends State<UserProfile> {
                 children: [
                   Expanded(
                     child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Center(
-                            child: CircleAvatar(
-                              radius: 37,
-                              backgroundImage: isMale
-                                  ? const AssetImage("assets/images/man.png")
-                                  : const AssetImage("assets/images/woman.png"),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: CircleAvatar(
+                                radius: 37,
+                                backgroundImage: isMale
+                                    ? const AssetImage("assets/images/man.png")
+                                    : const AssetImage(
+                                        "assets/images/woman.png"),
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 15),
-                          AbsorbPointer(
-                            absorbing: !isEditing,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10, bottom: 3),
-                                  child: Text("Username :"),
-                                ),
-                                //username
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: SizedBox(
-                                        height: 55,
-                                        child: TextFormField(
-                                          controller: fnameTextController,
-                                          decoration: InputDecoration(
-                                            prefixIcon:
-                                                const Icon(Icons.person),
-                                            hintText: fetchedFname,
-                                          ),
-                                          enabled: isEditing,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 20),
-                                    Expanded(
-                                      child: SizedBox(
-                                        height: 55,
-                                        child: TextFormField(
-                                          controller: lnameTextController,
-                                          decoration: InputDecoration(
-                                            prefixIcon: const Icon(
-                                                Icons.person_outline_outlined),
-                                            hintText: fetchedLname,
-                                          ),
-                                          enabled: isEditing,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 10),
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10, bottom: 3),
-                                  child: Text("Gender :"),
-                                ),
-                                //gender
-                                SizedBox(
-                                  child: Column(
+                            const SizedBox(height: 15),
+                            AbsorbPointer(
+                              absorbing: !isEditing,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, bottom: 3),
+                                    child: Text("Username :"),
+                                  ),
+                                  //username
+                                  Row(
                                     children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Radio(
-                                            value: 'Male',
-                                            groupValue: selectedGender,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                selectedGender =
-                                                    value.toString();
-                                                isMale =
-                                                    true; // Set isMale to true when Male is selected
-                                              });
+                                      Expanded(
+                                        child: SizedBox(
+                                          child: TextFormField(
+                                            controller: fnameTextController,
+                                            decoration: InputDecoration(
+                                              prefixIcon:
+                                                  const Icon(Icons.person),
+                                              hintText: fetchedFname,
+                                            ),
+                                            enabled: isEditing,
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Enter First name';
+                                              }
+                                              if (value.isNotEmpty &&
+                                                  value.length < 3) {
+                                                return 'Minimum 3 Characters required';
+                                              }
+                                              return null;
                                             },
-                                            toggleable: isEditing,
                                           ),
-                                          const Text('Male'),
-                                          const SizedBox(width: 10),
-                                          Radio(
-                                            value: 'Female',
-                                            groupValue: selectedGender,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                selectedGender =
-                                                    value.toString();
-                                                isMale =
-                                                    false; // Set isMale to false when Female is selected
-                                              });
+                                        ),
+                                      ),
+                                      const SizedBox(width: 20),
+                                      Expanded(
+                                        child: SizedBox(
+                                          child: TextFormField(
+                                            controller: lnameTextController,
+                                            decoration: InputDecoration(
+                                              prefixIcon: const Icon(Icons
+                                                  .person_outline_outlined),
+                                              hintText: fetchedLname,
+                                            ),
+                                            enabled: isEditing,
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Enter last name';
+                                              }
+                                              if (value.isNotEmpty &&
+                                                  value.length < 3) {
+                                                return 'Minimum 3 Characters required';
+                                              }
+                                              return null;
                                             },
-                                            toggleable: isEditing,
                                           ),
-                                          const Text('Female'),
-                                          const SizedBox(width: 10),
-                                          Radio(
-                                            value: 'Other',
-                                            groupValue: selectedGender,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                selectedGender =
-                                                    value.toString();
-                                              });
-                                            },
-                                            toggleable: isEditing,
-                                          ),
-                                          const Text('Other'),
-                                        ],
+                                        ),
                                       ),
                                     ],
                                   ),
-                                ),
-                                const SizedBox(height: 10),
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10, bottom: 3),
-                                  child: Text("Birth Date :"),
-                                ),
-                                //birthdate
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 5, right: 5),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      if (isEditing) {
-                                        _selectDate(context);
-                                      }
-                                    },
-                                    child: AbsorbPointer(
-                                      //absorbing: !isEditing,
-                                      child: TextFormField(
-                                        controller: birthDateTextController,
-                                        readOnly: true,
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                20), // Make it round
-                                          ),
-                                          // hintText: DateFormat('MMMM dd, yyyy')
-                                          //     .format(
-                                          //         fetchedBirthDate.toDate()),
-                                          prefixIcon: Container(
-                                            margin: const EdgeInsets.fromLTRB(
-                                                20, 16, 12, 16),
-                                            child: SvgPicture.asset(
-                                                svg_for_calendar),
-                                          ),
+                                  const SizedBox(height: 10),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, bottom: 3),
+                                    child: Text("Gender :"),
+                                  ),
+                                  //gender
+                                  SizedBox(
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Radio(
+                                              value: 'Male',
+                                              groupValue: selectedGender,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  selectedGender =
+                                                      value.toString();
+                                                  isMale =
+                                                      true; // Set isMale to true when Male is selected
+                                                });
+                                              },
+                                              toggleable: isEditing,
+                                            ),
+                                            const Text('Male'),
+                                            const SizedBox(width: 10),
+                                            Radio(
+                                              value: 'Female',
+                                              groupValue: selectedGender,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  selectedGender =
+                                                      value.toString();
+                                                  isMale =
+                                                      false; // Set isMale to false when Female is selected
+                                                });
+                                              },
+                                              toggleable: isEditing,
+                                            ),
+                                            const Text('Female'),
+                                            const SizedBox(width: 10),
+                                            Radio(
+                                              value: 'Other',
+                                              groupValue: selectedGender,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  selectedGender =
+                                                      value.toString();
+                                                });
+                                              },
+                                              toggleable: isEditing,
+                                            ),
+                                            const Text('Other'),
+                                          ],
                                         ),
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'Select Birth date';
-                                          }
-                                          return null;
-                                        },
-                                        enabled:
-                                            isEditing, // Always disabled for editing directly
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, bottom: 3),
+                                    child: Text("Birth Date :"),
+                                  ),
+                                  //birthdate
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 5, right: 5),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        if (isEditing) {
+                                          _selectDate(context);
+                                        }
+                                      },
+                                      child: AbsorbPointer(
+                                        //absorbing: !isEditing,
+                                        child: TextFormField(
+                                          controller: birthDateTextController,
+                                          readOnly: true,
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      20), // Make it round
+                                            ),
+                                            // hintText: DateFormat('MMMM dd, yyyy')
+                                            //     .format(
+                                            //         fetchedBirthDate.toDate()),
+                                            prefixIcon: Container(
+                                              margin: const EdgeInsets.fromLTRB(
+                                                  20, 16, 12, 16),
+                                              child: SvgPicture.asset(
+                                                  svg_for_calendar),
+                                            ),
+                                          ),
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              return 'Select Birth date';
+                                            }
+                                            return null;
+                                          },
+                                          enabled:
+                                              isEditing, // Always disabled for editing directly
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 10),
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10, bottom: 3),
-                                  child: Text("Phone number :"),
-                                ),
-                                //phone
-                                SizedBox(
-                                  height: 55,
-                                  child: TextFormField(
-                                    enabled: false,
-                                    decoration: InputDecoration(
-                                      prefixIcon: const Icon(Iconsax.call5),
-                                      hintText: fetchedPhone,
+                                  const SizedBox(height: 10),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Text(
+                                      "Citizen age : ${userAge.toString()}",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.deepPurple.shade300,
+                                          fontSize: 14),
                                     ),
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10, bottom: 3),
-                                  child: Text("Full Address :"),
-                                ),
-                                //address
-                                SizedBox(
-                                  child: TextFormField(
-                                    maxLength: 100,
-                                    minLines: 2,
-                                    maxLines: 4,
-                                    controller: addressTextController,
-                                    decoration: InputDecoration(
-                                      prefixIcon: const Icon(Iconsax.location),
-                                      hintText: fetchedFullAddress,
-                                    ),
-                                    enabled: isEditing,
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10, bottom: 3),
-                                  child: Text("Pincode :"),
-                                ),
-                                //pincode
-                                SizedBox(
-                                  height: 55,
-                                  child: TextFormField(
-                                    controller: pincodeTextController,
-                                    decoration: InputDecoration(
-                                      prefixIcon:
-                                          const Icon(Iconsax.location_add),
-                                      hintText: fetchedPinCode,
-                                    ),
-                                    enabled: isEditing,
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10, bottom: 3),
-                                  child: Text("City :"),
-                                ),
-                                //city
-                                SizedBox(
-                                  height: 55,
-                                  child: TextFormField(
-                                    controller: cityTextController,
-                                    decoration: InputDecoration(
-                                      prefixIcon:
-                                          const Icon(Iconsax.location_add),
-                                      hintText: fetchedCity,
-                                    ),
-                                    enabled: isEditing,
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 10, bottom: 3),
-                                  child: Text("State :"),
-                                ),
-                                //state
-                                SizedBox(
-                                  height: 55,
-                                  child: TextFormField(
-                                    controller: stateTextController,
-                                    decoration: InputDecoration(
-                                      prefixIcon:
-                                          const Icon(Iconsax.location_add),
-                                      hintText: fetchedState,
-                                    ),
-                                    enabled: isEditing,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          //extra details
-                          Align(
-                            alignment: AlignmentDirectional.center,
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.85,
-                              decoration: BoxDecoration(
-                                border: Border.all(width: 2),
-                                borderRadius: BorderRadius.circular(15),
-                                color: Colors.grey.withOpacity(0.1),
-                              ),
-                              child: Column(
-                                children: [
-                                  const SizedBox(height: 15),
-                                  Text(
-                                    "Citizen Age : ${userAge.toString()}",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  Text(
-                                    "User registered at  : $fetchedRegTime",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w600),
                                   ),
                                   const SizedBox(height: 15),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, bottom: 3),
+                                    child: Text("Phone number :"),
+                                  ),
+                                  //phone
+                                  SizedBox(
+                                    // height: 55,
+                                    child: TextFormField(
+                                      enabled: false,
+                                      decoration: InputDecoration(
+                                        prefixIcon: const Icon(Iconsax.call5),
+                                        hintText: fetchedPhone,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, bottom: 3),
+                                    child: Text("Full Address :"),
+                                  ),
+                                  //address
+                                  SizedBox(
+                                    child: TextFormField(
+                                      maxLength: 100,
+                                      minLines: 2,
+                                      maxLines: 4,
+                                      controller: addressTextController,
+                                      decoration: InputDecoration(
+                                        prefixIcon:
+                                            const Icon(Iconsax.location),
+                                        hintText: fetchedFullAddress,
+                                      ),
+                                      enabled: isEditing,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Enter full address';
+                                        }
+                                        if (value.isNotEmpty &&
+                                            value.length < 10) {
+                                          return "Too short address";
+                                        }
+                                        return null; // Return null if the input is valid
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, bottom: 3),
+                                    child: Text("Pincode :"),
+                                  ),
+                                  //pincode
+                                  SizedBox(
+                                    child: TextFormField(
+                                      controller: pincodeTextController,
+                                      decoration: InputDecoration(
+                                        prefixIcon:
+                                            const Icon(Iconsax.location_add),
+                                        hintText: fetchedPinCode,
+                                      ),
+                                      enabled: isEditing,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Enter Pin code';
+                                        }
+                                        if (value.isNotEmpty &&
+                                            value.length < 6) {
+                                          return 'Enter 6 digits Pin code';
+                                        }
+                                        return null; // Return null if the input is valid
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, bottom: 3),
+                                    child: Text("State :"),
+                                  ),
+                                  //state
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 5,
+                                      right: 5,
+                                    ),
+                                    child: SizedBox(
+                                      //height: 60,
+                                      child: DropdownButtonFormField<String>(
+                                        value: selectedState,
+                                        items: DropdownItems.dropdownItemState
+                                            .map((String state) {
+                                          return DropdownMenuItem<String>(
+                                            // alignment: AlignmentDirectional.topStart,
+                                            value: state,
+                                            child: Text(state),
+                                          );
+                                        }).toList(),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            selectedState = value!;
+                                            // Update city list based on the selected state
+                                            updateCityList(selectedState);
+                                            // Reset selected city when state changes
+                                            selectedCity = '';
+                                          });
+                                        },
+                                        decoration: InputDecoration(
+                                          enabled: isEditing,
+                                          // border: OutlineInputBorder(),
+                                          hintText: "Select your State",
+                                        ),
+                                        validator: (value) {
+                                          if (value == "Select your State") {
+                                            return 'Select your State';
+                                          }
+                                          return null; // Return null if the input is valid
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, bottom: 3),
+                                    child: Text("City :"),
+                                  ),
+                                  //city
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 5,
+                                      right: 5,
+                                    ),
+                                    child: SizedBox(
+                                      //height: 60,
+                                      child: DropdownButtonFormField<String>(
+                                        value: selectedCity.isNotEmpty
+                                            ? selectedCity
+                                            : null,
+                                        items:
+                                            dropdownItemCity.map((String city) {
+                                          return DropdownMenuItem<String>(
+                                            value: city,
+                                            child: Text(city),
+                                          );
+                                        }).toList(),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            selectedCity = value!;
+                                          });
+                                        },
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(24),
+                                          ),
+                                          enabled: isEditing,
+                                          hintText: "Select your City",
+                                        ),
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Select your City';
+                                          }
+                                          return null; // Return null if the input is valid
+                                        },
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 20),
+                            //extra details
+                            Align(
+                              alignment: AlignmentDirectional.bottomEnd,
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.85,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    const SizedBox(height: 10),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 10),
+                                      child: Text(
+                                        "User registered at  : \t   \n$fetchedRegTime",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 10),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 15),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -402,7 +527,9 @@ class _UserProfileState extends State<UserProfile> {
                                   "Enable editing to edit your profile ..",
                                   "Okay");
                             } else {
-                              updateUserProfile();
+                              if (_formKey.currentState!.validate()) {
+                                updateUserProfile();
+                              }
                             }
                           },
                           style: ButtonStyle(
@@ -453,6 +580,7 @@ class _UserProfileState extends State<UserProfile> {
           fetchedBirthDate = citizenSnapshot.get('birthDate');
           birthDateTextController.text =
               DateFormat('MMMM dd, yyyy').format(fetchedBirthDate.toDate());
+
           DateTime birthDate = fetchedBirthDate.toDate();
           DateTime currentDate = DateTime.now();
           userAge = currentDate.year - birthDate.year;
@@ -504,6 +632,7 @@ class _UserProfileState extends State<UserProfile> {
         setState(() {
           //fetchedBirthDate = Timestamp.fromDate(pickedDate);
           birthDateTextController.text = formattedDate;
+          calculateAge(pickedDate);
         });
       }
     }
@@ -515,8 +644,6 @@ class _UserProfileState extends State<UserProfile> {
       DateTime birthDate = DateFormat('MMMM dd, yyyy').parse(dateString);
 
       User? user = FirebaseAuth.instance.currentUser;
-      print(birthDate);
-      print(fetchedBirthDate.toDate());
 
       Map<String, dynamic> updatedData = {
         if (fnameTextController.text != fetchedFname)
@@ -524,13 +651,9 @@ class _UserProfileState extends State<UserProfile> {
         if (lnameTextController.text != fetchedLname)
           'lastName': lnameTextController.text,
         if (fetchedGender != selectedGender) 'gender': selectedGender,
-
-        // Include birth date in updated data if it's different from fetched value
         if (birthDate != fetchedBirthDate.toDate()) 'birthDate': birthDate,
-        if (stateTextController.text != fetchedState)
-          'state': stateTextController.text,
-        if (cityTextController.text != fetchedCity)
-          'city': cityTextController.text,
+        if (selectedState != fetchedState) 'state': selectedState,
+        if (selectedCity != fetchedCity) 'city': selectedCity,
         if (pincodeTextController.text != fetchedPinCode)
           'pinCode': pincodeTextController.text,
         if (addressTextController.text != fetchedFullAddress)
@@ -548,7 +671,7 @@ class _UserProfileState extends State<UserProfile> {
         setState(() {
           isEditing = false;
         });
-        showSnakeBar(context, "user profile updated successfully .. ", "Okay");
+        showSnakeBar(context, "User profile updated successfully .. ", "Okay");
       } else {
         // setState(() {isEditing = false;});
         showSnakeBar(context, "No profile data edited !", "Close");
@@ -558,6 +681,23 @@ class _UserProfileState extends State<UserProfile> {
         print('Error updating user profile: $e');
       }
       showSnakeBar(context, "$e!", "Okay");
+    }
+  }
+
+  void updateCityList(String state) {
+    setState(() {
+      dropdownItemCity = DropdownItems.cityMap[state] ?? [];
+    });
+  }
+
+  void calculateAge(DateTime passedDate) {
+    DateTime birthDate = passedDate;
+    DateTime currentDate = DateTime.now();
+    userAge = currentDate.year - birthDate.year;
+    if (currentDate.month < birthDate.month ||
+        (currentDate.month == birthDate.month &&
+            currentDate.day < birthDate.day)) {
+      userAge--;
     }
   }
 }

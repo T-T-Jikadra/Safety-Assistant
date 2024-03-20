@@ -46,7 +46,7 @@ class _User_Feedback_ScreenState extends State<User_Feedback_Screen> {
         backgroundColor: Colors.blueGrey.shade50,
         appBar: AppBar(
           elevation: 50,
-          backgroundColor: Colors.black12,
+          //backgroundColor: Colors.black12,
           centerTitle: true,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -80,7 +80,9 @@ class _User_Feedback_ScreenState extends State<User_Feedback_Screen> {
                             Text(
                               "Submit feedback for : ${widget.authority_name}",
                               style: const TextStyle(
-                                  fontSize: 19, fontWeight: FontWeight.w400),
+                                  color: Colors.black,
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.w400),
                             ),
                             const SizedBox(height: 9),
                             const Divider(
@@ -92,7 +94,9 @@ class _User_Feedback_ScreenState extends State<User_Feedback_Screen> {
                             const Text(
                               "Select rating as per service :",
                               style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w600),
+                                  color: Colors.black,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600),
                             ),
                             const SizedBox(height: 15),
                             Row(
@@ -118,6 +122,7 @@ class _User_Feedback_ScreenState extends State<User_Feedback_Screen> {
                                 Text(
                                   getRatingString(_starRating),
                                   style: const TextStyle(
+                                    color: Colors.black,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16,
                                   ),
@@ -305,18 +310,18 @@ class _User_Feedback_ScreenState extends State<User_Feedback_Screen> {
                               child: Text(
                                   'Tell us more !${widget.authority_name}',
                                   style: const TextStyle(
+                                      color: Colors.black,
                                       fontSize: 17,
                                       fontWeight: FontWeight.w600)),
                             ),
                             const SizedBox(height: 15),
-                            // Display custom checkboxes
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text('Was your request fulfilled ? :'),
+                                const Text('Was your request fulfilled ? :',
+                                    style: TextStyle(color: Colors.black)),
                                 const Spacer(),
                                 const SizedBox(width: 10),
-                                // Display thumbs up and thumbs down icons
                                 GestureDetector(
                                   onTap: () {
                                     _thumbsUpSelected = !_thumbsUpSelected;
@@ -387,6 +392,7 @@ class _User_Feedback_ScreenState extends State<User_Feedback_Screen> {
                               padding: EdgeInsets.only(left: 10, top: 5),
                               child: Text('Add detailed review !',
                                   style: TextStyle(
+                                      color: Colors.black,
                                       fontSize: 17,
                                       fontWeight: FontWeight.w600)),
                             ),
@@ -399,11 +405,23 @@ class _User_Feedback_ScreenState extends State<User_Feedback_Screen> {
                                     TextCapitalization.sentences,
                                 controller: descController,
                                 maxLength: 100,
-                                decoration: const InputDecoration(
+                                style: const TextStyle(color: Colors.black),
+                                decoration: InputDecoration(
                                   hintText: 'Write your feedback here ...',
-                                  // border: OutlineInputBorder(
-                                  //     borderRadius:
-                                  //         BorderRadius.all(Radius.circular(5))),
+                                  hintStyle:
+                                      const TextStyle(color: Colors.black),
+                                  enabledBorder:
+                                      const OutlineInputBorder().copyWith(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: const BorderSide(
+                                        width: 1, color: Colors.black),
+                                  ),
+                                  focusedBorder:
+                                      const OutlineInputBorder().copyWith(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: const BorderSide(
+                                        width: 1, color: Colors.black12),
+                                  ),
                                 ),
                                 maxLines: 5,
                                 validator: (value) {
@@ -584,7 +602,7 @@ class _User_Feedback_ScreenState extends State<User_Feedback_Screen> {
 
       Timer(const Duration(milliseconds: 800), () {
         showToastMsg("Feedback submitted successfully..");
-        Navigator.pop(context,true);
+        Navigator.pop(context, true);
         Navigator.pop(context);
 
         //Get.to(const Request_History_Screen());

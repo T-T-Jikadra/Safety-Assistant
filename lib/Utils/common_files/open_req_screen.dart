@@ -142,9 +142,9 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
                         rows: [
                           buildDataRow('Name : ', widget.userName),
                           buildDataRow('Request type : ', widget.title),
-                          buildDataRow('Address :', fetchedReqAddress),
+                          buildDataRow('Address :', widget.add),
                           buildDataRow('Pin Code :', widget.pin),
-                          buildDataRow('City :', fetchedCitizenCity),
+                          buildDataRow('City :', widget.city),
                           buildDataRow('Contact No : ', widget.contactNo),
                         ],
                       ),
@@ -403,6 +403,8 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
           fetchedCitizenCity = ReqSnapshot.get('city');
           fetchedReqAddress = ReqSnapshot.get('fullAddress');
           fetchedIsTnxComplete = ReqSnapshot.get('isTransactionCompleted');
+          print(fetchedReqAddress);
+          print(fetchedCitizenCity);
         });
       } else {
         if (kDebugMode) {
