@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Admin Related/alert/alert_history_screen.dart';
 import '../../../Utils/common_files/notice_screen.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
-import '../../../Utils/common_files/FAQ_screen.dart';
+import '../../../Utils/common_files/faq_screen/faq_screen.dart';
 import '../citizen_NGO-GA_list/citizen_NGO-GA_list_screen.dart';
 import '../../../Utils/common_files/about_us_screen.dart';
 import '../../Screens/citizen_donation_history_screen.dart';
