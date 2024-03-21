@@ -403,8 +403,6 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
           fetchedCitizenCity = ReqSnapshot.get('city');
           fetchedReqAddress = ReqSnapshot.get('fullAddress');
           fetchedIsTnxComplete = ReqSnapshot.get('isTransactionCompleted');
-          print(fetchedReqAddress);
-          print(fetchedCitizenCity);
         });
       } else {
         if (kDebugMode) {

@@ -143,8 +143,8 @@ class _response_history_list_widgetState
                       onTap: () async {
                         String passReq = responseData['RequestId'];
 
-                        DocumentSnapshot<Map<String, dynamic>>
-                            passSnapshot = await FirebaseFirestore.instance
+                        DocumentSnapshot<Map<String, dynamic>> passSnapshot =
+                            await FirebaseFirestore.instance
                                 .collection('clc_request')
                                 .doc(passReq)
                                 .get();
@@ -226,8 +226,8 @@ class _response_history_list_widgetState
 
                                     const SizedBox(height: 2),
                                     Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 15, top: 5),
+                                      padding: const EdgeInsets.only(
+                                          left: 15, top: 5),
                                       child: Row(
                                         children: [
                                           const Text(
@@ -245,8 +245,8 @@ class _response_history_list_widgetState
                                     ),
                                     const SizedBox(height: 2),
                                     Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 15, top: 5),
+                                      padding: const EdgeInsets.only(
+                                          left: 15, top: 5),
                                       child: Row(
                                         children: [
                                           const Text(
@@ -267,7 +267,8 @@ class _response_history_list_widgetState
                                       padding: const EdgeInsets.only(
                                           right: 10, bottom: 3),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
                                           //const Text("City : ",style: TextStyle(fontWeight: FontWeight.bold)),
                                           Text(

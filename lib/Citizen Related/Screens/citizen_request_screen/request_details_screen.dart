@@ -604,142 +604,142 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                           style: const TextStyle(fontSize: 16)),
                                       Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           hasNGOFeedbackSent
                                               ? Row(
-                                            children: [
-                                              const Icon(
-                                                  Iconsax.tick_circle4),
-                                              const SizedBox(width: 5),
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context)
-                                                      .push(
-                                                    PageRouteBuilder(
-                                                      pageBuilder: (context,
-                                                          animation,
-                                                          secondaryAnimation) =>
-                                                          Open_Feedback_Details_Screen(
-                                                              fid:
-                                                              fetchedNGOFid),
-                                                      transitionsBuilder:
-                                                          (context,
-                                                          animation,
-                                                          secondaryAnimation,
-                                                          child) {
-                                                        var begin =
-                                                        const Offset(
-                                                            1.0, 0.0);
-                                                        var end =
-                                                            Offset.zero;
-                                                        var curve =
-                                                            Curves.ease;
+                                                  children: [
+                                                    const Icon(
+                                                        Iconsax.tick_circle4),
+                                                    const SizedBox(width: 5),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .push(
+                                                          PageRouteBuilder(
+                                                            pageBuilder: (context,
+                                                                    animation,
+                                                                    secondaryAnimation) =>
+                                                                Open_Feedback_Details_Screen(
+                                                                    fid:
+                                                                        fetchedNGOFid),
+                                                            transitionsBuilder:
+                                                                (context,
+                                                                    animation,
+                                                                    secondaryAnimation,
+                                                                    child) {
+                                                              var begin =
+                                                                  const Offset(
+                                                                      1.0, 0.0);
+                                                              var end =
+                                                                  Offset.zero;
+                                                              var curve =
+                                                                  Curves.ease;
 
-                                                        var tween = Tween(
-                                                            begin:
-                                                            begin,
-                                                            end: end)
-                                                            .chain(CurveTween(
-                                                            curve:
-                                                            curve));
-                                                        var offsetAnimation =
-                                                        animation
-                                                            .drive(
-                                                            tween);
+                                                              var tween = Tween(
+                                                                      begin:
+                                                                          begin,
+                                                                      end: end)
+                                                                  .chain(CurveTween(
+                                                                      curve:
+                                                                          curve));
+                                                              var offsetAnimation =
+                                                                  animation
+                                                                      .drive(
+                                                                          tween);
 
-                                                        return SlideTransition(
-                                                          position:
-                                                          offsetAnimation,
-                                                          child: child,
+                                                              return SlideTransition(
+                                                                position:
+                                                                    offsetAnimation,
+                                                                child: child,
+                                                              );
+                                                            },
+                                                          ),
                                                         );
                                                       },
+                                                      child: const Text(
+                                                          "Feedback submitted",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.teal,
+                                                              fontSize: 15,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
                                                     ),
-                                                  );
-                                                },
-                                                child: const Text(
-                                                    "Feedback submitted",
-                                                    style: TextStyle(
-                                                        color:
-                                                        Colors.teal,
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                        FontWeight
-                                                            .bold)),
-                                              ),
-                                            ],
-                                          )
+                                                  ],
+                                                )
                                               : Row(
-                                            children: [
-                                              const Icon(Iconsax.receipt),
-                                              const SizedBox(width: 5),
-                                              TextButton(
-                                                child: const Text(
-                                                    "Give Feedback !",
-                                                    style: TextStyle(
-                                                        color: Colors
-                                                            .deepOrangeAccent,
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                        FontWeight
-                                                            .bold)),
-                                                onPressed: () {
-                                                  Navigator.of(context)
-                                                      .push(
-                                                    PageRouteBuilder(
-                                                      pageBuilder: (context,
-                                                          animation,
-                                                          secondaryAnimation) =>
-                                                          User_Feedback_Screen(
-                                                              authority_name:
-                                                              fetchedNGOName,
-                                                              authority_id:
-                                                              fetchedNid,
-                                                              respond_id:
-                                                              widget.documentSnapshot[
-                                                              'RespondId']),
-                                                      transitionsBuilder:
-                                                          (context,
-                                                          animation,
-                                                          secondaryAnimation,
-                                                          child) {
-                                                        var begin =
-                                                        const Offset(
-                                                            1.0, 0.0);
-                                                        var end =
-                                                            Offset.zero;
-                                                        var curve =
-                                                            Curves.ease;
+                                                  children: [
+                                                    const Icon(Iconsax.receipt),
+                                                    const SizedBox(width: 5),
+                                                    TextButton(
+                                                      child: const Text(
+                                                          "Give Feedback !",
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .deepOrangeAccent,
+                                                              fontSize: 15,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .push(
+                                                          PageRouteBuilder(
+                                                            pageBuilder: (context,
+                                                                    animation,
+                                                                    secondaryAnimation) =>
+                                                                User_Feedback_Screen(
+                                                                    authority_name:
+                                                                        fetchedNGOName,
+                                                                    authority_id:
+                                                                        fetchedNid,
+                                                                    respond_id:
+                                                                        widget.documentSnapshot[
+                                                                            'RespondId']),
+                                                            transitionsBuilder:
+                                                                (context,
+                                                                    animation,
+                                                                    secondaryAnimation,
+                                                                    child) {
+                                                              var begin =
+                                                                  const Offset(
+                                                                      1.0, 0.0);
+                                                              var end =
+                                                                  Offset.zero;
+                                                              var curve =
+                                                                  Curves.ease;
 
-                                                        var tween = Tween(
-                                                            begin:
-                                                            begin,
-                                                            end: end)
-                                                            .chain(CurveTween(
-                                                            curve:
-                                                            curve));
-                                                        var offsetAnimation =
-                                                        animation
-                                                            .drive(
-                                                            tween);
+                                                              var tween = Tween(
+                                                                      begin:
+                                                                          begin,
+                                                                      end: end)
+                                                                  .chain(CurveTween(
+                                                                      curve:
+                                                                          curve));
+                                                              var offsetAnimation =
+                                                                  animation
+                                                                      .drive(
+                                                                          tween);
 
-                                                        return SlideTransition(
-                                                          position:
-                                                          offsetAnimation,
-                                                          child: child,
+                                                              return SlideTransition(
+                                                                position:
+                                                                    offsetAnimation,
+                                                                child: child,
+                                                              );
+                                                            },
+                                                          ),
                                                         );
                                                       },
-                                                    ),
-                                                  );
-                                                },
-                                              )
-                                            ],
-                                          ),
+                                                    )
+                                                  ],
+                                                ),
                                           Column(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                                MainAxisAlignment.start,
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                             children: [
                                               const Text("Respond time :",
                                                   style: TextStyle(
@@ -748,9 +748,9 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                               const SizedBox(width: 4),
                                               Text(
                                                   DateFormat(
-                                                      'dd-MM-yyyy , HH:mm')
+                                                          'dd-MM-yyyy , HH:mm')
                                                       .format(DateTime.parse(
-                                                      fetchedNGORespondTime)),
+                                                          fetchedNGORespondTime)),
                                                   style: const TextStyle(
                                                       fontSize: 11,
                                                       color: Colors.grey)),
@@ -1226,5 +1226,4 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
       throw 'Could not launch $url';
     }
   }
-
 }

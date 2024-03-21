@@ -8,18 +8,18 @@ import 'package:flutter/material.dart';
 
 import '../../../Utils/Utils.dart';
 
-class Open_Feedback_Details_Screen extends StatefulWidget {
+class View_Feedback_Details_Screen extends StatefulWidget {
   final String fid;
 
-  const Open_Feedback_Details_Screen({super.key, required this.fid});
+  const View_Feedback_Details_Screen({super.key, required this.fid});
 
   @override
-  _Open_Feedback_Details_ScreenState createState() =>
-      _Open_Feedback_Details_ScreenState();
+  _View_Feedback_Details_ScreenState createState() =>
+      _View_Feedback_Details_ScreenState();
 }
 
-class _Open_Feedback_Details_ScreenState
-    extends State<Open_Feedback_Details_Screen> {
+class _View_Feedback_Details_ScreenState
+    extends State<View_Feedback_Details_Screen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool isLoading = true;
@@ -31,7 +31,7 @@ class _Open_Feedback_Details_ScreenState
   String fetchedAuthority_id = '';
   String fetchedResponse_id = '';
 
-  bool _showError = false;
+  final bool _showError = false;
   int _starRating = 3;
   bool _thumbsUpSelected = false;
   bool _thumbsDownSelected = false;
@@ -75,6 +75,18 @@ class _Open_Feedback_Details_ScreenState
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 15),
+
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            "Feedback on your response : ",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        const SizedBox(height: 15),
                         //stars
                         Padding(
                           padding: const EdgeInsets.symmetric(
@@ -91,10 +103,10 @@ class _Open_Feedback_Details_ScreenState
                               child: Column(
                                 children: [
                                   const Text(
-                                    "Select rating as per service :",
+                                    "Selected rating as per service :",
                                     style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: 17,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w600),
                                   ),
                                   const SizedBox(height: 15),
@@ -106,7 +118,7 @@ class _Open_Feedback_Details_ScreenState
                                         children: List.generate(
                                           5,
                                           (index) => GestureDetector(
-                                            onTap: () => _selectStar(index + 1),
+                                            // onTap: () => _selectStar(index + 1),
                                             child: Icon(
                                               index < _starRating
                                                   ? Icons.star
@@ -320,7 +332,7 @@ class _Open_Feedback_Details_ScreenState
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       const Text(
-                                          'Was your request fulfilled ? :',
+                                          'Was the request fulfilled ? :',
                                           style: TextStyle(
                                             color: Colors.black,
                                           )),
@@ -329,12 +341,12 @@ class _Open_Feedback_Details_ScreenState
                                       // Display thumbs up and thumbs down icons
                                       GestureDetector(
                                         onTap: () {
-                                          _thumbsUpSelected =
-                                              !_thumbsUpSelected;
-                                          setState(() {
-                                            _thumbsDownSelected = false;
-                                            //_showError = false;
-                                          });
+                                          // _thumbsUpSelected =
+                                          // !_thumbsUpSelected;
+                                          // setState(() {
+                                          //   _thumbsDownSelected = false;
+                                          //   //_showError = false;
+                                          // });
                                         },
                                         child: Icon(
                                           Icons.thumb_up,
@@ -346,12 +358,12 @@ class _Open_Feedback_Details_ScreenState
                                       const SizedBox(width: 10),
                                       GestureDetector(
                                         onTap: () {
-                                          _thumbsDownSelected =
-                                              !_thumbsDownSelected;
-                                          setState(() {
-                                            _thumbsUpSelected = false;
-                                            //_showError = false;
-                                          });
+                                          // _thumbsDownSelected =
+                                          // !_thumbsDownSelected;
+                                          // setState(() {
+                                          //   _thumbsUpSelected = false;
+                                          //   //_showError = false;
+                                          // });
                                         },
                                         child: Icon(
                                           Icons.thumb_down,
@@ -400,7 +412,7 @@ class _Open_Feedback_Details_ScreenState
                                 children: [
                                   const Padding(
                                     padding: EdgeInsets.only(left: 10, top: 5),
-                                    child: Text('Add detailed review !',
+                                    child: Text('Detailed review !',
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 17,
@@ -415,22 +427,31 @@ class _Open_Feedback_Details_ScreenState
                                           TextCapitalization.sentences,
                                       controller: descController,
                                       maxLength: 100,
+                                      enabled: false,
+                                      style:
+                                          const TextStyle(color: Colors.black),
                                       decoration: InputDecoration(
-                                        hintText: 'Write your feedback here ...',
-                                        hintStyle:
-                                        const TextStyle(color: Colors.black),
+                                        hintText:
+                                            'Write your feedback here ...',
+                                        hintStyle: const TextStyle(
+                                            color: Colors.black),
                                         enabledBorder:
-                                        const OutlineInputBorder().copyWith(
-                                          borderRadius: BorderRadius.circular(10),
+                                            const OutlineInputBorder().copyWith(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           borderSide: const BorderSide(
                                               width: 1, color: Colors.black),
                                         ),
                                         focusedBorder:
-                                        const OutlineInputBorder().copyWith(
-                                          borderRadius: BorderRadius.circular(10),
+                                            const OutlineInputBorder().copyWith(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           borderSide: const BorderSide(
                                               width: 1, color: Colors.black12),
                                         ),
+                                        // border: OutlineInputBorder(
+                                        //     borderRadius:
+                                        //         BorderRadius.all(Radius.circular(5))),
                                       ),
                                       maxLines: 5,
                                       validator: (value) {
@@ -465,141 +486,19 @@ class _Open_Feedback_Details_ScreenState
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      if (!_thumbsUpSelected && !_thumbsDownSelected) {
-                        setState(() {
-                          _showError = true;
-                        });
-                        return;
-                      }
-
-                      setState(() {
-                        _showError = false;
-                      });
-                      if (_formKey.currentState!.validate()) {
-                        //progress
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context) {
-                            return const Dialog(
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: 35, bottom: 25, left: 20, right: 20),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(height: 15),
-                                    CircularProgressIndicator(
-                                        color: Colors.blue),
-                                    SizedBox(height: 30),
-                                    Text('Processing ...')
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                        await Future.delayed(
-                            const Duration(milliseconds: 1300));
-
-                        try {
-                          if (fetchedFid != widget.fid ||
-                              starCount != getRatingString(_starRating) ||
-                              serviceFulfill !=
-                                  (_thumbsUpSelected ? 'Yes' : 'No') ||
-                              fetchedDesc != descController.text) {
-                            updateFeedback();
-                          } else {
-                            showToastMsg("No change in feedback");
-                          }
-
-                          //addFeedbackToDatabase(totalDocCount);
-                        } catch (e) {
-                          if (kDebugMode) {
-                            print('Error while sending citizen request : $e');
-                          }
-                        } finally {
-                          Navigator.pop(context);
-                        }
-                      }
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          const MaterialStatePropertyAll(Colors.teal),
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18),
-                      )),
-                    ),
-                    child: const Text("Update"),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: ElevatedButton(
                     onPressed: () async {
-                      final CupertinoAlertDialog alert = CupertinoAlertDialog(
-                        title: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text('Confirm : ',
-                              style: TextStyle(fontSize: 16)),
-                        ),
-                        content: const Text('Delete your Feedback ?'),
-                        actions: <Widget>[
-                          CupertinoDialogAction(
-                            isDefaultAction: true,
-                            child: const Text('Cancel'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          CupertinoDialogAction(
-                            isDefaultAction: true,
-                            child: const Text('Delete'),
-                            onPressed: () async {
-                              deleteFeedback();
-                              Navigator.pop(context, true);
-                              showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (BuildContext context) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(
-                                        color: Colors.white),
-                                  );
-                                },
-                              );
-                              await Future.delayed(
-                                  const Duration(milliseconds: 1200));
-                              Navigator.pop(context);
-                              Navigator.pop(context, true);
-                              Navigator.pop(context);
-                            },
-                          )
-                        ],
-                      );
-                      // Show the dialog
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return alert;
-                        },
-                      );
+                      Navigator.pop(context);
                     },
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStatePropertyAll(Colors.red.shade400),
+                          MaterialStatePropertyAll(Colors.red.shade300),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18),
                       )),
                     ),
-                    child: const Text("Delete"),
+                    child: const Text("Back to home"),
                   ),
                 ),
               ),
@@ -736,11 +635,5 @@ class _Open_Feedback_Details_ScreenState
       default:
         return 3; // Default to 3 if the rating string is unknown or null
     }
-  }
-
-  void _selectStar(int rating) {
-    setState(() {
-      _starRating = rating;
-    });
   }
 }
