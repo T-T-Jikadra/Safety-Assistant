@@ -544,6 +544,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
     //Storing data to database
     NGO_Response_Registration ResponseNGOData = NGO_Response_Registration(
         respondId: "Response_${widget.rid}",
+        requestId: fetchedRid,
         nid: fetchedNid,
         fid: '',
         responderNGOName: fetchedNGOName,
@@ -555,6 +556,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
 
     Govt_Response_Registration ResponseGovtData = Govt_Response_Registration(
         respondId: "Response_${widget.rid}",
+        requestId: fetchedRid,
         gid: fetchedGid,
         fid: '',
         responderGovtName: fetchedGovtName,
@@ -591,6 +593,17 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
             .doc("ngo_details")
             .set(respondNGOJson);
 
+        //*** 2nd level ***
+        var responseNGODocRef = FirebaseFirestore.instance
+            .collection("clc_response")
+            .doc(fetchedNGOEmail);
+
+        await responseNGODocRef
+            .collection('ngo')
+            .doc("Response_${widget.rid}")
+            .set(respondNGOJson);
+
+
         // await FirebaseFirestore.instance
         //     .collection("clc_response")
         //     .doc("Response_${widget.rid}")
@@ -610,6 +623,17 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
             .collection('govt')
             .doc("govt_details")
             .set(respondGovtJson);
+
+        //*** 2nd level ***
+        var responseGovtDocRef = FirebaseFirestore.instance
+            .collection("clc_response")
+            .doc(fetchedGovtEmail);
+
+        await responseGovtDocRef
+            .collection('govt')
+            .doc("Response_${widget.rid}")
+            .set(respondGovtJson);
+
       }
 
       Timer(const Duration(milliseconds: 300), () {

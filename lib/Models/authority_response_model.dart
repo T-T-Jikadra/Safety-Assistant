@@ -2,6 +2,7 @@
 
 class NGO_Response_Registration {
   final String respondId;
+  final String requestId;
   final String nid;
   final String fid;
   final String responderNGOName;
@@ -14,6 +15,7 @@ class NGO_Response_Registration {
 
   NGO_Response_Registration({
     required this.respondId,
+    required this.requestId,
     required this.fid,
     required this.nid,
     required this.responderNGOName,
@@ -28,6 +30,7 @@ class NGO_Response_Registration {
   Map<String, dynamic> toNGORespondJson() {
     return {
       'RespondId': respondId,
+      'RequestId': requestId,
       'nid': nid,
       'fid': fid,
       'ResponderNGOName': responderNGOName,
@@ -43,6 +46,7 @@ class NGO_Response_Registration {
 
 class Govt_Response_Registration {
   final String respondId;
+  final String requestId;
   final String gid;
   final String fid;
   final String responderGovtName;
@@ -57,6 +61,7 @@ class Govt_Response_Registration {
 
   Govt_Response_Registration({
     required this.respondId,
+    required this.requestId,
     required this.gid,
     required this.fid,
     required this.responderGovtName,
@@ -72,6 +77,7 @@ class Govt_Response_Registration {
   Map<String, dynamic> toGovtRespondJson() {
     return {
       'RespondId': respondId,
+      'RequestId': requestId,
       'gid': gid,
       'fid': fid,
       'ResponderGovtName': responderGovtName,

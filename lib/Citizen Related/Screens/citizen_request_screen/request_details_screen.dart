@@ -1227,9 +1227,4 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
     }
   }
 
-  void toggleContainerVisibility() {
-    setState(() {
-      isNGOExpanded = !isNGOExpanded;
-    });
-  }
 }
