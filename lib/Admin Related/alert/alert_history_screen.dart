@@ -44,7 +44,6 @@ class alert_history_list_widget extends StatefulWidget {
 }
 
 class _alert_history_list_widgetState extends State<alert_history_list_widget> {
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -57,7 +56,7 @@ class _alert_history_list_widgetState extends State<alert_history_list_widget> {
                   .collection("clc_alert")
                   //.where("contactNumber", isEqualTo: mobileNo)
                   .orderBy('sentTime', descending: true)
-                  .limit(25)
+                  // .limit(25)
                   .snapshots(),
               builder: (context, snapshot) {
                 //.where("city", isEqualTo: widget.selectedCity)
@@ -78,10 +77,10 @@ class _alert_history_list_widgetState extends State<alert_history_list_widget> {
                               ),
                             )
                           : ListView.builder(
-
                               itemCount: snapshot.data!.docs.length,
                               itemBuilder: (context, index) {
-                                String level = snapshot.data!.docs[index]['level'];
+                                String level =
+                                    snapshot.data!.docs[index]['level'];
                                 Color cardColor = getColorForLevel(level);
                                 //snapshot.data!.docs[index]['sentTime'];
                                 return GestureDetector(
@@ -147,17 +146,19 @@ class _alert_history_list_widgetState extends State<alert_history_list_widget> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
-                                                    const Text(
-                                                        "Type of an Alert : ",
-                                                        style: TextStyle(
-                                                          fontSize: 13,
+                                                    Text(
+                                                        snapshot.data!
+                                                                .docs[index]
+                                                            ['typeofDisaster'],
+                                                        style: const TextStyle(
+                                                          fontSize: 15,
                                                           color: Colors.black,
                                                         )),
                                                     const SizedBox(height: 3),
                                                     Text(
                                                         snapshot.data!
                                                                 .docs[index]
-                                                            ['typeofDisaster'],
+                                                            ['state'],
                                                         style: const TextStyle(
                                                           color: Colors.black,
                                                           fontSize: 15,

@@ -1,5 +1,6 @@
+// ignore_for_file: depend_on_referenced_packages, camel_case_types
+
 import 'dart:math';
-import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
@@ -7,9 +8,7 @@ import 'package:pie_chart/pie_chart.dart';
 import 'package:stacked_bar_chart/stacked_bar_chart.dart';
 
 import 'package:intl/intl.dart';
-import '../../../Components/Notification_related/message_screen.dart';
 
-// ignore: camel_case_types
 class commonbg extends StatefulWidget {
   const commonbg({super.key});
 

@@ -291,3 +291,16 @@ DataRow buildDataRow(String field, String data) {
     DataCell(Text(data)),
   ]);
 }
+
+Color getColorForLevel(String level) {
+  switch (level) {
+    case 'Low':
+      return Colors.yellow.shade400;
+    case 'Severe':
+      return Colors.orange.shade700;
+    case 'Critical':
+      return Colors.red.shade500;
+    default:
+      return Colors.orange;
+  }
+}

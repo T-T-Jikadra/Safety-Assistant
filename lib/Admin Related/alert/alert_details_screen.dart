@@ -83,26 +83,6 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                             children: [
                               Row(
                                 children: [
-                                  const Icon(Iconsax.card),
-                                  const SizedBox(width: 12),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text("Alert Id  :",
-                                          style: TextStyle(fontSize: 13)),
-                                      const SizedBox(height: 4),
-                                      Text(widget.documentSnapshot['AlertId'],
-                                          style: const TextStyle(fontSize: 16)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 8),
-                              const Divider(height: 2),
-                              const SizedBox(height: 8),
-                              Row(
-                                children: [
                                   const Icon(Iconsax.hierarchy_square),
                                   const SizedBox(width: 12),
                                   Column(
@@ -134,10 +114,21 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                       const Text("Description :",
                                           style: TextStyle(fontSize: 13)),
                                       const SizedBox(height: 4),
-                                      Text(
-                                          widget
-                                              .documentSnapshot['description'],
-                                          style: const TextStyle(fontSize: 16)),
+                                      SizedBox(
+                                        width: MediaQuery.of(context)
+                                            .size
+                                            .width *
+                                            0.65,
+                                        child: Flexible(
+                                          child: Text(
+                                              widget.documentSnapshot[
+                                                  'description'],
+                                              maxLines: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  fontSize: 16)),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ],
@@ -229,7 +220,7 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                           borderRadius: BorderRadius.circular(15),
                           color: Colors.green.withOpacity(0.3),
                         ),
-                        child:  Padding(
+                        child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 15),
                           child: Row(
@@ -243,7 +234,7 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width *
                                           0.7, // Adjust the width as needed
-                                      child:  Text(
+                                      child: Text(
                                         fetchedDos,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
@@ -265,7 +256,7 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                             borderRadius: BorderRadius.circular(15),
                             color: Colors.red.withOpacity(0.3)),
                         child: Padding(
-                          padding:  const EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 15),
                           child: Row(
                             children: [
@@ -278,7 +269,7 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width *
                                           0.7, // Adjust the width as needed
-                                      child:  Text(
+                                      child: Text(
                                         fetchedDonts,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
@@ -309,7 +300,6 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
         if (dosSnap.exists) {
           fetchedDos = dosSnap.get("dos");
           fetchedDonts = dosSnap.get("donts");
-
         } else {
           if (kDebugMode) {
             print('Dos document does not exist');

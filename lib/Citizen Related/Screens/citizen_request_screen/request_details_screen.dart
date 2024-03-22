@@ -112,29 +112,6 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                               children: [
                                 Row(
                                   children: [
-                                    const Icon(Iconsax.card),
-                                    const SizedBox(width: 12),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text("Request Id  :",
-                                            style: TextStyle(fontSize: 13)),
-                                        const SizedBox(height: 4),
-                                        Text(
-                                            widget
-                                                .documentSnapshot['RequestId'],
-                                            style:
-                                                const TextStyle(fontSize: 16)),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 8),
-                                const Divider(height: 2),
-                                const SizedBox(height: 8),
-                                Row(
-                                  children: [
                                     const Icon(Iconsax.hierarchy_square),
                                     const SizedBox(width: 12),
                                     Column(
@@ -144,11 +121,19 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                         const Text("Needed Service :",
                                             style: TextStyle(fontSize: 13)),
                                         const SizedBox(height: 4),
-                                        Text(
-                                            widget.documentSnapshot[
-                                                'neededService'],
-                                            style:
-                                                const TextStyle(fontSize: 16)),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.65,
+                                          child: Text(
+                                              widget.documentSnapshot[
+                                                  'neededService'],
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  fontSize: 16)),
+                                        ),
                                       ],
                                     ),
                                   ],
@@ -156,14 +141,6 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                 const SizedBox(height: 8),
                                 const Divider(height: 2),
                                 const SizedBox(height: 8),
-                                // const Text("Citizen id :",
-                                //     style: TextStyle(fontSize: 13)),
-                                // const SizedBox(height: 4),
-                                // Text(widget.documentSnapshot['cid'],
-                                //     style: const TextStyle(fontSize: 16)),
-                                // const SizedBox(height: 8),
-                                // const Divider(height: 2),
-                                // const SizedBox(height: 8),
                                 Row(
                                   children: [
                                     const Icon(Iconsax.call),
@@ -175,11 +152,19 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                         const Text("Phone no :",
                                             style: TextStyle(fontSize: 13)),
                                         const SizedBox(height: 4),
-                                        Text(
-                                            widget.documentSnapshot[
-                                                'contactNumber'],
-                                            style:
-                                                const TextStyle(fontSize: 16)),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              0.65,
+                                          child: Text(
+                                              widget.documentSnapshot[
+                                              'contactNumber'],
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  fontSize: 16)),
+                                        ),
                                       ],
                                     ),
                                   ],
@@ -204,11 +189,19 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                               style: TextStyle(fontSize: 13)),
                                         ),
                                         const SizedBox(height: 4),
-                                        Text(
-                                            widget.documentSnapshot[
-                                                'fullAddress'],
-                                            style:
-                                                const TextStyle(fontSize: 16)),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              0.65,
+                                          child: Text(
+                                              widget.documentSnapshot[
+                                              'fullAddress'],
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  fontSize: 16)),
+                                        ),
                                       ],
                                     ),
                                   ],
@@ -227,9 +220,19 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                         const Text("Pin code :",
                                             style: TextStyle(fontSize: 13)),
                                         const SizedBox(height: 4),
-                                        Text(widget.documentSnapshot['pinCode'],
-                                            style:
-                                                const TextStyle(fontSize: 16)),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              0.65,
+                                          child: Text(
+                                              widget.documentSnapshot[
+                                              'pinCode'],
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  fontSize: 16)),
+                                        ),
                                       ],
                                     ),
                                   ],
@@ -248,9 +251,19 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                         const Text("City :",
                                             style: TextStyle(fontSize: 13)),
                                         const SizedBox(height: 4),
-                                        Text(widget.documentSnapshot['city'],
-                                            style:
-                                                const TextStyle(fontSize: 16)),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              0.65,
+                                          child: Text(
+                                              widget.documentSnapshot[
+                                              'city'],
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  fontSize: 16)),
+                                        ),
                                       ],
                                     ),
                                   ],
@@ -497,14 +510,6 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      // const Text("NGO Id  :",
-                                      //     style: TextStyle(fontSize: 13)),
-                                      // const SizedBox(height: 4),
-                                      // Text(fetchedNid,
-                                      //     style: const TextStyle(fontSize: 16)),
-                                      // const SizedBox(height: 8),
-                                      // const Divider(height: 2),
-                                      // const SizedBox(height: 8),
                                       const Text("NGO Name :",
                                           style: TextStyle(fontSize: 13)),
                                       const SizedBox(height: 4),
@@ -545,9 +550,18 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                                   style:
                                                       TextStyle(fontSize: 13)),
                                               const SizedBox(height: 4),
-                                              Text(fetchedNGOContact,
-                                                  style: const TextStyle(
-                                                      fontSize: 16)),
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                    0.65,
+                                                child: Text(
+                                                    fetchedNGOContact,
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                        fontSize: 16)),
+                                              ),
                                             ],
                                           ),
                                           IconButton(
@@ -579,9 +593,18 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                                   style:
                                                       TextStyle(fontSize: 13)),
                                               const SizedBox(height: 4),
-                                              Text(fetchedNGOWebsite,
-                                                  style: const TextStyle(
-                                                      fontSize: 16)),
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                    0.65,
+                                                child: Text(
+                                                    fetchedNGOWebsite,
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                        fontSize: 16)),
+                                              ),
                                             ],
                                           ),
                                           IconButton(
@@ -600,8 +623,18 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                       const Text("Mail Address :",
                                           style: TextStyle(fontSize: 13)),
                                       const SizedBox(height: 4),
-                                      Text(fetchedNGOEmail,
-                                          style: const TextStyle(fontSize: 16)),
+                                      SizedBox(
+                                        width: MediaQuery.of(context)
+                                            .size
+                                            .width *
+                                            0.65,
+                                        child: Text(
+                                            fetchedNGOEmail,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                                fontSize: 16)),
+                                      ),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -819,14 +852,6 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      // const Text("NGO Id  :",
-                                      //     style: TextStyle(fontSize: 13)),
-                                      // const SizedBox(height: 4),
-                                      // Text(fetchedNid,
-                                      //     style: const TextStyle(fontSize: 16)),
-                                      // const SizedBox(height: 8),
-                                      // const Divider(height: 2),
-                                      // const SizedBox(height: 8),
                                       const Text("Govt Agency Name :",
                                           style: TextStyle(fontSize: 13)),
                                       const SizedBox(height: 4),
@@ -835,14 +860,6 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                       const SizedBox(height: 8),
                                       const Divider(height: 2),
                                       const SizedBox(height: 8),
-                                      // const Text("NGO register no :",
-                                      //     style: TextStyle(fontSize: 13)),
-                                      // const SizedBox(height: 4),
-                                      // Text(fetchedNGORegNo,
-                                      //     style: const TextStyle(fontSize: 16)),
-                                      // const SizedBox(height: 8),
-                                      // const Divider(height: 2),
-                                      // const SizedBox(height: 8),
                                       const Text("Address :",
                                           style: TextStyle(fontSize: 13)),
                                       const SizedBox(height: 4),
@@ -902,9 +919,18 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                                   style:
                                                       TextStyle(fontSize: 13)),
                                               const SizedBox(height: 4),
-                                              Text(fetchedGovtWebsite,
-                                                  style: const TextStyle(
-                                                      fontSize: 16)),
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                    0.65,
+                                                child: Text(
+                                                   fetchedGovtWebsite,
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                        fontSize: 16)),
+                                              ),
                                             ],
                                           ),
                                           IconButton(
@@ -923,8 +949,18 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                       const Text("Mail Address :",
                                           style: TextStyle(fontSize: 13)),
                                       const SizedBox(height: 4),
-                                      Text(fetchedGovtEmail,
-                                          style: const TextStyle(fontSize: 16)),
+                                      SizedBox(
+                                        width: MediaQuery.of(context)
+                                            .size
+                                            .width *
+                                            0.65,
+                                        child: Text(
+                                            fetchedGovtEmail,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                                fontSize: 16)),
+                                      ),
                                       const SizedBox(height: 5),
                                       Row(
                                         mainAxisAlignment:

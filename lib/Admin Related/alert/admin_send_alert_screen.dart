@@ -50,11 +50,7 @@ class _Admin_Send_Alert_ScreenState extends State<Admin_Send_Alert_Screen> {
 
   double _value = 0.0;
 
-  final List<String> _levels = [
-    "Low",
-    "Severe",
-    "Critical"
-  ];
+  final List<String> _levels = ["Low", "Severe", "Critical"];
 
   @override
   void initState() {
@@ -342,7 +338,7 @@ class _Admin_Send_Alert_ScreenState extends State<Admin_Send_Alert_Screen> {
                                           if (value == "Select your state") {
                                             return 'Select State';
                                           }
-                                          return null; // Return null if the input is valid
+                                          return null;
                                         },
                                       ),
                                     ),
@@ -351,42 +347,42 @@ class _Admin_Send_Alert_ScreenState extends State<Admin_Send_Alert_Screen> {
                               ],
                             ),
                             const SizedBox(height: 15),
-                            //city
-                            // Padding(
-                            //   padding: const EdgeInsets.only(
-                            //     left: 10,
-                            //     right: 10,
-                            //   ),
-                            //   child: SizedBox(
-                            //     //height: 60,
-                            //     child: DropdownButtonFormField<String>(
-                            //       value: selectedCity.isNotEmpty
-                            //           ? selectedCity
-                            //           : null,
-                            //       items: dropdownItemCity.map((String city) {
-                            //         return DropdownMenuItem<String>(
-                            //           value: city,
-                            //           child: Text(city),
-                            //         );
-                            //       }).toList(),
-                            //       onChanged: (value) {
-                            //         setState(() {
-                            //           selectedCity = value!;
-                            //         });
-                            //       },
-                            //       decoration: const InputDecoration(
-                            //         border: OutlineInputBorder(),
-                            //         hintText: "Select your City",
-                            //       ),
-                            //       validator: (value) {
-                            //         if (value == null || value.isEmpty) {
-                            //           return 'Select City';
-                            //         }
-                            //         return null; // Return null if the input is valid
-                            //       },
-                            //     ),
-                            //   ),
-                            // ),
+                            // city
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 10,
+                                right: 10,
+                              ),
+                              child: SizedBox(
+                                //height: 60,
+                                child: DropdownButtonFormField<String>(
+                                  value: selectedCity.isNotEmpty
+                                      ? selectedCity
+                                      : null,
+                                  items: dropdownItemCity.map((String city) {
+                                    return DropdownMenuItem<String>(
+                                      value: city,
+                                      child: Text(city),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedCity = value!;
+                                    });
+                                  },
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: "Select your City",
+                                  ),
+                                  // validator: (value) {
+                                  //   if (value == null || value.isEmpty) {
+                                  //     return 'Select City';
+                                  //   }
+                                  //   return null;
+                                  // },
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -403,15 +399,15 @@ class _Admin_Send_Alert_ScreenState extends State<Admin_Send_Alert_Screen> {
                         child: ElevatedButton(
                             onPressed: () async {
                               CollectionReference alertCollection =
-                              FirebaseFirestore.instance
-                                  .collection("clc_alert");
+                                  FirebaseFirestore.instance
+                                      .collection("clc_alert");
 
                               QuerySnapshot snapshot =
-                              await alertCollection.get();
+                                  await alertCollection.get();
                               int totalDocCount = snapshot.size;
                               totalDocCount++;
                               //to get dos anf donts document id
-                              fetchDid(selectedDisaster,totalDocCount);
+                              fetchDid(selectedDisaster, totalDocCount);
 
                               if (fetchedDid != null) {
                                 if (kDebugMode) {
@@ -452,64 +448,113 @@ class _Admin_Send_Alert_ScreenState extends State<Admin_Send_Alert_Screen> {
                                   const Duration(milliseconds: 1300));
                               Navigator.pop(context);
                               //For Rid
-
                               if (_formKey.currentState!.validate()) {
                                 if (!alertSent) {
-
                                   try {
+                                    if (selectedCity.isEmpty) {
+                                      //to selected state
+                                      var CitywiseCitizenSnap =
+                                          await FirebaseFirestore.instance
+                                              .collection('clc_citizen')
+                                              .where('state',
+                                                  isEqualTo: selectedState)
+                                              .get();
 
+                                      for (var doc
+                                          in CitywiseCitizenSnap.docs) {
+                                        String deviceToken =
+                                            doc.data()['deviceToken'];
+                                        broadcastAlert(
+                                            deviceToken, totalDocCount);
+                                      }
+
+                                      //sends alert to only NGO
+                                      var CitywiseNGOSnap = await FirebaseFirestore
+                                          .instance
+                                          .collection('clc_ngo')
+                                          //added new ***
+                                          // .where('services', whereIn: selectedServiceWords)
+                                          .where('state',
+                                              isEqualTo: selectedState)
+                                          .get();
+
+                                      for (var ngoDoc in CitywiseNGOSnap.docs) {
+                                        String deviceToken =
+                                            ngoDoc.data()['deviceToken'];
+                                        broadcastAlert(
+                                            deviceToken, totalDocCount);
+                                      }
+
+                                      var CitywiseGovtSnap =
+                                          await FirebaseFirestore
+                                              .instance
+                                              .collection('clc_govt')
+                                              .where('state',
+                                                  isEqualTo: selectedState)
+                                              .get();
+
+                                      for (var doc in CitywiseGovtSnap.docs) {
+                                        String deviceToken =
+                                            doc.data()['deviceToken'];
+                                        broadcastAlert(
+                                            deviceToken, totalDocCount);
+                                      }
+                                    } else {
+                                      //to selected city
+                                      var CitywiseCitizenSnap =
+                                          await FirebaseFirestore.instance
+                                              .collection('clc_citizen')
+                                              .where('city',
+                                                  isEqualTo: selectedCity)
+                                              .get();
+
+                                      for (var doc
+                                          in CitywiseCitizenSnap.docs) {
+                                        String deviceToken =
+                                            doc.data()['deviceToken'];
+                                        broadcastAlert(
+                                            deviceToken, totalDocCount);
+                                      }
+
+                                      //sends alert to only NGO
+                                      var CitywiseNGOSnap = await FirebaseFirestore
+                                          .instance
+                                          .collection('clc_ngo')
+                                          //added new ***
+                                          // .where('services', whereIn: selectedServiceWords)
+                                          .where('city',
+                                              isEqualTo: selectedCity)
+                                          .get();
+
+                                      for (var ngoDoc in CitywiseNGOSnap.docs) {
+                                        String deviceToken =
+                                            ngoDoc.data()['deviceToken'];
+                                        broadcastAlert(
+                                            deviceToken, totalDocCount);
+                                      }
+
+                                      var CitywiseGovtSnap =
+                                          await FirebaseFirestore
+                                              .instance
+                                              .collection('clc_govt')
+                                              .where('city',
+                                                  isEqualTo: selectedCity)
+                                              .get();
+
+                                      for (var doc in CitywiseGovtSnap.docs) {
+                                        String deviceToken =
+                                            doc.data()['deviceToken'];
+                                        broadcastAlert(
+                                            deviceToken, totalDocCount);
+                                      }
+                                    }
                                     //sends alert to citizen
-                                    var citizenQuerySnapshot =
-                                    await FirebaseFirestore
-                                        .instance
-                                        .collection('clc_citizen')
-                                        .where('state',
-                                        isEqualTo: selectedState)
-                                        .get();
 
-                                    for (var doc in citizenQuerySnapshot.docs) {
-                                      String deviceToken =
-                                      doc.data()['deviceToken'];
-                                      broadcastAlert(
-                                          deviceToken, totalDocCount);
-                                    }
-
-                                    //sends alert to only NGO
-                                    var ngoQuerySnapshot = await FirebaseFirestore
-                                        .instance
-                                        .collection('clc_ngo')
-                                        //added new ***
-                                        // .where('services', whereIn: selectedServiceWords)
-                                        .where('state', isEqualTo: selectedState)
-                                        .get();
-
-                                    for (var ngoDoc in ngoQuerySnapshot.docs) {
-                                      String deviceToken =
-                                          ngoDoc.data()['deviceToken'];
-                                      broadcastAlert(
-                                          deviceToken, totalDocCount);
-                                    }
-
-                                    var govtQuerySnapshot =
-                                        await FirebaseFirestore
-                                            .instance
-                                            .collection('clc_govt')
-                                            .where('state',
-                                                isEqualTo: selectedState)
-                                            .get();
-
-                                    for (var doc in govtQuerySnapshot.docs) {
-                                      String deviceToken =
-                                          doc.data()['deviceToken'];
-                                      broadcastAlert(
-                                          deviceToken, totalDocCount);
-                                    }
                                     // });
                                     addAlertToDatabase(totalDocCount);
                                   } catch (e) {
                                     if (kDebugMode) {
-                                      print(
-                                          'Error while sending alert : $e');
+                                      print('Error while sending alert : $e');
                                     }
                                   } finally {
                                     //Navigator.pop(context);
@@ -538,7 +583,7 @@ class _Admin_Send_Alert_ScreenState extends State<Admin_Send_Alert_Screen> {
     );
   }
 
-  void fetchDid(String typeOfDisaster,int totalCount) async {
+  void fetchDid(String typeOfDisaster, int totalCount) async {
     try {
       // Reference to the Firestore collection
       CollectionReference clcDosDontsCollection =
@@ -568,7 +613,6 @@ class _Admin_Send_Alert_ScreenState extends State<Admin_Send_Alert_Screen> {
                 .update({
               'did': "Dos_$totalCount",
             });
-
           } else {
             if (kDebugMode) {
               print('Dos document does not exist');
@@ -676,7 +720,7 @@ class _Admin_Send_Alert_ScreenState extends State<Admin_Send_Alert_Screen> {
       return Colors.orange;
     } else if (value < 3.0) {
       return Colors.red;
-    }else{
+    } else {
       return Colors.red;
     }
   }
