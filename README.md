@@ -1,8 +1,4 @@
-# fff
-
-A new Flutter project.
-
-## Getting Started
+# Emergency Response Support System 
 
 This project is a starting point for a Flutter application.
 
