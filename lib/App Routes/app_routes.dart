@@ -1,4 +1,3 @@
-import 'package:fff/Admin%20Related/Lower%20Level%20Admin/lower_admin.dart';
 import 'package:flutter/material.dart';
 import '../_Root/onBoarding/onBoard.dart';
 
@@ -24,13 +23,9 @@ class AppRoutes {
 
   static Map<String, WidgetBuilder> routes = {
 
-    Lower_Admin: (context) => const Ad_Lower(),
-
     on_Boarding: (context) => const LiquidPages(),
 
     //main: (context) => main(),
-
-
 
     //splashScreen: (context) => SplashScreen(),
     //regScreen: (context) => RegScreen(),

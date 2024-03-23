@@ -3,13 +3,15 @@
 class News_Registration {
   final String news_Id;
   final String news_image;
+  final String news_title;
   final String news_desc;
   final DateTime sentTime;
 
   News_Registration(
       {required this.news_Id,
       required this.news_image,
-      required this.news_desc,
+        required this.news_title,
+        required this.news_desc,
       DateTime? sentTime})
       : sentTime = sentTime ?? DateTime.now();
 
@@ -17,6 +19,7 @@ class News_Registration {
     return {
       'news_id': news_Id,
       'news_image': news_image,
+      'news_title': news_title,
       'news_description': news_desc,
       'sentTime': sentTime.toString(),
     };

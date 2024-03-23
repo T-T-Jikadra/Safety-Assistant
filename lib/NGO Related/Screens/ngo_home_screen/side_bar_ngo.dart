@@ -10,7 +10,7 @@ import '../../../Admin Related/alert/alert_history_screen.dart';
 import '../../../Utils/common_files/faq_screen/faq_screen.dart';
 import '../../../Utils/common_files/about_us_screen.dart';
 import '../../../Utils/common_files/apply_grant_screen.dart';
-import '../../../Utils/common_files/notice_screen.dart';
+import '../../../Utils/common_files/media_history_screen.dart';
 import '../../../Components/info_card.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../NGO_list/NGO_list.dart';
@@ -280,13 +280,13 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                                 ),
                               );
                             }
-                            else if (menu_ngo.title.contains("Notice")) {
+                            else if (menu_ngo.title.contains("Media")) {
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                       secondaryAnimation) =>
-                                  const notice_Screen(),
+                                  const Media_History_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);

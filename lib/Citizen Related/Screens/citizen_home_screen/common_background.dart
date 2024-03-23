@@ -121,6 +121,7 @@ class _commonbgState extends State<commonbg> {
                           children: [
                             Row(
                               children: [
+                                SizedBox(width: 3),
                                 const Text(
                                   "Latest alerts :",
                                   style: TextStyle(

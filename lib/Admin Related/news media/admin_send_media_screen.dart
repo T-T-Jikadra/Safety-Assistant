@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
 import '../../Models/send_news_model.dart';
 import '../../Utils/Utils.dart';
 
@@ -21,6 +20,7 @@ class Admin_Send_News extends StatefulWidget {
 class _Admin_Send_NewsState extends State<Admin_Send_News> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
   final FocusNode _FocusNode = FocusNode();
 
   File? pickedImage;
@@ -110,6 +110,7 @@ class _Admin_Send_NewsState extends State<Admin_Send_News> {
                                           fontWeight: FontWeight.w500),
                                     ),
                                   )),
+                        //img selection
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 15, horizontal: 5),
@@ -172,6 +173,31 @@ class _Admin_Send_NewsState extends State<Admin_Send_News> {
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
+                        ),
+                        const SizedBox(height: 8),
+                        TextFormField(
+                          controller: _titleController,
+                          keyboardType: TextInputType.multiline,
+                          decoration: InputDecoration(
+                            hintText: 'Enter title...',
+                            labelText: 'Media Title',
+                            prefixIcon: const Icon(Icons.newspaper),
+                            focusColor: Colors.deepPurple,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              _FocusNode.requestFocus();
+                              return 'Heading required ';
+                            }
+                            if (value.isNotEmpty && value.length < 5) {
+                              _FocusNode.requestFocus();
+                              return "Too short heading";
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 15),
                         TextFormField(
@@ -351,6 +377,7 @@ class _Admin_Send_NewsState extends State<Admin_Send_News> {
       News_Registration newsData = News_Registration(
           news_Id: "News_${totalDocCount.toString()}",
           news_image: imageUrl,
+          news_title: _titleController.text.trim(),
           news_desc: description);
 
       Map<String, dynamic> AdminAlertJson = newsData.toJsonNews();
