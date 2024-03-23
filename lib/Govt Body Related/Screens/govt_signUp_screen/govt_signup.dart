@@ -669,6 +669,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                       contactNumber: contactNoGovtTextController
                                           .text
                                           .trim(),
+                                      creditScore: 0,
                                       email:
                                           emailIdGovtTextController.text.trim(),
                                       website: websiteURLGovtTextController.text

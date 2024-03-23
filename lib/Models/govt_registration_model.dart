@@ -7,6 +7,7 @@ class GovtRegistration {
   final String contactNumber;
   final String email;
   final String website;
+  final int creditScore;
   final String state;
   final String city;
   final String pinCode;
@@ -23,6 +24,7 @@ class GovtRegistration {
       required this.contactNumber,
       required this.email,
       required this.website,
+      required this.creditScore,
       required this.state,
       required this.city,
       required this.pinCode,
@@ -41,6 +43,7 @@ class GovtRegistration {
       'contactNumber': "+91$contactNumber",
       'website': website,
       'email': email,
+      'creditScore': creditScore,
       'state': state,
       'city': city,
       'pinCode': pinCode,

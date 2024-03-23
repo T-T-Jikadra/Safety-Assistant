@@ -43,8 +43,12 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
 
   String fetchedSentTime = '';
 
-  String fetchedDos = '';
-  String fetchedDonts = '';
+  String fetchedDos1 = '';
+  String fetchedDonts1 = '';
+  String fetchedDos2 = '';
+  String fetchedDonts2 = '';
+  String fetchedDos3 = '';
+  String fetchedDonts3 = '';
 
   @override
   void initState() {
@@ -239,25 +243,75 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 15),
-                          child: Row(
+                          child: Column(
                             children: [
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Iconsax.tick_circle4),
-                                    const SizedBox(width: 5),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.7, // Adjust the width as needed
-                                      child: Text(
-                                        widget.dos,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.tick_circle4),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width *
+                                              0.7, // Adjust the width as needed
+                                          child: Text(
+                                            fetchedDos1,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.tick_circle4),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width *
+                                              0.7, // Adjust the width as needed
+                                          child: Text(
+                                            fetchedDos2,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.tick_circle4),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width *
+                                              0.7, // Adjust the width as needed
+                                          child: Text(
+                                            fetchedDos3,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -274,30 +328,81 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 15),
-                          child: Row(
+                          child: Column(
                             children: [
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Iconsax.shield_cross),
-                                    const SizedBox(width: 5),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.7, // Adjust the width as needed
-                                      child: Text(
-                                        widget.donts,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.shield_cross),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width *
+                                              0.7, // Adjust the width as needed
+                                          child: Text(
+                                            fetchedDonts1,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.shield_cross),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width *
+                                              0.7, // Adjust the width as needed
+                                          child: Text(
+                                            fetchedDonts2,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.shield_cross),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width *
+                                              0.7, // Adjust the width as needed
+                                          child: Text(
+                                            fetchedDonts3,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
                         ),
                       ),
+                      const SizedBox(height: 15)
                     ],
                   ),
                 ),
@@ -453,8 +558,12 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
           .get();
       try {
         if (dosSnap.exists) {
-          fetchedDos = dosSnap.get("dos");
-          fetchedDonts = dosSnap.get("donts");
+          fetchedDos1 = dosSnap.get("dos_1");
+          fetchedDonts1 = dosSnap.get("donts_1");
+          fetchedDos2 = dosSnap.get("dos_2");
+          fetchedDonts2 = dosSnap.get("donts_2");
+          fetchedDos3 = dosSnap.get("dos_3");
+          fetchedDonts3 = dosSnap.get("donts_3");
         } else {
           if (kDebugMode) {
             print('Dos document does not exist');

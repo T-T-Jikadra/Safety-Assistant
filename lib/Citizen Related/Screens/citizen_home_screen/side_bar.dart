@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fff/Citizen%20Related/Screens/citizen_DSG_screen.dart';
 import 'package:fff/Citizen%20Related/Screens/citizen_home_screen/side_menu.dart';
 import 'package:fff/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,9 +6,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Admin Related/alert/alert_history_screen.dart';
+import '../../../Admin Related/news media/admin_send_news.dart';
 import '../../../Utils/common_files/notice_screen.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../../../Utils/common_files/faq_screen/faq_screen.dart';
+import '../citizen_DSG/citizen_disaster_list.dart';
 import '../citizen_NGO-GA_list/citizen_NGO-GA_list_screen.dart';
 import '../../../Utils/common_files/about_us_screen.dart';
 import '../../Screens/citizen_donation_history_screen.dart';
@@ -229,13 +230,13 @@ class _SideBarState extends State<SideBar> {
                                   },
                                 ),
                               );
-                            } else if (menu.title.contains("Notice")) {
+                            } else if (menu.title.contains("Media")) {
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const notice_Screen(),
+                                      const Admin_Send_News(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);

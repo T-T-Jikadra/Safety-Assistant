@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'Citizen Related/Screens/citizen_request_screen/citizen_req_history_screen.dart';
 import 'Components/Notification_related/notification_services.dart';
 import 'Utils/common_files/open_req_screen.dart';
@@ -28,8 +29,8 @@ void main() async {
   runApp(const splash());
 
   //Orientation
-  // SystemChrome.setPreferredOrientations(
-  //     [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   //Status color
   // SystemChrome.setSystemUIOverlayStyle(
   //     const SystemUiOverlayStyle(statusBarColor: Colors.white12));
@@ -40,7 +41,7 @@ void main() async {
 Future<void> _firebaseMessagingBackgroundHandle(RemoteMessage message) async {
   //await Firebase.initializeApp();
   if (message.data['type'] == 'response') {
-    Get.to(() =>const Request_History_Screen());
+    Get.to(() => const Request_History_Screen());
     // Get.to(() => Open_Response_Screen(
     //       selectedService: message.data['service'],
     //       authorityName: message.data['authorityName'],

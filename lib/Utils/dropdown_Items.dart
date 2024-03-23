@@ -36,7 +36,7 @@ class DropdownItems {
     "Fire",
     "Flood",
     "Landslide",
-    "Heat Cove",
+    "Heat Wave",
     "Air Pollution",
     "Thunderstorm",
     //"Gas & Chemical leakage",

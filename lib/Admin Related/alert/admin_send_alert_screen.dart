@@ -264,7 +264,7 @@ class _Admin_Send_Alert_ScreenState extends State<Admin_Send_Alert_Screen> {
                                       controller: descController,
                                       minLines: 2,
                                       maxLines: 4,
-                                      maxLength: 100,
+                                      maxLength: 150,
                                       decoration: const InputDecoration(
                                           hintText: 'Brief description',
                                           prefixIcon: Icon(Icons.description),

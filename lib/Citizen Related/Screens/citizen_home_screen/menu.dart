@@ -35,7 +35,7 @@ List<Menu> sidebarMenus = [
     icon: Icons.crisis_alert,
   ),
   Menu(
-    title: "Notices",
+    title: "Media",
     icon: Icons.circle_notifications,
   ),
 ];

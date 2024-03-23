@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fff/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class _User_Feedback_ScreenState extends State<User_Feedback_Screen> {
         backgroundColor: Colors.blueGrey.shade50,
         appBar: AppBar(
           elevation: 50,
-          //backgroundColor: Colors.black12,
+          backgroundColor: color_AppBar,
           centerTitle: true,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -460,7 +461,6 @@ class _User_Feedback_ScreenState extends State<User_Feedback_Screen> {
                 });
                 return;
               }
-
               setState(() {
                 _showError = false;
               });
@@ -502,6 +502,30 @@ class _User_Feedback_ScreenState extends State<User_Feedback_Screen> {
 
                   //govt
                   if (widget.authority_id.startsWith("g")) {
+                    //add creditScore as per selected stars
+                    QuerySnapshot govtSnap = await FirebaseFirestore.instance
+                        .collection("clc_govt")
+                        .where("GovtAgencyName",
+                            isEqualTo: widget.authority_name)
+                        .get();
+
+                    int score = 0;
+                    String updateEmail = '';
+                    for (QueryDocumentSnapshot doc in govtSnap.docs) {
+                      Map<String, dynamic> data =
+                          doc.data() as Map<String, dynamic>;
+                      score = data['creditScore'];
+                      updateEmail = data['email'];
+                    }
+                    int selectedScore = _starRating * 2;
+                    score += selectedScore;
+
+                    await FirebaseFirestore.instance
+                        .collection("clc_govt")
+                        .doc(updateEmail)
+                        .update({'creditScore': score});
+
+                    //update fid
                     await FirebaseFirestore.instance
                         .collection("clc_response")
                         .doc(widget.respond_id)
@@ -513,6 +537,29 @@ class _User_Feedback_ScreenState extends State<User_Feedback_Screen> {
                   }
                   //ngo
                   else if (widget.authority_id.startsWith("n")) {
+                    //add creditScore as per selected stars
+                    QuerySnapshot ngoSnap = await FirebaseFirestore.instance
+                        .collection("clc_ngo")
+                        .where("nameOfNGO", isEqualTo: widget.authority_name)
+                        .get();
+
+                    int score = 0;
+                    String updateEmail = '';
+                    for (QueryDocumentSnapshot doc in ngoSnap.docs) {
+                      Map<String, dynamic> data =
+                          doc.data() as Map<String, dynamic>;
+                      score = data['creditScore'];
+                      updateEmail = data['email'];
+                    }
+                    int selectedScore = _starRating * 2;
+                    score += selectedScore;
+
+                    await FirebaseFirestore.instance
+                        .collection("clc_ngo")
+                        .doc(updateEmail)
+                        .update({'creditScore': score});
+
+                    //update fid
                     await FirebaseFirestore.instance
                         .collection("clc_response")
                         .doc(widget.respond_id)

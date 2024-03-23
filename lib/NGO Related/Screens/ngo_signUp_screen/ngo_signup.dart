@@ -640,19 +640,24 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                   //Storing data to database
                                   NGORegistration NGOData = NGORegistration(
                                       nid: "n$totalDocCount",
-                                      ngoName: nameOfNGOTextController.text,
-                                      ngoRegNo: regNoTextController.text,
-                                      services: servicesTextController.text,
+                                      ngoName:
+                                          nameOfNGOTextController.text.trim(),
+                                      ngoRegNo: regNoTextController.text.trim(),
+                                      services:
+                                          servicesTextController.text.trim(),
                                       contactNumber:
-                                          contactNoTextController.text,
-                                      email: emailIdTextController.text,
-                                      website: websiteURLTextController.text,
+                                          contactNoTextController.text.trim(),
+                                      email: emailIdTextController.text.trim(),
+                                      website:
+                                          websiteURLTextController.text.trim(),
+                                      creditScore: 0,
                                       state: selectedState,
                                       city: selectedCity,
-                                      pinCode: pinCodeTextController.text,
+                                      pinCode:
+                                          pinCodeTextController.text.trim(),
                                       fullAddress:
-                                          fullAddressTextController.text,
-                                      password: pwdTextController.text,
+                                          fullAddressTextController.text.trim(),
+                                      password: pwdTextController.text.trim(),
                                       // confirmPassword: confirmPwdTextController.text,
                                       // termsAccepted: NGOTnC,
                                       deviceToken: deviceTokenFound);

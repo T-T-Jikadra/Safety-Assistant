@@ -89,6 +89,7 @@ class _CitizenHomeScreenState extends State<CitizenHomeScreen>
           _animationController.reverse();
           return false;
         } else {
+          Navigator.of(context).pop(true);
           // If the sidebar is not open, show the exit confirmation dialog
           return _showExitConfirmationDialog(context);
         }

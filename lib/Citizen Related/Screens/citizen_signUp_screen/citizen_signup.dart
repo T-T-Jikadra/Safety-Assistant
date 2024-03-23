@@ -585,8 +585,8 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                   //Storing data to database
                                   UserRegistration userData = UserRegistration(
                                       cid: "c$totalDocCount",
-                                      firstName: fnameTextController.text,
-                                      lastName: lnameTextController.text,
+                                      firstName: fnameTextController.text.trim(),
+                                      lastName: lnameTextController.text.trim(),
                                       gender: genderRadio ?? "",
                                       // Assuming genderRadio is nullable String
                                       phoneNumber: widget.contactNumber,
@@ -594,9 +594,9 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                       //userAge: userAge.toString(),
                                       state: selectedState,
                                       city: selectedCity,
-                                      pinCode: pinCodeTextController.text,
+                                      pinCode: pinCodeTextController.text.trim(),
                                       fullAddress:
-                                          fullAddressTextController.text,
+                                          fullAddressTextController.text.trim(),
                                       //termsAccepted: CitizenTnC,
                                       deviceToken: deviceTokenFound);
 

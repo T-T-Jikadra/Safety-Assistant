@@ -285,6 +285,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                                     Icons.pin_drop_outlined),
                                                 hintText: 'Enter Pincode',
                                                 labelText: "Pincode"),
+                                            keyboardType: TextInputType.number,
                                             validator: selectedRadioAddress != 1
                                                 ? pincodeValidator
                                                 : null,

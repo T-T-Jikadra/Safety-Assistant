@@ -5,7 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../../Admin Related/alert/alert_details_screen.dart';
+import '../../../Admin Related/alert/alert_history_screen.dart';
 import '../../../Citizen Related/Screens/citizen_request_screen/citizen_request_screen.dart';
 import '../../../Components/Notification_related/notification_services.dart';
 import 'package:intl/intl.dart';
@@ -62,10 +64,8 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
               padding: const EdgeInsets.only(left: 80, top: 20),
               child: Row(
                 children: [
-                  const Image(
-                      image: AssetImage("assets/images/logo.png"),
-                      width: 33,
-                      height: 33),
+                  SvgPicture.asset("assets/images/logo_svg.svg",
+                      height: 33, width: 33),
                   const Icon(Icons.location_on_outlined,
                       color: Colors.redAccent, size: 18),
                   const SizedBox(width: 8),
@@ -90,19 +90,70 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
-                child: const Padding(
-                  padding:
-                  EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10, vertical: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Latest Alerts :",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
+                      Row(
+                        children: [
+                          const Text(
+                            "Latest alerts :",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          const Spacer(),
+                          TextButton(
+                              child: const Row(
+                                children: [
+                                  Text("View More",
+                                      style: TextStyle(
+                                        color: Colors.teal,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w500,
+                                      )),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Icon(Icons.arrow_forward,
+                                      color: Colors.teal),
+                                ],
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation,
+                                        secondaryAnimation) =>
+                                    const Alert_History_Screen(),
+                                    transitionsBuilder: (context,
+                                        animation,
+                                        secondaryAnimation,
+                                        child) {
+                                      var begin = const Offset(1.0, 0.0);
+                                      var end = Offset.zero;
+                                      var curve = Curves.ease;
+
+                                      var tween = Tween(
+                                          begin: begin, end: end)
+                                          .chain(
+                                          CurveTween(curve: curve));
+                                      var offsetAnimation =
+                                      animation.drive(tween);
+
+                                      return SlideTransition(
+                                        position: offsetAnimation,
+                                        child: child,
+                                      );
+                                    },
+                                  ),
+                                );
+                              }),
+                        ],
                       ),
+                      //Spacer(),
                     ],
                   ),
                 ),
@@ -118,7 +169,6 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                       .limit(5)
                       .snapshots(),
                   builder: (context, snapshot) {
-                    //.where("city", isEqualTo: widget.selectedCity)
                     if (snapshot.connectionState ==
                         ConnectionState.active) {
                       if (snapshot.hasData) {
@@ -137,11 +187,15 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                               ),
                             )
                                 : SizedBox(
-                              height: 220,
+                              height: MediaQuery.of(context)
+                                  .size
+                                  .height *
+                                  0.33,
                               width: double.infinity,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: snapshot.data!.docs.length,
+                                itemCount:
+                                snapshot.data!.docs.length,
                                 itemBuilder: (context, index) {
                                   String level = snapshot
                                       .data!.docs[index]['level'];
@@ -156,15 +210,17 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                                               animation,
                                               secondaryAnimation) =>
                                               Alert_Details_Screen(
-                                                documentSnapshot: snapshot
-                                                    .data!.docs[index],
+                                                documentSnapshot:
+                                                snapshot.data!
+                                                    .docs[index],
                                               ),
                                           transitionsBuilder:
                                               (context,
                                               animation,
                                               secondaryAnimation,
                                               child) {
-                                            var begin = const Offset(
+                                            var begin =
+                                            const Offset(
                                                 1.0, 0.0);
                                             var end = Offset.zero;
                                             var curve = Curves.ease;
@@ -194,13 +250,15 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                                           0.75,
                                       child: Card(
                                         color: cardColor,
-                                        margin: const EdgeInsets.only(
+                                        margin:
+                                        const EdgeInsets.only(
                                             bottom: 13,
                                             left: 7,
                                             right: 7),
                                         // Set margin to zero to remove white spaces
                                         elevation: 3,
-                                        shape: RoundedRectangleBorder(
+                                        shape:
+                                        RoundedRectangleBorder(
                                           borderRadius:
                                           BorderRadius.circular(
                                               15),
@@ -215,7 +273,8 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                                               const EdgeInsets
                                                   .symmetric(
                                                   vertical: 5,
-                                                  horizontal: 7),
+                                                  horizontal:
+                                                  7),
                                               child: Column(
                                                 crossAxisAlignment:
                                                 CrossAxisAlignment
@@ -226,11 +285,11 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                                                     CircleAvatar(
                                                       maxRadius: 14,
                                                       backgroundColor:
-                                                      Colors.grey,
+                                                      Colors
+                                                          .grey,
                                                       child: Text(
                                                           "${index + 1}"),
                                                     ),
-                                                    //textColor: Colors.white,
                                                     title: Column(
                                                       mainAxisAlignment:
                                                       MainAxisAlignment
@@ -240,16 +299,14 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                                                           .start,
                                                       children: [
                                                         Text(
-                                                            snapshot.data!
-                                                                .docs[index]
-                                                            [
-                                                            'typeofDisaster'],
-                                                            style:
-                                                            const TextStyle(
+                                                            snapshot
+                                                                .data!
+                                                                .docs[index]['typeofDisaster'],
+                                                            style: const TextStyle(
                                                               fontSize:
                                                               15,
-                                                              color: Colors
-                                                                  .black,
+                                                              color:
+                                                              Colors.black,
                                                             )),
                                                         const SizedBox(
                                                             height:
@@ -259,60 +316,48 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                                                                 " ${snapshot.data!.docs[index]['city']}",
                                                             style:
                                                             const TextStyle(
-                                                              color: Colors
-                                                                  .black,
+                                                              color:
+                                                              Colors.black,
                                                               fontSize:
                                                               13,
                                                             )),
-
-                                                        // Text(
-                                                        //   snapshot.data!.docs[index]
-                                                        //       ['userName'],
-                                                        //   style: TextStyle(
-                                                        //
-                                                        //     fontWeight: FontWeight.w700,
-                                                        //     color: Colors.black
-                                                        //         .withOpacity(0.6),
-                                                        //   ),
-                                                        // ),
                                                       ],
                                                     ),
                                                   ),
-                                                  //const SizedBox(height: 4),
-                                                  // Padding(
-                                                  //   padding:
-                                                  //       const EdgeInsets.symmetric(
-                                                  //           horizontal: 3),
-                                                  //   child: Row(
-                                                  //     children: [
-                                                  //       const Text("Request type : ",
-                                                  //           style: TextStyle(
-                                                  //               fontWeight:
-                                                  //                   FontWeight.bold)),
-                                                  //       Text(
-                                                  //           snapshot.data!.docs[index]
-                                                  //               ['neededService'],
-                                                  //           style: const TextStyle(
-                                                  //               color: Colors.black)),
-                                                  //     ],
-                                                  //   ),
-                                                  // ),
-                                                  const SizedBox(height: 10),
-                                                  const Divider(height: 2,color: Colors.black54),
-                                                  const SizedBox(height: 10),
+                                                  const SizedBox(
+                                                      height: 10),
+                                                  const Divider(
+                                                      height: 2,
+                                                      color: Colors
+                                                          .black54),
+                                                  const SizedBox(
+                                                      height: 10),
                                                   Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal:
+                                                        10),
                                                     child: SizedBox(
-                                                      width: MediaQuery.of(context)
+                                                      width: MediaQuery.of(
+                                                          context)
                                                           .size
                                                           .width *
                                                           0.65,
                                                       child: Text(
-                                                          snapshot.data!.docs[index]['description'],
-                                                          maxLines: 5,
-                                                          overflow: TextOverflow.ellipsis,
+                                                          snapshot.data!.docs[
+                                                          index]
+                                                          [
+                                                          'description'],
+                                                          maxLines:
+                                                          5,
+                                                          overflow:
+                                                          TextOverflow
+                                                              .ellipsis,
                                                           style: const TextStyle(
-                                                              fontSize: 15)),
+                                                              color: Colors
+                                                                  .black,
+                                                              fontSize:
+                                                              15)),
                                                     ),
                                                   ),
                                                   const SizedBox(
@@ -321,7 +366,8 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                                                     padding:
                                                     const EdgeInsets
                                                         .only(
-                                                        left: 15,
+                                                        left:
+                                                        15,
                                                         top: 5),
                                                     child: Row(
                                                       children: [
@@ -334,15 +380,13 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                                                           ),
                                                         ),
                                                         Text(
-                                                            snapshot.data!
-                                                                .docs[index]
+                                                            snapshot.data!.docs[index]
                                                             [
                                                             'level'],
                                                             style: const TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                FontWeight.bold)),
+                                                                color:
+                                                                Colors.black,
+                                                                fontWeight: FontWeight.bold)),
                                                       ],
                                                     ),
                                                   ),
@@ -352,7 +396,8 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                                                     padding:
                                                     const EdgeInsets
                                                         .only(
-                                                        right: 10,
+                                                        right:
+                                                        10,
                                                         bottom:
                                                         3),
                                                     child: Row(
@@ -360,20 +405,24 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                                                       MainAxisAlignment
                                                           .end,
                                                       children: [
-                                                        //const Text("City : ",style: TextStyle(fontWeight: FontWeight.bold)),
-                                                        const Icon(Icons.watch_later_outlined,size: 16),
-                                                        const SizedBox(width: 3),
+                                                        const Icon(
+                                                            Icons
+                                                                .watch_later_outlined,
+                                                            size:
+                                                            16,
+                                                            color: Colors
+                                                                .black54),
+                                                        const SizedBox(
+                                                            width:
+                                                            3),
                                                         Text(
-                                                            DateFormat('dd-MM-yyyy , HH:mm').format(DateTime.parse(snapshot
-                                                                .data!
-                                                                .docs[index]
+                                                            DateFormat('dd-MM-yyyy , HH:mm').format(DateTime.parse(snapshot.data!.docs[index]
                                                             [
                                                             'sentTime'])),
                                                             style: const TextStyle(
-                                                                color: Colors
-                                                                    .black54,
-                                                                fontSize:
-                                                                12)),
+                                                                color:
+                                                                Colors.black54,
+                                                                fontSize: 12)),
                                                       ],
                                                     ),
                                                   ),
@@ -395,7 +444,8 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                       return const Center(
                           child: CircularProgressIndicator());
                     }
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(
+                        child: CircularProgressIndicator());
                   }),
             ),
             Padding(

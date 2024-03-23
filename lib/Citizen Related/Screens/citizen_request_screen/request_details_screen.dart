@@ -554,7 +554,7 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                                 width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                    0.65,
+                                                    0.6,
                                                 child: Text(
                                                     fetchedNGOContact,
                                                     maxLines: 1,
@@ -597,7 +597,7 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                                 width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                    0.65,
+                                                    0.6,
                                                 child: Text(
                                                     fetchedNGOWebsite,
                                                     maxLines: 1,
@@ -923,7 +923,7 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                                 width: MediaQuery.of(context)
                                                     .size
                                                     .width *
-                                                    0.65,
+                                                    0.6,
                                                 child: Text(
                                                    fetchedGovtWebsite,
                                                     maxLines: 1,
