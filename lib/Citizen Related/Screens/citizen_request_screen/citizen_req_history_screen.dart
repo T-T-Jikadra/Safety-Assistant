@@ -27,10 +27,14 @@ class _Request_History_ScreenState extends State<Request_History_Screen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name - Req History Page"),
+        title: const Text("$appbar_display_name Request History"),
       ),
       body: const Column(
-        children: [req_history_list_widget()],
+        children: [
+          Expanded(
+            child: req_history_list_widget(),
+          ),
+        ],
       ),
     );
   }

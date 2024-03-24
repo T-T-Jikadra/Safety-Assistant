@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 import 'dart:async';
-import 'package:fff/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +13,7 @@ import '../../NGO Related/Screens/ngo_home_screen/home_screen_ngo.dart';
 import '../../Utils/themes/theme.dart';
 import '../../Citizen Related/Screens/citizen_home_screen/home_screen_citizen.dart';
 import '../onBoarding/onBoard.dart';
+import '../type of user/select_user_type_screen.dart';
 
 // ignore: camel_case_types
 class splash extends StatelessWidget {
@@ -24,9 +24,9 @@ class splash extends StatelessWidget {
     final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
     return GetMaterialApp(
-      //title:'CAS',
+      title:'CAS',
       navigatorKey: navigatorKey, // Set the global navigator key
-      title: 'Citizen Emergency & response system',
+      // title: 'Citizen Emergency & response system',
       debugShowCheckedModeBanner: false,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
@@ -119,12 +119,13 @@ class _SplashScreenState extends State<SplashScreen> {
           AnimatedPositioned(
               duration: const Duration(milliseconds: 1600),
               bottom: animate ? 150 : 0,
-              height: 450,
-              width: 350,
+              left: 20,
+              height: 300,
+              width: 300,
               child: AnimatedOpacity(
                   duration: const Duration(milliseconds: 1600),
                   opacity: animate ? 1 : 0,
-                  child: SvgPicture.asset(splash_svg))),
+                  child: SvgPicture.asset("assets/images/logo_svg.svg"))),
           //4th small object at bottom ..
           AnimatedPositioned(
             duration: const Duration(milliseconds: 1600),
@@ -164,7 +165,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // setState(() {
     //   animate = false;
     // });
-    await Future.delayed(const Duration(milliseconds: 2000));
+    await Future.delayed(const Duration(milliseconds: 3000));
 
     final SharedPreferences sharedPref = await SharedPreferences.getInstance();
     var obtainedUserType = sharedPref.getString("userType");
@@ -197,7 +198,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Get.offAll(() => const CitizenHomeScreen());
       }
     } else {
-      Get.offAll(() => const liquidpages());
+      Get.offAll(() => const SelectOptionPageScreen());
 
       // Handle invalid userType
       if (kDebugMode) {

@@ -216,9 +216,15 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                               style: TextStyle(fontSize: 13)),
                                         ),
                                         const SizedBox(height: 4),
-                                        Text(fetchedReqAddress,
-                                            style:
-                                                const TextStyle(fontSize: 16)),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              0.67,
+                                          child: Text(fetchedReqAddress,maxLines: 3,
+                                              style:
+                                                  const TextStyle(fontSize: 16)),
+                                        ),
                                       ],
                                     ),
                                   ],
@@ -328,8 +334,15 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                           const Text("Address :",
                                               style: TextStyle(fontSize: 13)),
                                           const SizedBox(height: 4),
-                                          Text(fetchedNGOAddress,
-                                              style: const TextStyle(fontSize: 16)),
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width *
+                                                0.67,
+                                            child: Text(fetchedNGOAddress,maxLines: 3,
+                                                style:
+                                                const TextStyle(fontSize: 16)),
+                                          ),
                                           const SizedBox(height: 8),
                                           const Divider(height: 2),
                                           const SizedBox(height: 8),

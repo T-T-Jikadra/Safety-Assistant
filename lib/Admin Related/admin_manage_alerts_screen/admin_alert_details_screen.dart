@@ -1,27 +1,29 @@
-// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, deprecated_member_use
+// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, deprecated_member_use, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fff/Utils/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
+import '../../Utils/Utils.dart';
+
 // ignore: camel_case_types
-class Alert_Details_Screen extends StatefulWidget {
+class Admin_Alert_Details_Screen extends StatefulWidget {
   final DocumentSnapshot<Object?> documentSnapshot;
 
-  const Alert_Details_Screen({
+  const Admin_Alert_Details_Screen({
     super.key,
     required this.documentSnapshot,
   });
 
   @override
-  State<Alert_Details_Screen> createState() => _Alert_Details_ScreenState();
+  State<Admin_Alert_Details_Screen> createState() => _Admin_Alert_Details_ScreenState();
 }
 
 // ignore: camel_case_types
-class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
+class _Admin_Alert_Details_ScreenState extends State<Admin_Alert_Details_Screen> {
   bool isLoading = true;
 
   String fetchedDos1 = '';
@@ -54,7 +56,7 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name - Alert details"),
+        title: const Text("Alert details"),
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -392,7 +394,76 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                 ),
               ),
             ),
-    );
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.only(right: 20, left: 20, bottom: 15,top: 10),
+          child: Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      final CupertinoAlertDialog alert = CupertinoAlertDialog(
+                        title: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text('Confirm : ',
+                              style: TextStyle(fontSize: 16)),
+                        ),
+                        content: const Text('Delete this alert ?'),
+                        actions: <Widget>[
+                          CupertinoDialogAction(
+                            isDefaultAction: true,
+                            child: const Text('Cancel'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          CupertinoDialogAction(
+                            isDefaultAction: true,
+                            child: const Text('Delete'),
+                            onPressed: () async {
+                              deleteAlert();
+                              Navigator.pop(context, true);
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(
+                                        color: Colors.white),
+                                  );
+                                },
+                              );
+                              await Future.delayed(
+                                  const Duration(milliseconds: 1200));
+                              Navigator.pop(context);
+                              Navigator.pop(context, true);
+                            },
+                          )
+                        ],
+                      );
+                      // Show the dialog
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return alert;
+                        },
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                      MaterialStatePropertyAll(Colors.red.shade300),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      )),
+                    ),
+                    child: const Text("Delete Alert"),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ));
   }
 
   void fetchDos() async {
@@ -426,4 +497,13 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
     }
     return null;
   }
-}
+
+  void deleteAlert() {
+    //delete feedback doc
+    DocumentReference feedbackRef = FirebaseFirestore.instance
+        .collection("clc_alert")
+        .doc(widget.documentSnapshot["AlertId"]);
+    feedbackRef
+        .delete()
+        .then((value) => showToastMsg("Alert removed successfully"));
+  }}

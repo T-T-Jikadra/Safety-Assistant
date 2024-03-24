@@ -1,41 +1,42 @@
-// ignore_for_file: camel_case_types, non_constant_identifier_names
+// ignore_for_file: camel_case_types
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fff/Govt%20Body%20Related/Screens/govt_home_screen/side_menu_govt.dart';
+import 'package:fff/Admin%20Related/admin_donation_history.dart';
+import 'package:fff/Admin%20Related/admin_home_screen/menu_admin.dart';
+import 'package:fff/Admin%20Related/admin_home_screen/side_menu_admin.dart';
 import 'package:fff/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../Utils/common_files/alerts/alert_history_screen.dart';
+// import '../../../Admin Related/news media/admin_send_media_screen.dart';
+import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../../../Utils/common_files/faq_screen/faq_screen.dart';
 import '../../../Utils/common_files/about_us_screen.dart';
-import '../../../Utils/common_files/media_history_screen.dart';
 import '../../../Components/info_card.dart';
-import '../../../_Root/type of user/select_user_type_screen.dart';
-import '../Govt_list_GovtAgency/Govt_list.dart';
-import '../../../Utils/common_files/apply_grant_screen.dart';
-import '../govt_profile_screen.dart';
-import '../govt_respond_history_screen.dart';
-import 'menu_govt.dart';
+import '../admin_manage_alerts_screen/admin_manage_alert_screen.dart';
+import '../admin_manage_citizen_screen/admin_view_citizen_screen.dart';
+import '../admin_manage_govt_screen/admin_manage_govt_agency_screen.dart';
+import '../admin_manage_media_screen/admin_manage_media_screen.dart';
+import '../admin_manage_ngo_screen/admin_manage_ngo_screen.dart';
+import '../admin_request_history_screen/admin_request_history_screen.dart';
 
-class SideBar_govt extends StatefulWidget {
-  const SideBar_govt({super.key});
+class SideBar_Admin extends StatefulWidget {
+  const SideBar_Admin({super.key});
 
   @override
-  State<SideBar_govt> createState() => _SideBar_govtState();
+  State<SideBar_Admin> createState() => _SideBar_AdminState();
 }
 
-class _SideBar_govtState extends State<SideBar_govt> {
-  Menu_govt selectedSideMenu = sidebarMenus.first;
-  String govtAgencyName = "";
-  String govtEmail = "";
+class _SideBar_AdminState extends State<SideBar_Admin> {
+  Menu_admin selectedSideMenu = sidebarMenus.first;
+  String citizenName = "";
+  String citizenMobile = "";
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    fetchGovtData();
+    fetchCitizenData();
   }
 
   @override
@@ -61,131 +62,36 @@ class _SideBar_govtState extends State<SideBar_govt> {
               children: [
                 GestureDetector(
                   onTap: () => {
-                    Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                        const Govt_Profile(),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          var begin = const Offset(1.0, 0.0);
-                          var end = Offset.zero;
-                          var curve = Curves.ease;
-
-                          var tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-                          var offsetAnimation = animation.drive(tween);
-
-                          return SlideTransition(
-                            position: offsetAnimation,
-                            child: child,
-                          );
-                        },
-                      ),
-                    )
                   },
-                  child: InfoCard(
-                    name: govtAgencyName,
-                    mail: govtEmail,
+                  child: const InfoCard(
+                    name: "ADMIN",
+                    mail: "INDIA",
                   ),
                 ),
                 const SizedBox(height: 25),
                 ...sidebarMenus
-                    .map((menu_govt) => SideMenu_govt(
-                          menu: menu_govt,
+                    .map((menuAdmin) => SideMenu_admin(
+                          menu: menuAdmin,
                           selectedMenu: selectedSideMenu,
 
                           //on tap routes ..
                           press: () async {
-                            //RiveUtils.chnageSMIBoolState(menu_govt.rive.status!);
+                            //RiveUtils.changeSMIBoolState(menu.rive.status!);
                             setState(() {
-                              selectedSideMenu = menu_govt;
+                              selectedSideMenu = menuAdmin;
                             });
                             //extra (for testing only)
                             await Future.delayed(
                                 const Duration(milliseconds: 500));
 
-                            if (menu_govt.title.contains("Home")) {
-                              // ignore: use_build_context_synchronously
-                              // Navigator.of(context).push(
-                              //   PageRouteBuilder(
-                              //     pageBuilder: (context, animation,
-                              //             secondaryAnimation) =>
-                              //         const msgScreen(),
-                              //     transitionsBuilder: (context, animation,
-                              //         secondaryAnimation, child) {
-                              //       var begin = const Offset(1.0, 0.0);
-                              //       var end = Offset.zero;
-                              //       var curve = Curves.ease;
-                              //
-                              //       var tween = Tween(begin: begin, end: end)
-                              //           .chain(CurveTween(curve: curve));
-                              //       var offsetAnimation =
-                              //           animation.drive(tween);
-                              //
-                              //       return SlideTransition(
-                              //         position: offsetAnimation,
-                              //         child: child,
-                              //       );
-                              //     },
-                              //   ),
-                              // );
-                            } else if (menu_govt.title.contains("Profile")) {
-                              //ignore: use_build_context_synchronously
-                              Navigator.of(context).push(
-                                PageRouteBuilder(
-                                  pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
-                                      const Govt_Profile(),
-                                  transitionsBuilder: (context, animation,
-                                      secondaryAnimation, child) {
-                                    var begin = const Offset(1.0, 0.0);
-                                    var end = Offset.zero;
-                                    var curve = Curves.ease;
-
-                                    var tween = Tween(begin: begin, end: end)
-                                        .chain(CurveTween(curve: curve));
-                                    var offsetAnimation =
-                                        animation.drive(tween);
-
-                                    return SlideTransition(
-                                      position: offsetAnimation,
-                                      child: child,
-                                    );
-                                  },
-                                ),
-                              );
-                            } else if (menu_govt.title.contains("Other")) {
-                              // ignore: use_build_context_synchronously
-                              Navigator.of(context).push(
-                                PageRouteBuilder(
-                                  pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
-                                      const govt_ListofAgency(),
-                                  transitionsBuilder: (context, animation,
-                                      secondaryAnimation, child) {
-                                    var begin = const Offset(1.0, 0.0);
-                                    var end = Offset.zero;
-                                    var curve = Curves.ease;
-
-                                    var tween = Tween(begin: begin, end: end)
-                                        .chain(CurveTween(curve: curve));
-                                    var offsetAnimation =
-                                        animation.drive(tween);
-
-                                    return SlideTransition(
-                                      position: offsetAnimation,
-                                      child: child,
-                                    );
-                                  },
-                                ),
-                              );
-                            } else if (menu_govt.title.contains("Response")) {
+                            if (menuAdmin.title.contains("Home")) {
+                            } else if (menuAdmin.title.contains("Citizen")) {
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                       secondaryAnimation) =>
-                                   const Govt_Response_History_Screen(),
+                                  const Admin_View_Citizen_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -204,64 +110,13 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                   },
                                 ),
                               );
-                            } else if (menu_govt.title.contains("Alert")) {
-                              //ignore: use_build_context_synchronously
-                              Navigator.of(context).push(
-                                PageRouteBuilder(
-                                  pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
-                                      const Alert_History_Screen(),
-                                  transitionsBuilder: (context, animation,
-                                      secondaryAnimation, child) {
-                                    var begin = const Offset(1.0, 0.0);
-                                    var end = Offset.zero;
-                                    var curve = Curves.ease;
-
-                                    var tween = Tween(begin: begin, end: end)
-                                        .chain(CurveTween(curve: curve));
-                                    var offsetAnimation =
-                                        animation.drive(tween);
-
-                                    return SlideTransition(
-                                      position: offsetAnimation,
-                                      child: child,
-                                    );
-                                  },
-                                ),
-                              );
-                            } else if (menu_govt.title.contains("Grant")) {
-                              // ignore: use_build_context_synchronously
-                              Navigator.of(context).push(
-                                PageRouteBuilder(
-                                  pageBuilder: (context, animation,
-                                          secondaryAnimation) =>
-                                      const ApplyForGrant(),
-                                  transitionsBuilder: (context, animation,
-                                      secondaryAnimation, child) {
-                                    var begin = const Offset(1.0, 0.0);
-                                    var end = Offset.zero;
-                                    var curve = Curves.ease;
-
-                                    var tween = Tween(begin: begin, end: end)
-                                        .chain(CurveTween(curve: curve));
-                                    var offsetAnimation =
-                                        animation.drive(tween);
-
-                                    return SlideTransition(
-                                      position: offsetAnimation,
-                                      child: child,
-                                    );
-                                  },
-                                ),
-                              );
-                            }
-                            else if (menu_govt.title.contains("Media")) {
+                            } else if (menuAdmin.title.contains("NGO")) {
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                       secondaryAnimation) =>
-                                  const Media_History_Screen(),
+                                  const Admin_Manage_NGO_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -272,6 +127,131 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
                                     animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
+                            } else if (menuAdmin.title.contains("Govt")) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      const Admin_Manage_Govt_Agency_Screen(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                        animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
+                            } else if (menuAdmin.title.contains("Request")) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      const Admin_Request_History_Screen(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                        animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
+                            } else if (menuAdmin.title.contains("Donation")) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      const Admin_Donation_History_Screen(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                        animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
+                            } else if (menuAdmin.title.contains("Alert")) {
+                              //ignore: use_build_context_synchronously
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      const Admin_Manage_Alert_Screen(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                        animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
+                            } else if (menuAdmin.title.contains("Media")) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      const Admin_Manage_Media_Screen(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -283,11 +263,6 @@ class _SideBar_govtState extends State<SideBar_govt> {
                             }
                             //till above
                           },
-
-                          // riveOnInit: (artboard) {
-                          //   menu_govt.rive.status = RiveUtils.getRiveInput(artboard,
-                          //       stateMachineName: menu_govt.rive.stateMachineName);
-                          // },
                         ))
                     .toList(),
                 Padding(
@@ -301,24 +276,23 @@ class _SideBar_govtState extends State<SideBar_govt> {
                   ),
                 ),
                 ...sidebarMenus2
-                    .map((menu_govt) => SideMenu_govt(
-                          menu: menu_govt,
+                    .map((menu) => SideMenu_admin(
+                          menu: menu,
                           selectedMenu: selectedSideMenu,
                           press: () async {
-                            //RiveUtils.chnageSMIBoolState(menu_govt.rive.status!);
                             setState(() {
-                              selectedSideMenu = menu_govt;
+                              selectedSideMenu = menu;
                             });
                             await Future.delayed(
                                 const Duration(milliseconds: 500));
 
-                            if (menu_govt.title.contains("FAQ")) {
+                            if (menu.title.contains("FAQ")) {
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const FAQScreen(),
+                                          secondaryAnimation) =>
+                                      const FAQScreen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -328,7 +302,7 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -337,13 +311,13 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                   },
                                 ),
                               );
-                            } else if (menu_govt.title.contains("About")) {
+                            } else if (menu.title.contains("About")) {
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const AboutUsScreen(),
+                                          secondaryAnimation) =>
+                                      const AboutUsScreen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -353,7 +327,7 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -362,10 +336,11 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                   },
                                 ),
                               );
-                            }else if (menu_govt.title.contains("Logout")) {
+                            } else if (menu.title.contains("Logout")) {
                               // ignore: use_build_context_synchronously
                               //To logs out the current user ..
-                              final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+                              final SharedPreferences sharedPref =
+                                  await SharedPreferences.getInstance();
                               sharedPref.remove("userType");
                               await FirebaseAuth.instance.signOut();
                               // ignore: use_build_context_synchronously
@@ -378,8 +353,8 @@ class _SideBar_govtState extends State<SideBar_govt> {
                             }
                           },
                           // riveOnInit: (artboard) {
-                          //   menu_govt.rive.status = RiveUtils.getRiveInput(artboard,
-                          //       stateMachineName: menu_govt.rive.stateMachineName);
+                          //   menu.rive.status = RiveUtils.getRiveInput(artboard,
+                          //       stateMachineName: menu.rive.stateMachineName);
                           // },
                         ))
                     .toList(),
@@ -392,22 +367,24 @@ class _SideBar_govtState extends State<SideBar_govt> {
     );
   }
 
-  Future<void> fetchGovtData() async {
+  Future<void> fetchCitizenData() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
 
       // Fetch data from Firestore
-      DocumentSnapshot GovtSnapshot = await FirebaseFirestore.instance
-          .collection('clc_govt')
-          .doc(user?.email)
+      DocumentSnapshot citizenSnapshot = await FirebaseFirestore.instance
+          .collection('clc_citizen')
+          .doc(user?.phoneNumber)
           .get();
 
       // Check if the document exists
-      if (GovtSnapshot.exists) {
+      if (citizenSnapshot.exists) {
         // Access the fields from the document
         setState(() {
-          govtAgencyName = GovtSnapshot.get('GovtAgencyName');
-          govtEmail = GovtSnapshot.get('email');
+          String fname = citizenSnapshot.get('firstName');
+          String lname = citizenSnapshot.get('lastName');
+          citizenName = "$fname $lname";
+          citizenMobile = citizenSnapshot.get('phoneNumber');
         });
       } else {
         if (kDebugMode) {

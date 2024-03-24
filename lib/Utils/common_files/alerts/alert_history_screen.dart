@@ -2,10 +2,10 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../../Utils/Utils.dart';
-import '../../Utils/constants.dart';
+import '../../Utils.dart';
+import 'alert_screen.dart';
+import '../../constants.dart';
 import 'package:intl/intl.dart';
-import 'alert_details_screen.dart';
 
 class Alert_History_Screen extends StatefulWidget {
   const Alert_History_Screen({super.key});
@@ -26,7 +26,7 @@ class _Alert_History_ScreenState extends State<Alert_History_Screen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name - Alert History Page"),
+        title: const Text("$appbar_display_name Alerts"),
       ),
       body: const Column(
         children: [alert_history_list_widget()],
@@ -156,9 +156,7 @@ class _alert_history_list_widgetState extends State<alert_history_list_widget> {
                                                         )),
                                                     const SizedBox(height: 3),
                                                     Text(
-                                                        snapshot.data!
-                                                                .docs[index]
-                                                            ['state'],
+                                                        "${snapshot.data!.docs[index]['state']} , ${snapshot.data!.docs[index]['city']}",
                                                         style: const TextStyle(
                                                           color: Colors.black,
                                                           fontSize: 15,

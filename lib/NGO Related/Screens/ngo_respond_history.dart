@@ -270,7 +270,16 @@ class _response_history_list_widgetState
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: [
-                                          //const Text("City : ",style: TextStyle(fontWeight: FontWeight.bold)),
+                                          const Icon(
+                                              Icons
+                                                  .watch_later_outlined,
+                                              size:
+                                              16,
+                                              color: Colors
+                                                  .black54),
+                                          const SizedBox(
+                                              width:
+                                              3),
                                           Text(
                                               DateFormat('dd-MM-yyyy , HH:mm')
                                                   .format(DateTime.parse(

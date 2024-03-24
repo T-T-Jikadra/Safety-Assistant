@@ -1,31 +1,35 @@
-// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, deprecated_member_use
+// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, deprecated_member_use, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fff/Utils/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
+import '../../Utils.dart';
 
 // ignore: camel_case_types
-class Alert_Manage_Screen extends StatefulWidget {
+class Alert_Details_Screen extends StatefulWidget {
   final DocumentSnapshot<Object?> documentSnapshot;
 
-  const Alert_Manage_Screen({
+  const Alert_Details_Screen({
     super.key,
     required this.documentSnapshot,
   });
 
   @override
-  State<Alert_Manage_Screen> createState() => _Alert_Manage_ScreenState();
+  State<Alert_Details_Screen> createState() => _Alert_Details_ScreenState();
 }
 
 // ignore: camel_case_types
-class _Alert_Manage_ScreenState extends State<Alert_Manage_Screen> {
+class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
   bool isLoading = true;
 
-  String fetchedDos = '';
-  String fetchedDonts = '';
+  String fetchedDos1 = '';
+  String fetchedDonts1 = '';
+  String fetchedDos2 = '';
+  String fetchedDonts2 = '';
+  String fetchedDos3 = '';
+  String fetchedDonts3 = '';
 
   @override
   void initState() {
@@ -50,7 +54,7 @@ class _Alert_Manage_ScreenState extends State<Alert_Manage_Screen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name - Alert details"),
+        title: const Text("Alert details"),
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -81,26 +85,6 @@ class _Alert_Manage_ScreenState extends State<Alert_Manage_Screen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  const Icon(Iconsax.card),
-                                  const SizedBox(width: 12),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text("Alert Id  :",
-                                          style: TextStyle(fontSize: 13)),
-                                      const SizedBox(height: 4),
-                                      Text(widget.documentSnapshot['AlertId'],
-                                          style: const TextStyle(fontSize: 16)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 8),
-                              const Divider(height: 2),
-                              const SizedBox(height: 8),
                               Row(
                                 children: [
                                   const Icon(Iconsax.hierarchy_square),
@@ -134,10 +118,20 @@ class _Alert_Manage_ScreenState extends State<Alert_Manage_Screen> {
                                       const Text("Description :",
                                           style: TextStyle(fontSize: 13)),
                                       const SizedBox(height: 4),
-                                      Text(
-                                          widget
-                                              .documentSnapshot['description'],
-                                          style: const TextStyle(fontSize: 16)),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.65,
+                                        child: Flexible(
+                                          child: Text(
+                                              widget.documentSnapshot[
+                                                  'description'],
+                                              maxLines: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  fontSize: 16)),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ],
@@ -232,25 +226,84 @@ class _Alert_Manage_ScreenState extends State<Alert_Manage_Screen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 15),
-                          child: Row(
+                          child: Column(
                             children: [
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Iconsax.tick_circle4),
-                                    const SizedBox(width: 5),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.7, // Adjust the width as needed
-                                      child: Text(
-                                        fetchedDos,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.tick_circle4),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.7, // Adjust the width as needed
+                                          child: Text(
+                                            fetchedDos1,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.tick_circle4),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.7, // Adjust the width as needed
+                                          child: Text(
+                                            fetchedDos2,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.tick_circle4),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.7, // Adjust the width as needed
+                                          child: Text(
+                                            fetchedDos3,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -267,34 +320,93 @@ class _Alert_Manage_ScreenState extends State<Alert_Manage_Screen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 15),
-                          child: Row(
+                          child: Column(
                             children: [
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(Iconsax.shield_cross),
-                                    const SizedBox(width: 5),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.7, // Adjust the width as needed
-                                      child: Text(
-                                        fetchedDonts,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.shield_cross),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.7, // Adjust the width as needed
+                                          child: Text(
+                                            fetchedDonts1,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.shield_cross),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.7, // Adjust the width as needed
+                                          child: Text(
+                                            fetchedDonts2,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.shield_cross),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.7, // Adjust the width as needed
+                                          child: Text(
+                                            fetchedDonts3,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
                         ),
                       ),
+                      const SizedBox(height: 15)
                     ],
                   ),
                 ),
-
               ),
             ),
     );
@@ -308,15 +420,18 @@ class _Alert_Manage_ScreenState extends State<Alert_Manage_Screen> {
           .get();
       try {
         if (dosSnap.exists) {
-          fetchedDos = dosSnap.get("dos");
-          fetchedDonts = dosSnap.get("donts");
+          fetchedDos1 = dosSnap.get("dos_1");
+          fetchedDonts1 = dosSnap.get("donts_1");
+          fetchedDos2 = dosSnap.get("dos_2");
+          fetchedDonts2 = dosSnap.get("donts_2");
+          fetchedDos3 = dosSnap.get("dos_3");
+          fetchedDonts3 = dosSnap.get("donts_3");
         } else {
           if (kDebugMode) {
             print('Dos document does not exist');
           }
         }
       } catch (e) {
-        // Handle any errors that occur during the process
         if (kDebugMode) {
           print('Error fetching dos/donts: $e');
         }
@@ -327,5 +442,15 @@ class _Alert_Manage_ScreenState extends State<Alert_Manage_Screen> {
       }
     }
     return null;
+  }
+
+  void deleteAlert() {
+    //delete feedback doc
+    DocumentReference feedbackRef = FirebaseFirestore.instance
+        .collection("clc_alert")
+        .doc(widget.documentSnapshot["AlertId"]);
+    feedbackRef
+        .delete()
+        .then((value) => showToastMsg("Alert removed successfully"));
   }
 }

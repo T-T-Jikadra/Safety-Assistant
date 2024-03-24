@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class govtListTile extends StatefulWidget {
+import 'admin_govt_agency_details_screen.dart';
+
+class Admin_GovtListTile extends StatefulWidget {
   final String index;
   final String regNo;
   final String govtAgencyName;
@@ -16,7 +18,7 @@ class govtListTile extends StatefulWidget {
   final String address;
   final String pwd;
 
-  const govtListTile({
+  const Admin_GovtListTile({
     Key? key,
     required this.index,
     required this.regNo,
@@ -33,10 +35,10 @@ class govtListTile extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _GovtListTileState createState() => _GovtListTileState();
+  _Admin_GovtListTileState createState() => _Admin_GovtListTileState();
 }
 
-class _GovtListTileState extends State<govtListTile>
+class _Admin_GovtListTileState extends State<Admin_GovtListTile>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _heightAnimation;
@@ -103,7 +105,13 @@ class _GovtListTileState extends State<govtListTile>
                   const SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: Text("Service List: ${widget.serviceList}",
+                    child: Text("Service List : ${widget.serviceList}",
+                        style: const TextStyle(color: Colors.black)),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: Text("City : ${widget.state} , ${widget.city}",
                         style: const TextStyle(color: Colors.black)),
                   ),
                   const SizedBox(height: 8),
@@ -111,7 +119,7 @@ class _GovtListTileState extends State<govtListTile>
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: Row(
                       children: [
-                        Text("Contact: ${widget.contact}",
+                        Text("Contact : ${widget.contact}",
                             style: const TextStyle(color: Colors.black)),
                         TextButton(
                           onPressed: () {
@@ -120,7 +128,7 @@ class _GovtListTileState extends State<govtListTile>
                             );
                           },
                           child: Icon(Icons.call,
-                              size: 14, color: Colors.green.shade800),
+                              size: 18, color: Colors.green.shade800),
                         ),
                       ],
                     ),
@@ -156,16 +164,6 @@ class _GovtListTileState extends State<govtListTile>
                       ),
                       Padding(
                         padding: const EdgeInsets.all(3.0),
-                        child: Text("City : ${widget.city}",
-                            style: const TextStyle(color: Colors.black)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Text("State : ${widget.state}",
-                            style: const TextStyle(color: Colors.black)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(3.0),
                         child: Text("Email : ${widget.email}",
                             style: const TextStyle(color: Colors.black)),
                       ),
@@ -192,9 +190,7 @@ class _GovtListTileState extends State<govtListTile>
                                   widget.website,
                                   style: TextStyle(
                                     color: Colors.blue.shade200,
-                                    // Change the text color to blue for indicating a link
-                                    decoration: TextDecoration
-                                        .underline, // Add underline decoration for indicating a link
+                                    decoration: TextDecoration.underline,
                                   ),
                                 ),
                               ),
@@ -202,7 +198,59 @@ class _GovtListTileState extends State<govtListTile>
                           ),
                         ],
                       ),
-                      const SizedBox(height: 15)
+                      const SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.only(
+                                bottom: 30, left: 20, right: 20),
+                            width: 200,
+                            child: ClipRRect(
+                                child: TextButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              Colors.deepPurple.shade300),
+                                      foregroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              Colors.white),
+                                    ),
+                                    onPressed: () async {
+                                      Navigator.of(context).push(
+                                        PageRouteBuilder(
+                                          pageBuilder: (context, animation,
+                                                  secondaryAnimation) =>
+                                              const Admin_Govt_Agency_Details_Screen(),
+                                          transitionsBuilder: (context,
+                                              animation,
+                                              secondaryAnimation,
+                                              child) {
+                                            var begin = const Offset(1.0, 0.0);
+                                            var end = Offset.zero;
+                                            var curve = Curves.ease;
+
+                                            var tween = Tween(
+                                                    begin: begin, end: end)
+                                                .chain(
+                                                    CurveTween(curve: curve));
+                                            var offsetAnimation =
+                                                animation.drive(tween);
+
+                                            return SlideTransition(
+                                              position: offsetAnimation,
+                                              child: child,
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    child: const Text(
+                                      "Manage",
+                                      style: TextStyle(fontSize: 15),
+                                    ))),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

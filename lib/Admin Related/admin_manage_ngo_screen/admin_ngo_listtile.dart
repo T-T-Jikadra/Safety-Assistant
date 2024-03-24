@@ -1,11 +1,14 @@
-// ignore_for_file: library_private_types_in_public_api, camel_case_types, file_names, deprecated_member_use, unused_field
+// ignore_for_file: deprecated_member_use, file_names, library_private_types_in_public_api, unused_field, camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class govtListTile extends StatefulWidget {
+import 'admin_ngo_details_screen.dart';
+
+class Admin_NGOListTile extends StatefulWidget {
   final String index;
   final String regNo;
-  final String govtAgencyName;
+  final String nameOfNGO;
   final String serviceList;
   final String contact;
   final String website;
@@ -16,11 +19,11 @@ class govtListTile extends StatefulWidget {
   final String address;
   final String pwd;
 
-  const govtListTile({
+  const Admin_NGOListTile({
     Key? key,
     required this.index,
     required this.regNo,
-    required this.govtAgencyName,
+    required this.nameOfNGO,
     required this.serviceList,
     required this.contact,
     required this.website,
@@ -33,10 +36,10 @@ class govtListTile extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _GovtListTileState createState() => _GovtListTileState();
+  _Admin_NGOListTileState createState() => _Admin_NGOListTileState();
 }
 
-class _GovtListTileState extends State<govtListTile>
+class _Admin_NGOListTileState extends State<Admin_NGOListTile>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _heightAnimation;
@@ -70,7 +73,7 @@ class _GovtListTileState extends State<govtListTile>
       },
       child: Card(
         color: Colors.white,
-        margin: const EdgeInsets.only(bottom: 12, left: 10, right: 10),
+        margin: const EdgeInsets.only(bottom: 12),
         // Set margin to zero to remove white spaces
         elevation: 3,
         shape: RoundedRectangleBorder(
@@ -92,7 +95,7 @@ class _GovtListTileState extends State<govtListTile>
                     ),
                     textColor: Colors.white,
                     title: Text(
-                      widget.govtAgencyName,
+                      widget.nameOfNGO,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
@@ -109,6 +112,12 @@ class _GovtListTileState extends State<govtListTile>
                   const SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: Text("City : ${widget.state} , ${widget.city}",
+                        style: const TextStyle(color: Colors.black)),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: Row(
                       children: [
                         Text("Contact: ${widget.contact}",
@@ -120,7 +129,7 @@ class _GovtListTileState extends State<govtListTile>
                             );
                           },
                           child: Icon(Icons.call,
-                              size: 14, color: Colors.green.shade800),
+                              size: 18, color: Colors.green.shade800),
                         ),
                       ],
                     ),
@@ -152,16 +161,6 @@ class _GovtListTileState extends State<govtListTile>
                       Padding(
                         padding: const EdgeInsets.all(3.0),
                         child: Text("Pincode : ${widget.pinCode}",
-                            style: const TextStyle(color: Colors.black)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Text("City : ${widget.city}",
-                            style: const TextStyle(color: Colors.black)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Text("State : ${widget.state}",
                             style: const TextStyle(color: Colors.black)),
                       ),
                       Padding(
@@ -202,7 +201,59 @@ class _GovtListTileState extends State<govtListTile>
                           ),
                         ],
                       ),
-                      const SizedBox(height: 15)
+                      const SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.only(
+                                bottom: 30, left: 20, right: 20),
+                            width: 200,
+                            child: ClipRRect(
+                                child: TextButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              Colors.deepPurple.shade300),
+                                      foregroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              Colors.white),
+                                    ),
+                                    onPressed: () async {
+                                      Navigator.of(context).push(
+                                        PageRouteBuilder(
+                                          pageBuilder: (context, animation,
+                                                  secondaryAnimation) =>
+                                              const Admin_NGO_Details_Screen(),
+                                          transitionsBuilder: (context,
+                                              animation,
+                                              secondaryAnimation,
+                                              child) {
+                                            var begin = const Offset(1.0, 0.0);
+                                            var end = Offset.zero;
+                                            var curve = Curves.ease;
+
+                                            var tween = Tween(
+                                                    begin: begin, end: end)
+                                                .chain(
+                                                    CurveTween(curve: curve));
+                                            var offsetAnimation =
+                                                animation.drive(tween);
+
+                                            return SlideTransition(
+                                              position: offsetAnimation,
+                                              child: child,
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    child: const Text(
+                                      "Manage",
+                                      style: TextStyle(fontSize: 15),
+                                    ))),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

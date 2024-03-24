@@ -92,7 +92,7 @@ class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
                                   return 'Enter Registration No';
                                 }
                                 if (value.isNotEmpty && value.length < 3) {
-                                  return 'Minimum 3 Characters required';
+                                  return "Registration number did not matched";
                                 }
                                 return null; // Return null if the input is valid
                               },
@@ -126,7 +126,7 @@ class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
                                 final emailRegex =
                                     RegExp(r'^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$');
                                 if (!emailRegex.hasMatch(value)) {
-                                  return 'Enter valid email address';
+                                  return 'Email address did not matched';
                                 }
                                 return null; // Return null if the input is valid
                               },

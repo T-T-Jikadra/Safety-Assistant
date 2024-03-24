@@ -6,12 +6,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../Admin Related/alert/alert_details_screen.dart';
-import '../../../Admin Related/alert/alert_history_screen.dart';
-import '../../../Citizen Related/Screens/citizen_request_screen/citizen_request_screen.dart';
+import '../../../Utils/common_files/alerts/alert_history_screen.dart';
 import '../../../Components/Notification_related/notification_services.dart';
 import 'package:intl/intl.dart';
 import '../../../Utils/Utils.dart';
+import '../../../Utils/common_files/alerts/alert_screen.dart';
 
 class commonbg_ngo extends StatefulWidget {
   const commonbg_ngo({super.key});
@@ -353,6 +352,7 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                                                           overflow:
                                                           TextOverflow
                                                               .ellipsis,
+                                                          textAlign: TextAlign.justify,
                                                           style: const TextStyle(
                                                               color: Colors
                                                                   .black,
@@ -447,34 +447,6 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                     return const Center(
                         child: CircularProgressIndicator());
                   }),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Container(
-                height: 150,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                  color: Colors.black12,
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Text(
-                    "Temsting",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 30),
-            Center(
-              child: ElevatedButton(
-                child: const Text("It's NGO Home Page"),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const userRequest_Screen()));
-                },
-              ),
             ),
           ],
         ),

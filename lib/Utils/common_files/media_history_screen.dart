@@ -26,7 +26,7 @@ class _Media_History_ScreenState extends State<Media_History_Screen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name - Media history Page"),
+        title: const Text("$appbar_display_name Media publishes"),
       ),
       body: const Column(
         children: [media_history_list_widget()],
@@ -139,13 +139,6 @@ class _media_history_list_widgetState extends State<media_history_list_widget> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   ListTile(
-                                                    leading: CircleAvatar(
-                                                      maxRadius: 14,
-                                                      backgroundColor:
-                                                          Colors.grey,
-                                                      child:
-                                                          Text("${index + 1}"),
-                                                    ),
                                                     //textColor: Colors.white,
                                                     title: Column(
                                                       mainAxisAlignment:
@@ -155,14 +148,6 @@ class _media_history_list_widgetState extends State<media_history_list_widget> {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        const Text(
-                                                            "News Title : ",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize: 13)),
-                                                        const SizedBox(
-                                                            height: 3),
                                                         Text(
                                                             snapshot.data!
                                                                     .docs[index]
@@ -183,7 +168,7 @@ class _media_history_list_widgetState extends State<media_history_list_widget> {
                                                         padding: const EdgeInsets.all(8.0),
                                                         child: Image.network(
                                                           newsImage,
-                                                          width: 250,
+                                                          // width: 250,
                                                           height: 180,
                                                           fit: BoxFit.contain,
                                                           loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
@@ -217,6 +202,7 @@ class _media_history_list_widgetState extends State<media_history_list_widget> {
                                                           maxLines: 5,
                                                           overflow: TextOverflow
                                                               .ellipsis,
+                                                          textAlign: TextAlign.justify,
                                                           style:
                                                               const TextStyle(
                                                                   color: Colors

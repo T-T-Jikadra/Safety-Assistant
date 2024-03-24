@@ -40,7 +40,7 @@ List<Menu_ngo> sidebarMenus = [
     icon: Icons.local_activity_outlined,
   ),
   Menu_ngo(
-    title: "Notices",
+    title: "Media",
     icon: Icons.circle_notifications,
   ),
 ];

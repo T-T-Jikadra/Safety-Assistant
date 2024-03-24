@@ -83,9 +83,9 @@ class _OtpScreenState extends State<OtpScreen> {
                   SizedBox(
                     height: screenHeight * 0.01,
                   ),
-                  const Text("Check Your Inbox ...\n (●'◡'●)",
+                  const Text("Check Your Inbox",
                       style:
-                          TextStyle(fontSize: 37, fontWeight: FontWeight.w600)),
+                          TextStyle(fontSize: 34, fontWeight: FontWeight.w600)),
                   const SizedBox(
                     height: 0,
                   ),
@@ -93,7 +93,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       width: 300, height: 300, fit: BoxFit.fitWidth),
                   const Text(
                     'Verification process : ',
-                    style: TextStyle(fontSize: 28),
+                    style: TextStyle(fontSize: 26),
                   ),
                   SizedBox(
                     height: screenHeight * 0.01,
@@ -102,7 +102,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     'Enter 6 digit OTP that was \nsent to : ${widget._contact}',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      fontSize: 18,
+                      fontSize: 17,
                     ),
                   ),
                   SizedBox(
@@ -140,7 +140,7 @@ class _OtpScreenState extends State<OtpScreen> {
                               textAlign: TextAlign.center,
                             )),
                         SizedBox(
-                          height: screenHeight * 0.03,
+                          height: screenHeight * 0.05,
                         ),
                         Container(
                           padding: const EdgeInsets.only(bottom: 20),
@@ -258,7 +258,7 @@ class _OtpScreenState extends State<OtpScreen> {
       if (kDebugMode) {
         print('Error: $e');
       }
-      showAlertDialog(context, 'Invalid OTP :(');
+      showAlertDialog(context, 'Invalid OTP ');
     }
   }
 

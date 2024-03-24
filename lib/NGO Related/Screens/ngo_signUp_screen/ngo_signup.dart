@@ -165,7 +165,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                 }
                                 if (value.isNotEmpty && value.length < 3) {
                                   _regNoFocusNode.requestFocus();
-                                  return 'Minimum 3 Characters required';
+                                  return 'Invalid registration no';
                                 }
                                 return null; // Return null if the input is valid
                               },
@@ -406,7 +406,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                   });
                                 },
                                 decoration: const InputDecoration(
-                                  hintText: "Select NGO City",
+                                  hintText: "Select your City",
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -425,7 +425,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               maxLength: 6,
                               controller: pinCodeTextController,
                               decoration: const InputDecoration(
-                                hintText: "Enter NGO Pin code",
+                                hintText: "Enter Pin code",
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -434,7 +434,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               keyboardType: TextInputType.phone,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Enter pin code of an NGO';
+                                  return 'Enter pin code ';
                                 }
                                 if (value.isNotEmpty && value.length < 6) {
                                   return 'Enter 6 digits Pin code';
@@ -455,7 +455,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               textCapitalization: TextCapitalization.sentences,
                               controller: fullAddressTextController,
                               decoration: const InputDecoration(
-                                hintText: "Enter full address of an NGO",
+                                hintText: "Enter full address",
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -487,7 +487,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                   Icons.lock,
                                   color: Colors.deepPurple,
                                 ),
-                                hintText: "Create Password for an NGO",
+                                hintText: "Create Password",
                                 contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,

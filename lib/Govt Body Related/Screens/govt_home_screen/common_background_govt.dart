@@ -7,11 +7,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../../Admin Related/alert/alert_details_screen.dart';
-import '../../../Admin Related/alert/alert_history_screen.dart';
+import '../../../Utils/common_files/alerts/alert_history_screen.dart';
 import '../../../Components/Notification_related/notification_services.dart';
 import '../../../Utils/Utils.dart';
 import 'package:intl/intl.dart';
+
+import '../../../Utils/common_files/alerts/alert_screen.dart';
 
 class commonbg_govt extends StatefulWidget {
   const commonbg_govt({super.key});
@@ -354,6 +355,7 @@ class _commonbg_govtState extends State<commonbg_govt> {
                                                           overflow:
                                                           TextOverflow
                                                               .ellipsis,
+                                                          textAlign: TextAlign.justify,
                                                           style: const TextStyle(
                                                               color: Colors
                                                                   .black,

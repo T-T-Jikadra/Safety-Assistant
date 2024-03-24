@@ -78,7 +78,7 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
               borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(25),
                   bottomLeft: Radius.circular(25))),
-          title: const Text("$appbar_display_name - Request details"),
+          title: const Text("$appbar_display_name Request details"),
         ),
         body: isLoading
             ? const Center(child: CircularProgressIndicator())
@@ -304,7 +304,7 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                         const SizedBox(height: 25),
 
                         //NGO
-                        const Text("NGO Details : ",
+                        const Text("Responder NGO : ",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 17)),
                         const SizedBox(height: 20),
@@ -833,7 +833,7 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
 
                         //Govt
                         const SizedBox(height: 25),
-                        const Text("Govt Details : ",
+                        const Text("Responder Govt Agency : ",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 17)),
                         const SizedBox(height: 20),

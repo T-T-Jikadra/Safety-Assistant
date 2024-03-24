@@ -212,10 +212,8 @@ class _ngo_list_widgetState extends State<ngo_list_widget> {
   }
 
   Future<void> _refreshData() async {
-    // Simulate a delay for refreshing data
     await Future.delayed(const Duration(milliseconds: 1200));
     setState(() {
-      // Update your data here
     });
   }
 }

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 //Strings
-const String appbar_display_name = "DMS";
+const String appbar_display_name = "";
 
 //sizes
 const tDefaultSize = 30.0;

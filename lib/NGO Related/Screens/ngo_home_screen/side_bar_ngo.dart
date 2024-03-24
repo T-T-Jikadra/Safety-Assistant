@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../Admin Related/alert/alert_history_screen.dart';
+import '../../../Utils/common_files/alerts/alert_history_screen.dart';
 import '../../../Utils/common_files/faq_screen/faq_screen.dart';
 import '../../../Utils/common_files/about_us_screen.dart';
 import '../../../Utils/common_files/apply_grant_screen.dart';

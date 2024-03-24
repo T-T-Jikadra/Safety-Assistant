@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../Govt Body Related/Screens/govt_login_screen/govt_login.dart';
 import '../../../NGO Related/Screens/ngo_login_screen/ngo_login.dart';
-import '../../Admin Related/alert/admin_send_alert_screen.dart';
+import '../../Admin Related/admin_home_screen/home_screen_admin.dart';
 import '../../Citizen Related/Screens/citizen_login_screen/login_screen.dart';
 import '../../Components/check_for_internet/check_internet.dart';
 import '../../Components/Notification_related/notification_services.dart';
@@ -20,8 +20,8 @@ class SelectOptionPageScreen extends StatefulWidget {
 
 class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
   NotificationServices notificationServices = NotificationServices();
-  int? _selectedIndex; // Index of the selected role in the list
-  String? _selectedRole; // The selected role
+  int? _selectedIndex;
+  String? _selectedRole;
 
   @override
   void initState() {
@@ -67,15 +67,22 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                       // ),
                       //right btn
                       Padding(
-                        padding: const EdgeInsets.only(right: 10, top: 35),
+                        padding: const EdgeInsets.only(right: 10, top: 40),
                         child: TextButton(
                           onPressed: () {
                             // Navigate to Local Admin screen
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const Admin_Send_Alert_Screen()));
+                                    builder: (context) =>
+                                        const AdminHomeScreen()));
                           },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.deepPurple.shade500.withOpacity(0.9)),
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                          ),
                           child: const Text('Admin',
                               textAlign: TextAlign.center,
                               style: TextStyle(fontSize: 14)),
@@ -128,20 +135,18 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                             );
                           },
                         );
-                        await Future.delayed(
-                            const Duration(milliseconds: 400));
+                        await Future.delayed(const Duration(milliseconds: 400));
                         Navigator.pop(context);
                         //showErrorDialog(context, 'Mobile number can\'t be empty.');
 
-                        // showToastMsg("gey"),
-                        // Navigate based on selected role
+                        // showToastMsg("hey"),
                         switch (_selectedRole) {
                           case "I am Citizen":
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                  const CitizenLoginScreen()),
+                                      const CitizenLoginScreen()),
                             );
                             break;
                           case "I am an NGO":
@@ -149,7 +154,7 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                  const NGOLoginPageScreen()),
+                                      const NGOLoginPageScreen()),
                             );
                             break;
                           case "I am Government Agency":
@@ -157,14 +162,12 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                  const GovtLoginPageScreen()),
+                                      const GovtLoginPageScreen()),
                             );
                             break;
                           default:
-                            final snackBar = TsnakeBar(
-                                context,
-                                "Please select type of user first ..",
-                                "Undo");
+                            final snackBar = TsnakeBar(context,
+                                "Please select type of user first ..", "Undo");
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
                         }
@@ -222,7 +225,7 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
   }
 
   void showErrorDialog(BuildContext context, String message) {
-    // Set up the AlertDialog
+    // AlertDialog
     final CupertinoAlertDialog alert = CupertinoAlertDialog(
       title: const Text('Error : '),
       content: Text('\n$message'),

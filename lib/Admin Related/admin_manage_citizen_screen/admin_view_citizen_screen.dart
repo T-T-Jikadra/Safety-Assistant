@@ -5,19 +5,17 @@ import 'package:flutter/material.dart';
 import '../../../Utils/Utils.dart';
 import '../../../Utils/constants.dart';
 import 'package:intl/intl.dart';
+import 'admin_citizen_details_screen.dart';
 
-import 'admin_manage_media_screen.dart';
-
-class Admin_Media_History_Screen extends StatefulWidget {
-  const Admin_Media_History_Screen({super.key});
+class Admin_View_Citizen_Screen extends StatefulWidget {
+  const Admin_View_Citizen_Screen({super.key});
 
   @override
-  State<Admin_Media_History_Screen> createState() =>
-      _Admin_Media_History_ScreenState();
+  State<Admin_View_Citizen_Screen> createState() =>
+      _Admin_View_Citizen_ScreenState();
 }
 
-class _Admin_Media_History_ScreenState
-    extends State<Admin_Media_History_Screen> {
+class _Admin_View_Citizen_ScreenState extends State<Admin_View_Citizen_Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,24 +27,25 @@ class _Admin_Media_History_ScreenState
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name - Admin Media history Page"),
+        title: const Text("Registered Citizen"),
       ),
       body: const Column(
-        children: [media_history_list_widget()],
+        children: [citizen_history_list_widget()],
       ),
     );
   }
 }
 
-class media_history_list_widget extends StatefulWidget {
-  const media_history_list_widget({Key? key}) : super(key: key);
+class citizen_history_list_widget extends StatefulWidget {
+  const citizen_history_list_widget({Key? key}) : super(key: key);
 
   @override
-  _media_history_list_widgetState createState() =>
-      _media_history_list_widgetState();
+  _citizen_history_list_widgetState createState() =>
+      _citizen_history_list_widgetState();
 }
 
-class _media_history_list_widgetState extends State<media_history_list_widget> {
+class _citizen_history_list_widgetState
+    extends State<citizen_history_list_widget> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -56,13 +55,11 @@ class _media_history_list_widgetState extends State<media_history_list_widget> {
           onRefresh: _refreshData,
           child: StreamBuilder(
               stream: FirebaseFirestore.instance
-                  .collection("clc_news")
-                  // .where("contactNumber", isEqualTo: mobileNo)
-                  .orderBy('sentTime', descending: true)
+                  .collection("clc_citizen")
+                  .orderBy('registrationTime', descending: true)
                   // .limit(25)
                   .snapshots(),
               builder: (context, snapshot) {
-                //.where("city", isEqualTo: widget.selectedCity)
                 if (snapshot.connectionState == ConnectionState.active) {
                   if (snapshot.hasData) {
                     return Padding(
@@ -71,7 +68,7 @@ class _media_history_list_widgetState extends State<media_history_list_widget> {
                       child: snapshot.data!.docs.isEmpty
                           ? const Center(
                               child: Text(
-                                'No records found for news !',
+                                'No citizen record found !',
                                 style: TextStyle(
                                   fontSize: 19,
                                   fontWeight: FontWeight.bold,
@@ -83,18 +80,15 @@ class _media_history_list_widgetState extends State<media_history_list_widget> {
                               child: ListView.builder(
                                   itemCount: snapshot.data!.docs.length,
                                   itemBuilder: (context, index) {
-                                    snapshot.data!.docs[index]['sentTime'];
-                                    var document = snapshot.data!.docs[index];
-                                    String newsDesc =
-                                        document['news_description'];
-                                    String newsImage = document['news_image'];
+                                    snapshot.data!.docs[index]
+                                        ['registrationTime'];
                                     return GestureDetector(
                                       onTap: () {
                                         Navigator.of(context).push(
                                           PageRouteBuilder(
                                             pageBuilder: (context, animation,
                                                     secondaryAnimation) =>
-                                                Admin_Manage_News_Screen(
+                                                Citizen_Details_Screen(
                                               documentSnapshot:
                                                   snapshot.data!.docs[index],
                                             ),
@@ -163,7 +157,7 @@ class _media_history_list_widgetState extends State<media_history_list_widget> {
                                                               .start,
                                                       children: [
                                                         const Text(
-                                                            "News Title : ",
+                                                            "Citizen name : ",
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .black,
@@ -173,81 +167,64 @@ class _media_history_list_widgetState extends State<media_history_list_widget> {
                                                         Text(
                                                             snapshot.data!
                                                                     .docs[index]
-                                                                ['news_title'],
+                                                                ['firstName'],
                                                             style:
                                                                 const TextStyle(
                                                               color:
                                                                   Colors.black,
-                                                              fontSize: 17,
+                                                              fontSize: 15,
                                                             )),
                                                       ],
                                                     ),
                                                   ),
-                                                  if (newsImage.isNotEmpty)
-                                                    Hero(
-                                                      tag: document['news_id'],
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Image.network(
-                                                          newsImage,
-                                                          width: 250,
-                                                          height: 180,
-                                                          fit: BoxFit.contain,
-                                                          loadingBuilder:
-                                                              (BuildContext
-                                                                      context,
-                                                                  Widget child,
-                                                                  ImageChunkEvent?
-                                                                      loadingProgress) {
-                                                            if (loadingProgress ==
-                                                                null) {
-                                                              return child; // If image is fully loaded, display the image
-                                                            } else {
-                                                              return Center(
-                                                                child:
-                                                                    CircularProgressIndicator(
-                                                                  // Show CircularProgressIndicator while image is loading
-                                                                  value: loadingProgress
-                                                                              .expectedTotalBytes !=
-                                                                          null
-                                                                      ? loadingProgress
-                                                                              .cumulativeBytesLoaded /
-                                                                          loadingProgress
-                                                                              .expectedTotalBytes!
-                                                                      : null,
-                                                                ),
-                                                              );
-                                                            }
-                                                          },
-                                                        ),
-                                                      ),
-                                                    ),
+
                                                   const SizedBox(height: 2),
                                                   Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 13),
-                                                    child: SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.8,
-                                                      child: Text(newsDesc,
-                                                          maxLines: 5,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style:
-                                                              const TextStyle(
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontSize:
-                                                                      15)),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15, top: 5),
+                                                    child: Row(
+                                                      children: [
+                                                        const Text(
+                                                          "Phone no : ",
+                                                        ),
+                                                        Text(
+                                                            snapshot.data!
+                                                                    .docs[index]
+                                                                ['phoneNumber'],
+                                                            style: const TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                      ],
                                                     ),
                                                   ),
-                                                  const SizedBox(height: 5),
+                                                  const SizedBox(height: 2),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 15, top: 5),
+                                                    child: Row(
+                                                      children: [
+                                                        const Text(
+                                                          "City : ",
+                                                        ),
+                                                        Text(
+                                                            snapshot.data!
+                                                                    .docs[index]
+                                                                ['city'],
+                                                            style: const TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 2),
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
@@ -257,6 +234,14 @@ class _media_history_list_widgetState extends State<media_history_list_widget> {
                                                       mainAxisAlignment:
                                                           MainAxisAlignment.end,
                                                       children: [
+                                                        const Icon(
+                                                            Icons
+                                                                .watch_later_outlined,
+                                                            size: 16,
+                                                            color:
+                                                                Colors.black54),
+                                                        const SizedBox(
+                                                            width: 3),
                                                         Text(
                                                             DateFormat(
                                                                     'dd-MM-yyyy , HH:mm')
@@ -265,7 +250,7 @@ class _media_history_list_widgetState extends State<media_history_list_widget> {
                                                                             .docs[
                                                                         index]
                                                                     [
-                                                                    'sentTime'])),
+                                                                    'registrationTime'])),
                                                             style:
                                                                 const TextStyle(
                                                                     color: Colors
@@ -275,6 +260,31 @@ class _media_history_list_widgetState extends State<media_history_list_widget> {
                                                       ],
                                                     ),
                                                   ),
+                                                  // Padding(
+                                                  //   padding:
+                                                  //       const EdgeInsets.symmetric(
+                                                  //           horizontal: 0),
+                                                  //   child: Row(
+                                                  //     children: [
+                                                  //       Text(
+                                                  //           snapshot.data!.docs[index]
+                                                  //               ['fullAddress'],
+                                                  //           style: const TextStyle(
+                                                  //               color: Colors.black)),
+                                                  //       TextButton(
+                                                  //         onPressed: () {
+                                                  //           launch(
+                                                  //             'tel:',
+                                                  //           );
+                                                  //         },
+                                                  //         child: Icon(Icons.call,
+                                                  //             size: 14,
+                                                  //             color: Colors
+                                                  //                 .green.shade800),
+                                                  //       ),
+                                                  //     ],
+                                                  //   ),
+                                                  // ),
                                                 ],
                                               ),
                                             ),

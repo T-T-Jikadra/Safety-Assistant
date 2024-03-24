@@ -1,11 +1,12 @@
 import 'dart:math';
-import 'package:fff/NGO%20Related/Screens/ngo_home_screen/common_background_ngo.dart';
-import 'package:fff/NGO%20Related/Screens/ngo_home_screen/side_bar_ngo.dart';
+import 'package:fff/Admin%20Related/admin_home_screen/side_bar_admin.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
+import '../../../Components/Notification_related/notification_services.dart';
 import '../../../Utils/constants.dart';
 import '../../../Utils/other/menu_btn.dart';
-import 'menu_ngo.dart';
+import 'common_background_admin.dart';
+import 'menu_admin.dart';
 
 // class entry extends StatelessWidget {
 //   const entry({super.key});
@@ -23,18 +24,20 @@ import 'menu_ngo.dart';
 //   }
 // }
 
-class NGOHomeScreen extends StatefulWidget {
-  const NGOHomeScreen({super.key});
+class AdminHomeScreen extends StatefulWidget {
+  const AdminHomeScreen({super.key});
 
   @override
-  State<NGOHomeScreen> createState() => _NGOHomeScreenState();
+  State<AdminHomeScreen> createState() => _AdminHomeScreenState();
 }
 
-class _NGOHomeScreenState extends State<NGOHomeScreen>
+class _AdminHomeScreenState extends State<AdminHomeScreen>
     with SingleTickerProviderStateMixin {
+  NotificationServices notificationServices = NotificationServices();
+
   bool isSideBarOpen = false;
 
-  Menu_ngo selectedSideMenu = sidebarMenus.first;
+  Menu_admin selectedSideMenu = sidebarMenus.first;
 
   late SMIBool isMenuOpenInput;
 
@@ -49,7 +52,7 @@ class _NGOHomeScreenState extends State<NGOHomeScreen>
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 200))
       ..addListener(
-            () {
+        () {
           setState(() {});
         },
       );
@@ -58,6 +61,11 @@ class _NGOHomeScreenState extends State<NGOHomeScreen>
     animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
         parent: _animationController, curve: Curves.fastOutSlowIn));
     super.initState();
+    //listen to  incoming msg...
+    notificationServices.firebaseInit(context);
+
+    //for  notification when background and terminated case of application
+    notificationServices.setupInteractMessage(context);
   }
 
   @override
@@ -68,6 +76,8 @@ class _NGOHomeScreenState extends State<NGOHomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setSystemUIOverlayStyle(
+    //     SystemUiOverlayStyle(statusBarColor: Colors.white.withOpacity(0.9)));
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
@@ -79,6 +89,7 @@ class _NGOHomeScreenState extends State<NGOHomeScreen>
           _animationController.reverse();
           return false;
         } else {
+          Navigator.of(context).pop(true);
           // If the sidebar is not open, show the exit confirmation dialog
           return _showExitConfirmationDialog(context);
         }
@@ -109,7 +120,8 @@ class _NGOHomeScreenState extends State<NGOHomeScreen>
                   curve: Curves.fastOutSlowIn,
                   left: isSideBarOpen ? 0 : -288,
                   top: 0,
-                  child: const SideBar_ngo(),
+                  // DRAWER
+                  child: const SideBar_Admin(),
                 ),
                 //To show the moving background
                 Transform(
@@ -126,7 +138,8 @@ class _NGOHomeScreenState extends State<NGOHomeScreen>
                         borderRadius: BorderRadius.all(
                           Radius.circular(24),
                         ),
-                        child: commonbg_ngo(),
+                        //  HOME SCREEN
+                        child: commonbg_admin(),
                       ),
                     ),
                   ),
@@ -149,7 +162,7 @@ class _NGOHomeScreenState extends State<NGOHomeScreen>
                       }
 
                       setState(
-                            () {
+                        () {
                           isSideBarOpen = !isSideBarOpen;
                         },
                       );
@@ -161,7 +174,7 @@ class _NGOHomeScreenState extends State<NGOHomeScreen>
                       artboard.addController(controller!);
 
                       isMenuOpenInput =
-                      controller.findInput<bool>("isOpen") as SMIBool;
+                          controller.findInput<bool>("isOpen") as SMIBool;
                       isMenuOpenInput.value = true;
                     },
                   ),

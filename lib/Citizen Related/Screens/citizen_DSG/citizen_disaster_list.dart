@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, camel_case_types
 
 import 'package:flutter/material.dart';
-
 import '../../../Utils/constants.dart';
 import 'citizen_guide_list.dart';
 
@@ -23,18 +22,19 @@ class _Digital_Guide_ScreenState extends State<Digital_Guide_Screen> {
     'Flood',
     'Cyclone',
     'Tsunami',
-    'EarthQuick',
+    'Earthquake',
     'Avalanche',
     'Fire',
     'Gas and Chemical Leakages',
     'Cold Wave',
-    'Thunder Storm',
-    'Heat wave',
-    'Lighting',
+    'Thunderstorm',
+    'Heat Wave',
+    'Lightning',
+    'Urban Floods',
     'Drought',
     'Forest Fire',
     'Landslide',
-    'Smog / Air Pollution',
+    'Air Pollution',
     'Biological Emergencies',
     'Nuclear Radiological Emergencies'
   ];
@@ -57,20 +57,43 @@ class _Digital_Guide_ScreenState extends State<Digital_Guide_Screen> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView.builder(
-            itemCount: DisasterData.length,
-            itemBuilder: (context, index) {
-              return Card(
+          itemCount: DisasterData.length,
+          itemBuilder: (context, index) {
+            return Hero(
+              tag: DisasterData[index].disaster,
+              child: Card(
                 child: ListTile(
                   title: Text(DisasterData[index].disaster),
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Display(
-                              disasterList: DisasterData[index],
-                            )));
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            Display(
+                          disasterList: DisasterData[index],
+                        ),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          var begin = const Offset(1.0, 0.0);
+                          var end = Offset.zero;
+                          var curve = Curves.ease;
+
+                          var tween = Tween(begin: begin, end: end)
+                              .chain(CurveTween(curve: curve));
+                          var offsetAnimation = animation.drive(tween);
+
+                          return SlideTransition(
+                            position: offsetAnimation,
+                            child: child,
+                          );
+                        },
+                      ),
+                    );
                   },
                 ),
-              );
-            }),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

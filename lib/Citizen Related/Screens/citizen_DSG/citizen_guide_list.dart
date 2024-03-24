@@ -1,148 +1,349 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import '../../../Utils/constants.dart';
 import 'citizen_disaster_list.dart';
 
-class Display extends StatelessWidget {
+class Display extends StatefulWidget {
   final DisasterList disasterList;
 
   const Display({Key? key, required this.disasterList}) : super(key: key);
 
   @override
+  State<Display> createState() => _DisplayState();
+}
+
+class _DisplayState extends State<Display> {
+  String fetchedDid = "";
+  String fetchedType = "";
+  String fetchedDos1 = "";
+  String fetchedDos2 = "";
+  String fetchedDos3 = "";
+  String fetchedDonts1 = "";
+  String fetchedDonts2 = "";
+  String fetchedDonts3 = "";
+
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    fetchGuideData();
+    super.initState();
+    // Start loading
+    Future.delayed(const Duration(milliseconds: 1100), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(disasterList.disaster),
+        elevation: 50,
+        backgroundColor: color_AppBar,
+        centerTitle: true,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(25),
+                bottomLeft: Radius.circular(25))),
+        title: const Text("Digital Survival Guide"),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding:
-              const EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
-          child: Column(
-            children: [
-              Container(
-                //height: 740,
-                width: 370,
-                decoration: BoxDecoration(
-                  color: const Color(0xfff5f5f5),
-                  borderRadius: BorderRadius.circular(35),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 15, bottom: 20, left: 15, right: 15),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      //mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          disasterList.disaster,
-                          style: const TextStyle(
-                              color: Color((0xff7871db)),
-                              fontSize: 23,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        const Divider(
-                          height: 14,
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        const Text(
-                          'Do\'s',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          'do this in ${disasterList.disaster}',
-                          style: const TextStyle(),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        const Text(
-                          'Don\'ts',
-                          style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          "Don't do this in ${disasterList.disaster}",
-                          style: const TextStyle(),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        const Text(
-                          'Additional Instructions',
-                          style: TextStyle(
-                              color: Colors.amber,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        const Text(
-                          'Additional Instructions can be show here',
-                          style: TextStyle(),
-                        ),
-                        /* Text(
-                          //Ignore rumours, Stay calm, Don't panic\n
-                          'Keep your mobile phones charged for emergency communication; use SMS.
-                          \nListen to radio, watch TV, read newspapers for weather updates.
-                           \nKeep your documents and valuables in water-proof containers.
-                           \nTry staying in an empty room; keep movable items securely tied.
-                           \nPrepare an emergency kit with essential items for safety and survival.
-                           \nSecure your house, especially the roof; carry out repairs; dont leave sharp objects loose.
-                           \nKeep cattle/animals untied to ensure their safety.
-                           \nIn case of a storm surge/tide warning, or flooding, know your nearest safe high ground/ safe shelter and the safest access route to it.
-                           \nStore adequate ready-to-eat food and water to last at least a week.
-                           \nConduct mock drills for your family and community.
-                           \nTrim treetops and branches near your house with permission from the local authority.
-                           \nClose doors and windows securely.
-                           \nEvacuate immediately to safe places when directed by government officials.
-                           \n',
-                          textAlign: TextAlign.justify,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-
-                            // fontWeight: FontWeight.w600
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 15, right: 15, top: 80, bottom: 10),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xfff5f5f5),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 15, bottom: 20, left: 15, right: 15),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            //mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                fetchedType,
+                                style: const TextStyle(
+                                    color: Color((0xff7871db)),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              const Divider(height: 14),
+                              const SizedBox(height: 20),
+                              const Text(
+                                'Do\'s',
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              const SizedBox(height: 20),
+                              Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.green.withOpacity(0.3),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 15),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                const Icon(
+                                                    Iconsax.tick_circle4),
+                                                const SizedBox(width: 5),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.64,
+                                                  // Adjust the width as needed
+                                                  child: Text(
+                                                    fetchedDos1,
+                                                    maxLines: 3,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 15),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                const Icon(
+                                                    Iconsax.tick_circle4),
+                                                const SizedBox(width: 5),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.64,
+                                                  // Adjust the width as needed
+                                                  child: Text(
+                                                    fetchedDos2,
+                                                    maxLines: 3,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 15),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                const Icon(
+                                                    Iconsax.tick_circle4),
+                                                const SizedBox(width: 5),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.64,
+                                                  // Adjust the width as needed
+                                                  child: Text(
+                                                    fetchedDos3,
+                                                    maxLines: 3,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              const Text(
+                                'Don\'ts',
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              const SizedBox(height: 20),
+                              Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.red.withOpacity(0.3)),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 15),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                const Icon(
+                                                    Iconsax.shield_cross),
+                                                const SizedBox(width: 5),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.64,
+                                                  // Adjust the width as needed
+                                                  child: Text(
+                                                    fetchedDonts1,
+                                                    maxLines: 3,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 15),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                const Icon(
+                                                    Iconsax.shield_cross),
+                                                const SizedBox(width: 5),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.64,
+                                                  // Adjust the width as needed
+                                                  child: Text(
+                                                    fetchedDonts2,
+                                                    maxLines: 3,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 15),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                const Icon(
+                                                    Iconsax.shield_cross),
+                                                const SizedBox(width: 5),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.64,
+                                                  // Adjust the width as needed
+                                                  child: Text(
+                                                    fetchedDonts3,
+                                                    maxLines: 3,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 25),
+                            ],
                           ),
-                        ),*/
-                        const SizedBox(
-                          height: 20,
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xff7871db),
-                              shape: const ContinuousRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(30))),
-                              foregroundColor: Colors.white),
-                          child: const Text("back"),
-                        ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
-        ),
-      ),
+              ),
+            ),
     );
+  }
+
+  Future<void> fetchGuideData() async {
+    try {
+      // Fetch data from Firestore
+      QuerySnapshot guideQuery = await FirebaseFirestore.instance
+          .collection('clc_dos_donts')
+          .where('typeOfDisaster', isEqualTo: widget.disasterList.disaster)
+          .get();
+
+      // Check if the document exists
+      if (guideQuery.docs.isNotEmpty) {
+        DocumentSnapshot guideSnap = guideQuery.docs.first;
+        // Access the fields from the document
+        setState(() {
+          fetchedDid = guideSnap.get('did');
+          fetchedType = guideSnap.get('typeOfDisaster');
+          fetchedDos1 = guideSnap.get('dos_1');
+          fetchedDos2 = guideSnap.get('dos_2');
+          fetchedDos3 = guideSnap.get('dos_3');
+          fetchedDonts1 = guideSnap.get('donts_1');
+          fetchedDonts2 = guideSnap.get('donts_2');
+          fetchedDonts3 = guideSnap.get('donts_3');
+        });
+      } else {
+        if (kDebugMode) {
+          print('Document does not exist');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching user data: $e');
+      }
+    }
   }
 }

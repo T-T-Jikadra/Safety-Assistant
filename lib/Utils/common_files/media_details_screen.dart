@@ -26,44 +26,25 @@ class _Media_Details_ScreenState extends State<Media_Details_Screen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name - Media Details"),
+        title: const Text("$appbar_display_name Media Details"),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 18),
-          const Padding(
-            padding: EdgeInsets.only(left: 15),
-            child: Text(
-              "Media Headline : ",
-              style: TextStyle(
-                //color: Colors.black,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.only(left: 20),
             child: Text(
               widget.documentSnapshot['news_title'],
               style: const TextStyle(
-                color: Colors.deepPurple,
+                color: Colors.black,
                 fontSize: 22,
                 fontWeight: FontWeight.w600,
               ),
             ),
           ),
           const SizedBox(height: 8),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 5),
-            child: Divider(
-              color: Colors.black12,
-              thickness: 2,
-              endIndent: 10,
-              indent: 10,
-            ),
-          ),
+
           const SizedBox(height: 8),
           Align(
             alignment: AlignmentDirectional.center,
@@ -73,23 +54,12 @@ class _Media_Details_ScreenState extends State<Media_Details_Screen> {
                 width: MediaQuery.of(context).size.width - 20,
                 height: 200,
                 decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                        bottomRight: Radius.circular(30)),
                     image: DecorationImage(
-                      image: NetworkImage(
-                          "${widget.documentSnapshot['news_image']}"),
-                      fit: BoxFit.scaleDown,
-                    )),
+                  image:
+                      NetworkImage("${widget.documentSnapshot['news_image']}"),
+                  fit: BoxFit.scaleDown,
+                )),
               ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            child: Divider(
-              thickness: 2,
-              endIndent: 10,
-              indent: 10,
             ),
           ),
           // ignore: sized_box_for_whitespace
@@ -97,17 +67,6 @@ class _Media_Details_ScreenState extends State<Media_Details_Screen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: Text(
-                  "Media Description : ",
-                  style: TextStyle(
-                    //color: Colors.black,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
                 child: Column(
@@ -116,6 +75,7 @@ class _Media_Details_ScreenState extends State<Media_Details_Screen> {
                     const SizedBox(height: 2),
                     Text(
                       widget.documentSnapshot['news_description'],
+                      textAlign: TextAlign.justify,
                       style: const TextStyle(
                         fontSize: 18,
                       ),
