@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../Govt Body Related/Screens/govt_login_screen/govt_login.dart';
 import '../../../NGO Related/Screens/ngo_login_screen/ngo_login.dart';
-import '../../Admin Related/admin_home_screen/home_screen_admin.dart';
+import '../../Admin Related/admin_login_screen/admin_login_screen.dart';
 import '../../Citizen Related/Screens/citizen_login_screen/login_screen.dart';
 import '../../Components/check_for_internet/check_internet.dart';
 import '../../Components/Notification_related/notification_services.dart';
@@ -75,7 +75,7 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const AdminHomeScreen()));
+                                        const Admin_Login_Screen()));
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(

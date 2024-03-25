@@ -335,7 +335,7 @@ class _Admin_NGO_Details_ScreenState extends State<Admin_NGO_Details_Screen> {
                                             value.length < 10) {
                                           return 'Too short address';
                                         }
-                                        return null; // Return null if the input is valid
+                                        return null;
                                       },
                                     ),
                                   ),
@@ -413,7 +413,7 @@ class _Admin_NGO_Details_ScreenState extends State<Admin_NGO_Details_Screen> {
                                           if (value == "Select your State") {
                                             return 'Select your State';
                                           }
-                                          return null; // Return null if the input is valid
+                                          return null;
                                         },
                                       ),
                                     ),
@@ -462,7 +462,7 @@ class _Admin_NGO_Details_ScreenState extends State<Admin_NGO_Details_Screen> {
                                           if (value == null || value.isEmpty) {
                                             return 'Select your City';
                                           }
-                                          return null; // Return null if the input is valid
+                                          return null;
                                         },
                                       ),
                                     ),
@@ -512,7 +512,6 @@ class _Admin_NGO_Details_ScreenState extends State<Admin_NGO_Details_Screen> {
                             padding: const EdgeInsets.only(right: 8),
                             child: ElevatedButton(
                               onPressed: () async {
-                                // if (_formKey.currentState!.validate()) {
                                 //progress
                                 showDialog(
                                   context: context,
@@ -548,7 +547,7 @@ class _Admin_NGO_Details_ScreenState extends State<Admin_NGO_Details_Screen> {
                                 if (isEditing == false) {
                                   showSnakeBar(
                                       context,
-                                      "Enable editing to govt agency profile ..",
+                                      "Enable editing to edit profile ..",
                                       "okay");
                                 } else {
                                   if (_formKey.currentState!.validate()) {
@@ -558,7 +557,7 @@ class _Admin_NGO_Details_ScreenState extends State<Admin_NGO_Details_Screen> {
                                 try {} catch (e) {
                                   if (kDebugMode) {
                                     print(
-                                        'Error while updating govt profile : $e');
+                                        'Error while updating ngo profile : $e');
                                   }
                                 } finally {
                                   Navigator.pop(context);
@@ -590,7 +589,7 @@ class _Admin_NGO_Details_ScreenState extends State<Admin_NGO_Details_Screen> {
                                         style: TextStyle(fontSize: 16)),
                                   ),
                                   content:
-                                      const Text('Delete this Govt Agency ?'),
+                                      const Text('Delete this NGO ?'),
                                   actions: <Widget>[
                                     CupertinoDialogAction(
                                       isDefaultAction: true,

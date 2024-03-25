@@ -398,9 +398,7 @@ class _Admin_Govt_Agency_Details_ScreenState
                                         onChanged: (value) {
                                           setState(() {
                                             selectedState = value!;
-                                            // Update city list based on the selected state
                                             updateCityList(selectedState);
-                                            // Reset selected city when state changes
                                             selectedCity = '';
                                           });
                                         },
@@ -414,7 +412,7 @@ class _Admin_Govt_Agency_Details_ScreenState
                                           if (value == "Select your State") {
                                             return 'Select your State';
                                           }
-                                          return null; // Return null if the input is valid
+                                          return null;
                                         },
                                       ),
                                     ),
@@ -463,7 +461,7 @@ class _Admin_Govt_Agency_Details_ScreenState
                                           if (value == null || value.isEmpty) {
                                             return 'Select your City';
                                           }
-                                          return null; // Return null if the input is valid
+                                          return null;
                                         },
                                       ),
                                     ),
@@ -549,7 +547,7 @@ class _Admin_Govt_Agency_Details_ScreenState
                                 if (isEditing == false) {
                                   showSnakeBar(
                                       context,
-                                      "Enable editing to govt agency profile ..",
+                                      "Enable editing to edit profile ..",
                                       "okay");
                                 } else {
                                   if (_formKey.currentState!.validate()) {

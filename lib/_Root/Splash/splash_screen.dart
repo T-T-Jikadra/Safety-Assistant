@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../Admin Related/admin_home_screen/home_screen_admin.dart';
 import '../../Citizen Related/Screens/citizen_login_screen/otp_screen.dart';
 import '../../Components/check_for_internet/check_internet.dart';
 import '../../Govt Body Related/Screens/govt_home_screen/home_screen_govt.dart';
@@ -23,7 +24,7 @@ class splash extends StatelessWidget {
     final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
     return GetMaterialApp(
-      title:'CAS',
+      title: 'CAS',
       navigatorKey: navigatorKey,
       // title: 'Citizen Emergency & response system',
       debugShowCheckedModeBanner: false,
@@ -175,8 +176,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void navigateToPageBasedOnUserType(String? userType) {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user = auth.currentUser;
-
-    if (userType == "NGO") {
+    if (userType == "ADMIN") {
+      Get.offAll(() => const AdminHomeScreen());
+    } else if (userType == "NGO") {
       Get.offAll(() => const NGOHomeScreen());
     } else if (userType == "Govt") {
       // Navigate to Government screen

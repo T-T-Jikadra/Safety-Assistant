@@ -8,22 +8,6 @@ import '../../../Utils/other/menu_btn.dart';
 import 'common_background_admin.dart';
 import 'menu_admin.dart';
 
-// class entry extends StatelessWidget {
-//   const entry({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'CAS',
-//       debugShowCheckedModeBanner: false,
-//       theme: TAppTheme.lightTheme,
-//       darkTheme: TAppTheme.darkTheme,
-//       themeMode: ThemeMode.system,
-//       home: const EntryPoint(),
-//     );
-//   }
-// }
-
 class AdminHomeScreen extends StatefulWidget {
   const AdminHomeScreen({super.key});
 

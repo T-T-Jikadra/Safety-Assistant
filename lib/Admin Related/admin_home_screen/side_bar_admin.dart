@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fff/Admin%20Related/admin_donation_history.dart';
@@ -86,7 +86,6 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
 
                             if (menuAdmin.title.contains("Home")) {
                             } else if (menuAdmin.title.contains("Citizen")) {
-                              // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -111,7 +110,6 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
                                 ),
                               );
                             } else if (menuAdmin.title.contains("NGO")) {
-                              // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -136,7 +134,6 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
                                 ),
                               );
                             } else if (menuAdmin.title.contains("Govt")) {
-                              // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -161,7 +158,6 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
                                 ),
                               );
                             } else if (menuAdmin.title.contains("Request")) {
-                              // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -186,7 +182,6 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
                                 ),
                               );
                             } else if (menuAdmin.title.contains("Donation")) {
-                              // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -211,7 +206,6 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
                                 ),
                               );
                             } else if (menuAdmin.title.contains("Alert")) {
-                              //ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -236,7 +230,6 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
                                 ),
                               );
                             } else if (menuAdmin.title.contains("Media")) {
-                              // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -287,7 +280,6 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
                                 const Duration(milliseconds: 500));
 
                             if (menu.title.contains("FAQ")) {
-                              // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -312,7 +304,6 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
                                 ),
                               );
                             } else if (menu.title.contains("About")) {
-                              // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -337,13 +328,11 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
                                 ),
                               );
                             } else if (menu.title.contains("Logout")) {
-                              // ignore: use_build_context_synchronously
                               //To logs out the current user ..
                               final SharedPreferences sharedPref =
                                   await SharedPreferences.getInstance();
                               sharedPref.remove("userType");
                               await FirebaseAuth.instance.signOut();
-                              // ignore: use_build_context_synchronously
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -352,10 +341,6 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
                               );
                             }
                           },
-                          // riveOnInit: (artboard) {
-                          //   menu.rive.status = RiveUtils.getRiveInput(artboard,
-                          //       stateMachineName: menu.rive.stateMachineName);
-                          // },
                         ))
                     .toList(),
                 const SizedBox(height: 50)
