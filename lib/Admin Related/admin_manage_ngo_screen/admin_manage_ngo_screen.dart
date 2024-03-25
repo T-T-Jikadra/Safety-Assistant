@@ -75,6 +75,7 @@ class _Admin_Manage_NGO_ScreenState extends State<Admin_Manage_NGO_Screen> {
                                   itemCount: snapshot.data!.docs.length,
                                   itemBuilder: (context, index) {
                                     return Admin_NGOListTile(
+                                      NGOSnapshot: snapshot.data!.docs[index],
                                       index: "${index + 1}",
                                       nameOfNGO: snapshot.data!.docs[index]
                                           ["nameOfNGO"],

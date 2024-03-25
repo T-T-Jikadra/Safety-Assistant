@@ -24,7 +24,7 @@ class _ApplyForGrantState extends State<ApplyForGrant> {
               borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(25),
                   bottomLeft: Radius.circular(25))),
-          title: const Text("$appbar_display_name - About Us "),
+          title: const Text("Apply for grant"),
         ),
         body: Column(
           children: [

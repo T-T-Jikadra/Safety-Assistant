@@ -23,6 +23,8 @@ List<Menu_govt> sidebarMenus = [
   Menu_govt(
     title: "Other Serving Government Agency ",
     icon: Icons.temple_hindu_rounded,
+    // icon: Icons.add_task_sharp,
+
   ),
   Menu_govt(
     title: "Response History",
@@ -37,7 +39,7 @@ List<Menu_govt> sidebarMenus = [
     icon: Icons.local_activity_outlined,
   ),
   Menu_govt(
-    title: "Notices",
+    title: "Media",
     icon: Icons.circle_notifications,
   ),
 ];

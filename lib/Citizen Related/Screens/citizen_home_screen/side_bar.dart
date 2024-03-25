@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Utils/common_files/alerts/alert_history_screen.dart';
+
 // import '../../../Admin Related/news media/admin_send_media_screen.dart';
 import '../../../Utils/common_files/media_history_screen.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
@@ -60,29 +61,7 @@ class _SideBarState extends State<SideBar> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GestureDetector(
-                  onTap: () => {
-                    Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            const UserProfile(),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          var begin = const Offset(1.0, 0.0);
-                          var end = Offset.zero;
-                          var curve = Curves.ease;
-
-                          var tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-                          var offsetAnimation = animation.drive(tween);
-
-                          return SlideTransition(
-                            position: offsetAnimation,
-                            child: child,
-                          );
-                        },
-                      ),
-                    )
-                  },
+                  onTap: () => {},
                   child: InfoCard(
                     name: citizenName,
                     mail: citizenMobile,
@@ -291,8 +270,8 @@ class _SideBarState extends State<SideBar> {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const Digital_Guide_Screen(),
+                                          secondaryAnimation) =>
+                                      const Digital_Guide_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -302,7 +281,7 @@ class _SideBarState extends State<SideBar> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -311,7 +290,7 @@ class _SideBarState extends State<SideBar> {
                                   },
                                 ),
                               );
-                            }else if (menu.title.contains("FAQ")) {
+                            } else if (menu.title.contains("FAQ")) {
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(

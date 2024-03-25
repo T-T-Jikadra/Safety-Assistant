@@ -82,7 +82,6 @@ class _CitizenHomeScreenState extends State<CitizenHomeScreen>
     return WillPopScope(
       onWillPop: () async {
         if (isSideBarOpen) {
-          // If the sidebar is open, close it and return false to prevent exiting the app
           setState(() {
             isSideBarOpen = false;
           });
@@ -90,7 +89,6 @@ class _CitizenHomeScreenState extends State<CitizenHomeScreen>
           return false;
         } else {
           Navigator.of(context).pop(true);
-          // If the sidebar is not open, show the exit confirmation dialog
           return _showExitConfirmationDialog(context);
         }
       },
@@ -106,8 +104,6 @@ class _CitizenHomeScreenState extends State<CitizenHomeScreen>
                   isSideBarOpen = false;
                 });
                 _animationController.reverse();
-                // Trigger click event of MenuBtn
-                // You can call the MenuBtn's press function here if it's accessible
               }
             },
             child: Stack(

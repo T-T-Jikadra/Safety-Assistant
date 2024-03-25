@@ -77,9 +77,6 @@ class _Admin_Manage_News_ScreenState extends State<Admin_Manage_News_Screen> {
                   width: MediaQuery.of(context).size.width - 20,
                   height: 200,
                   decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30)),
                       image: DecorationImage(
                         image: NetworkImage(
                             "${widget.documentSnapshot['news_image']}"),

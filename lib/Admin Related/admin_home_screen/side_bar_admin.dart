@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 // import '../../../Admin Related/news media/admin_send_media_screen.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../../../Utils/common_files/faq_screen/faq_screen.dart';
@@ -61,8 +62,7 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GestureDetector(
-                  onTap: () => {
-                  },
+                  onTap: () => {},
                   child: const InfoCard(
                     name: "ADMIN",
                     mail: "INDIA",
@@ -90,8 +90,8 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const Admin_View_Citizen_Screen(),
+                                          secondaryAnimation) =>
+                                      const Admin_View_Citizen_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -101,7 +101,7 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -115,8 +115,8 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const Admin_Manage_NGO_Screen(),
+                                          secondaryAnimation) =>
+                                      const Admin_Manage_NGO_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -126,7 +126,7 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,

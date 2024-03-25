@@ -1,18 +1,14 @@
-// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, deprecated_member_use, use_build_context_synchronously
+// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, deprecated_member_use, use_build_context_synchronously, camel_case_types
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
-
 import '../../Utils/Utils.dart';
-import '../../Utils/constants.dart';
 import '../../Utils/dropdown_Items.dart';
 
-// ignore: camel_case_types
 class Citizen_Details_Screen extends StatefulWidget {
   final DocumentSnapshot<Object?> documentSnapshot;
 
@@ -25,14 +21,12 @@ class Citizen_Details_Screen extends StatefulWidget {
   State<Citizen_Details_Screen> createState() => _Citizen_Details_ScreenState();
 }
 
-// ignore: camel_case_types
 class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool isLoading = true;
   bool isMale = true;
   bool isEditing = false;
-  bool isNGOExpanded = false;
 
   String selectedState = '';
   String selectedCity = '';
@@ -79,8 +73,6 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
   @override
   void initState() {
     super.initState();
-    fetchNGOResponseDetails();
-    fetchGovtResponseDetails();
     selectedState = widget.documentSnapshot['state'];
     selectedCity = widget.documentSnapshot['city'];
     updateCityList(selectedState);
@@ -189,8 +181,8 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                           child: TextFormField(
                                             controller: fnameTextController,
                                             decoration: InputDecoration(
-                                              prefixIcon:
-                                                  const Icon(Icons.person),
+                                              prefixIcon: const Icon(
+                                                  CupertinoIcons.person_alt),
                                               hintText:
                                                   "${widget.documentSnapshot['firstName']}",
                                             ),
@@ -215,8 +207,8 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                           child: TextFormField(
                                             controller: lnameTextController,
                                             decoration: InputDecoration(
-                                              prefixIcon: const Icon(Icons
-                                                  .person_outline_outlined),
+                                              prefixIcon: const Icon(
+                                                  CupertinoIcons.person_alt),
                                               hintText:
                                                   "${widget.documentSnapshot['lastName']}",
                                             ),
@@ -327,11 +319,8 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                             // hintText: DateFormat('MMMM dd, yyyy')
                                             //     .format(
                                             //         fetchedBirthDate.toDate()),
-                                            prefixIcon: Container(
-                                              margin: const EdgeInsets.fromLTRB(
-                                                  20, 16, 12, 16),
-                                              child: SvgPicture.asset(
-                                                  svg_for_calendar),
+                                            prefixIcon: const Icon(
+                                              CupertinoIcons.calendar_today,
                                             ),
                                           ),
                                           validator: (value) {
@@ -371,7 +360,8 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                     child: TextFormField(
                                       enabled: false,
                                       decoration: InputDecoration(
-                                        prefixIcon: const Icon(Iconsax.call5),
+                                        prefixIcon:
+                                            const Icon(CupertinoIcons.phone),
                                         hintText:
                                             "${widget.documentSnapshot['phoneNumber']}",
                                       ),
@@ -391,8 +381,8 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                       maxLines: 4,
                                       controller: addressTextController,
                                       decoration: InputDecoration(
-                                        prefixIcon:
-                                            const Icon(Iconsax.location),
+                                        prefixIcon: const Icon(CupertinoIcons
+                                            .pencil_ellipsis_rectangle),
                                         hintText:
                                             "${widget.documentSnapshot['fullAddress']}",
                                       ),
@@ -421,11 +411,12 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                       controller: pincodeTextController,
                                       decoration: InputDecoration(
                                         prefixIcon:
-                                            const Icon(Iconsax.location_add),
+                                            const Icon(Icons.pin_rounded),
                                         hintText:
                                             "${widget.documentSnapshot['pinCode']}",
                                       ),
                                       enabled: isEditing,
+                                      keyboardType: TextInputType.number,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter Pin code';
@@ -473,6 +464,8 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                           enabled: isEditing,
                                           // border: OutlineInputBorder(),
                                           hintText: "Select your State",
+                                          prefixIcon: const Icon(
+                                              CupertinoIcons.map_pin_ellipse),
                                         ),
                                         validator: (value) {
                                           if (value == "Select your State") {
@@ -520,6 +513,8 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                           ),
                                           enabled: isEditing,
                                           hintText: "Select your City",
+                                          prefixIcon: const Icon(
+                                              Icons.location_city_rounded),
                                         ),
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
@@ -573,16 +568,6 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                             padding: const EdgeInsets.only(right: 8),
                             child: ElevatedButton(
                               onPressed: () async {
-                                if (isEditing == false) {
-                                  showSnakeBar(
-                                      context,
-                                      "Enable editing to edit your profile ..",
-                                      "Okay");
-                                } else {
-                                  if (_formKey.currentState!.validate()) {
-                                    //updateUserProfile();
-                                  }
-                                }
                                 // if (_formKey.currentState!.validate()) {
                                 //progress
                                 showDialog(
@@ -616,23 +601,20 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                 );
                                 await Future.delayed(
                                     const Duration(milliseconds: 1300));
-
-                                try {
-                                  // if (fetchedFid != widget.fid ||
-                                  //     starCount != getRatingString(_starRating) ||
-                                  //     serviceFulfill !=
-                                  //         (_thumbsUpSelected ? 'Yes' : 'No') ||
-                                  //     fetchedDesc != descController.text) {
-                                  //   updateFeedback();
-                                  // } else {
-                                  //   showToastMsg("No change in feedback");
-                                  // }
-
-                                  //addFeedbackToDatabase(totalDocCount);
-                                } catch (e) {
+                                if (isEditing == false) {
+                                  showSnakeBar(
+                                      context,
+                                      "Enable editing to edit profile ..",
+                                      "okay");
+                                } else {
+                                  if (_formKey.currentState!.validate()) {
+                                    updateCitizenProfile();
+                                  }
+                                }
+                                try {} catch (e) {
                                   if (kDebugMode) {
                                     print(
-                                        'Error while sending citizen request : $e');
+                                        'Error while updating citizen profile : $e');
                                   }
                                 } finally {
                                   Navigator.pop(context);
@@ -663,7 +645,7 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                     child: Text('Confirm : ',
                                         style: TextStyle(fontSize: 16)),
                                   ),
-                                  content: const Text('Delete your Feedback ?'),
+                                  content: const Text('Delete this Citizen ?'),
                                   actions: <Widget>[
                                     CupertinoDialogAction(
                                       isDefaultAction: true,
@@ -676,7 +658,8 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                       isDefaultAction: true,
                                       child: const Text('Delete'),
                                       onPressed: () async {
-                                        // deleteFeedback();
+                                        //delete user
+                                        deleteUser();
                                         Navigator.pop(context, true);
                                         showDialog(
                                           context: context,
@@ -689,10 +672,9 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                           },
                                         );
                                         await Future.delayed(
-                                            const Duration(milliseconds: 1200));
+                                            const Duration(milliseconds: 1100));
                                         Navigator.pop(context);
                                         Navigator.pop(context, true);
-                                        Navigator.pop(context);
                                       },
                                     )
                                   ],
@@ -724,96 +706,6 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
               ),
             ),
     );
-  }
-
-  Future<void> fetchNGOResponseDetails() async {
-    try {
-      // Fetch data from Firestore
-      DocumentSnapshot NGOResponseSnapshot = await FirebaseFirestore.instance
-          .collection('clc_response')
-          .doc(widget.documentSnapshot['RespondId'])
-          .collection("ngo")
-          .doc("ngo_details")
-          .get();
-      //print(user!.email);
-      //print(GovtSnapshot.get('GovtAgencyRegNo'));
-
-      // Check if the document exists
-      if (NGOResponseSnapshot.exists) {
-        // Access the fields from the document
-        setState(() {
-          hasNGOResponded = true;
-          fetchedNid = NGOResponseSnapshot.get('nid');
-          fetchedNGOFid = NGOResponseSnapshot.get('fid');
-          if (kDebugMode) {
-            print(fetchedNGOFid);
-          }
-          if (fetchedNGOFid.isNotEmpty) {
-            hasNGOFeedbackSent = true;
-          }
-          fetchedNGOName = NGOResponseSnapshot.get('ResponderNGOName');
-          fetchedNGORegNo = NGOResponseSnapshot.get('ResponderNGORegNo');
-          fetchedNGOAddress = NGOResponseSnapshot.get('ResponderNGOAddress');
-          fetchedNGOContact =
-              NGOResponseSnapshot.get('ResponderNGOContactNumber');
-          fetchedNGOEmail = NGOResponseSnapshot.get('ResponderNGOEmail');
-          fetchedNGOWebsite = NGOResponseSnapshot.get('ResponderNGOWebsite');
-          fetchedNGORespondTime = NGOResponseSnapshot.get('RespondNGOTime');
-        });
-      } else {
-        if (kDebugMode) {
-          print('NGO response Document does not exist');
-        }
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error fetching NGO response data: $e');
-      }
-    }
-  }
-
-  Future<void> fetchGovtResponseDetails() async {
-    try {
-      // Fetch data from Firestore
-      DocumentSnapshot GovtResponseSnapshot = await FirebaseFirestore.instance
-          .collection('clc_response')
-          .doc(widget.documentSnapshot['RespondId'])
-          .collection("govt")
-          .doc("govt_details")
-          .get();
-
-      // Check if the document exists
-      if (GovtResponseSnapshot.exists) {
-        // Access the fields from the document
-        setState(() {
-          hasGovtResponded = true;
-          fetchedGid = GovtResponseSnapshot.get('gid');
-          fetchedGovtFid = GovtResponseSnapshot.get('fid');
-          if (kDebugMode) {
-            print(fetchedGovtFid);
-          }
-          if (fetchedGovtFid.isNotEmpty) {
-            hasGovtFeedbackSent = true;
-          }
-          fetchedGovtName = GovtResponseSnapshot.get('ResponderGovtName');
-          fetchedGovtRegNo = GovtResponseSnapshot.get('ResponderGovtRegNo');
-          fetchedGovtAddress = GovtResponseSnapshot.get('ResponderGovtAddress');
-          fetchedGovtContact =
-              GovtResponseSnapshot.get('ResponderGovtContactNumber');
-          fetchedGovtEmail = GovtResponseSnapshot.get('ResponderGovtEmail');
-          fetchedGovtWebsite = GovtResponseSnapshot.get('ResponderGovtWebsite');
-          fetchedGovtRespondTime = GovtResponseSnapshot.get('RespondGovtTime');
-        });
-      } else {
-        if (kDebugMode) {
-          print('Govt response Document does not exist');
-        }
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error fetching Govt response data: $e');
-      }
-    }
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -856,5 +748,73 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
     setState(() {
       dropdownItemCity = DropdownItems.cityMap[state] ?? [];
     });
+  }
+
+  Future<void> updateCitizenProfile() async {
+    try {
+      String dateString = birthDateTextController.text;
+      DateTime birthDate = DateFormat('MMMM dd, yyyy').parse(dateString);
+
+      // User? user = FirebaseAuth.instance.currentUser;
+
+      Map<String, dynamic> updatedData = {
+        if (fnameTextController.text != widget.documentSnapshot['firstName'])
+          'firstName': fnameTextController.text,
+        if (lnameTextController.text != widget.documentSnapshot['lastName'])
+          'lastName': lnameTextController.text,
+        if (fetchedGender != selectedGender) 'gender': selectedGender,
+        if (birthDate != widget.documentSnapshot['birthDate'].toDate())
+          'birthDate': birthDate,
+        if (selectedState != widget.documentSnapshot['state'])
+          'state': selectedState,
+        if (selectedCity != widget.documentSnapshot['city'])
+          'city': selectedCity,
+        if (pincodeTextController.text != widget.documentSnapshot['pinCode'])
+          'pinCode': pincodeTextController.text,
+        if (addressTextController.text !=
+            widget.documentSnapshot['fullAddress'])
+          'fullAddress': addressTextController.text,
+      };
+
+      // Check if any field is edited, including birth date
+      if (updatedData.isNotEmpty) {
+        // Update data in Firestore only for non-empty fields
+        await FirebaseFirestore.instance
+            .collection('clc_citizen')
+            .doc(widget.documentSnapshot['phoneNumber'])
+            .update(updatedData);
+
+        setState(() {
+          isEditing = false;
+        });
+        showSnakeBar(context, "User profile updated successfully .. ", "okay");
+      } else {
+        // setState(() {isEditing = false;});
+        showSnakeBar(context, "No profile data edited !", "Close");
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error updating user profile: $e');
+      }
+      showSnakeBar(context, "$e!", "Okay");
+    }
+  }
+
+  void deleteUser() async {
+    try {
+      // Delete user
+      DocumentReference userRef = FirebaseFirestore.instance
+          .collection('clc_citizen')
+          .doc(widget.documentSnapshot['phoneNumber']);
+      await userRef
+          .delete()
+          .then((value) => showToastMsg("User deleted successfully"));
+
+    } catch (error) {
+      if (kDebugMode) {
+        print("Error deleting user: $error");
+      }
+      showToastMsg("Failed to delete citizen");
+    }
   }
 }

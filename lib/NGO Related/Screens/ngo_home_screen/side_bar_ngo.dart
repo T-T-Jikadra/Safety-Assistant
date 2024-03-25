@@ -33,10 +33,10 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchGovtData();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -59,35 +59,12 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GestureDetector(
-                  onTap: () => {
-                    Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                        const NGO_Profile(),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          var begin = const Offset(1.0, 0.0);
-                          var end = Offset.zero;
-                          var curve = Curves.ease;
-
-                          var tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-                          var offsetAnimation = animation.drive(tween);
-
-                          return SlideTransition(
-                            position: offsetAnimation,
-                            child: child,
-                          );
-                        },
-                      ),
-                    )
-                  },
+                  onTap: () => {},
                   child: InfoCard(
                     name: NGOName,
                     mail: NGOEmail,
                   ),
                 ),
-
                 const SizedBox(height: 25),
                 ...sidebarMenus
                     .map((menu_ngo) => SideMenu_ngo(
@@ -134,8 +111,8 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const NGO_Profile(),
+                                          secondaryAnimation) =>
+                                      const NGO_Profile(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -145,7 +122,7 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -159,8 +136,8 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const NGO_List(),
+                                          secondaryAnimation) =>
+                                      const NGO_List(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -170,7 +147,7 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -184,8 +161,8 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const NGO_Response_History_Screen(),
+                                          secondaryAnimation) =>
+                                      const NGO_Response_History_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -195,7 +172,7 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -209,8 +186,8 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const NGO_Donation_History(),
+                                          secondaryAnimation) =>
+                                      const NGO_Donation_History(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -220,7 +197,7 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -234,8 +211,8 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const Alert_History_Screen(),
+                                          secondaryAnimation) =>
+                                      const Alert_History_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -245,7 +222,7 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -259,8 +236,8 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const ApplyForGrant(),
+                                          secondaryAnimation) =>
+                                      const ApplyForGrant(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -270,7 +247,7 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -279,14 +256,13 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                                   },
                                 ),
                               );
-                            }
-                            else if (menu_ngo.title.contains("Media")) {
+                            } else if (menu_ngo.title.contains("Media")) {
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const Media_History_Screen(),
+                                          secondaryAnimation) =>
+                                      const Media_History_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -296,7 +272,7 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -341,8 +317,8 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const FAQScreen(),
+                                          secondaryAnimation) =>
+                                      const FAQScreen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -352,7 +328,7 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -366,8 +342,8 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const AboutUsScreen(),
+                                          secondaryAnimation) =>
+                                      const AboutUsScreen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -377,7 +353,7 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -386,10 +362,11 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                                   },
                                 ),
                               );
-                            }else if (menu_ngo.title.contains("Logout")) {
+                            } else if (menu_ngo.title.contains("Logout")) {
                               // ignore: use_build_context_synchronously
                               //To logs out the current user ..
-                              final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+                              final SharedPreferences sharedPref =
+                                  await SharedPreferences.getInstance();
                               sharedPref.remove("userType");
                               await FirebaseAuth.instance.signOut();
                               // ignore: use_build_context_synchronously

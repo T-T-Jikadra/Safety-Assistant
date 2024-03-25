@@ -1,11 +1,12 @@
-// ignore_for_file: deprecated_member_use, file_names, library_private_types_in_public_api, unused_field, camel_case_types
-
+// ignore_for_file: deprecated_member_use, file_names, library_private_types_in_public_api, unused_field, camel_case_types, non_constant_identifier_names
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'admin_ngo_details_screen.dart';
 
 class Admin_NGOListTile extends StatefulWidget {
+  final DocumentSnapshot NGOSnapshot;
   final String index;
   final String regNo;
   final String nameOfNGO;
@@ -22,6 +23,7 @@ class Admin_NGOListTile extends StatefulWidget {
   const Admin_NGOListTile({
     Key? key,
     required this.index,
+    required this.NGOSnapshot,
     required this.regNo,
     required this.nameOfNGO,
     required this.serviceList,
@@ -223,7 +225,9 @@ class _Admin_NGOListTileState extends State<Admin_NGOListTile>
                                         PageRouteBuilder(
                                           pageBuilder: (context, animation,
                                                   secondaryAnimation) =>
-                                              const Admin_NGO_Details_Screen(),
+                                              Admin_NGO_Details_Screen(
+                                                  NGOSnapshot:
+                                                      widget.NGOSnapshot),
                                           transitionsBuilder: (context,
                                               animation,
                                               secondaryAnimation,

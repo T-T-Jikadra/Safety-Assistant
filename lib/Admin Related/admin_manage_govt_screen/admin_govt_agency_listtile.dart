@@ -1,10 +1,12 @@
-// ignore_for_file: library_private_types_in_public_api, camel_case_types, file_names, deprecated_member_use, unused_field
+// ignore_for_file: library_private_types_in_public_api, camel_case_types, file_names, deprecated_member_use, unused_field, non_constant_identifier_names
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'admin_govt_agency_details_screen.dart';
 
 class Admin_GovtListTile extends StatefulWidget {
+  final DocumentSnapshot GovtSnapshot;
   final String index;
   final String regNo;
   final String govtAgencyName;
@@ -20,6 +22,7 @@ class Admin_GovtListTile extends StatefulWidget {
 
   const Admin_GovtListTile({
     Key? key,
+    required this.GovtSnapshot,
     required this.index,
     required this.regNo,
     required this.govtAgencyName,
@@ -220,7 +223,9 @@ class _Admin_GovtListTileState extends State<Admin_GovtListTile>
                                         PageRouteBuilder(
                                           pageBuilder: (context, animation,
                                                   secondaryAnimation) =>
-                                              const Admin_Govt_Agency_Details_Screen(),
+                                              Admin_Govt_Agency_Details_Screen(
+                                                  GovtSnapshot:
+                                                      widget.GovtSnapshot),
                                           transitionsBuilder: (context,
                                               animation,
                                               secondaryAnimation,

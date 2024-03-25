@@ -81,7 +81,6 @@ class _commonbgState extends State<commonbg> {
                     //location
                     child: Row(
                       children: [
-                        // const SizedBox(width: 8),
                         const Icon(Icons.location_on_outlined,
                             color: Colors.redAccent, size: 18),
                         const SizedBox(width: 8),

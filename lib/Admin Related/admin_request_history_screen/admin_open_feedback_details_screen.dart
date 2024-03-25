@@ -60,7 +60,7 @@ class _Admin_Open_Feedback_Details_ScreenState
               borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(25),
                   bottomLeft: Radius.circular(25))),
-          title: const Text("Submit feedback"),
+          title: const Text("Feedback details"),
         ),
         body: isLoading
             ? const Center(child: CircularProgressIndicator())
@@ -104,7 +104,7 @@ class _Admin_Open_Feedback_Details_ScreenState
                                   children: List.generate(
                                     5,
                                         (index) => GestureDetector(
-                                      onTap: () => _selectStar(index + 1),
+                                      //onTap: () => _selectStar(index + 1),
                                       child: Icon(
                                         index < _starRating
                                             ? Icons.star
@@ -133,160 +133,6 @@ class _Admin_Open_Feedback_Details_ScreenState
                   ),
 
                   const SizedBox(height: 5),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(8.0),
-                  //   child: Row(
-                  //     children: [
-                  //       const Text('Selected Rating:'),
-                  //       const SizedBox(width: 10),
-                  //       Text(_starRating.toString()),
-                  //     ],
-                  //   ),
-                  // ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(8.0),
-                  //   child: Row(
-                  //     children: [
-                  //       const Text('Select emojis:'),
-                  //       const SizedBox(width: 10),
-                  //       // Display different emojis based on star rating
-                  //       _starRating == 1
-                  //           ? const Text('Poor')
-                  //           : _starRating == 2
-                  //               ? const Text('Fair')
-                  //               : _starRating == 3
-                  //                   ? const Text('Average')
-                  //                   : _starRating == 4
-                  //                       ? const Text('Good')
-                  //                       : _starRating == 5
-                  //                           ? const Text('Excellent')
-                  //                           : const Text(''),
-                  //     ],
-                  //   ),
-                  // ),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 7),
-                  //   //btn
-                  //   child: Container(
-                  //     decoration: const BoxDecoration(
-                  //       color: Colors.white,
-                  //       borderRadius: BorderRadius.all(Radius.circular(12)),
-                  //     ),
-                  //     child: Padding(
-                  //       padding:
-                  //           const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  //       child: Column(
-                  //         mainAxisAlignment: MainAxisAlignment.start,
-                  //         crossAxisAlignment: CrossAxisAlignment.start,
-                  //         children: [
-                  //           const Padding(
-                  //             padding: EdgeInsets.only(left: 10, top: 5),
-                  //             child: Text('What can be improved ?',
-                  //                 style: TextStyle(
-                  //                     fontSize: 17, fontWeight: FontWeight.w600)),
-                  //           ),
-                  //           const SizedBox(height: 15),
-                  //           // Display custom checkboxes
-                  //           Wrap(
-                  //             children: [
-                  //               Row(
-                  //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //                 children: [
-                  //                   GestureDetector(
-                  //                     onTap: () => _toggleCheckbox(0),
-                  //                     child: Container(
-                  //                       margin: const EdgeInsets.all(5),
-                  //                       padding: const EdgeInsets.all(8),
-                  //                       decoration: BoxDecoration(
-                  //                         color: _checkboxValues[0]
-                  //                             ? Colors.green.shade200
-                  //                             : Colors.grey.shade200,
-                  //                         borderRadius: BorderRadius.circular(5),
-                  //                         border: Border.all(color: Colors.grey),
-                  //                       ),
-                  //                       child: const Padding(
-                  //                         padding:
-                  //                             EdgeInsets.symmetric(horizontal: 20),
-                  //                         child: Text('Checkbox 1'),
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                   const SizedBox(width: 10),
-                  //                   GestureDetector(
-                  //                     onTap: () => _toggleCheckbox(1),
-                  //                     child: Container(
-                  //                       margin: const EdgeInsets.all(5),
-                  //                       padding: const EdgeInsets.all(8),
-                  //                       decoration: BoxDecoration(
-                  //                         color: _checkboxValues[1]
-                  //                             ? Colors.green.shade200
-                  //                             : Colors.grey.shade200,
-                  //                         borderRadius: BorderRadius.circular(5),
-                  //                         border: Border.all(color: Colors.grey),
-                  //                       ),
-                  //                       child: const Padding(
-                  //                         padding:
-                  //                             EdgeInsets.symmetric(horizontal: 20),
-                  //                         child: Text('Checkbox 2'),
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //               const SizedBox(height: 13),
-                  //               Row(
-                  //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //                 children: [
-                  //                   GestureDetector(
-                  //                     onTap: () => _toggleCheckbox(2),
-                  //                     child: Container(
-                  //                       margin: const EdgeInsets.all(5),
-                  //                       padding: const EdgeInsets.all(8),
-                  //                       decoration: BoxDecoration(
-                  //                         color: _checkboxValues[2]
-                  //                             ? Colors.green.shade200
-                  //                             : Colors.grey.shade200,
-                  //                         borderRadius: BorderRadius.circular(5),
-                  //                         border: Border.all(color: Colors.grey),
-                  //                       ),
-                  //                       child: const Padding(
-                  //                         padding:
-                  //                             EdgeInsets.symmetric(horizontal: 20),
-                  //                         child: Text('Checkbox 4'),
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                   const SizedBox(width: 10),
-                  //                   GestureDetector(
-                  //                     onTap: () => _toggleCheckbox(3),
-                  //                     child: Container(
-                  //                       margin: const EdgeInsets.all(5),
-                  //                       padding: const EdgeInsets.all(8),
-                  //                       decoration: BoxDecoration(
-                  //                         color: _checkboxValues[3]
-                  //                             ? Colors.green.shade200
-                  //                             : Colors.grey.shade200,
-                  //                         borderRadius: BorderRadius.circular(5),
-                  //                         border: Border.all(color: Colors.grey),
-                  //                       ),
-                  //                       child: const Padding(
-                  //                         padding:
-                  //                             EdgeInsets.symmetric(horizontal: 20),
-                  //                         child: Text('Checkbox 5'),
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-
-                  //other
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 5, vertical: 7),
@@ -327,12 +173,12 @@ class _Admin_Open_Feedback_Details_ScreenState
                                 // Display thumbs up and thumbs down icons
                                 GestureDetector(
                                   onTap: () {
-                                    _thumbsUpSelected =
-                                    !_thumbsUpSelected;
-                                    setState(() {
-                                      _thumbsDownSelected = false;
-                                      //_showError = false;
-                                    });
+                                    // _thumbsUpSelected =
+                                    // !_thumbsUpSelected;
+                                    // setState(() {
+                                    //   _thumbsDownSelected = false;
+                                    //   //_showError = false;
+                                    // });
                                   },
                                   child: Icon(
                                     Icons.thumb_up,
@@ -344,12 +190,12 @@ class _Admin_Open_Feedback_Details_ScreenState
                                 const SizedBox(width: 10),
                                 GestureDetector(
                                   onTap: () {
-                                    _thumbsDownSelected =
-                                    !_thumbsDownSelected;
-                                    setState(() {
-                                      _thumbsUpSelected = false;
-                                      //_showError = false;
-                                    });
+                                    // _thumbsDownSelected =
+                                    // !_thumbsDownSelected;
+                                    // setState(() {
+                                    //   _thumbsUpSelected = false;
+                                    //   //_showError = false;
+                                    // });
                                   },
                                   child: Icon(
                                     Icons.thumb_down,
@@ -413,6 +259,7 @@ class _Admin_Open_Feedback_Details_ScreenState
                                 TextCapitalization.sentences,
                                 controller: descController,
                                 maxLength: 100,
+                                enabled: false,
                                 decoration: InputDecoration(
                                   hintText: 'Write your feedback here ...',
                                   hintStyle:
@@ -437,7 +284,7 @@ class _Admin_Open_Feedback_Details_ScreenState
                                   } else if (value.length < 3) {
                                     return 'Too short feedback ..';
                                   }
-                                  return null; // Return null if the input is valid
+                                  return null;
                                 },
                               ),
                             ),
@@ -534,7 +381,6 @@ class _Admin_Open_Feedback_Details_ScreenState
         _thumbsUpSelected ? 'Yes' : (_thumbsDownSelected ? 'No' : ''),
         'score': _starRating * 2,
         'description': descController.text,
-        // Add other fields here if needed
       });
 
       showToastMsg("Feedback updated successfully");
@@ -542,7 +388,6 @@ class _Admin_Open_Feedback_Details_ScreenState
       if (kDebugMode) {
         print('Error updating feedback: $e');
       }
-      // Show an error message or perform any other actions upon error
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Error updating feedback')),
       );
@@ -610,13 +455,7 @@ class _Admin_Open_Feedback_Details_ScreenState
       case "Excellent":
         return 5;
       default:
-        return 3; // Default to 3 if the rating string is unknown or null
+        return 3;
     }
-  }
-
-  void _selectStar(int rating) {
-    setState(() {
-      _starRating = rating;
-    });
   }
 }

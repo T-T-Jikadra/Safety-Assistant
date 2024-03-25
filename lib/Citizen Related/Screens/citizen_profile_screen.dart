@@ -2,9 +2,9 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import '../../Utils/Utils.dart';
@@ -141,8 +141,8 @@ class _UserProfileState extends State<UserProfile> {
                                           child: TextFormField(
                                             controller: fnameTextController,
                                             decoration: InputDecoration(
-                                              prefixIcon:
-                                                  const Icon(Icons.person),
+                                              prefixIcon: const Icon(
+                                                  CupertinoIcons.person_alt),
                                               hintText: fetchedFname,
                                             ),
                                             enabled: isEditing,
@@ -166,8 +166,8 @@ class _UserProfileState extends State<UserProfile> {
                                           child: TextFormField(
                                             controller: lnameTextController,
                                             decoration: InputDecoration(
-                                              prefixIcon: const Icon(Icons
-                                                  .person_outline_outlined),
+                                              prefixIcon: const Icon(
+                                                  CupertinoIcons.person_alt),
                                               hintText: fetchedLname,
                                             ),
                                             enabled: isEditing,
@@ -278,11 +278,8 @@ class _UserProfileState extends State<UserProfile> {
                                             // hintText: DateFormat('MMMM dd, yyyy')
                                             //     .format(
                                             //         fetchedBirthDate.toDate()),
-                                            prefixIcon: Container(
-                                              margin: const EdgeInsets.fromLTRB(
-                                                  20, 16, 12, 16),
-                                              child: SvgPicture.asset(
-                                                  svg_for_calendar),
+                                            prefixIcon: const Icon(
+                                              CupertinoIcons.calendar_today,
                                             ),
                                           ),
                                           validator: (value) {
@@ -322,7 +319,8 @@ class _UserProfileState extends State<UserProfile> {
                                     child: TextFormField(
                                       enabled: false,
                                       decoration: InputDecoration(
-                                        prefixIcon: const Icon(Iconsax.call5),
+                                        prefixIcon:
+                                            const Icon(CupertinoIcons.phone),
                                         hintText: fetchedPhone,
                                       ),
                                     ),
@@ -341,8 +339,8 @@ class _UserProfileState extends State<UserProfile> {
                                       maxLines: 4,
                                       controller: addressTextController,
                                       decoration: InputDecoration(
-                                        prefixIcon:
-                                            const Icon(Iconsax.location),
+                                        prefixIcon: const Icon(CupertinoIcons
+                                            .pencil_ellipsis_rectangle),
                                         hintText: fetchedFullAddress,
                                       ),
                                       enabled: isEditing,
@@ -370,10 +368,11 @@ class _UserProfileState extends State<UserProfile> {
                                       controller: pincodeTextController,
                                       decoration: InputDecoration(
                                         prefixIcon:
-                                            const Icon(Iconsax.location_add),
+                                            const Icon(Icons.pin_rounded),
                                         hintText: fetchedPinCode,
                                       ),
                                       enabled: isEditing,
+                                      keyboardType: TextInputType.number,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Enter Pin code';
@@ -423,6 +422,8 @@ class _UserProfileState extends State<UserProfile> {
                                           enabled: isEditing,
                                           // border: OutlineInputBorder(),
                                           hintText: "Select your State",
+                                          prefixIcon: const Icon(
+                                              CupertinoIcons.map_pin_ellipse),
                                         ),
                                         validator: (value) {
                                           if (value == "Select your State") {
@@ -470,6 +471,8 @@ class _UserProfileState extends State<UserProfile> {
                                           ),
                                           enabled: isEditing,
                                           hintText: "Select your City",
+                                          prefixIcon: const Icon(
+                                              Icons.location_city_rounded),
                                         ),
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {

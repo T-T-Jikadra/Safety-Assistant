@@ -1,5 +1,6 @@
 //for menu items in drawer
 // ignore_for_file: camel_case_types
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -17,19 +18,21 @@ List<Menu_ngo> sidebarMenus = [
   ),
   Menu_ngo(
     title: "NGO Profile",
-    icon: Icons.person_2,
+    icon: CupertinoIcons.profile_circled,
   ),
   Menu_ngo(
     title: "Other serving NGOs",
     icon: Icons.temple_hindu_rounded,
+    // icon: Icons.add_task_sharp,
+
   ),
   Menu_ngo(
     title: "Response History",
-    icon: Icons.history,
+    icon: Icons.history_rounded,
   ),
   Menu_ngo(
     title: "Donation History",
-    icon: Icons.history_sharp,
+    icon: Icons.monetization_on_outlined,
   ),
   Menu_ngo(
     title: "Alerts",
@@ -41,7 +44,7 @@ List<Menu_ngo> sidebarMenus = [
   ),
   Menu_ngo(
     title: "Media",
-    icon: Icons.circle_notifications,
+    icon: Iconsax.stickynote4,
   ),
 ];
 

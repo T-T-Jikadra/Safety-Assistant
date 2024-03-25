@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../Utils/common_files/alerts/alert_history_screen.dart';
 import '../../../Components/Notification_related/notification_services.dart';
@@ -23,14 +24,19 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
   NotificationServices notificationServices = NotificationServices();
   String fetchedState = "";
   String fetchedCity = "";
+  bool isFetched = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchNGOData();
     //for notification permission pop up
     notificationServices.requestNotificationPermission();
+    Future.delayed(const Duration(milliseconds: 1600), () {
+      setState(() {
+        isFetched = true;
+      });
+    });
   }
 
   @override
@@ -63,17 +69,26 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
               padding: const EdgeInsets.only(left: 80, top: 20),
               child: Row(
                 children: [
-                  SvgPicture.asset("assets/images/logo_svg.svg",
-                      height: 33, width: 33),
                   const Icon(Icons.location_on_outlined,
                       color: Colors.redAccent, size: 18),
                   const SizedBox(width: 8),
-                  Text(
+                  isFetched
+                      ? Text(
                     "$fetchedCity, $fetchedState",
                     style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.bold),
+                  )
+                      : const SpinKitThreeBounce(
+                    color: Colors.blueGrey,
+                    size: 20,
+                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: SvgPicture.asset("assets/images/logo_svg.svg",
+                        height: 33, width: 33),
                   ),
                 ],
               ),
@@ -254,7 +269,6 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                                             bottom: 13,
                                             left: 7,
                                             right: 7),
-                                        // Set margin to zero to remove white spaces
                                         elevation: 3,
                                         shape:
                                         RoundedRectangleBorder(

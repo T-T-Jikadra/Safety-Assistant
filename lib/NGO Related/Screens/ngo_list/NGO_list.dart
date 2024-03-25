@@ -1,5 +1,6 @@
-// ignore_for_file: library_private_types_in_public_api, camel_case_types
+// ignore_for_file: library_private_types_in_public_api, camel_case_types, file_names
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../Utils/Utils.dart';
@@ -16,12 +17,11 @@ class NGO_List extends StatefulWidget {
 
 class _NGO_ListState extends State<NGO_List> {
   String selectedState = '';
-  String selectedCity = ''; // Variable to hold the selected city value
+  String selectedCity = '';
   List<String> dropdownItemCity = [];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     selectedState = DropdownItems.dropdownItemState.first;
     updateCityList(selectedState);
@@ -33,13 +33,13 @@ class _NGO_ListState extends State<NGO_List> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 50,
-        backgroundColor: Colors.black12,
+        backgroundColor: color_AppBar,
         centerTitle: true,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name - NGO List"),
+        title: const Text("List of the NGOs"),
       ),
       body: Column(
         children: [
@@ -59,7 +59,7 @@ class _NGO_ListState extends State<NGO_List> {
                     child: DropdownButtonFormField<String>(
                       value: selectedState,
                       items:
-                          DropdownItems.dropdownItemState.map((String state) {
+                      DropdownItems.dropdownItemState.map((String state) {
                         return DropdownMenuItem<String>(
                           // alignment: AlignmentDirectional.topStart,
                           value: state,
@@ -78,6 +78,8 @@ class _NGO_ListState extends State<NGO_List> {
                       decoration: const InputDecoration(
                         // border: OutlineInputBorder(),
                         hintText: "Select your State",
+                        prefixIcon:
+                        Icon(CupertinoIcons.map_pin_ellipse),
                       ),
                       //hint: const Text("Select your State"),
                     ),
@@ -110,6 +112,8 @@ class _NGO_ListState extends State<NGO_List> {
                 },
                 decoration: const InputDecoration(
                   hintText: "Select your City",
+                  prefixIcon:
+                  Icon(Icons.location_city_rounded),
                 ),
               ),
             ),
@@ -160,42 +164,42 @@ class _ngo_list_widgetState extends State<ngo_list_widget> {
                 if (snapshot.hasData) {
                   return Padding(
                     padding:
-                        const EdgeInsets.only(left: 10, right: 10, top: 10),
+                    const EdgeInsets.only(left: 10, right: 10, top: 10),
                     child: snapshot.data!.docs.isEmpty
                         ? const Center(
-                            child: Text(
-                              'No records found !',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          )
+                      child: Text(
+                        'No records found !',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    )
                         : ListView.builder(
-                            itemCount: snapshot.data!.docs.length,
-                            itemBuilder: (context, index) {
-                              return NgoListTile(
-                                index: "${index + 1}",
-                                nameOfNGO: snapshot.data!.docs[index]
-                                    ["nameOfNGO"],
-                                regNo: snapshot.data!.docs[index]["NGORegNo"],
-                                serviceList: snapshot.data!.docs[index]
-                                    ["services"],
-                                contact: snapshot.data!.docs[index]
-                                    ["contactNumber"],
-                                email: snapshot.data!.docs[index]["email"],
-                                website: snapshot.data!.docs[index]["website"],
-                                state: snapshot.data!.docs[index]["state"],
-                                city: snapshot.data!.docs[index]["city"],
-                                pinCode: snapshot.data!.docs[index]["pinCode"],
-                                address: snapshot.data!.docs[index]
-                                    ["fullAddress"],
-                                pwd: snapshot.data!.docs[index]["password"],
-                                // Add more fields as needed
-                              );
-                            },
-                          ),
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        return NgoListTile(
+                          index: "${index + 1}",
+                          nameOfNGO: snapshot.data!.docs[index]
+                          ["nameOfNGO"],
+                          regNo: snapshot.data!.docs[index]["NGORegNo"],
+                          serviceList: snapshot.data!.docs[index]
+                          ["services"],
+                          contact: snapshot.data!.docs[index]
+                          ["contactNumber"],
+                          email: snapshot.data!.docs[index]["email"],
+                          website: snapshot.data!.docs[index]["website"],
+                          state: snapshot.data!.docs[index]["state"],
+                          city: snapshot.data!.docs[index]["city"],
+                          pinCode: snapshot.data!.docs[index]["pinCode"],
+                          address: snapshot.data!.docs[index]
+                          ["fullAddress"],
+                          pwd: snapshot.data!.docs[index]["password"],
+                          // Add more fields as needed
+                        );
+                      },
+                    ),
                   );
                 }
               } else if (snapshot.hasError) {
@@ -212,8 +216,10 @@ class _ngo_list_widgetState extends State<ngo_list_widget> {
   }
 
   Future<void> _refreshData() async {
+    // Simulate a delay for refreshing data
     await Future.delayed(const Duration(milliseconds: 1200));
     setState(() {
+      // Update your data here
     });
   }
 }

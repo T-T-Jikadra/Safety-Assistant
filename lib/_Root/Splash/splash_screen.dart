@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, camel_case_types
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -15,7 +15,6 @@ import '../../Citizen Related/Screens/citizen_home_screen/home_screen_citizen.da
 import '../onBoarding/onBoard.dart';
 import '../type of user/select_user_type_screen.dart';
 
-// ignore: camel_case_types
 class splash extends StatelessWidget {
   const splash({super.key});
 
@@ -25,7 +24,7 @@ class splash extends StatelessWidget {
 
     return GetMaterialApp(
       title:'CAS',
-      navigatorKey: navigatorKey, // Set the global navigator key
+      navigatorKey: navigatorKey,
       // title: 'Citizen Emergency & response system',
       debugShowCheckedModeBanner: false,
       theme: TAppTheme.lightTheme,
@@ -33,7 +32,6 @@ class splash extends StatelessWidget {
       themeMode: ThemeMode.system,
       home: const SplashScreen(),
       initialRoute: '/',
-      // Set the initial route to '/'
 
       //Paths of the screens in key value pair ..
       routes: <String, WidgetBuilder>{

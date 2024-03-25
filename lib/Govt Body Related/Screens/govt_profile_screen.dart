@@ -95,7 +95,7 @@ class _Govt_ProfileState extends State<Govt_Profile> {
             bottomLeft: Radius.circular(25),
           ),
         ),
-        title: const Text("$appbar_display_name - Profile Page"),
+        title: const Text("Govt Profile"),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15),
@@ -582,7 +582,7 @@ class _Govt_ProfileState extends State<Govt_Profile> {
 
       Map<String, dynamic> updatedData = {
         if (nameTextController.text.trim() != fetchedGovtName)
-          'nameOfNGO': nameTextController.text.trim(),
+          'GovtAgencyName': nameTextController.text.trim(),
         if (fetchedServices != serviceGovtTextController.text.trim())
           'services': serviceGovtTextController.text.trim(),
         if (phoneTextController.text.trim() != fetchedContactNo)
@@ -612,7 +612,6 @@ class _Govt_ProfileState extends State<Govt_Profile> {
         });
         showSnakeBar(context, "Govt profile updated successfully .. ", "okay");
       } else {
-        // setState(() {isEditing = false;});
         showSnakeBar(context, "No Govt profile data edited !", "close");
       }
     } catch (e) {

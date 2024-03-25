@@ -2,27 +2,10 @@ import 'dart:math';
 import 'package:fff/Govt%20Body%20Related/Screens/govt_home_screen/common_background_govt.dart';
 import 'package:fff/Govt%20Body%20Related/Screens/govt_home_screen/side_bar_govt.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
 import '../../../Utils/constants.dart';
 import '../../../Utils/other/menu_btn.dart';
 import 'menu_govt.dart';
-
-// class entry extends StatelessWidget {
-//   const entry({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'CAS',
-//       debugShowCheckedModeBanner: false,
-//       theme: TAppTheme.lightTheme,
-//       darkTheme: TAppTheme.darkTheme,
-//       themeMode: ThemeMode.system,
-//       home: const EntryPoint(),
-//     );
-//   }
-// }
 
 class GovtHomeScreen extends StatefulWidget {
   const GovtHomeScreen({super.key});
@@ -73,14 +56,12 @@ class _GovtHomeScreenState extends State<GovtHomeScreen>
     return WillPopScope(
       onWillPop: () async {
         if (isSideBarOpen) {
-          // If the sidebar is open, close it and return false to prevent exiting the app
           setState(() {
             isSideBarOpen = false;
           });
           _animationController.reverse();
           return false;
         } else {
-          // If the sidebar is not open, show the exit confirmation dialog
           return _showExitConfirmationDialog(context);
         }
       },
@@ -96,8 +77,6 @@ class _GovtHomeScreenState extends State<GovtHomeScreen>
                   isSideBarOpen = false;
                 });
                 _animationController.reverse();
-                // Trigger click event of MenuBtn
-                // You can call the MenuBtn's press function here if it's accessible
               }
             },
             child: Stack(

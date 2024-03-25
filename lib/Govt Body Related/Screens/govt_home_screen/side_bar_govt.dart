@@ -33,7 +33,6 @@ class _SideBar_govtState extends State<SideBar_govt> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchGovtData();
   }
@@ -60,29 +59,7 @@ class _SideBar_govtState extends State<SideBar_govt> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GestureDetector(
-                  onTap: () => {
-                    Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                        const Govt_Profile(),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          var begin = const Offset(1.0, 0.0);
-                          var end = Offset.zero;
-                          var curve = Curves.ease;
-
-                          var tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-                          var offsetAnimation = animation.drive(tween);
-
-                          return SlideTransition(
-                            position: offsetAnimation,
-                            child: child,
-                          );
-                        },
-                      ),
-                    )
-                  },
+                  onTap: () => {},
                   child: InfoCard(
                     name: govtAgencyName,
                     mail: govtEmail,
@@ -184,8 +161,8 @@ class _SideBar_govtState extends State<SideBar_govt> {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                   const Govt_Response_History_Screen(),
+                                          secondaryAnimation) =>
+                                      const Govt_Response_History_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -195,7 +172,7 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -254,14 +231,13 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                   },
                                 ),
                               );
-                            }
-                            else if (menu_govt.title.contains("Media")) {
+                            } else if (menu_govt.title.contains("Media")) {
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const Media_History_Screen(),
+                                          secondaryAnimation) =>
+                                      const Media_History_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -271,7 +247,7 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -317,8 +293,8 @@ class _SideBar_govtState extends State<SideBar_govt> {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const FAQScreen(),
+                                          secondaryAnimation) =>
+                                      const FAQScreen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -328,7 +304,7 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -342,8 +318,8 @@ class _SideBar_govtState extends State<SideBar_govt> {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const AboutUsScreen(),
+                                          secondaryAnimation) =>
+                                      const AboutUsScreen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -353,7 +329,7 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -362,10 +338,11 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                   },
                                 ),
                               );
-                            }else if (menu_govt.title.contains("Logout")) {
+                            } else if (menu_govt.title.contains("Logout")) {
                               // ignore: use_build_context_synchronously
                               //To logs out the current user ..
-                              final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+                              final SharedPreferences sharedPref =
+                                  await SharedPreferences.getInstance();
                               sharedPref.remove("userType");
                               await FirebaseAuth.instance.signOut();
                               // ignore: use_build_context_synchronously

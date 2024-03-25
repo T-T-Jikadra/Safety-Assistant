@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fff/Citizen%20Related/Screens/citizen_home_screen/home_screen_citizen.dart';
 import 'package:fff/Utils/Utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,8 +22,8 @@ class CitizenSignupPageScreen extends StatefulWidget {
 
   const CitizenSignupPageScreen({Key? key, required this.contactNumber})
       : super(
-          key: key,
-        );
+    key: key,
+  );
 
   @override
   State<CitizenSignupPageScreen> createState() =>
@@ -66,7 +67,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
         statusBarColor: Colors.white12,
         // Change this color to the desired color
         statusBarIconBrightness:
-            Brightness.light, // Change the status bar icons' color
+        Brightness.light, // Change the status bar icons' color
       ),
     );
 
@@ -97,7 +98,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 25),
                       padding: EdgeInsets.only(
-                          //for fields that are covered under keyboard
+                        //for fields that are covered under keyboard
                           bottom: MediaQuery.of(context).viewInsets.bottom,
                           left: 16,
                           right: 16),
@@ -123,7 +124,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                     child: TextFormField(
                                       focusNode: _fnameFocusNode,
                                       textCapitalization:
-                                          TextCapitalization.sentences,
+                                      TextCapitalization.sentences,
                                       controller: fnameTextController,
                                       decoration: const InputDecoration(
                                         hintText: "First Name",
@@ -158,7 +159,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                     child: TextFormField(
                                       focusNode: _lnameFocusNode,
                                       textCapitalization:
-                                          TextCapitalization.sentences,
+                                      TextCapitalization.sentences,
                                       controller: lnameTextController,
                                       decoration: const InputDecoration(
                                         hintText: "Last Name",
@@ -203,7 +204,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                     value: genderList[0],
                                     groupValue: genderRadio,
                                     padding:
-                                        const EdgeInsets.symmetric(vertical: 1),
+                                    const EdgeInsets.symmetric(vertical: 1),
                                     onChange: (value) {
                                       // Update the state when a radio button is selected
                                       setState(() {
@@ -220,7 +221,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                     value: genderList[1],
                                     groupValue: genderRadio,
                                     padding:
-                                        const EdgeInsets.symmetric(vertical: 1),
+                                    const EdgeInsets.symmetric(vertical: 1),
                                     onChange: (value) {
                                       // Update the state when a radio button is selected
                                       setState(() {
@@ -231,13 +232,13 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                 ),
                                 Padding(
                                   padding:
-                                      const EdgeInsets.only(left: 28, top: 0),
+                                  const EdgeInsets.only(left: 28, top: 0),
                                   child: CustomRadioButton(
                                     text: "Others",
                                     value: genderList[2],
                                     groupValue: genderRadio,
                                     padding:
-                                        const EdgeInsets.symmetric(vertical: 1),
+                                    const EdgeInsets.symmetric(vertical: 1),
                                     onChange: (value) {
                                       // Update the state when a radio button is selected
                                       setState(() {
@@ -281,7 +282,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                 hintText: "Enter your Mobile number",
                                 prefixIcon: Container(
                                   margin:
-                                      const EdgeInsets.fromLTRB(20, 16, 12, 16),
+                                  const EdgeInsets.fromLTRB(20, 16, 12, 16),
                                   child: SvgPicture.asset(svg_for_call),
                                 ),
                                 prefixIconConstraints: const BoxConstraints(
@@ -324,11 +325,9 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                       borderRadius: BorderRadius.circular(4),
                                     ),
                                     hintText: "Select your Birthdate",
-                                    prefixIcon: Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          20, 16, 12, 16),
-                                      child: SvgPicture.asset(svg_for_calendar),
-                                    ),
+                                    prefixIcon: const Icon(
+                                        CupertinoIcons.calendar_today,
+                                        color: Colors.deepPurple),
                                   ),
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -379,6 +378,8 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                       decoration: const InputDecoration(
                                         // border: OutlineInputBorder(),
                                         hintText: "Select your State",
+                                        prefixIcon:
+                                        Icon(CupertinoIcons.map_pin_ellipse),
                                       ),
                                       //hint: const Text("Select your State"), // Hint text displayed initially
                                       validator: (value) {
@@ -419,6 +420,8 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                 },
                                 decoration: const InputDecoration(
                                   hintText: "Select your City",
+                                  prefixIcon:
+                                  Icon(Icons.location_city_rounded),
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -438,6 +441,8 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                               controller: pinCodeTextController,
                               decoration: const InputDecoration(
                                 hintText: "Enter your Pin Code",
+                                prefixIcon:
+                                Icon(Icons.pin_rounded),
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -468,6 +473,8 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                               controller: fullAddressTextController,
                               decoration: const InputDecoration(
                                 hintText: "Enter your full address",
+                                prefixIcon: Icon(CupertinoIcons
+                                    .pencil_ellipsis_rectangle),
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -505,7 +512,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                 text: "I accept term & conditions",
                                 value: CitizenTnC,
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 1),
+                                const EdgeInsets.symmetric(vertical: 1),
                                 onChange: (value) {
                                   setState(() {
                                     CitizenTnC = value;
@@ -585,8 +592,8 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                   //Storing data to database
                                   UserRegistration userData = UserRegistration(
                                       cid: "c$totalDocCount",
-                                      firstName: fnameTextController.text.trim(),
-                                      lastName: lnameTextController.text.trim(),
+                                      firstName: fnameTextController.text,
+                                      lastName: lnameTextController.text,
                                       gender: genderRadio ?? "",
                                       // Assuming genderRadio is nullable String
                                       phoneNumber: widget.contactNumber,
@@ -594,15 +601,15 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                       //userAge: userAge.toString(),
                                       state: selectedState,
                                       city: selectedCity,
-                                      pinCode: pinCodeTextController.text.trim(),
+                                      pinCode: pinCodeTextController.text,
                                       fullAddress:
-                                          fullAddressTextController.text.trim(),
+                                      fullAddressTextController.text,
                                       //termsAccepted: CitizenTnC,
                                       deviceToken: deviceTokenFound);
 
                                   // Convert the object to JSON
                                   Map<String, dynamic> userDataJson =
-                                      userData.toJsonCitizen();
+                                  userData.toJsonCitizen();
 
                                   // Store data in Firestore
                                   try {
@@ -625,8 +632,8 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                     Navigator.of(context).push(
                                       PageRouteBuilder(
                                         pageBuilder: (context, animation,
-                                                secondaryAnimation) =>
-                                            const CitizenHomeScreen(),
+                                            secondaryAnimation) =>
+                                        const CitizenHomeScreen(),
                                         transitionsBuilder: (context, animation,
                                             secondaryAnimation, child) {
                                           var begin = const Offset(1.0, 0.0);
@@ -634,10 +641,10 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                           var curve = Curves.ease;
 
                                           var tween = Tween(
-                                                  begin: begin, end: end)
+                                              begin: begin, end: end)
                                               .chain(CurveTween(curve: curve));
                                           var offsetAnimation =
-                                              animation.drive(tween);
+                                          animation.drive(tween);
                                           //slight fade effect
                                           //var opacityAnimation = animation.drive(tween);
 
@@ -667,7 +674,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                 shape: MaterialStateProperty.all(
                                     RoundedRectangleBorder(
                                         borderRadius:
-                                            BorderRadius.circular(18)))),
+                                        BorderRadius.circular(18)))),
                             child: const Text("Continue"))),
                   ),
                 ),

@@ -40,7 +40,7 @@ class _Govt_Response_History_ScreenState
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name - Response History Page"),
+        title: const Text("Response History"),
       ),
       body: Column(
         children: [

@@ -2,10 +2,10 @@
 
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fff/Citizen%20Related/Screens/citizen_request_screen/citizen_request_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../Utils/common_files/alerts/alert_history_screen.dart';
 import '../../../Components/Notification_related/notification_services.dart';
@@ -25,14 +25,19 @@ class _commonbg_govtState extends State<commonbg_govt> {
   NotificationServices notificationServices = NotificationServices();
   String fetchedState = "";
   String fetchedCity = "";
+  bool isFetched = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchGovtData();
     //for notification permission pop up
     notificationServices.requestNotificationPermission();
+    Future.delayed(const Duration(milliseconds: 1600), () {
+      setState(() {
+        isFetched = true;
+      });
+    });
   }
 
   @override
@@ -66,17 +71,26 @@ class _commonbg_govtState extends State<commonbg_govt> {
               padding: const EdgeInsets.only(left: 80, top: 20),
               child: Row(
                 children: [
-                  SvgPicture.asset("assets/images/logo_svg.svg",
-                      height: 33, width: 33),
                   const Icon(Icons.location_on_outlined,
                       color: Colors.redAccent, size: 18),
                   const SizedBox(width: 8),
-                  Text(
+                  isFetched
+                      ? Text(
                     "$fetchedCity, $fetchedState",
                     style: const TextStyle(
-                        fontSize: 16,
                         color: Colors.black,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold),
+                  )
+                      : const SpinKitThreeBounce(
+                    color: Colors.blueGrey,
+                    size: 20,
+                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: SvgPicture.asset("assets/images/logo_svg.svg",
+                        height: 33, width: 33),
                   ),
                 ],
               ),
@@ -355,7 +369,9 @@ class _commonbg_govtState extends State<commonbg_govt> {
                                                           overflow:
                                                           TextOverflow
                                                               .ellipsis,
-                                                          textAlign: TextAlign.justify,
+                                                          textAlign:
+                                                          TextAlign
+                                                              .justify,
                                                           style: const TextStyle(
                                                               color: Colors
                                                                   .black,
@@ -452,34 +468,6 @@ class _commonbg_govtState extends State<commonbg_govt> {
                   }),
             ),
             const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Container(
-                height: 150,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                  color: Colors.black12,
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Text(
-                    "Temsting",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 30),
-            Center(
-              child: ElevatedButton(
-                child: const Text("It's Govt Home Page"),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const userRequest_Screen()));
-                },
-              ),
-            ),
           ],
         ),
       ],

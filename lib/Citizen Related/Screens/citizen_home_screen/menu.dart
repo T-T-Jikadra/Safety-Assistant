@@ -1,4 +1,5 @@
 //for menu items in drawer
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -16,7 +17,7 @@ List<Menu> sidebarMenus = [
   ),
   Menu(
     title: "User Profile",
-    icon: Icons.person_2,
+    icon: CupertinoIcons.profile_circled,
   ),
   Menu(
     title: "Serving NGO / Government Body",
@@ -24,19 +25,19 @@ List<Menu> sidebarMenus = [
   ),
   Menu(
     title: "Request History",
-    icon: Icons.history,
+    icon: Icons.history_outlined,
   ),
   Menu(
     title: "Donation History",
-    icon: Icons.money_rounded,
+    icon: Icons.monetization_on_outlined,
   ),
   Menu(
     title: "Alerts",
     icon: Icons.crisis_alert,
   ),
   Menu(
-    title: "Media",
-    icon: Icons.circle_notifications,
+    title: "Notices",
+    icon: Iconsax.stickynote4,
   ),
 ];
 

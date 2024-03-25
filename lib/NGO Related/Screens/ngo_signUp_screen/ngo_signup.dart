@@ -366,8 +366,10 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                         });
                                       },
                                       decoration: const InputDecoration(
-                                        // border: OutlineInputBorder(),
                                         hintText: "Select NGO State",
+                                        prefixIcon: Icon(
+                                            CupertinoIcons.map_pin_ellipse,
+                                            color: Colors.deepPurple),
                                       ),
                                       validator: (value) {
                                         if (value == "Select NGO state") {
@@ -407,6 +409,8 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                 },
                                 decoration: const InputDecoration(
                                   hintText: "Select your City",
+                                  prefixIcon: Icon(Icons.location_city_rounded,
+                                      color: Colors.deepPurple),
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -426,6 +430,8 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               controller: pinCodeTextController,
                               decoration: const InputDecoration(
                                 hintText: "Enter Pin code",
+                                prefixIcon: Icon(Icons.pin_rounded,
+                                    color: Colors.deepPurple),
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -456,6 +462,9 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                               controller: fullAddressTextController,
                               decoration: const InputDecoration(
                                 hintText: "Enter full address",
+                                prefixIcon: Icon(
+                                    CupertinoIcons.pencil_ellipsis_rectangle,
+                                    color: Colors.deepPurple),
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,

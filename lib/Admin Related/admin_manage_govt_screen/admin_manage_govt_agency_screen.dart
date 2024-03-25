@@ -76,6 +76,8 @@ class _Admin_Manage_Govt_Agency_ScreenState
                                       itemCount: snapshot.data!.docs.length,
                                       itemBuilder: (context, index) {
                                         return Admin_GovtListTile(
+                                          GovtSnapshot:
+                                              snapshot.data!.docs[index],
                                           index: "${index + 1}",
                                           govtAgencyName: snapshot.data!
                                               .docs[index]["GovtAgencyName"],

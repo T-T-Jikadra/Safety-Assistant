@@ -1,11 +1,9 @@
 // ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages, unrelated_type_equality_checks, use_build_context_synchronously, camel_case_types
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../Utils/Utils.dart';
 import '../../Utils/constants.dart';
@@ -69,7 +67,6 @@ class _NGO_ProfileState extends State<NGO_Profile> {
         selectedCity = fetchedCity.trim();
         updateCityList(selectedState);
 
-
         for (int i = 0;
             i < DropdownItems.dropdownItemListofServices.length;
             i++) {
@@ -88,7 +85,7 @@ class _NGO_ProfileState extends State<NGO_Profile> {
     return Scaffold(
       appBar: AppBar(
         elevation: 50,
-        backgroundColor: Colors.black12,
+        backgroundColor: color_AppBar,
         centerTitle: true,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -141,7 +138,8 @@ class _NGO_ProfileState extends State<NGO_Profile> {
                                     child: TextFormField(
                                       controller: nameTextController,
                                       decoration: InputDecoration(
-                                        prefixIcon: const Icon(Icons.person),
+                                        prefixIcon: const Icon(
+                                            CupertinoIcons.person_alt),
                                         hintText: fetchedNGOName,
                                       ),
                                       enabled: isEditing,
@@ -150,8 +148,8 @@ class _NGO_ProfileState extends State<NGO_Profile> {
                                           return 'Enter NGO name';
                                         }
                                         if (value.isNotEmpty &&
-                                            value.length < 2) {
-                                          return 'Minimum 2 Characters required';
+                                            value.length < 3) {
+                                          return 'Minimum 3 Characters required';
                                         }
                                         return null;
                                       },
@@ -170,7 +168,7 @@ class _NGO_ProfileState extends State<NGO_Profile> {
                                       enabled: false,
                                       decoration: InputDecoration(
                                         prefixIcon:
-                                            const Icon(Iconsax.location_add),
+                                            const Icon(Icons.app_registration),
                                         hintText: fetchedNGORegNo,
                                       ),
                                     ),
@@ -196,15 +194,11 @@ class _NGO_ProfileState extends State<NGO_Profile> {
                                       },
                                       controller: serviceTextController,
                                       readOnly: true,
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         hintText:
                                             "Select Services NGO can provide",
-                                        prefixIcon: Container(
-                                          margin: const EdgeInsets.fromLTRB(
-                                              20, 16, 12, 16),
-                                          child: SvgPicture.asset(
-                                              svg_for_calendar),
-                                        ),
+                                        prefixIcon: Icon(
+                                            CupertinoIcons.square_list_fill),
                                       ),
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
@@ -232,7 +226,7 @@ class _NGO_ProfileState extends State<NGO_Profile> {
                                       maxLength: 13,
                                       decoration: InputDecoration(
                                         prefixIcon:
-                                            const Icon(Iconsax.location_add),
+                                            const Icon(CupertinoIcons.phone),
                                         hintText: fetchedContactNo,
                                       ),
                                       keyboardType: TextInputType.phone,
@@ -260,7 +254,7 @@ class _NGO_ProfileState extends State<NGO_Profile> {
                                       controller: emailTextController,
                                       decoration: InputDecoration(
                                         prefixIcon:
-                                            const Icon(Iconsax.location_add),
+                                            const Icon(Icons.email_outlined),
                                         hintText: fetchedEmail,
                                       ),
                                       enabled: isEditing,
@@ -289,8 +283,8 @@ class _NGO_ProfileState extends State<NGO_Profile> {
                                     child: TextFormField(
                                       controller: websiteTextController,
                                       decoration: InputDecoration(
-                                        prefixIcon:
-                                            const Icon(Iconsax.location_add),
+                                        prefixIcon: const Icon(
+                                            Icons.dataset_linked_outlined),
                                         hintText: fetchedWebsite,
                                       ),
                                       enabled: isEditing,
@@ -329,14 +323,14 @@ class _NGO_ProfileState extends State<NGO_Profile> {
                                       maxLines: 4,
                                       controller: addressTextController,
                                       decoration: InputDecoration(
-                                        prefixIcon:
-                                            const Icon(Iconsax.location_add),
+                                        prefixIcon: const Icon(CupertinoIcons
+                                            .pencil_ellipsis_rectangle),
                                         hintText: fetchedFullAddress,
                                       ),
                                       enabled: isEditing,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
-                                          return 'Enter full address';
+                                          return 'Enter NGO full address';
                                         }
                                         if (value.isNotEmpty &&
                                             value.length < 10) {
@@ -358,7 +352,7 @@ class _NGO_ProfileState extends State<NGO_Profile> {
                                       controller: pincodeTextController,
                                       decoration: InputDecoration(
                                         prefixIcon:
-                                            const Icon(Iconsax.location_add),
+                                            const Icon(Icons.pin_rounded),
                                         hintText: fetchedPinCode,
                                       ),
                                       enabled: isEditing,
@@ -412,6 +406,8 @@ class _NGO_ProfileState extends State<NGO_Profile> {
                                           enabled: isEditing,
                                           // border: OutlineInputBorder(),
                                           hintText: "Select your State",
+                                          prefixIcon: const Icon(
+                                              CupertinoIcons.map_pin_ellipse),
                                         ),
                                         validator: (value) {
                                           if (value == "Select your State") {
@@ -459,6 +455,8 @@ class _NGO_ProfileState extends State<NGO_Profile> {
                                           ),
                                           enabled: isEditing,
                                           hintText: "Select your City",
+                                          prefixIcon: const Icon(
+                                              Icons.location_city_rounded),
                                         ),
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
@@ -591,10 +589,8 @@ class _NGO_ProfileState extends State<NGO_Profile> {
           'email': emailTextController.text,
         if (websiteTextController.text.trim() != fetchedWebsite)
           'website': websiteTextController.text.trim(),
-        if (selectedState != fetchedState)
-          'state': selectedState,
-        if (selectedCity != fetchedCity)
-          'city': selectedCity,
+        if (selectedState != fetchedState) 'state': selectedState,
+        if (selectedCity != fetchedCity) 'city': selectedCity,
         if (pincodeTextController.text != fetchedPinCode)
           'pinCode': pincodeTextController.text.trim(),
         if (addressTextController.text.trim() != fetchedFullAddress)
