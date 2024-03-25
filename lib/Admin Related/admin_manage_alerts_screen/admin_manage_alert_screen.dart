@@ -469,62 +469,6 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
                                       if (_formKey.currentState!.validate()) {
                                         if (!alertSent) {
                                           try {
-                                            if (selectedCity.isEmpty) {
-                                              //to selected state
-                                              var CitywiseCitizenSnap =
-                                                  await FirebaseFirestore
-                                                      .instance
-                                                      .collection('clc_citizen')
-                                                      .where('state',
-                                                          isEqualTo:
-                                                              selectedState)
-                                                      .get();
-
-                                              for (var doc
-                                                  in CitywiseCitizenSnap.docs) {
-                                                String deviceToken =
-                                                    doc.data()['deviceToken'];
-                                                broadcastAlert(
-                                                    deviceToken, totalDocCount);
-                                              }
-
-                                              //sends alert to only NGO
-                                              var CitywiseNGOSnap =
-                                                  await FirebaseFirestore
-                                                      .instance
-                                                      .collection('clc_ngo')
-                                                      //added new ***
-                                                      // .where('services', whereIn: selectedServiceWords)
-                                                      .where('state',
-                                                          isEqualTo:
-                                                              selectedState)
-                                                      .get();
-
-                                              for (var ngoDoc
-                                                  in CitywiseNGOSnap.docs) {
-                                                String deviceToken = ngoDoc
-                                                    .data()['deviceToken'];
-                                                broadcastAlert(
-                                                    deviceToken, totalDocCount);
-                                              }
-
-                                              var CitywiseGovtSnap =
-                                                  await FirebaseFirestore
-                                                      .instance
-                                                      .collection('clc_govt')
-                                                      .where('state',
-                                                          isEqualTo:
-                                                              selectedState)
-                                                      .get();
-
-                                              for (var doc
-                                                  in CitywiseGovtSnap.docs) {
-                                                String deviceToken =
-                                                    doc.data()['deviceToken'];
-                                                broadcastAlert(
-                                                    deviceToken, totalDocCount);
-                                              }
-                                            } else {
                                               //to selected city
                                               var CitywiseCitizenSnap =
                                                   await FirebaseFirestore
@@ -579,7 +523,7 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
                                                 broadcastAlert(
                                                     deviceToken, totalDocCount);
                                               }
-                                            }
+
                                             //sends alert to citizen
 
                                             // });
