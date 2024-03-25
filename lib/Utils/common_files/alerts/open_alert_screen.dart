@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
-import '../constants.dart';
 
 class Open_Alert_Screen extends StatefulWidget {
   final String alertId;
@@ -74,7 +73,7 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name - Alert details"),
+        title: const Text("Alert details"),
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())

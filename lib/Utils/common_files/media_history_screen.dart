@@ -26,7 +26,7 @@ class _Media_History_ScreenState extends State<Media_History_Screen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name Media publishes"),
+        title: const Text("Media publishes"),
       ),
       body: const Column(
         children: [media_history_list_widget()],

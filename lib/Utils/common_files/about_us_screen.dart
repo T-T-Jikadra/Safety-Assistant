@@ -21,7 +21,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text(" About Us"),
+        title: const Text("About Us"),
       ),
       body: SingleChildScrollView(
         child: Container(

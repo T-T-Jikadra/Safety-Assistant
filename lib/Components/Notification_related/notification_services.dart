@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import '../../Citizen Related/Screens/citizen_request_screen/citizen_req_history_screen.dart';
-import '../../Utils/common_files/open_alert_screen.dart';
+import '../../Utils/common_files/alerts/open_alert_screen.dart';
 import '../../Utils/common_files/open_req_screen.dart';
 
 // ignore: camel_case_types

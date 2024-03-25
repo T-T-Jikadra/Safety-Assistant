@@ -102,7 +102,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name - Request sent "),
+        title: const Text("Request Details"),
       ),
       body: SizedBox(
         child: Padding(

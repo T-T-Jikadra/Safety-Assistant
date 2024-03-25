@@ -62,7 +62,7 @@ class _View_Feedback_Details_ScreenState
               borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(25),
                   bottomLeft: Radius.circular(25))),
-          title: const Text("Submit feedback"),
+          title: const Text("Feedback Details"),
         ),
         body: isLoading
             ? const Center(child: CircularProgressIndicator())

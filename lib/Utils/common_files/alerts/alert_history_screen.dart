@@ -26,7 +26,7 @@ class _Alert_History_ScreenState extends State<Alert_History_Screen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name Alerts"),
+        title: const Text("Alerts"),
       ),
       body: const Column(
         children: [alert_history_list_widget()],

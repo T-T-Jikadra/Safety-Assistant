@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../Utils/constants.dart';
-
 // ignore: camel_case_types
 class notice_Screen extends StatefulWidget {
   const notice_Screen({super.key});
@@ -23,7 +21,7 @@ class _notice_ScreenState extends State<notice_Screen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name - Notice Page"),
+        title: const Text("Notice"),
       ),
       body: const Center(
         child: Text("It's Notice Page"),

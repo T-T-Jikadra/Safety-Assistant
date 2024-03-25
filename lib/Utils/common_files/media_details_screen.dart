@@ -3,7 +3,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../constants.dart';
 
 class Media_Details_Screen extends StatefulWidget {
   final DocumentSnapshot documentSnapshot;
@@ -26,7 +25,7 @@ class _Media_Details_ScreenState extends State<Media_Details_Screen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name Media Details"),
+        title: const Text("Media Details"),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

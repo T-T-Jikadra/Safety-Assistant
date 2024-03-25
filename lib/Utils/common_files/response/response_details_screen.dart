@@ -95,7 +95,7 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
               borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(25),
                   bottomLeft: Radius.circular(25))),
-          title: const Text("$appbar_display_name - Response details"),
+          title: const Text("Response details"),
         ),
         body: isLoading
             ? const Center(child: CircularProgressIndicator())
