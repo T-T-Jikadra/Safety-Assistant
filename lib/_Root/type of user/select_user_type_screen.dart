@@ -77,11 +77,11 @@ class _SelectOptionPageScreenState extends State<SelectOptionPageScreen> {
                                     builder: (context) =>
                                         const Admin_Login_Screen()));
                           },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Colors.deepPurple.shade500.withOpacity(0.9)),
-                            foregroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
+                          style: const ButtonStyle(
+                            // backgroundColor: MaterialStateProperty.all<Color>(
+                            //     Colors.deepPurple.shade500.withOpacity(0.9)),
+                            // foregroundColor:
+                            //     MaterialStateProperty.all<Color>(Colors.white),
                           ),
                           child: const Text('Admin',
                               textAlign: TextAlign.center,

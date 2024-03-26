@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, non_constant_identifier_names
+// ignore_for_file: camel_case_types, non_constant_identifier_names, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fff/Govt%20Body%20Related/Screens/govt_home_screen/side_menu_govt.dart';
@@ -82,7 +82,6 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                 const Duration(milliseconds: 500));
 
                             if (menu_govt.title.contains("Home")) {
-                              // ignore: use_build_context_synchronously
                               // Navigator.of(context).push(
                               //   PageRouteBuilder(
                               //     pageBuilder: (context, animation,
@@ -107,7 +106,6 @@ class _SideBar_govtState extends State<SideBar_govt> {
                               //   ),
                               // );
                             } else if (menu_govt.title.contains("Profile")) {
-                              //ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -132,7 +130,6 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                 ),
                               );
                             } else if (menu_govt.title.contains("Other")) {
-                              // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -157,7 +154,6 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                 ),
                               );
                             } else if (menu_govt.title.contains("Response")) {
-                              // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -182,7 +178,6 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                 ),
                               );
                             } else if (menu_govt.title.contains("Alert")) {
-                              //ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -207,7 +202,6 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                 ),
                               );
                             } else if (menu_govt.title.contains("Grant")) {
-                              // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -232,7 +226,6 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                 ),
                               );
                             } else if (menu_govt.title.contains("Media")) {
-                              // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -289,7 +282,6 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                 const Duration(milliseconds: 500));
 
                             if (menu_govt.title.contains("FAQ")) {
-                              // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -314,7 +306,6 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                 ),
                               );
                             } else if (menu_govt.title.contains("About")) {
-                              // ignore: use_build_context_synchronously
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -339,13 +330,11 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                 ),
                               );
                             } else if (menu_govt.title.contains("Logout")) {
-                              // ignore: use_build_context_synchronously
                               //To logs out the current user ..
                               final SharedPreferences sharedPref =
                                   await SharedPreferences.getInstance();
                               sharedPref.remove("userType");
                               await FirebaseAuth.instance.signOut();
-                              // ignore: use_build_context_synchronously
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(

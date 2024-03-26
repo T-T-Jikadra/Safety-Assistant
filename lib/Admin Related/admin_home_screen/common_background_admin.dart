@@ -2,6 +2,7 @@
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -11,6 +12,9 @@ import '../../Utils/common_files/alerts/alert_history_screen.dart';
 import '../../../Components/Notification_related/notification_services.dart';
 import '../../../Utils/Utils.dart';
 import 'package:intl/intl.dart';
+
+import '../admin_manage_media_screen/admin_manage_media_screen.dart';
+import '../admin_request_history_screen/admin_request_history_screen.dart';
 
 class commonbg_admin extends StatefulWidget {
   const commonbg_admin({super.key});
@@ -91,6 +95,209 @@ class _commonbg_adminState extends State<commonbg_admin> {
                     ),
                   ),
                   const SizedBox(height: 30),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    child: Row(
+                      children: [
+                        // 1.USER
+                        Builder(builder: (context) {
+                          return Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                // Navigator.pushNamed(context, 'citizen');
+                              },
+                              child: Container(
+                                  //width: MediaQuery.of(context).size.width * 0.46,
+                                  height: 80,
+                                  decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                      colors: [Colors.yellow, Colors.teal],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      stops: [0.0, 1.0],
+                                      tileMode: TileMode.mirror,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: const Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 8.0),
+                                          child: Text(
+                                            '1500\nUser',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(width: 20),
+                                        Icon(Icons.person,
+                                            color: Colors.white, size: 50)
+                                      ])),
+                            ),
+                          );
+                        }),
+                        const SizedBox(width: 12.0),
+                        //2.NGO
+                        Builder(builder: (context) {
+                          return Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                // Navigator.pushNamed(context, 'ngo');
+                              },
+                              child: Container(
+                                  // width: MediaQuery.of(context).size.width * 0.46,
+                                  height: 80,
+                                  decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                        Colors.orangeAccent,
+                                        Colors.lightBlue
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.topRight,
+                                      stops: [0.0, 1.0],
+                                      tileMode: TileMode.mirror,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: const Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 8),
+                                          child: Text(
+                                            '5478\nNGO\nJoined',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(width: 5),
+                                        Icon(Icons.location_city_outlined,
+                                            color: Colors.white, size: 50)
+                                      ])),
+                            ),
+                          );
+                        }),
+                        // const SizedBox(width: 12.0),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                    child: Row(
+                      children: [
+                        // 3.Govt
+                        Builder(builder: (context) {
+                          return Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                // Navigator.pushNamed(context, 'citizen');
+                              },
+                              child: Container(
+                                  //width: MediaQuery.of(context).size.width * 0.46,
+                                  height: 80,
+                                  decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                        Colors.green,
+                                        Colors.indigoAccent
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      stops: [0.0, 1.0],
+                                      tileMode: TileMode.mirror,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: const Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 8.0),
+                                          child: Text(
+                                            '15\nGovt.\nAgencies',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(width: 20),
+                                        Icon(CupertinoIcons.building_2_fill,
+                                            color: Colors.white, size: 50)
+                                      ])),
+                            ),
+                          );
+                        }),
+                        const SizedBox(width: 12.0),
+                        //4. req
+                        Builder(builder: (context) {
+                          return Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                // Navigator.pushNamed(context, 'ngo');
+                              },
+                              child: Container(
+                                  // width: MediaQuery.of(context).size.width * 0.46,
+                                  height: 80,
+                                  decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                      colors: [Colors.teal, Colors.orange],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.topRight,
+                                      stops: [0.0, 1.0],
+                                      tileMode: TileMode.mirror,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: const Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 8),
+                                          child: Text(
+                                            '137\nRequests ',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(width: 5),
+                                        Icon(Icons.plus_one_outlined,
+                                            color: Colors.white, size: 50)
+                                      ])),
+                            ),
+                          );
+                        }),
+                        // const SizedBox(width: 12.0),
+                      ],
+                    ),
+                  ),
                   //latest alert
                   Padding(
                     padding:
@@ -464,7 +671,127 @@ class _commonbg_adminState extends State<commonbg_admin> {
                         }),
                   ),
                   const SizedBox(height: 15),
-                  const SizedBox(height: 30),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      const Admin_Request_History_Screen(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                        animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            child: Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: Material(
+                                  elevation: 4,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(20)),
+                                  child: Container(
+                                    // height: 80,
+                                    decoration: const BoxDecoration(
+                                        color: Colors.white12,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15))),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      child: Column(
+                                        children: [
+                                          Image.asset("assets/images/req.png",
+                                              height: 50, width: 50),
+                                          const SizedBox(height: 10),
+                                          const Text("Requests"),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )),
+                          ),
+                        ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      const Admin_Manage_Media_Screen(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                        animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            child: Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: Material(
+                                  elevation: 4,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(20)),
+                                  child: Container(
+                                    // height: 80,
+                                    decoration: const BoxDecoration(
+                                        color: Colors.white12,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15))),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      child: Column(
+                                        children: [
+                                          Image.asset("assets/images/guide.png",
+                                              height: 50, width: 50),
+                                          const SizedBox(height: 10),
+                                          const Text("Media"),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),

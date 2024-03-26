@@ -89,7 +89,7 @@ class _Admin_Alert_Details_ScreenState extends State<Admin_Alert_Details_Screen>
                             children: [
                               Row(
                                 children: [
-                                  const Icon(Iconsax.hierarchy_square),
+                                  const Icon(CupertinoIcons.exclamationmark_octagon_fill),
                                   const SizedBox(width: 12),
                                   Column(
                                     crossAxisAlignment:
@@ -111,7 +111,7 @@ class _Admin_Alert_Details_ScreenState extends State<Admin_Alert_Details_Screen>
                               const SizedBox(height: 8),
                               Row(
                                 children: [
-                                  const Icon(Iconsax.call),
+                                  const Icon(Icons.description),
                                   const SizedBox(width: 12),
                                   Column(
                                     crossAxisAlignment:
@@ -144,7 +144,7 @@ class _Admin_Alert_Details_ScreenState extends State<Admin_Alert_Details_Screen>
                               const SizedBox(height: 8),
                               Row(
                                 children: [
-                                  const Icon(Iconsax.buildings),
+                                  const Icon(Icons.speaker),
                                   const SizedBox(width: 12),
                                   Column(
                                     crossAxisAlignment:
@@ -169,7 +169,7 @@ class _Admin_Alert_Details_ScreenState extends State<Admin_Alert_Details_Screen>
                               const SizedBox(height: 8),
                               Row(
                                 children: [
-                                  const Icon(Iconsax.building_3),
+                                  const Icon(Icons.location_city_rounded),
                                   const SizedBox(width: 12),
                                   Column(
                                     crossAxisAlignment:

@@ -301,7 +301,6 @@ class _Admin_Manage_Media_ScreenState extends State<Admin_Manage_Media_Screen> {
                                                   keyboardType:
                                                       TextInputType.multiline,
                                                   maxLines: 4,
-                                                  maxLength: 150,
                                                   decoration: InputDecoration(
                                                     hintText:
                                                         'Enter description...',

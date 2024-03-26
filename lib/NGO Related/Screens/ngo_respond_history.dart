@@ -40,7 +40,7 @@ class _NGO_Response_History_ScreenState
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name - Response History Page"),
+        title: const Text("Response History"),
       ),
       body: Column(
         children: [
@@ -270,16 +270,9 @@ class _response_history_list_widgetState
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: [
-                                          const Icon(
-                                              Icons
-                                                  .watch_later_outlined,
-                                              size:
-                                              16,
-                                              color: Colors
-                                                  .black54),
-                                          const SizedBox(
-                                              width:
-                                              3),
+                                          const Icon(Icons.watch_later_outlined,
+                                              size: 16, color: Colors.black54),
+                                          const SizedBox(width: 3),
                                           Text(
                                               DateFormat('dd-MM-yyyy , HH:mm')
                                                   .format(DateTime.parse(

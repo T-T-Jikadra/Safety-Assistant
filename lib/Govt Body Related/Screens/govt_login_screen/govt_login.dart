@@ -71,6 +71,7 @@ class _GovtLoginPageScreenState extends State<GovtLoginPageScreen> {
                             padding: const EdgeInsets.only(right: 5, left: 5),
                             child: TextFormField(
                               controller: loginRegNoGovtTextController,
+                              maxLength: 10,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.app_registration,
                                     color: Colors.deepPurple),

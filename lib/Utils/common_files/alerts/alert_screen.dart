@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, deprecated_member_use, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -87,7 +88,7 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                             children: [
                               Row(
                                 children: [
-                                  const Icon(Iconsax.hierarchy_square),
+                                  const Icon(CupertinoIcons.exclamationmark_octagon_fill),
                                   const SizedBox(width: 12),
                                   Column(
                                     crossAxisAlignment:
@@ -109,7 +110,7 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                               const SizedBox(height: 8),
                               Row(
                                 children: [
-                                  const Icon(Iconsax.call),
+                                  const Icon(Icons.description),
                                   const SizedBox(width: 12),
                                   Column(
                                     crossAxisAlignment:
@@ -141,7 +142,7 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                               const SizedBox(height: 8),
                               Row(
                                 children: [
-                                  const Icon(Iconsax.buildings),
+                                  const Icon(Icons.speaker),
                                   const SizedBox(width: 12),
                                   Column(
                                     crossAxisAlignment:
@@ -166,7 +167,7 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                               const SizedBox(height: 8),
                               Row(
                                 children: [
-                                  const Icon(Iconsax.building_3),
+                                  const Icon(Icons.location_city_rounded),
                                   const SizedBox(width: 12),
                                   Column(
                                     crossAxisAlignment:

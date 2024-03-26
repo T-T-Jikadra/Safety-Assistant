@@ -76,6 +76,7 @@ class _NGOLoginPageScreenState extends State<NGOLoginPageScreen> {
                             child: TextFormField(
                               focusNode: _lastNameFocusNode,
                               controller: loginRegNoNGOTextController,
+                              maxLength: 10,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.app_registration,
                                     color: Colors.deepPurple),

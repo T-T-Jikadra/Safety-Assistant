@@ -13,6 +13,8 @@ import '../../../Utils/Utils.dart';
 import 'package:intl/intl.dart';
 
 import '../../../Utils/common_files/alerts/alert_screen.dart';
+import '../../../Utils/common_files/media_history_screen.dart';
+import '../govt_respond_history_screen.dart';
 
 class commonbg_govt extends StatefulWidget {
   const commonbg_govt({super.key});
@@ -467,7 +469,128 @@ class _commonbg_govtState extends State<commonbg_govt> {
                         child: CircularProgressIndicator());
                   }),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 15),
+            Padding(
+              padding:
+              const EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation,
+                                secondaryAnimation) =>
+                            const Govt_Response_History_Screen(),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              var begin = const Offset(1.0, 0.0);
+                              var end = Offset.zero;
+                              var curve = Curves.ease;
+
+                              var tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: curve));
+                              var offsetAnimation =
+                              animation.drive(tween);
+
+                              return SlideTransition(
+                                position: offsetAnimation,
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      child: Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: Material(
+                            elevation: 4,
+                            borderRadius: const BorderRadius.all(
+                                Radius.circular(20)),
+                            child: Container(
+                              // height: 80,
+                              decoration: const BoxDecoration(
+                                  color: Colors.white12,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(15))),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10),
+                                child: Column(
+                                  children: [
+                                    Image.asset("assets/images/response.png",
+                                        height: 50, width: 50),
+                                    const SizedBox(height: 10),
+                                    const Text("Responses"),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation,
+                                secondaryAnimation) =>
+                            const Media_History_Screen(),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              var begin = const Offset(1.0, 0.0);
+                              var end = Offset.zero;
+                              var curve = Curves.ease;
+
+                              var tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: curve));
+                              var offsetAnimation =
+                              animation.drive(tween);
+
+                              return SlideTransition(
+                                position: offsetAnimation,
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      child: Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: Material(
+                            elevation: 4,
+                            borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
+                            child: Container(
+                              // height: 80,
+                              decoration: const BoxDecoration(
+                                  color: Colors.white12,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(15))),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10),
+                                child: Column(
+                                  children: [
+                                    Image.asset("assets/images/guide.png",
+                                        height: 50, width: 50),
+                                    const SizedBox(height: 10),
+                                    const Text("Media"),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
           ],
         ),
       ],

@@ -16,7 +16,6 @@ import '../../../Utils/dropdown_Items.dart';
 import 'custom_checkbox_button.dart';
 import 'custom_radio_button.dart';
 
-// ignore: must_be_immutable
 class CitizenSignupPageScreen extends StatefulWidget {
   final String contactNumber;
 
@@ -47,14 +46,14 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
   List<String> genderList = ["Male", "Female", "Others"];
 
   String selectedState = '';
-  String selectedCity = ''; // Variable to hold the selected city value
+  String selectedCity = '';
 
   List<String> dropdownItemCity = [];
 
   bool CitizenTnC = false;
 
   NotificationServices notificationServices = NotificationServices();
-  String deviceTokenFound = ""; // Global variable to store device token
+  String deviceTokenFound = "";
 
   @override
   void initState() {
@@ -67,7 +66,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
         statusBarColor: Colors.white12,
         // Change this color to the desired color
         statusBarIconBrightness:
-        Brightness.light, // Change the status bar icons' color
+        Brightness.light,
       ),
     );
 
@@ -105,7 +104,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                       child: Column(
                         children: [
                           const Text(
-                            "Create your Account here : ",
+                            "Create your account here : ",
                             style: TextStyle(fontSize: 24),
                           ),
                           const SizedBox(height: 9),
@@ -177,7 +176,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                         if (value.isNotEmpty &&
                                             value.length < 3) {
                                           _lnameFocusNode.requestFocus();
-                                          return 'Minimum 3 Characters';
+                                          return 'Minimum 3 Characters required';
                                         }
                                         return null; // Return null if the input is valid
                                       },
@@ -379,7 +378,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                         // border: OutlineInputBorder(),
                                         hintText: "Select your State",
                                         prefixIcon:
-                                        Icon(CupertinoIcons.map_pin_ellipse),
+                                        Icon(CupertinoIcons.map_pin_ellipse,color: Colors.deepPurple),
                                       ),
                                       //hint: const Text("Select your State"), // Hint text displayed initially
                                       validator: (value) {
@@ -421,7 +420,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                 decoration: const InputDecoration(
                                   hintText: "Select your City",
                                   prefixIcon:
-                                  Icon(Icons.location_city_rounded),
+                                  Icon(Icons.location_city_rounded,color: Colors.deepPurple),
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -442,7 +441,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                               decoration: const InputDecoration(
                                 hintText: "Enter your Pin Code",
                                 prefixIcon:
-                                Icon(Icons.pin_rounded),
+                                Icon(Icons.pin_rounded,color: Colors.deepPurple),
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -450,7 +449,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Enter zip code';
+                                  return 'Enter pin code';
                                 }
                                 if (value.length < 6) {
                                   return 'Enter 6 digits Pin code';
@@ -474,7 +473,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                               decoration: const InputDecoration(
                                 hintText: "Enter your full address",
                                 prefixIcon: Icon(CupertinoIcons
-                                    .pencil_ellipsis_rectangle),
+                                    .pencil_ellipsis_rectangle,color: Colors.deepPurple),
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,

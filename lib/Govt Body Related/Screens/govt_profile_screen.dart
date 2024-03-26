@@ -35,6 +35,7 @@ class _Govt_ProfileState extends State<Govt_Profile> {
   String fetchedPinCode = "";
   String fetchedFullAddress = "";
   String fetchedRegTime = "";
+  int fetchedScore = 0;
 
   TextEditingController nameTextController = TextEditingController();
   TextEditingController serviceGovtTextController = TextEditingController();
@@ -130,9 +131,29 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  Row(
+                                    children: [
+                                      const Spacer(),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 15, left: 10, bottom: 3),
+                                        child: Row(
+                                          children: [
+                                            const Icon(Iconsax.medal_star),
+                                            const SizedBox(width: 3),
+                                            Text("Credit score : $fetchedScore",
+                                                style: const TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w600)),
+                                            const SizedBox(width: 3),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   const Padding(
                                     padding: EdgeInsets.only(
-                                        top: 25, left: 10, bottom: 3),
+                                        top: 10, left: 10, bottom: 3),
                                     child: Text("Name of Govt Agency :"),
                                   ),
                                   //username
@@ -209,7 +230,7 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                         if (value == null || value.isEmpty) {
                                           return 'Select your services from list';
                                         }
-                                        return null; // Return null if the input is valid
+                                        return null;
                                       },
                                       onEditingComplete: () {
                                         FocusScope.of(context).nextFocus();
@@ -563,6 +584,7 @@ class _Govt_ProfileState extends State<Govt_Profile> {
           fetchedFullAddress = govtSnapshot.get('fullAddress');
           fetchedRegTime = govtSnapshot.get('registrationTime');
           fetchedRegTime = fetchedRegTime.substring(0, 20);
+          fetchedScore = govtSnapshot.get('creditScore');
         });
       } else {
         if (kDebugMode) {

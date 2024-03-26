@@ -22,7 +22,7 @@ class _NGO_Donation_HistoryState extends State<NGO_Donation_History> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("$appbar_display_name - NGO Donation history"),
+        title: const Text("NGO Donation history"),
       ),
       body: const Center(
         child: Text("It's NGO Donation history"),

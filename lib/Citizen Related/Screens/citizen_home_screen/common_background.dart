@@ -13,6 +13,8 @@ import '../../../Components/Notification_related/notification_services.dart';
 import '../../../Utils/Utils.dart';
 import 'package:intl/intl.dart';
 import '../../../Utils/common_files/alerts/alert_screen.dart';
+import '../../../Utils/common_files/media_history_screen.dart';
+import '../citizen_DSG/citizen_disaster_list.dart';
 import '../citizen_request_screen/citizen_request_screen.dart';
 
 class commonbg extends StatefulWidget {
@@ -380,7 +382,9 @@ class _commonbgState extends State<commonbg> {
                                                                       overflow:
                                                                           TextOverflow
                                                                               .ellipsis,
-                                                                      textAlign: TextAlign.justify,
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .justify,
                                                                       style: const TextStyle(
                                                                           color: Colors
                                                                               .black,
@@ -479,8 +483,8 @@ class _commonbgState extends State<commonbg> {
 
                   //emergency btn
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                     child: Container(
                       // height: 150,
                       width: double.infinity,
@@ -494,8 +498,7 @@ class _commonbgState extends State<commonbg> {
                           // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const Text(
-                                "Need any help?",
+                            const Text("Need any help?",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w900,
@@ -541,7 +544,6 @@ class _commonbgState extends State<commonbg> {
                     ),
                   ),
                   const SizedBox(height: 15),
-
                   //112
                   Padding(
                     padding:
@@ -561,7 +563,7 @@ class _commonbgState extends State<commonbg> {
                           children: [
                             const Text(
                               "Dial 112 if you didn't get any "
-                                  "\n response from Agency :",
+                              "\n response from Agency :",
                               maxLines: 3,
                               textAlign: TextAlign.justify,
                               style: TextStyle(
@@ -573,7 +575,7 @@ class _commonbgState extends State<commonbg> {
                             IconButton(
                                 style: ButtonStyle(
                                     backgroundColor:
-                                    MaterialStateProperty.all(Colors.red)),
+                                        MaterialStateProperty.all(Colors.red)),
                                 icon: const Icon(Iconsax.call5,
                                     color: Colors.white),
                                 onPressed: () {
@@ -587,7 +589,129 @@ class _commonbgState extends State<commonbg> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 12),
+                  //2 box
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      const Digital_Guide_Screen(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                        animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            child: Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: Material(
+                                  elevation: 4,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(20)),
+                                  child: Container(
+                                    // height: 80,
+                                    decoration: const BoxDecoration(
+                                        color: Colors.white12,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15))),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      child: Column(
+                                        children: [
+                                          Image.asset("assets/images/news.png",
+                                              height: 50, width: 50),
+                                          const SizedBox(height: 10),
+                                          const Text("DSG"),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )),
+                          ),
+                        ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: (){
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                      secondaryAnimation) =>
+                                  const Media_History_Screen(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                    animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            child: Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: Material(
+                                  elevation: 4,
+                                  borderRadius:
+                                      const BorderRadius.all(Radius.circular(20)),
+                                  child: Container(
+                                    // height: 80,
+                                    decoration: const BoxDecoration(
+                                        color: Colors.white12,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15))),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      child: Column(
+                                        children: [
+                                          Image.asset("assets/images/guide.png",
+                                              height: 50, width: 50),
+                                          const SizedBox(height: 10),
+                                          const Text("Media"),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),

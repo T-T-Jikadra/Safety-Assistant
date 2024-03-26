@@ -17,8 +17,8 @@ import '../govt_login_screen/govt_login.dart';
 class GovtSignupPageScreen extends StatefulWidget {
   const GovtSignupPageScreen({Key? key})
       : super(
-    key: key,
-  );
+          key: key,
+        );
 
   @override
   State<GovtSignupPageScreen> createState() => _GovtSignupPageScreenState();
@@ -90,7 +90,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 30),
                       padding: EdgeInsets.only(
-                        //for fields that are covered under keyboard
+                          //for fields that are covered under keyboard
                           bottom: MediaQuery.of(context).viewInsets.bottom,
                           left: 16,
                           right: 16),
@@ -132,10 +132,9 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                   _nameFocusNode.requestFocus();
                                   return 'Minimum 3 Characters required';
                                 }
-                                return null; // Return null if the input is valid
+                                return null;
                               },
                               onEditingComplete: () {
-                                // Move focus to the next field when "Enter" is pressed
                                 FocusScope.of(context).nextFocus();
                               },
                             ),
@@ -147,11 +146,12 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                             child: TextFormField(
                               focusNode: _regNoFocusNode,
                               controller: regNoGovtTextController,
+                              maxLength: 10,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.app_registration,
                                     color: Colors.deepPurple),
                                 hintText:
-                                "Enter registration no. of Govt. Agency",
+                                    "Enter registration no. of Govt. Agency",
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -159,16 +159,20 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                 filled: true,
                                 // fillColor: Colors.deepPurple,
                               ),
-                              keyboardType: TextInputType.phone,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   _regNoFocusNode.requestFocus();
                                   return 'Enter Registration No';
                                 }
-                                if (value.isNotEmpty && value.length < 3) {
+
+                                RegExp regExp = RegExp(r'^[a-zA-Z]{3}/\d{6}$');
+
+                                // Check if the value matches the pattern
+                                if (!regExp.hasMatch(value)) {
                                   _regNoFocusNode.requestFocus();
                                   return 'Invalid registration number';
                                 }
+
                                 return null;
                               },
                               onEditingComplete: () {
@@ -194,7 +198,8 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                               readOnly: true,
                               decoration: const InputDecoration(
                                 hintText: "Select Services Govt. can provide",
-                                prefixIcon: Icon(CupertinoIcons.square_list_fill,
+                                prefixIcon: Icon(
+                                    CupertinoIcons.square_list_fill,
                                     color: Colors.deepPurple),
                               ),
                               validator: (value) {
@@ -222,7 +227,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                               decoration: const InputDecoration(
                                 //prefixText: "+91 ",
                                 hintText:
-                                "Enter contact number of Govt. Agency",
+                                    "Enter contact number of Govt. Agency",
                                 prefixIcon: Icon(CupertinoIcons.phone,
                                     color: Colors.deepPurple),
                               ),
@@ -254,7 +259,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                 prefixIcon: Icon(Icons.email_outlined,
                                     color: Colors.deepPurple),
                                 hintText:
-                                "Enter authorized mail id of Govt. Agency",
+                                    "Enter authorized mail id of Govt. Agency",
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -267,7 +272,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                 }
                                 // Regular expression for validating an email address
                                 final emailRegex =
-                                RegExp(r'^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$');
+                                    RegExp(r'^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$');
                                 if (!emailRegex.hasMatch(value)) {
                                   _emailFocusNode.requestFocus();
                                   return 'Enter valid email address';
@@ -287,8 +292,8 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                               focusNode: _websiteFocusNode,
                               controller: websiteURLGovtTextController,
                               decoration: const InputDecoration(
-                                prefixIcon:
-                                Icon(Icons.dataset_linked_outlined,color: Colors.deepPurple),
+                                prefixIcon: Icon(Icons.dataset_linked_outlined,
+                                    color: Colors.deepPurple),
                                 hintText: "Enter website URL of Govt. Agency",
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
@@ -352,8 +357,9 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                       decoration: const InputDecoration(
                                         // border: OutlineInputBorder(),
                                         hintText: "Select Govt Agency State",
-                                        prefixIcon:
-                                        Icon(CupertinoIcons.map_pin_ellipse, color: Colors.deepPurple),
+                                        prefixIcon: Icon(
+                                            CupertinoIcons.map_pin_ellipse,
+                                            color: Colors.deepPurple),
                                       ),
                                       validator: (value) {
                                         if (value ==
@@ -395,8 +401,8 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   hintText: "Select Govt Agency City",
-                                  prefixIcon:
-                                  Icon(Icons.location_city_rounded, color: Colors.deepPurple),
+                                  prefixIcon: Icon(Icons.location_city_rounded,
+                                      color: Colors.deepPurple),
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -415,8 +421,8 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                               controller: pinCodeGovtTextController,
                               decoration: const InputDecoration(
                                 hintText: "Enter Pin code",
-                                prefixIcon:
-                                Icon(Icons.pin_rounded, color: Colors.deepPurple),
+                                prefixIcon: Icon(Icons.pin_rounded,
+                                    color: Colors.deepPurple),
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -446,8 +452,9 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                               controller: fullAddressGovtTextController,
                               decoration: const InputDecoration(
                                 hintText: "Enter full address",
-                                prefixIcon: Icon(CupertinoIcons
-                                    .pencil_ellipsis_rectangle, color: Colors.deepPurple),
+                                prefixIcon: Icon(
+                                    CupertinoIcons.pencil_ellipsis_rectangle,
+                                    color: Colors.deepPurple),
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -528,7 +535,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                   onTap: () {
                                     setState(() {
                                       _obscureConfirmPwdText =
-                                      !_obscureConfirmPwdText;
+                                          !_obscureConfirmPwdText;
                                     });
                                   },
                                   child: Icon(
@@ -568,7 +575,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                 text: "I accept term & conditions",
                                 value: GovtTnC,
                                 padding:
-                                const EdgeInsets.symmetric(vertical: 1),
+                                    const EdgeInsets.symmetric(vertical: 1),
                                 onChange: (value) {
                                   setState(() {
                                     GovtTnC = value;
@@ -592,7 +599,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                     padding: const EdgeInsets.only(bottom: 8),
                     width: double.infinity,
                     child: ClipRRect(
-                      // borderRadius: BorderRadius.circular(50),
+                        // borderRadius: BorderRadius.circular(50),
                         child: ElevatedButton(
                             onPressed: () async {
                               //Circular Progress Bar
@@ -624,46 +631,46 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                   return;
                                 } else {
                                   CollectionReference citizenRequestCollection =
-                                  FirebaseFirestore.instance
-                                      .collection("clc_govt");
+                                      FirebaseFirestore.instance
+                                          .collection("clc_govt");
                                   //for id
                                   QuerySnapshot snapshot =
-                                  await citizenRequestCollection.get();
+                                      await citizenRequestCollection.get();
                                   int totalDocCount = snapshot.size;
                                   totalDocCount++;
                                   //Storing data to database
                                   GovtRegistration GovtData = GovtRegistration(
                                       gid: "g$totalDocCount",
                                       GovtAgencyName:
-                                      nameOfGovtTextController.text.trim(),
+                                          nameOfGovtTextController.text.trim(),
                                       GovtAgencyARegNo:
-                                      regNoGovtTextController.text.trim(),
+                                          regNoGovtTextController.text.trim(),
                                       services:
-                                      serviceGovtTextController.text.trim(),
+                                          serviceGovtTextController.text.trim(),
                                       contactNumber: contactNoGovtTextController
                                           .text
                                           .trim(),
                                       creditScore: 0,
                                       email:
-                                      emailIdGovtTextController.text.trim(),
+                                          emailIdGovtTextController.text.trim(),
                                       website: websiteURLGovtTextController.text
                                           .trim(),
                                       state: selectedState.trim(),
                                       city: selectedCity.trim(),
                                       pinCode:
-                                      pinCodeGovtTextController.text.trim(),
+                                          pinCodeGovtTextController.text.trim(),
                                       fullAddress: fullAddressGovtTextController
                                           .text
                                           .trim(),
                                       password:
-                                      pwdGovtTextController.text.trim(),
+                                          pwdGovtTextController.text.trim(),
                                       // confirmPassword: confirmPwdGovtTextController.text.trim(),
                                       // termsAccepted: GovtTnC,
                                       deviceToken: deviceTokenFound);
 
                                   // Convert the object to JSON
                                   Map<String, dynamic> GovtDataJson =
-                                  GovtData.toJsonGovt();
+                                      GovtData.toJsonGovt();
 
                                   // Store data in Firestore
                                   try {
@@ -713,8 +720,8 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                       Navigator.of(context).push(
                                         PageRouteBuilder(
                                           pageBuilder: (context, animation,
-                                              secondaryAnimation) =>
-                                          const GovtLoginPageScreen(),
+                                                  secondaryAnimation) =>
+                                              const GovtLoginPageScreen(),
                                           transitionsBuilder: (context,
                                               animation,
                                               secondaryAnimation,
@@ -723,11 +730,11 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                             var end = Offset.zero;
                                             var curve = Curves.ease;
                                             var tween = Tween(
-                                                begin: begin, end: end)
+                                                    begin: begin, end: end)
                                                 .chain(
-                                                CurveTween(curve: curve));
+                                                    CurveTween(curve: curve));
                                             var offsetAnimation =
-                                            animation.drive(tween);
+                                                animation.drive(tween);
                                             //slight fade effect
                                             //var opacityAnimation = animation.drive(tween);
                                             return SlideTransition(
@@ -762,7 +769,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                 shape: MaterialStateProperty.all(
                                     RoundedRectangleBorder(
                                         borderRadius:
-                                        BorderRadius.circular(18)))),
+                                            BorderRadius.circular(18)))),
                             child: const Text("Continue"))),
                   ),
                 ),
@@ -788,7 +795,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                            const GovtLoginPageScreen(),
+                                                const GovtLoginPageScreen(),
                                           ));
                                     },
                                     child: const Text(
@@ -812,7 +819,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
   }
 
   final List<bool> _checked =
-  List.filled(DropdownItems.dropdownItemListofServices.length, false);
+      List.filled(DropdownItems.dropdownItemListofServices.length, false);
 
   void _showCupertinoDialog(BuildContext context) {
     showDialog(
@@ -830,7 +837,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                   itemBuilder: (context, index) {
                     return ListTile(
                       title:
-                      Text(DropdownItems.dropdownItemListofServices[index]),
+                          Text(DropdownItems.dropdownItemListofServices[index]),
                       trailing: CupertinoSwitch(
                         value: _checked[index],
                         onChanged: (bool value) {

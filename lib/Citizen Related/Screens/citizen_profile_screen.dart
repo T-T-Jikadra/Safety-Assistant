@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import '../../Utils/Utils.dart';
-import '../../Utils/constants.dart';
 import '../../Utils/dropdown_Items.dart';
 
 class UserProfile extends StatefulWidget {
@@ -83,7 +82,7 @@ class _UserProfileState extends State<UserProfile> {
             bottomLeft: Radius.circular(25),
           ),
         ),
-        title: const Text("$appbar_display_name - Profile Page"),
+        title: const Text("User Profile"),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15),

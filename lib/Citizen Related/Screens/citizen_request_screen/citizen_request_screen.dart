@@ -80,7 +80,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
             borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(25),
                 bottomLeft: Radius.circular(25))),
-        title: const Text("DMS"),
+        title: const Text("Request for an emergency"),
       ),
       body: SizedBox(
         width: double.infinity,
@@ -281,6 +281,8 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                               horizontal: 15.0),
                                           child: TextFormField(
                                             controller: pincodeController,
+                                            keyboardType: TextInputType.number,
+                                            maxLength: 6,
                                             decoration: const InputDecoration(
                                                 prefixIcon:
                                                 Icon(Icons.pin_rounded),
@@ -548,7 +550,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
       'priority': 'high',
       'notification': {
         'title': selectedService,
-        'body': "${selectedRadioAddress == 1 ? fetchedFullAddress : addressController.text}"
+        'body': "${selectedRadioAddress == 1 ? fetchedFullAddress : addressController.text} , "
             "${selectedRadioAddress == 1 ? fetchedPinCode : pincodeController.text}"
       },
       'android': {

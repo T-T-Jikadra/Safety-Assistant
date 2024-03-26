@@ -1,6 +1,7 @@
 //for menu items in drawer
 // ignore_for_file: camel_case_types
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -18,19 +19,19 @@ List<Menu_admin> sidebarMenus = [
   ),
   Menu_admin(
     title: "Manage Citizen",
-    icon: Icons.temple_hindu_rounded,
+    icon: CupertinoIcons.person_3_fill,
   ),
   Menu_admin(
     title: "Manage Govt Agencies",
-    icon: Icons.garage_outlined,
+    icon: Icons.account_balance_sharp,
   ),
   Menu_admin(
     title: "Manage NGO",
-    icon: Icons.money_rounded,
+    icon: Icons.temple_hindu_sharp,
   ),
   Menu_admin(
     title: "Request History",
-    icon: Icons.history,
+    icon: Icons.history_outlined,
   ),
   Menu_admin(
     title: "Manage Alerts",
@@ -38,11 +39,11 @@ List<Menu_admin> sidebarMenus = [
   ),
   Menu_admin(
     title: "Manage Media",
-    icon: Icons.circle_notifications,
+    icon: Icons.perm_media_outlined,
   ),
   Menu_admin(
     title: "Donation History",
-    icon: Icons.money_rounded,
+    icon: Icons.monetization_on_outlined,
   ),
 ];
 

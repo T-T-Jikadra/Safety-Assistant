@@ -146,6 +146,7 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                             child: TextFormField(
                               focusNode: _regNoFocusNode,
                               controller: regNoTextController,
+                              maxLength: 10,
                               decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.app_registration,
                                     color: Colors.deepPurple),
@@ -157,20 +158,22 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                 filled: true,
                                 // fillColor: Colors.deepPurple,
                               ),
-                              keyboardType: TextInputType.phone,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   _regNoFocusNode.requestFocus();
                                   return 'Enter Registration No';
                                 }
-                                if (value.isNotEmpty && value.length < 3) {
+
+                                RegExp regExp = RegExp(r'^[a-zA-Z]{3}/\d{6}$');
+
+                                // Check if the value matches the pattern
+                                if (!regExp.hasMatch(value)) {
                                   _regNoFocusNode.requestFocus();
-                                  return 'Invalid registration no';
+                                  return 'Invalid registration number';
                                 }
-                                return null; // Return null if the input is valid
+                                return null;
                               },
                               onEditingComplete: () {
-                                // Move focus to the next field when "Enter" is pressed
                                 FocusScope.of(context).nextFocus();
                               },
                             ),

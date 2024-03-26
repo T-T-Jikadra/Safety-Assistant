@@ -33,6 +33,7 @@ class _NGO_ProfileState extends State<NGO_Profile> {
   String fetchedPinCode = "";
   String fetchedFullAddress = "";
   String fetchedRegTime = "";
+  int fetchedScore = 0;
 
   String selectedState = '';
   String selectedCity = '';
@@ -93,7 +94,7 @@ class _NGO_ProfileState extends State<NGO_Profile> {
             bottomLeft: Radius.circular(25),
           ),
         ),
-        title: const Text("$appbar_display_name - Profile Page"),
+        title: const Text("NGO Profile"),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15),
@@ -128,6 +129,26 @@ class _NGO_ProfileState extends State<NGO_Profile> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  Row(
+                                    children: [
+                                      const Spacer(),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 15, left: 10, bottom: 3),
+                                        child: Row(
+                                          children: [
+                                            const Icon(Iconsax.medal_star),
+                                            const SizedBox(width: 3),
+                                            Text("Credit score : $fetchedScore",
+                                                style: const TextStyle(
+                                                    fontWeight:
+                                                    FontWeight.w600)),
+                                            const SizedBox(width: 3),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   const Padding(
                                     padding: EdgeInsets.only(
                                         top: 25, left: 10, bottom: 3),
@@ -561,6 +582,8 @@ class _NGO_ProfileState extends State<NGO_Profile> {
           fetchedFullAddress = govtSnapshot.get('fullAddress');
           fetchedRegTime = govtSnapshot.get('registrationTime');
           fetchedRegTime = fetchedRegTime.substring(0, 20);
+          fetchedScore = govtSnapshot.get('creditScore');
+
         });
       } else {
         if (kDebugMode) {

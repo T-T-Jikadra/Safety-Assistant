@@ -24,7 +24,7 @@ class splash extends StatelessWidget {
     final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
     return GetMaterialApp(
-      title: 'CAS',
+      title: 'Safety Assistant',
       navigatorKey: navigatorKey,
       // title: 'Citizen Emergency & response system',
       debugShowCheckedModeBanner: false,
@@ -89,42 +89,60 @@ class _SplashScreenState extends State<SplashScreen> {
                       topLeft: Radius.circular(320),
                       bottomLeft: Radius.circular(230),
                       topRight: Radius.circular(200)),
-                  color: Colors.teal),
+                  color: Color(0xFF2c4178)),
             ),
           ),
           //2nd object as a 2 texts
           AnimatedPositioned(
               duration: const Duration(milliseconds: 1600),
               top: 135,
-              left: animate ? 100 : -10,
+              left: animate ? 150 : -10,
               child: AnimatedOpacity(
                 duration: const Duration(milliseconds: 1600),
                 opacity: animate ? 1 : 0,
-                child: Column(
+                child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Welcome",
-                      style: Theme.of(context).textTheme.titleLarge,
+                      style: TextStyle(fontSize: 22),
                     ),
-                    Text(
-                      "It's Splash Screen",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
+                    // Text(
+                    //   "Safety Assistant",
+                    //   style: Theme.of(context).textTheme.bodyLarge,
+                    // ),
                   ],
                 ),
               )),
           //3rd object as an image
           AnimatedPositioned(
               duration: const Duration(milliseconds: 1600),
-              bottom: animate ? 150 : 0,
-              left: 20,
-              height: 300,
-              width: 300,
+              bottom: animate ? 300 : 0,
+              left: 40,
+              height: 280,
+              width: 280,
               child: AnimatedOpacity(
                   duration: const Duration(milliseconds: 1600),
                   opacity: animate ? 1 : 0,
                   child: SvgPicture.asset("assets/images/logo_svg.svg"))),
+          //2nd object as a 2 texts
+          AnimatedPositioned(
+              duration: const Duration(milliseconds: 1600),
+              bottom: 160,
+              left: animate ? 90 : 400,
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 1600),
+                opacity: animate ? 1 : 0,
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "आपदा सेवा सदैव सर्वत्र",
+                      style: TextStyle(fontSize: 25, color: Color(0xFF2c4178)),
+                    ),
+                  ],
+                ),
+              )),
           //4th small object at bottom ..
           AnimatedPositioned(
             duration: const Duration(milliseconds: 1600),
@@ -145,7 +163,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         topLeft: Radius.circular(120),
                         bottomLeft: Radius.circular(30),
                         topRight: Radius.circular(290)),
-                    color: Colors.teal),
+                    color: Color(0xFFd2af6d)),
               ),
             ),
           ),
