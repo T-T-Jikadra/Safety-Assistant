@@ -673,10 +673,10 @@ class _commonbg_adminState extends State<commonbg_admin> {
                   const SizedBox(height: 15),
                   Padding(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      // crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
                           child: GestureDetector(
@@ -733,6 +733,7 @@ class _commonbg_adminState extends State<commonbg_admin> {
                                 )),
                           ),
                         ),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: GestureDetector(
                             onTap: () {

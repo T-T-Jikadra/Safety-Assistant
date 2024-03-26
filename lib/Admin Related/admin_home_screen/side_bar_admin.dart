@@ -1,16 +1,12 @@
 // ignore_for_file: camel_case_types, use_build_context_synchronously
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fff/Admin%20Related/admin_donation_history.dart';
 import 'package:fff/Admin%20Related/admin_home_screen/menu_admin.dart';
 import 'package:fff/Admin%20Related/admin_home_screen/side_menu_admin.dart';
 import 'package:fff/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-// import '../../../Admin Related/news media/admin_send_media_screen.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../../../Utils/common_files/faq_screen/faq_screen.dart';
 import '../../../Utils/common_files/about_us_screen.dart';
@@ -37,7 +33,6 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
   @override
   void initState() {
     super.initState();
-    fetchCitizenData();
   }
 
   @override
@@ -350,36 +345,5 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
         ),
       ),
     );
-  }
-
-  Future<void> fetchCitizenData() async {
-    try {
-      User? user = FirebaseAuth.instance.currentUser;
-
-      // Fetch data from Firestore
-      DocumentSnapshot citizenSnapshot = await FirebaseFirestore.instance
-          .collection('clc_citizen')
-          .doc(user?.phoneNumber)
-          .get();
-
-      // Check if the document exists
-      if (citizenSnapshot.exists) {
-        // Access the fields from the document
-        setState(() {
-          String fname = citizenSnapshot.get('firstName');
-          String lname = citizenSnapshot.get('lastName');
-          citizenName = "$fname $lname";
-          citizenMobile = citizenSnapshot.get('phoneNumber');
-        });
-      } else {
-        if (kDebugMode) {
-          print('Document does not exist');
-        }
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error fetching user data: $e');
-      }
-    }
   }
 }
