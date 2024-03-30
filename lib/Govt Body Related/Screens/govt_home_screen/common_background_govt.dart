@@ -13,7 +13,7 @@ import '../../../Utils/Utils.dart';
 import 'package:intl/intl.dart';
 
 import '../../../Utils/common_files/alerts/alert_screen.dart';
-import '../../../Utils/common_files/media_history_screen.dart';
+import '../../../Utils/common_files/media/media_history_screen.dart';
 import '../govt_respond_history_screen.dart';
 
 class commonbg_govt extends StatefulWidget {

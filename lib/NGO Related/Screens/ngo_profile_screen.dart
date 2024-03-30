@@ -505,10 +505,10 @@ class _NGO_ProfileState extends State<NGO_Profile> {
                                   Padding(
                                     padding: const EdgeInsets.only(right: 10),
                                     child: Text(
-                                      "'you created this account on : \t   \n$fetchedRegTime",
+                                      "You created this account on : \t $fetchedRegTime",
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 10),
+                                          fontSize: 11),
                                     ),
                                   ),
                                   const SizedBox(height: 15),
@@ -581,7 +581,7 @@ class _NGO_ProfileState extends State<NGO_Profile> {
           fetchedPinCode = govtSnapshot.get('pinCode');
           fetchedFullAddress = govtSnapshot.get('fullAddress');
           fetchedRegTime = govtSnapshot.get('registrationTime');
-          fetchedRegTime = fetchedRegTime.substring(0, 20);
+          fetchedRegTime = fetchedRegTime.substring(0, 16);
           fetchedScore = govtSnapshot.get('creditScore');
 
         });

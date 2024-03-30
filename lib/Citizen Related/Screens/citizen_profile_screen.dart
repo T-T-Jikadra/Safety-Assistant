@@ -498,10 +498,10 @@ class _UserProfileState extends State<UserProfile> {
                                     Padding(
                                       padding: const EdgeInsets.only(right: 10),
                                       child: Text(
-                                        "You created this account on : \t   \n$fetchedRegTime",
+                                        "You created this account on : \t$fetchedRegTime",
                                         style: const TextStyle(
                                             fontWeight: FontWeight.w400,
-                                            fontSize: 10),
+                                            fontSize: 11),
                                       ),
                                     ),
                                     const SizedBox(height: 15),
@@ -578,7 +578,7 @@ class _UserProfileState extends State<UserProfile> {
           fetchedPinCode = citizenSnapshot.get('pinCode');
           fetchedFullAddress = citizenSnapshot.get('fullAddress');
           fetchedRegTime = citizenSnapshot.get('registrationTime');
-          fetchedRegTime = fetchedRegTime.substring(0, 20);
+          fetchedRegTime = fetchedRegTime.substring(0, 16);
           fetchedBirthDate = citizenSnapshot.get('birthDate');
           birthDateTextController.text =
               DateFormat('MMMM dd, yyyy').format(fetchedBirthDate.toDate());

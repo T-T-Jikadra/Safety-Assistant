@@ -164,7 +164,7 @@ class _Admin_Govt_Agency_Details_ScreenState
                                       enabled: false,
                                       decoration: InputDecoration(
                                         prefixIcon:
-                                        const Icon(Icons.app_registration),
+                                            const Icon(Icons.app_registration),
                                         hintText:
                                             "${widget.GovtSnapshot['GovtAgencyRegNo']}",
                                       ),
@@ -223,7 +223,7 @@ class _Admin_Govt_Agency_Details_ScreenState
                                       maxLength: 13,
                                       decoration: InputDecoration(
                                         prefixIcon:
-                                        const Icon(CupertinoIcons.phone),
+                                            const Icon(CupertinoIcons.phone),
                                         hintText:
                                             "${widget.GovtSnapshot['contactNumber']}",
                                       ),
@@ -252,7 +252,7 @@ class _Admin_Govt_Agency_Details_ScreenState
                                       controller: emailTextController,
                                       decoration: InputDecoration(
                                         prefixIcon:
-                                        const Icon(Icons.email_outlined),
+                                            const Icon(Icons.email_outlined),
                                         hintText:
                                             "${widget.GovtSnapshot['email']}",
                                       ),
@@ -353,7 +353,7 @@ class _Admin_Govt_Agency_Details_ScreenState
                                       controller: pincodeTextController,
                                       decoration: InputDecoration(
                                         prefixIcon:
-                                        const Icon(Icons.pin_rounded),
+                                            const Icon(Icons.pin_rounded),
                                         hintText:
                                             "${widget.GovtSnapshot['pinCode']}",
                                       ),
@@ -483,8 +483,7 @@ class _Admin_Govt_Agency_Details_ScreenState
                                   Padding(
                                     padding: const EdgeInsets.only(right: 10),
                                     child: Text(
-                                      "Govt Agency registered at  : \t   "
-                                      "\n${fetchedRegTime.substring(0, 20)}",
+                                      "Govt Agency registered at : \t ${fetchedRegTime.substring(0, 16)}",
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 10),
@@ -805,22 +804,4 @@ class _Admin_Govt_Agency_Details_ScreenState
       showSnakeBar(context, "$e!", "Okay");
     }
   }
-
-// void deleteGovtAgency() async {
-//   try {
-//     // Delete user
-//     DocumentReference userRef = FirebaseFirestore.instance
-//         .collection('clc_citizen')
-//         .doc(widget.GovtSnapshot['phoneNumber']);
-//     await userRef
-//         .delete()
-//         .then((value) => showToastMsg("User deleted successfully"));
-//
-//   } catch (error) {
-//     if (kDebugMode) {
-//       print("Error deleting user: $error");
-//     }
-//     showToastMsg("Failed to delete citizen");
-//   }
-// }
 }

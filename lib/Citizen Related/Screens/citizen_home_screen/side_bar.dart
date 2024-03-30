@@ -8,12 +8,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Utils/common_files/alerts/alert_history_screen.dart';
 
 // import '../../../Admin Related/news media/admin_send_media_screen.dart';
-import '../../../Utils/common_files/media_history_screen.dart';
+import '../../../Utils/common_files/media/media_history_screen.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../../../Utils/common_files/faq_screen/faq_screen.dart';
 import '../citizen_DSG/citizen_disaster_list.dart';
 import '../citizen_NGO-GA_list/citizen_NGO-GA_list_screen.dart';
-import '../../../Utils/common_files/about_us_screen.dart';
+import '../../../Utils/common_files/about_us/about_us_screen.dart';
 import '../citizen_donation_history_screen.dart';
 import '../citizen_request_screen/citizen_req_history_screen.dart';
 import '../../Screens/citizen_profile_screen.dart';

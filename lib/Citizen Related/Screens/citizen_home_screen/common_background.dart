@@ -13,7 +13,7 @@ import '../../../Components/Notification_related/notification_services.dart';
 import '../../../Utils/Utils.dart';
 import 'package:intl/intl.dart';
 import '../../../Utils/common_files/alerts/alert_screen.dart';
-import '../../../Utils/common_files/media_history_screen.dart';
+import '../../../Utils/common_files/media/media_history_screen.dart';
 import '../citizen_DSG/citizen_disaster_list.dart';
 import '../citizen_request_screen/citizen_request_screen.dart';
 
@@ -378,7 +378,7 @@ class _commonbgState extends State<commonbg> {
                                                                           [
                                                                           'description'],
                                                                       maxLines:
-                                                                          5,
+                                                                          4,
                                                                       overflow:
                                                                           TextOverflow
                                                                               .ellipsis,

@@ -28,6 +28,7 @@ class _Declined_Request_Details_ScreenState
   String fetchedCitizenContactNo = "";
   String fetchedCitizenState = "";
   String fetchedCitizenCity = "";
+  String fetchedCitizenPinCode = "";
   String fetchedReqAddress = "";
   String fetchedIsTnxComplete = "";
   int? selectedRadioAddress = 1;
@@ -97,7 +98,7 @@ class _Declined_Request_Details_ScreenState
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Text("Needed Service :",
+                                        const Text("Citizen Needed Service :",
                                             style: TextStyle(fontSize: 13)),
                                         const SizedBox(height: 4),
                                         Text(fetchedService,
@@ -118,7 +119,7 @@ class _Declined_Request_Details_ScreenState
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Text("Phone no :",
+                                        const Text("Citizen Phone no :",
                                             style: TextStyle(fontSize: 13)),
                                         const SizedBox(height: 4),
                                         Text(fetchedCitizenContactNo,
@@ -223,7 +224,7 @@ class _Declined_Request_Details_ScreenState
                                         const SizedBox(width: 4),
                                         Text(fetchedReqTime,
                                             style: const TextStyle(
-                                                fontSize: 11,
+                                                fontSize: 10,
                                                 color: Colors.grey)),
                                       ],
                                     ),
@@ -295,9 +296,9 @@ class _Declined_Request_Details_ScreenState
                                             widget
                                                 .documentSnapshot['DeclineTime']
                                                 .toString()
-                                                .substring(0, 20),
+                                                .substring(0, 16),
                                             style: const TextStyle(
-                                                fontSize: 11,
+                                                fontSize: 10,
                                                 color: Colors.grey)),
                                       ],
                                     ),
@@ -334,10 +335,11 @@ class _Declined_Request_Details_ScreenState
           fetchedCitizenContactNo = ReqSnapshot.get('contactNumber');
           fetchedCitizenState = ReqSnapshot.get('state');
           fetchedCitizenCity = ReqSnapshot.get('city');
+          fetchedCitizenPinCode = ReqSnapshot.get('pinCode');
           fetchedReqAddress = ReqSnapshot.get('fullAddress');
           fetchedIsTnxComplete = ReqSnapshot.get('isTransactionCompleted');
           fetchedReqTime =
-              ReqSnapshot.get('reqTime').toString().substring(0, 20);
+              ReqSnapshot.get('reqTime').toString().substring(0, 16);
         });
       } else {
         if (kDebugMode) {

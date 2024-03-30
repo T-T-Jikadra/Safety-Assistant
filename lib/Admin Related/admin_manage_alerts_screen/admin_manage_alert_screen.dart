@@ -557,7 +557,7 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
               Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 4,left: 4,right: 4),
+                    padding: const EdgeInsets.only(top: 4),
                     child: Card(
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
@@ -578,7 +578,8 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
                                   const SizedBox(width: 5),
                                   const Text(
                                     'Critical',
-                                    style: TextStyle(fontWeight: FontWeight.w600),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w600),
                                   ),
                                 ],
                               ),
@@ -598,7 +599,8 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
                                   const SizedBox(width: 5),
                                   const Text(
                                     'Severe',
-                                    style: TextStyle(fontWeight: FontWeight.w600),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w600),
                                   ),
                                 ],
                               ),
@@ -618,7 +620,8 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
                                   const SizedBox(width: 5),
                                   const Text(
                                     'Low',
-                                    style: TextStyle(fontWeight: FontWeight.w600),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w600),
                                   ),
                                 ],
                               ),
@@ -628,7 +631,6 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
                       ),
                     ),
                   ),
-
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -773,10 +775,8 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
                                                                       height:
                                                                           3),
                                                                   Text(
-                                                                      snapshot.data!
-                                                                              .docs[index]
-                                                                          [
-                                                                          'state'],
+                                                                      "${snapshot.data!.docs[index]['state']} "
+                                                                      ", ${snapshot.data!.docs[index]['city']}",
                                                                       style:
                                                                           const TextStyle(
                                                                         color: Colors
@@ -828,6 +828,9 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
                                                                 children: [
                                                                   const Text(
                                                                     "Level : ",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .black54),
                                                                   ),
                                                                   Text(
                                                                       snapshot.data!

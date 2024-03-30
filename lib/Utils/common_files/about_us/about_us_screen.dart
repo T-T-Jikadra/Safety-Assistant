@@ -2,7 +2,7 @@
 //import 'constants.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../../constants.dart';
 
 class AboutUsScreen extends StatefulWidget {
   const AboutUsScreen({super.key});

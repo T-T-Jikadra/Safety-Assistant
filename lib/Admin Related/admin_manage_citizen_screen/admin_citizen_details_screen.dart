@@ -539,8 +539,7 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                     Padding(
                                       padding: const EdgeInsets.only(right: 10),
                                       child: Text(
-                                        "Citizen registered at : \t   "
-                                        "\n${widget.documentSnapshot['registrationTime'].toString().substring(0, 20)}",
+                                        "Citizen registered at : \t${widget.documentSnapshot['registrationTime'].toString().substring(0, 16)}",
                                         style: const TextStyle(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 10),

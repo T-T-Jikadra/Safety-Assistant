@@ -24,7 +24,6 @@ class _NGO_Response_History_ScreenState
   List<String> documentIds = [];
   String fetchedNid = "";
 
-
   List<Map<String, dynamic>> responseHistoryData = [];
 
   @override
@@ -47,7 +46,7 @@ class _NGO_Response_History_ScreenState
               borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(25),
                   bottomLeft: Radius.circular(25))),
-          title: const Text("Response History"),
+          title: const Text("History"),
           bottom: const TabBar(
             tabs: [
               Tab(text: 'Response history'),
@@ -87,222 +86,211 @@ class _NGO_Response_History_ScreenState
                                       left: 7, right: 7, top: 10),
                                   child: snapshot.data!.docs.isEmpty
                                       ? const Center(
-                                    child: Text(
-                                      'No declined requests found !',
-                                      style: TextStyle(
-                                        fontSize: 19,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  )
+                                          child: Text(
+                                            'No declined requests found !',
+                                            style: TextStyle(
+                                              fontSize: 19,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        )
                                       : Scrollbar(
-                                    child: ListView.builder(
-                                        itemCount:
-                                        snapshot.data!.docs.length,
-                                        itemBuilder: (context, index) {
-                                          snapshot.data!.docs[index]
-                                          ['DeclineTime'];
-                                          return GestureDetector(
-                                            onTap: () {
-                                              Navigator.of(context).push(
-                                                PageRouteBuilder(
-                                                  pageBuilder: (context,
-                                                      animation,
-                                                      secondaryAnimation) =>
-                                                      Declined_Request_Details_Screen(
-                                                        documentSnapshot:
-                                                        snapshot.data!
-                                                            .docs[index],
+                                          child: ListView.builder(
+                                              itemCount:
+                                                  snapshot.data!.docs.length,
+                                              itemBuilder: (context, index) {
+                                                snapshot.data!.docs[index]
+                                                    ['DeclineTime'];
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.of(context).push(
+                                                      PageRouteBuilder(
+                                                        pageBuilder: (context,
+                                                                animation,
+                                                                secondaryAnimation) =>
+                                                            Declined_Request_Details_Screen(
+                                                          documentSnapshot:
+                                                              snapshot.data!
+                                                                  .docs[index],
+                                                        ),
+                                                        transitionsBuilder:
+                                                            (context,
+                                                                animation,
+                                                                secondaryAnimation,
+                                                                child) {
+                                                          var begin =
+                                                              const Offset(
+                                                                  1.0, 0.0);
+                                                          var end = Offset.zero;
+                                                          var curve =
+                                                              Curves.ease;
+
+                                                          var tween = Tween(
+                                                                  begin: begin,
+                                                                  end: end)
+                                                              .chain(CurveTween(
+                                                                  curve:
+                                                                      curve));
+                                                          var offsetAnimation =
+                                                              animation
+                                                                  .drive(tween);
+
+                                                          return SlideTransition(
+                                                            position:
+                                                                offsetAnimation,
+                                                            child: child,
+                                                          );
+                                                        },
                                                       ),
-                                                  transitionsBuilder:
-                                                      (context,
-                                                      animation,
-                                                      secondaryAnimation,
-                                                      child) {
-                                                    var begin =
-                                                    const Offset(
-                                                        1.0, 0.0);
-                                                    var end = Offset.zero;
-                                                    var curve =
-                                                        Curves.ease;
-
-                                                    var tween = Tween(
-                                                        begin: begin,
-                                                        end: end)
-                                                        .chain(CurveTween(
-                                                        curve:
-                                                        curve));
-                                                    var offsetAnimation =
-                                                    animation
-                                                        .drive(tween);
-
-                                                    return SlideTransition(
-                                                      position:
-                                                      offsetAnimation,
-                                                      child: child,
                                                     );
                                                   },
-                                                ),
-                                              );
-                                            },
-                                            child: Card(
-                                              color: Colors.white,
-                                              margin:
-                                              const EdgeInsets.only(
-                                                  bottom: 13,
-                                                  left: 7,
-                                                  right: 7),
-                                              // Set margin to zero to remove white spaces
-                                              elevation: 3,
-                                              shape:
-                                              RoundedRectangleBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(
-                                                    15),
-                                              ),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment
-                                                    .start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                    const EdgeInsets
-                                                        .symmetric(
-                                                        vertical: 5,
-                                                        horizontal:
-                                                        7),
+                                                  child: Card(
+                                                    color: Colors.white,
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            bottom: 13,
+                                                            left: 7,
+                                                            right: 7),
+                                                    // Set margin to zero to remove white spaces
+                                                    elevation: 3,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                    ),
                                                     child: Column(
                                                       crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .start,
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
-                                                        ListTile(
-                                                          leading:
-                                                          CircleAvatar(
-                                                            maxRadius: 14,
-                                                            backgroundColor:
-                                                            Colors
-                                                                .grey,
-                                                            child: Text(
-                                                                "${index + 1}"),
-                                                          ),
-                                                          //textColor: Colors.white,
-                                                          title: Column(
-                                                            mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  vertical: 5,
+                                                                  horizontal:
+                                                                      7),
+                                                          child: Column(
                                                             crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
+                                                                CrossAxisAlignment
+                                                                    .start,
                                                             children: [
-                                                              const Text(
-                                                                  "The reason of declination : ",
-                                                                  style: TextStyle(
-                                                                      color:
+                                                              ListTile(
+                                                                leading:
+                                                                    CircleAvatar(
+                                                                  maxRadius: 14,
+                                                                  backgroundColor:
                                                                       Colors
-                                                                          .black,
-                                                                      fontSize: 13)),
-                                                              const SizedBox(
-                                                                  height:
-                                                                  3),
-                                                              Text(
-                                                                  snapshot
-                                                                      .data!
-                                                                      .docs[index]['Decline_Reason'],
-                                                                  style: const TextStyle(
-                                                                    color:
-                                                                    Colors
-                                                                        .black,
-                                                                    fontSize:
-                                                                    15,
-                                                                  )),
-                                                            ],
-                                                          ),
-                                                        ),
-
-                                                        const SizedBox(
-                                                            height: 2),
-                                                        Padding(
-                                                          padding:
-                                                          const EdgeInsets
-                                                              .only(
-                                                              left:
-                                                              15,
-                                                              top: 5),
-                                                          child: Row(
-                                                            children: [
-                                                              const Text(
-                                                                "Citizen : ",
+                                                                          .grey,
+                                                                  child: Text(
+                                                                      "${index + 1}"),
+                                                                ),
+                                                                //textColor: Colors.white,
+                                                                title: Column(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    const Text(
+                                                                        "The reason of declination : ",
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontSize: 13)),
+                                                                    const SizedBox(
+                                                                        height:
+                                                                            3),
+                                                                    Text(
+                                                                        snapshot
+                                                                            .data!
+                                                                            .docs[index]['Decline_Reason'],
+                                                                        style: const TextStyle(
+                                                                          color:
+                                                                              Colors.black,
+                                                                          fontSize:
+                                                                              15,
+                                                                        )),
+                                                                  ],
+                                                                ),
                                                               ),
-                                                              Text(
-                                                                  snapshot.data!
-                                                                      .docs[index]
-                                                                  [
-                                                                  'Username'],
-                                                                  style: const TextStyle(
-                                                                      color:
-                                                                      Colors
-                                                                          .black,
-                                                                      fontWeight: FontWeight
-                                                                          .bold)),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 4),
-                                                        Padding(
-                                                          padding:
-                                                          const EdgeInsets
-                                                              .only(
-                                                              right:
-                                                              10,
-                                                              bottom:
-                                                              3),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                            children: [
-                                                              const Icon(
-                                                                  Icons
-                                                                      .watch_later_outlined,
-                                                                  size:
-                                                                  16,
-                                                                  color: Colors
-                                                                      .black54),
                                                               const SizedBox(
-                                                                  width:
-                                                                  3),
-                                                              Text(
-                                                                  DateFormat(
-                                                                      'dd-MM-yyyy , HH:mm')
-                                                                      .format(
-                                                                      DateTime
-                                                                          .parse(
-                                                                          snapshot
-                                                                              .data!
-                                                                              .docs[index]
-                                                                          [
-                                                                          'DeclineTime'])),
-                                                                  style: const TextStyle(
-                                                                      color:
-                                                                      Colors
-                                                                          .black38,
-                                                                      fontSize: 12)),
+                                                                  height: 2),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .only(
+                                                                        left:
+                                                                            15,
+                                                                        top: 5),
+                                                                child: Row(
+                                                                  children: [
+                                                                    const Text(
+                                                                      "Citizen : ",
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.black),
+                                                                    ),
+                                                                    Text(
+                                                                        snapshot.data!.docs[index]
+                                                                            [
+                                                                            'Username'],
+                                                                        style: const TextStyle(
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontWeight: FontWeight.bold)),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                  height: 4),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .only(
+                                                                        right:
+                                                                            10,
+                                                                        bottom:
+                                                                            3),
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .end,
+                                                                  children: [
+                                                                    const Icon(
+                                                                        Icons
+                                                                            .watch_later_outlined,
+                                                                        size:
+                                                                            16,
+                                                                        color: Colors
+                                                                            .black54),
+                                                                    const SizedBox(
+                                                                        width:
+                                                                            3),
+                                                                    Text(
+                                                                        DateFormat('dd-MM-yyyy , HH:mm').format(DateTime.parse(snapshot.data!.docs[index]
+                                                                            [
+                                                                            'DeclineTime'])),
+                                                                        style: const TextStyle(
+                                                                            color:
+                                                                                Colors.black38,
+                                                                            fontSize: 12)),
+                                                                  ],
+                                                                ),
+                                                              ),
                                                             ],
                                                           ),
                                                         ),
                                                       ],
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        }),
-                                  ),
+                                                );
+                                              }),
+                                        ),
                                 );
                               }
                             } else if (snapshot.hasError) {
@@ -413,180 +401,184 @@ class _response_history_list_widgetState
           onRefresh: _refreshData,
           child: widget.responseHistoryData.isEmpty
               ? const Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Loading responses ...",
-                      style: TextStyle(
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey,
-                      )),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  CircularProgressIndicator()
-                ]),
-          ) // Show progress indicator if data is empty
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Loading responses ...",
+                            style: TextStyle(
+                              fontSize: 19,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                            )),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        CircularProgressIndicator()
+                      ]),
+                ) // Show progress indicator if data is empty
               : ListView.builder(
-            itemCount: widget.responseHistoryData.length,
-            itemBuilder: (context, index) {
-              final responseData = widget.responseHistoryData[index];
-              return GestureDetector(
-                onTap: () async {
-                  String passReq = responseData['RequestId'];
+                  itemCount: widget.responseHistoryData.length,
+                  itemBuilder: (context, index) {
+                    final responseData = widget.responseHistoryData[index];
+                    return GestureDetector(
+                      onTap: () async {
+                        String passReq = responseData['RequestId'];
 
-                  DocumentSnapshot<Map<String, dynamic>> passSnapshot =
-                  await FirebaseFirestore.instance
-                      .collection('clc_request')
-                      .doc(passReq)
-                      .get();
+                        DocumentSnapshot<Map<String, dynamic>> passSnapshot =
+                            await FirebaseFirestore.instance
+                                .collection('clc_request')
+                                .doc(passReq)
+                                .get();
 
-                  Navigator.of(context).push(
-                    PageRouteBuilder(
-                      pageBuilder:
-                          (context, animation, secondaryAnimation) =>
-                          Response_Details_Screen(
-                            documentSnapshot: passSnapshot,
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    Response_Details_Screen(
+                              documentSnapshot: passSnapshot,
+                            ),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              var begin = const Offset(1.0, 0.0);
+                              var end = Offset.zero;
+                              var curve = Curves.ease;
+
+                              var tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: curve));
+                              var offsetAnimation = animation.drive(tween);
+
+                              return SlideTransition(
+                                position: offsetAnimation,
+                                child: child,
+                              );
+                            },
                           ),
-                      transitionsBuilder: (context, animation,
-                          secondaryAnimation, child) {
-                        var begin = const Offset(1.0, 0.0);
-                        var end = Offset.zero;
-                        var curve = Curves.ease;
-
-                        var tween = Tween(begin: begin, end: end)
-                            .chain(CurveTween(curve: curve));
-                        var offsetAnimation = animation.drive(tween);
-
-                        return SlideTransition(
-                          position: offsetAnimation,
-                          child: child,
                         );
                       },
-                    ),
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: Card(
-                    color: Colors.white,
-                    margin: const EdgeInsets.only(
-                        bottom: 6, left: 7, right: 7),
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 7),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Card(
+                          color: Colors.white,
+                          margin: const EdgeInsets.only(
+                              bottom: 6, left: 7, right: 7),
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ListTile(
-                                leading: CircleAvatar(
-                                  maxRadius: 14,
-                                  backgroundColor: Colors.grey,
-                                  child: Text("${index + 1}"),
-                                ),
-                                title: Column(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.start,
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 7),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text(
-                                      "Requested service : ",
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 13,
+                                    ListTile(
+                                      leading: CircleAvatar(
+                                        maxRadius: 14,
+                                        backgroundColor: Colors.grey,
+                                        child: Text("${index + 1}"),
+                                      ),
+                                      title: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                            "Requested service : ",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 13,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 3),
+                                          Text(
+                                            '${responseData['neededService']}',
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    const SizedBox(height: 3),
-                                    Text(
-                                      '${responseData['neededService']}',
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
 
-                              const SizedBox(height: 2),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15, top: 5),
-                                child: Row(
-                                  children: [
-                                    const Text(
-                                      "User : ",
-                                    ),
-                                    Text(
-                                      '${responseData['userName']}',
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15,
+                                    const SizedBox(height: 2),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 15, top: 5),
+                                      child: Row(
+                                        children: [
+                                          const Text(
+                                            "Citizen : ",
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                          Text(
+                                            '${responseData['userName']}',
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 2),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15, top: 5),
-                                child: Row(
-                                  children: [
-                                    const Text(
-                                      "City : ",
-                                    ),
-                                    Text(
-                                      '${responseData['city']}',
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15,
+                                    const SizedBox(height: 2),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 15, top: 5),
+                                      child: Row(
+                                        children: [
+                                          const Text(
+                                            "City : ",
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                          Text(
+                                            '${responseData['city']}',
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
+                                    const SizedBox(height: 2),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 10, bottom: 3),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          const Icon(Icons.watch_later_outlined,
+                                              size: 16, color: Colors.black54),
+                                          const SizedBox(width: 3),
+                                          Text(
+                                              DateFormat('dd-MM-yyyy , HH:mm')
+                                                  .format(DateTime.parse(
+                                                      responseData['reqTime'])),
+                                              style: const TextStyle(
+                                                  color: Colors.black38,
+                                                  fontSize: 12)),
+                                        ],
+                                      ),
+                                    ),
+                                    // Other parts of your UI
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 2),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    right: 10, bottom: 3),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.end,
-                                  children: [
-                                    const Icon(Icons.watch_later_outlined,
-                                        size: 16, color: Colors.black54),
-                                    const SizedBox(width: 3),
-                                    Text(
-                                        DateFormat('dd-MM-yyyy , HH:mm')
-                                            .format(DateTime.parse(
-                                            responseData['reqTime'])),
-                                        style: const TextStyle(
-                                            color: Colors.black38,
-                                            fontSize: 12)),
-                                  ],
-                                ),
-                              ),
-                              // Other parts of your UI
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
         ),
       ),
     );

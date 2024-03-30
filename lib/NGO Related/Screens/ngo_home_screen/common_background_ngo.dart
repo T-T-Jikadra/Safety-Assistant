@@ -12,7 +12,7 @@ import '../../../Components/Notification_related/notification_services.dart';
 import 'package:intl/intl.dart';
 import '../../../Utils/Utils.dart';
 import '../../../Utils/common_files/alerts/alert_screen.dart';
-import '../../../Utils/common_files/media_history_screen.dart';
+import '../../../Utils/common_files/media/media_history_screen.dart';
 import '../ngo_respond_history.dart';
 
 class commonbg_ngo extends StatefulWidget {

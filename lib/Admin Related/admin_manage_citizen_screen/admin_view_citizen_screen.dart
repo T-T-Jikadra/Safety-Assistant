@@ -186,7 +186,7 @@ class _citizen_history_list_widgetState
                                                     child: Row(
                                                       children: [
                                                         const Text(
-                                                          "Phone no : ",
+                                                          "Phone no : ",style: TextStyle(color: Colors.black),
                                                         ),
                                                         Text(
                                                             snapshot.data!
@@ -209,7 +209,7 @@ class _citizen_history_list_widgetState
                                                     child: Row(
                                                       children: [
                                                         const Text(
-                                                          "City : ",
+                                                          "City : ",style: TextStyle(color: Colors.black),
                                                         ),
                                                         Text(
                                                             snapshot.data!

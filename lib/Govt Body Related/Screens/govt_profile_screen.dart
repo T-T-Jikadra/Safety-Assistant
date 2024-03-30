@@ -5,10 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../Utils/Utils.dart';
-import '../../Utils/constants.dart';
 import '../../Utils/dropdown_Items.dart';
 
 class Govt_Profile extends StatefulWidget {
@@ -161,7 +159,8 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                     child: TextFormField(
                                       controller: nameTextController,
                                       decoration: InputDecoration(
-                                        prefixIcon: const Icon(Icons.person),
+                                        prefixIcon: const Icon(
+                                            CupertinoIcons.person_alt),
                                         hintText: fetchedGovtName,
                                       ),
                                       enabled: isEditing,
@@ -190,7 +189,7 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                       enabled: false,
                                       decoration: InputDecoration(
                                         prefixIcon:
-                                            const Icon(Iconsax.location_add),
+                                            const Icon(Icons.app_registration),
                                         hintText: fetchedGovtRegNo,
                                       ),
                                     ),
@@ -216,16 +215,11 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                       },
                                       controller: serviceGovtTextController,
                                       readOnly: true,
-                                      decoration: InputDecoration(
-                                        hintText:
-                                            "Select Services NGO can provide",
-                                        prefixIcon: Container(
-                                          margin: const EdgeInsets.fromLTRB(
-                                              20, 16, 12, 16),
-                                          child: SvgPicture.asset(
-                                              svg_for_calendar),
-                                        ),
-                                      ),
+                                      decoration: const InputDecoration(
+                                          hintText:
+                                              "Select Services NGO can provide",
+                                          prefixIcon: Icon(
+                                              CupertinoIcons.square_list_fill)),
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Select your services from list';
@@ -253,7 +247,7 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                       maxLength: 13,
                                       decoration: InputDecoration(
                                         prefixIcon:
-                                            const Icon(Iconsax.location_add),
+                                            const Icon(CupertinoIcons.phone),
                                         hintText: fetchedContactNo,
                                       ),
                                       keyboardType: TextInputType.phone,
@@ -281,7 +275,7 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                       controller: emailTextController,
                                       decoration: InputDecoration(
                                         prefixIcon:
-                                            const Icon(Iconsax.location_add),
+                                            const Icon(Icons.email_outlined),
                                         hintText: fetchedEmail,
                                       ),
                                       enabled: isEditing,
@@ -310,8 +304,8 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                     child: TextFormField(
                                       controller: websiteTextController,
                                       decoration: InputDecoration(
-                                        prefixIcon:
-                                            const Icon(Iconsax.location_add),
+                                        prefixIcon: const Icon(
+                                            Icons.dataset_linked_outlined),
                                         hintText: fetchedWebsite,
                                       ),
                                       enabled: isEditing,
@@ -350,8 +344,8 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                       maxLines: 4,
                                       controller: addressTextController,
                                       decoration: InputDecoration(
-                                        prefixIcon:
-                                            const Icon(Iconsax.location_add),
+                                        prefixIcon: const Icon(CupertinoIcons
+                                            .pencil_ellipsis_rectangle),
                                         hintText: fetchedFullAddress,
                                       ),
                                       enabled: isEditing,
@@ -379,7 +373,7 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                       controller: pincodeTextController,
                                       decoration: InputDecoration(
                                         prefixIcon:
-                                            const Icon(Iconsax.location_add),
+                                            const Icon(Icons.pin_rounded),
                                         hintText: fetchedPinCode,
                                       ),
                                       enabled: isEditing,
@@ -433,6 +427,8 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                           enabled: isEditing,
                                           // border: OutlineInputBorder(),
                                           hintText: "Select your State",
+                                          prefixIcon: const Icon(
+                                              CupertinoIcons.map_pin_ellipse),
                                         ),
                                         validator: (value) {
                                           if (value == "Select your State") {
@@ -480,6 +476,8 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                           ),
                                           enabled: isEditing,
                                           hintText: "Select your City",
+                                          prefixIcon: const Icon(
+                                              Icons.location_city_rounded),
                                         ),
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
@@ -507,10 +505,10 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                   Padding(
                                     padding: const EdgeInsets.only(right: 10),
                                     child: Text(
-                                      "Govt agency registered at  : \t   \n$fetchedRegTime",
+                                      "Govt agency registered at : \t$fetchedRegTime",
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 10),
+                                          fontSize: 11),
                                     ),
                                   ),
                                   const SizedBox(height: 15),
@@ -583,7 +581,7 @@ class _Govt_ProfileState extends State<Govt_Profile> {
           fetchedPinCode = govtSnapshot.get('pinCode');
           fetchedFullAddress = govtSnapshot.get('fullAddress');
           fetchedRegTime = govtSnapshot.get('registrationTime');
-          fetchedRegTime = fetchedRegTime.substring(0, 20);
+          fetchedRegTime = fetchedRegTime.substring(0, 16);
           fetchedScore = govtSnapshot.get('creditScore');
         });
       } else {

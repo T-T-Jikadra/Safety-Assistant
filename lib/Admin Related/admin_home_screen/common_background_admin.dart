@@ -142,8 +142,7 @@ class _commonbg_adminState extends State<commonbg_admin> {
                                                   width: 30,
                                                   child:
                                                       CircularProgressIndicator(
-                                                          color:
-                                                              Colors.black12))
+                                                          color: Colors.white))
                                               : Text(
                                                   '$numberOfCitizen\nCitizen \nconnected',
                                                   textAlign: TextAlign.center,
@@ -197,8 +196,7 @@ class _commonbg_adminState extends State<commonbg_admin> {
                                                   width: 30,
                                                   child:
                                                       CircularProgressIndicator(
-                                                          color:
-                                                              Colors.black12))
+                                                          color: Colors.white))
                                               : Text(
                                                   '$numberOfNGO\nNGOs\nJoined',
                                                   textAlign: TextAlign.center,
@@ -249,8 +247,7 @@ class _commonbg_adminState extends State<commonbg_admin> {
                                                   width: 30,
                                                   child:
                                                       CircularProgressIndicator(
-                                                          color:
-                                                              Colors.black12))
+                                                          color: Colors.white))
                                               : Text(
                                                   '$numberOfGovt\nGovt.Ags \njoined',
                                                   textAlign: TextAlign.center,
@@ -304,24 +301,23 @@ class _commonbg_adminState extends State<commonbg_admin> {
                                       children: [
                                         Padding(
                                           padding:
-                                          const EdgeInsets.only(left: 0.0),
+                                              const EdgeInsets.only(left: 0.0),
                                           child: numberOfReq == 0
                                               ? const SizedBox(
-                                              height: 30,
-                                              width: 30,
-                                              child:
-                                              CircularProgressIndicator(
-                                                  color:
-                                                  Colors.black12))
+                                                  height: 30,
+                                                  width: 30,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                          color: Colors.white))
                                               : Text(
-                                            '$numberOfReq\nRequests ',
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
+                                                  '$numberOfReq\nRequests ',
+                                                  textAlign: TextAlign.center,
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
                                         ),
                                         const SizedBox(width: 6),
                                         const Icon(Icons.plus_one_outlined,
@@ -356,24 +352,23 @@ class _commonbg_adminState extends State<commonbg_admin> {
                                       children: [
                                         Padding(
                                           padding:
-                                          const EdgeInsets.only(left: 0.0),
+                                              const EdgeInsets.only(left: 0.0),
                                           child: numberOfResponse == 0
                                               ? const SizedBox(
-                                              height: 30,
-                                              width: 30,
-                                              child:
-                                              CircularProgressIndicator(
-                                                  color:
-                                                  Colors.black12))
+                                                  height: 30,
+                                                  width: 30,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                          color: Colors.white))
                                               : Text(
-                                            '$numberOfResponse\nResponses ',
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
+                                                  '$numberOfResponse\nResponses ',
+                                                  textAlign: TextAlign.center,
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
                                         ),
                                         const SizedBox(width: 6),
                                         const Icon(Icons.plus_one_outlined,
@@ -802,7 +797,7 @@ class _commonbg_adminState extends State<commonbg_admin> {
                                   child: Container(
                                     // height: 80,
                                     decoration: const BoxDecoration(
-                                        color: Colors.white12,
+                                        color: Colors.white,
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(15))),
                                     child: Padding(
@@ -811,9 +806,11 @@ class _commonbg_adminState extends State<commonbg_admin> {
                                       child: Column(
                                         children: [
                                           Image.asset("assets/images/req.png",
-                                              height: 50, width: 50),
+                                              height: 40, width: 40),
                                           const SizedBox(height: 10),
-                                          const Text("Requests"),
+                                          const Text("Requests",
+                                              style: TextStyle(
+                                                  color: Colors.black)),
                                         ],
                                       ),
                                     ),
@@ -858,7 +855,7 @@ class _commonbg_adminState extends State<commonbg_admin> {
                                   child: Container(
                                     // height: 80,
                                     decoration: const BoxDecoration(
-                                        color: Colors.white12,
+                                        color: Colors.white,
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(15))),
                                     child: Padding(
@@ -867,9 +864,11 @@ class _commonbg_adminState extends State<commonbg_admin> {
                                       child: Column(
                                         children: [
                                           Image.asset("assets/images/guide.png",
-                                              height: 50, width: 50),
+                                              height: 40, width: 40),
                                           const SizedBox(height: 10),
-                                          const Text("Media"),
+                                          const Text("Media",
+                                              style: TextStyle(
+                                                  color: Colors.black)),
                                         ],
                                       ),
                                     ),
@@ -941,9 +940,7 @@ class _commonbg_adminState extends State<commonbg_admin> {
       QuerySnapshot resSnap =
           await FirebaseFirestore.instance.collection("clc_response").get();
 
-
       resSnap.docs.forEach((DocumentSnapshot document) {
-
         if (document.id.startsWith('Res')) {
           numberOfResponse++;
         }
@@ -955,7 +952,6 @@ class _commonbg_adminState extends State<commonbg_admin> {
         numberOfReq = reqSnap.size;
         // numberOfResponse = resSnap.size;
         numberOfResponse = 12;
-
       });
     } catch (e) {
       if (kDebugMode) {

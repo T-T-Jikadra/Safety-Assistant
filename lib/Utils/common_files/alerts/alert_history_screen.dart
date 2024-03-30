@@ -31,7 +31,7 @@ class _Alert_History_ScreenState extends State<Alert_History_Screen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 4,left: 4,right: 4),
+            padding: const EdgeInsets.only(top: 4),
             child: Card(
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
