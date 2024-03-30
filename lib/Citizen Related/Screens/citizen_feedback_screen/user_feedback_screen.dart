@@ -431,7 +431,7 @@ class _User_Feedback_ScreenState extends State<User_Feedback_Screen> {
                                   } else if (value.length < 3) {
                                     return 'Too short feedback ..';
                                   }
-                                  return null; // Return null if the input is valid
+                                  return null;
                                 },
                               ),
                             ),

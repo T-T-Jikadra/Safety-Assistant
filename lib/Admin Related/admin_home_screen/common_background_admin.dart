@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, depend_on_referenced_packages, deprecated_member_use
+// ignore_for_file: camel_case_types, depend_on_referenced_packages, deprecated_member_use, avoid_function_literals_in_foreach_calls
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,8 +29,15 @@ class _commonbg_adminState extends State<commonbg_admin> {
   String fetchedCity = "";
   bool isFetched = false;
 
+  int numberOfCitizen = 0;
+  int numberOfNGO = 0;
+  int numberOfGovt = 0;
+  int numberOfReq = 0;
+  int numberOfResponse = 0;
+
   @override
   void initState() {
+    fetchNumbers();
     super.initState();
     fetchCitizenData();
     Future.delayed(const Duration(milliseconds: 1600), () {
@@ -120,40 +127,47 @@ class _commonbg_adminState extends State<commonbg_admin> {
                                     ),
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
-                                  child: const Row(
+                                  child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
                                         Padding(
-                                          padding: EdgeInsets.only(left: 8.0),
-                                          child: Text(
-                                            '1500\nUser',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
+                                          padding:
+                                              const EdgeInsets.only(left: 0.0),
+                                          child: numberOfCitizen == 0
+                                              ? const SizedBox(
+                                                  height: 30,
+                                                  width: 30,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                          color:
+                                                              Colors.black12))
+                                              : Text(
+                                                  '$numberOfCitizen\nCitizen \nconnected',
+                                                  textAlign: TextAlign.center,
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    // fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
                                         ),
-                                        SizedBox(width: 20),
-                                        Icon(Icons.person,
-                                            color: Colors.white, size: 50)
+                                        const SizedBox(width: 6),
+                                        const Icon(Icons.person,
+                                            color: Colors.white, size: 28)
                                       ])),
                             ),
                           );
                         }),
-                        const SizedBox(width: 12.0),
+                        const SizedBox(width: 8.0),
                         //2.NGO
                         Builder(builder: (context) {
                           return Expanded(
                             child: GestureDetector(
-                              onTap: () {
-                                // Navigator.pushNamed(context, 'ngo');
-                              },
+                              onTap: () {},
                               child: Container(
-                                  // width: MediaQuery.of(context).size.width * 0.46,
                                   height: 80,
                                   decoration: BoxDecoration(
                                     gradient: const LinearGradient(
@@ -168,31 +182,94 @@ class _commonbg_adminState extends State<commonbg_admin> {
                                     ),
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
-                                  child: const Row(
+                                  child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
                                         Padding(
-                                          padding: EdgeInsets.only(left: 8),
-                                          child: Text(
-                                            '5478\nNGO\nJoined',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
+                                          padding:
+                                              const EdgeInsets.only(left: 0.0),
+                                          child: numberOfNGO == 0
+                                              ? const SizedBox(
+                                                  height: 30,
+                                                  width: 30,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                          color:
+                                                              Colors.black12))
+                                              : Text(
+                                                  '$numberOfNGO\nNGOs\nJoined',
+                                                  textAlign: TextAlign.center,
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    // fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
                                         ),
-                                        SizedBox(width: 5),
-                                        Icon(Icons.location_city_outlined,
-                                            color: Colors.white, size: 50)
+                                        const SizedBox(width: 6),
+                                        const Icon(Icons.location_city_outlined,
+                                            color: Colors.white, size: 28)
                                       ])),
                             ),
                           );
                         }),
-                        // const SizedBox(width: 12.0),
+                        const SizedBox(width: 8.0),
+                        // 3.Govt
+                        Builder(builder: (context) {
+                          return Expanded(
+                            child: GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                  height: 80,
+                                  decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                      colors: [Colors.teal, Colors.yellow],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      stops: [0.0, 1.0],
+                                      tileMode: TileMode.mirror,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 0.0),
+                                          child: numberOfGovt == 0
+                                              ? const SizedBox(
+                                                  height: 30,
+                                                  width: 30,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                          color:
+                                                              Colors.black12))
+                                              : Text(
+                                                  '$numberOfGovt\nGovt.Ags \njoined',
+                                                  textAlign: TextAlign.center,
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    // fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                        ),
+                                        const SizedBox(width: 6),
+                                        const Icon(
+                                            CupertinoIcons.building_2_fill,
+                                            color: Colors.white,
+                                            size: 28)
+                                      ])),
+                            ),
+                          );
+                        }),
                       ],
                     ),
                   ),
@@ -202,63 +279,12 @@ class _commonbg_adminState extends State<commonbg_admin> {
                         const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                     child: Row(
                       children: [
-                        // 3.Govt
-                        Builder(builder: (context) {
-                          return Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                // Navigator.pushNamed(context, 'citizen');
-                              },
-                              child: Container(
-                                  //width: MediaQuery.of(context).size.width * 0.46,
-                                  height: 80,
-                                  decoration: BoxDecoration(
-                                    gradient: const LinearGradient(
-                                      colors: [
-                                        Colors.green,
-                                        Colors.indigoAccent
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      stops: [0.0, 1.0],
-                                      tileMode: TileMode.mirror,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: const Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 8.0),
-                                          child: Text(
-                                            '15\nGovt.\nAgencies',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(width: 20),
-                                        Icon(CupertinoIcons.building_2_fill,
-                                            color: Colors.white, size: 50)
-                                      ])),
-                            ),
-                          );
-                        }),
-                        const SizedBox(width: 12.0),
                         //4. req
                         Builder(builder: (context) {
                           return Expanded(
                             child: GestureDetector(
-                              onTap: () {
-                                // Navigator.pushNamed(context, 'ngo');
-                              },
+                              onTap: () {},
                               child: Container(
-                                  // width: MediaQuery.of(context).size.width * 0.46,
                                   height: 80,
                                   decoration: BoxDecoration(
                                     gradient: const LinearGradient(
@@ -270,26 +296,88 @@ class _commonbg_adminState extends State<commonbg_admin> {
                                     ),
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
-                                  child: const Row(
+                                  child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
                                         Padding(
-                                          padding: EdgeInsets.only(left: 8),
-                                          child: Text(
-                                            '137\nRequests ',
-                                            style: TextStyle(
+                                          padding:
+                                          const EdgeInsets.only(left: 0.0),
+                                          child: numberOfReq == 0
+                                              ? const SizedBox(
+                                              height: 30,
+                                              width: 30,
+                                              child:
+                                              CircularProgressIndicator(
+                                                  color:
+                                                  Colors.black12))
+                                              : Text(
+                                            '$numberOfReq\nRequests ',
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 16,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
                                         ),
-                                        SizedBox(width: 5),
-                                        Icon(Icons.plus_one_outlined,
-                                            color: Colors.white, size: 50)
+                                        const SizedBox(width: 6),
+                                        const Icon(Icons.plus_one_outlined,
+                                            color: Colors.white, size: 28)
+                                      ])),
+                            ),
+                          );
+                        }),
+                        const SizedBox(width: 12.0),
+                        //5. response
+                        Builder(builder: (context) {
+                          return Expanded(
+                            child: GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                  height: 80,
+                                  decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                      colors: [Colors.orange, Colors.teal],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.topRight,
+                                      stops: [0.0, 1.0],
+                                      tileMode: TileMode.mirror,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                          const EdgeInsets.only(left: 0.0),
+                                          child: numberOfResponse == 0
+                                              ? const SizedBox(
+                                              height: 30,
+                                              width: 30,
+                                              child:
+                                              CircularProgressIndicator(
+                                                  color:
+                                                  Colors.black12))
+                                              : Text(
+                                            '$numberOfResponse\nResponses ',
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 6),
+                                        const Icon(Icons.plus_one_outlined,
+                                            color: Colors.white, size: 28)
                                       ])),
                             ),
                           );
@@ -827,6 +915,51 @@ class _commonbg_adminState extends State<commonbg_admin> {
     } catch (e) {
       if (kDebugMode) {
         print('Error fetching user data: $e');
+      }
+    }
+  }
+
+  Future<void> fetchNumbers() async {
+    try {
+      //citizen
+      QuerySnapshot citizenSnap =
+          await FirebaseFirestore.instance.collection("clc_citizen").get();
+
+      //ngo
+      QuerySnapshot ngoSnap =
+          await FirebaseFirestore.instance.collection("clc_ngo").get();
+
+      //govt
+      QuerySnapshot govtSnap =
+          await FirebaseFirestore.instance.collection("clc_govt").get();
+
+      //req
+      QuerySnapshot reqSnap =
+          await FirebaseFirestore.instance.collection("clc_request").get();
+
+      //response
+      QuerySnapshot resSnap =
+          await FirebaseFirestore.instance.collection("clc_response").get();
+
+
+      resSnap.docs.forEach((DocumentSnapshot document) {
+
+        if (document.id.startsWith('Res')) {
+          numberOfResponse++;
+        }
+      });
+      setState(() {
+        numberOfCitizen = citizenSnap.size;
+        numberOfNGO = ngoSnap.size;
+        numberOfGovt = govtSnap.size;
+        numberOfReq = reqSnap.size;
+        // numberOfResponse = resSnap.size;
+        numberOfResponse = 12;
+
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching number of documents : $e');
       }
     }
   }

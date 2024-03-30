@@ -96,7 +96,7 @@ class _Govt_ProfileState extends State<Govt_Profile> {
             bottomLeft: Radius.circular(25),
           ),
         ),
-        title: const Text("Govt Profile"),
+        title: const Text("Profile"),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15),

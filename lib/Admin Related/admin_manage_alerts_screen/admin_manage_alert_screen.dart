@@ -71,11 +71,11 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
                 borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(25),
                     bottomLeft: Radius.circular(25))),
-            title: const Text("Manage Alerts"),
+            title: const Text("Manage alerts"),
             bottom: const TabBar(
               tabs: [
-                Tab(text: 'Add Alert'), // First tab
-                Tab(text: 'Manage Alert'), // Second tab
+                Tab(text: 'Add alert'), // First tab
+                Tab(text: 'View alerts'), // Second tab
               ],
             ),
           ),
@@ -162,11 +162,11 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
                                           0.85,
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 10),
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              width: 1, color: Colors.grey),
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(20))),
+                                      // decoration: BoxDecoration(
+                                      //     border: Border.all(
+                                      //         width: 1, color: Colors.grey),
+                                      //     borderRadius: const BorderRadius.all(
+                                      //         Radius.circular(20))),
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 10),
@@ -469,60 +469,54 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
                                       if (_formKey.currentState!.validate()) {
                                         if (!alertSent) {
                                           try {
-                                              //to selected city
-                                              var CitywiseCitizenSnap =
-                                                  await FirebaseFirestore
-                                                      .instance
-                                                      .collection('clc_citizen')
-                                                      .where('city',
-                                                          isEqualTo:
-                                                              selectedCity)
-                                                      .get();
+                                            //to selected city
+                                            var CitywiseCitizenSnap =
+                                                await FirebaseFirestore.instance
+                                                    .collection('clc_citizen')
+                                                    .where('city',
+                                                        isEqualTo: selectedCity)
+                                                    .get();
 
-                                              for (var doc
-                                                  in CitywiseCitizenSnap.docs) {
-                                                String deviceToken =
-                                                    doc.data()['deviceToken'];
-                                                broadcastAlert(
-                                                    deviceToken, totalDocCount);
-                                              }
+                                            for (var doc
+                                                in CitywiseCitizenSnap.docs) {
+                                              String deviceToken =
+                                                  doc.data()['deviceToken'];
+                                              broadcastAlert(
+                                                  deviceToken, totalDocCount);
+                                            }
 
-                                              //sends alert to only NGO
-                                              var CitywiseNGOSnap =
-                                                  await FirebaseFirestore
-                                                      .instance
-                                                      .collection('clc_ngo')
-                                                      //added new ***
-                                                      // .where('services', whereIn: selectedServiceWords)
-                                                      .where('city',
-                                                          isEqualTo:
-                                                              selectedCity)
-                                                      .get();
+                                            //sends alert to only NGO
+                                            var CitywiseNGOSnap =
+                                                await FirebaseFirestore.instance
+                                                    .collection('clc_ngo')
+                                                    //added new ***
+                                                    // .where('services', whereIn: selectedServiceWords)
+                                                    .where('city',
+                                                        isEqualTo: selectedCity)
+                                                    .get();
 
-                                              for (var ngoDoc
-                                                  in CitywiseNGOSnap.docs) {
-                                                String deviceToken = ngoDoc
-                                                    .data()['deviceToken'];
-                                                broadcastAlert(
-                                                    deviceToken, totalDocCount);
-                                              }
+                                            for (var ngoDoc
+                                                in CitywiseNGOSnap.docs) {
+                                              String deviceToken =
+                                                  ngoDoc.data()['deviceToken'];
+                                              broadcastAlert(
+                                                  deviceToken, totalDocCount);
+                                            }
 
-                                              var CitywiseGovtSnap =
-                                                  await FirebaseFirestore
-                                                      .instance
-                                                      .collection('clc_govt')
-                                                      .where('city',
-                                                          isEqualTo:
-                                                              selectedCity)
-                                                      .get();
+                                            var CitywiseGovtSnap =
+                                                await FirebaseFirestore.instance
+                                                    .collection('clc_govt')
+                                                    .where('city',
+                                                        isEqualTo: selectedCity)
+                                                    .get();
 
-                                              for (var doc
-                                                  in CitywiseGovtSnap.docs) {
-                                                String deviceToken =
-                                                    doc.data()['deviceToken'];
-                                                broadcastAlert(
-                                                    deviceToken, totalDocCount);
-                                              }
+                                            for (var doc
+                                                in CitywiseGovtSnap.docs) {
+                                              String deviceToken =
+                                                  doc.data()['deviceToken'];
+                                              broadcastAlert(
+                                                  deviceToken, totalDocCount);
+                                            }
 
                                             //sends alert to citizen
 
@@ -562,6 +556,79 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
               // Content of the second tab View media history
               Column(
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4,left: 4,right: 4),
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 25,
+                                    height: 25,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  const Text(
+                                    'Critical',
+                                    style: TextStyle(fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 25,
+                                    height: 25,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.orange,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  const Text(
+                                    'Severe',
+                                    style: TextStyle(fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 25,
+                                    height: 25,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.yellow,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  const Text(
+                                    'Low',
+                                    style: TextStyle(fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -581,7 +648,7 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
                                 if (snapshot.hasData) {
                                   return Padding(
                                     padding: const EdgeInsets.only(
-                                        left: 7, right: 7, top: 10),
+                                        left: 7, right: 7, top: 3),
                                     child: snapshot.data!.docs.isEmpty
                                         ? const Center(
                                             child: Text(
@@ -792,13 +859,12 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
                                                                   const Icon(
                                                                       Icons
                                                                           .watch_later_outlined,
-                                                                      size:
-                                                                      16,
+                                                                      size: 16,
                                                                       color: Colors
                                                                           .black54),
                                                                   const SizedBox(
-                                                                      width:
-                                                                      3),                                                                  Text(
+                                                                      width: 3),
+                                                                  Text(
                                                                       DateFormat('dd-MM-yyyy , HH:mm').format(DateTime.parse(snapshot
                                                                               .data!
                                                                               .docs[index]

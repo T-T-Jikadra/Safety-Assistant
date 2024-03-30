@@ -18,7 +18,6 @@ import '../type of user/select_user_type_screen.dart';
 
 class splash extends StatelessWidget {
   const splash({super.key});
-
   @override
   Widget build(BuildContext context) {
     final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

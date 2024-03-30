@@ -17,7 +17,7 @@ List<Menu_ngo> sidebarMenus = [
     icon: Icons.home,
   ),
   Menu_ngo(
-    title: "NGO Profile",
+    title: "Profile",
     icon: CupertinoIcons.profile_circled,
   ),
   Menu_ngo(

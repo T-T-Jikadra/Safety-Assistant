@@ -38,13 +38,29 @@ class _Admin_Manage_News_ScreenState extends State<Admin_Manage_News_Screen> {
               const SizedBox(height: 18),
               Padding(
                 padding: const EdgeInsets.only(left: 20),
-                child: Text(
-                  widget.documentSnapshot['news_title'],
-                  style: const TextStyle(
-                    color: Colors.deepPurple,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600,
-                  ),
+                child: Column(
+                  children: [
+                    Text(
+                      widget.documentSnapshot['news_title'],
+                      style: const TextStyle(
+                        color: Colors.deepPurple,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        const Spacer(),
+                        const Icon(Icons.watch_later_outlined, size: 16),
+                        const SizedBox(width: 5),
+                        Text(
+                            DateFormat('dd-MM-yyyy , HH:mm').format(
+                                DateTime.parse(
+                                    widget.documentSnapshot['sentTime'])),
+                            style: const TextStyle(fontSize: 12)),
+                      ],
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 8),
@@ -76,23 +92,24 @@ class _Admin_Manage_News_ScreenState extends State<Admin_Manage_News_Screen> {
                         const SizedBox(height: 2),
                         Text(
                           widget.documentSnapshot['news_description'],
+                          textAlign: TextAlign.justify,
                           style: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 15,
                           ),
                         ),
                         const SizedBox(height: 25),
-                        Row(
-                          children: [
-                            const Spacer(),
-                            const Icon(Icons.watch_later_outlined, size: 16),
-                            const SizedBox(width: 5),
-                            Text(
-                                DateFormat('dd-MM-yyyy , HH:mm').format(
-                                    DateTime.parse(
-                                        widget.documentSnapshot['sentTime'])),
-                                style: const TextStyle(fontSize: 12)),
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     const Spacer(),
+                        //     const Icon(Icons.watch_later_outlined, size: 16),
+                        //     const SizedBox(width: 5),
+                        //     Text(
+                        //         DateFormat('dd-MM-yyyy , HH:mm').format(
+                        //             DateTime.parse(
+                        //                 widget.documentSnapshot['sentTime'])),
+                        //         style: const TextStyle(fontSize: 12)),
+                        //   ],
+                        // ),
                         const SizedBox(height: 30)
                       ],
                     ),

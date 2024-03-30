@@ -55,7 +55,7 @@ class _Digital_Guide_ScreenState extends State<Digital_Guide_Screen> {
         title: const Text("Digital Survival Guide"),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(top: 3,left: 8,right: 8),
         child: ListView.builder(
           itemCount: DisasterData.length,
           itemBuilder: (context, index) {

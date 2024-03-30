@@ -23,7 +23,6 @@ class _NGO_GA_ListScreenState extends State<NGO_GA_ListScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     selectedState = DropdownItems.dropdownItemState.first;
     updateCityList(selectedState);
@@ -46,7 +45,7 @@ class _NGO_GA_ListScreenState extends State<NGO_GA_ListScreen> {
                 borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(25),
                     bottomLeft: Radius.circular(25))),
-            title: const Text("Authorities"),
+            title: const Text("Search your nearby Agencies"),
             bottom: const TabBar(
               tabs: [
                 Tab(text: 'NGO'), // First tab

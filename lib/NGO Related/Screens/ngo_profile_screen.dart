@@ -94,7 +94,7 @@ class _NGO_ProfileState extends State<NGO_Profile> {
             bottomLeft: Radius.circular(25),
           ),
         ),
-        title: const Text("NGO Profile"),
+        title: const Text("Profile"),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15),
@@ -505,7 +505,7 @@ class _NGO_ProfileState extends State<NGO_Profile> {
                                   Padding(
                                     padding: const EdgeInsets.only(right: 10),
                                     child: Text(
-                                      "NGO registered at  : \t   \n$fetchedRegTime",
+                                      "'you created this account on : \t   \n$fetchedRegTime",
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 10),

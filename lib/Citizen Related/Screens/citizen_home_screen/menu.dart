@@ -16,11 +16,11 @@ List<Menu> sidebarMenus = [
     icon: Icons.home,
   ),
   Menu(
-    title: "User Profile",
+    title: "Profile",
     icon: CupertinoIcons.profile_circled,
   ),
   Menu(
-    title: "Serving NGO / Government Body",
+    title: "Serving NGO / Government Agencies",
     icon: Icons.temple_hindu_rounded,
   ),
   Menu(

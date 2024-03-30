@@ -28,8 +28,83 @@ class _Alert_History_ScreenState extends State<Alert_History_Screen> {
                 bottomLeft: Radius.circular(25))),
         title: const Text("Alerts"),
       ),
-      body: const Column(
-        children: [alert_history_list_widget()],
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 4,left: 4,right: 4),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 25,
+                            height: 25,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.red,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          const Text(
+                            'Critical',
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 25,
+                            height: 25,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.orange,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          const Text(
+                            'Severe',
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 25,
+                            height: 25,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.yellow,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          const Text(
+                            'Low',
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // const SizedBox(height: 4),
+          const alert_history_list_widget()
+        ],
       ),
     );
   }
@@ -64,7 +139,7 @@ class _alert_history_list_widgetState extends State<alert_history_list_widget> {
                   if (snapshot.hasData) {
                     return Padding(
                       padding:
-                          const EdgeInsets.only(left: 7, right: 7, top: 10),
+                          const EdgeInsets.only(left: 7, right: 7, top: 3),
                       child: snapshot.data!.docs.isEmpty
                           ? const Center(
                               child: Text(
@@ -223,6 +298,14 @@ class _alert_history_list_widgetState extends State<alert_history_list_widget> {
                                                       MainAxisAlignment.end,
                                                   children: [
                                                     //const Text("City : ",style: TextStyle(fontWeight: FontWeight.bold)),
+                                                    const Icon(
+                                                        Icons
+                                                            .watch_later_outlined,
+                                                        size: 16,
+                                                        color: Colors
+                                                            .black54),
+                                                    const SizedBox(
+                                                        width: 3),
                                                     Text(
                                                         DateFormat(
                                                                 'dd-MM-yyyy , HH:mm')

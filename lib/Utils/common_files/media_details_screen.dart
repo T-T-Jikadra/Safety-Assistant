@@ -34,13 +34,29 @@ class _Media_Details_ScreenState extends State<Media_Details_Screen> {
             const SizedBox(height: 18),
             Padding(
               padding: const EdgeInsets.only(left: 20),
-              child: Text(
-                widget.documentSnapshot['news_title'],
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
-                ),
+              child: Column(
+                children: [
+                  Text(
+                    widget.documentSnapshot['news_title'],
+                    style: const TextStyle(
+                      color: Colors.deepPurple,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      const Spacer(),
+                      const Icon(Icons.watch_later_outlined, size: 16),
+                      const SizedBox(width: 5),
+                      Text(
+                          DateFormat('dd-MM-yyyy , HH:mm').format(
+                              DateTime.parse(
+                                  widget.documentSnapshot['sentTime'])),
+                          style: const TextStyle(fontSize: 12)),
+                    ],
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 8),
@@ -62,7 +78,6 @@ class _Media_Details_ScreenState extends State<Media_Details_Screen> {
                 ),
               ),
             ),
-            // ignore: sized_box_for_whitespace
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,22 +92,10 @@ class _Media_Details_ScreenState extends State<Media_Details_Screen> {
                         widget.documentSnapshot['news_description'],
                         textAlign: TextAlign.justify,
                         style: const TextStyle(
-                          fontSize: 18,
+                          fontSize: 15,
                         ),
                       ),
                       const SizedBox(height: 25),
-                      Row(
-                        children: [
-                          const Spacer(),
-                          const Icon(Icons.watch_later_outlined, size: 16),
-                          const SizedBox(width: 5),
-                          Text(
-                              DateFormat('dd-MM-yyyy , HH:mm').format(
-                                  DateTime.parse(
-                                      widget.documentSnapshot['sentTime'])),
-                              style: const TextStyle(fontSize: 12)),
-                        ],
-                      ),
                       const SizedBox(height: 30)
                     ],
                   ),

@@ -82,7 +82,7 @@ class _UserProfileState extends State<UserProfile> {
             bottomLeft: Radius.circular(25),
           ),
         ),
-        title: const Text("User Profile"),
+        title: const Text("Profile"),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15),
@@ -130,7 +130,7 @@ class _UserProfileState extends State<UserProfile> {
                                   const Padding(
                                     padding:
                                         EdgeInsets.only(left: 10, bottom: 3),
-                                    child: Text("Username :"),
+                                    child: Text("Citizen name :"),
                                   ),
                                   //username
                                   Row(
@@ -498,7 +498,7 @@ class _UserProfileState extends State<UserProfile> {
                                     Padding(
                                       padding: const EdgeInsets.only(right: 10),
                                       child: Text(
-                                        "User registered at  : \t   \n$fetchedRegTime",
+                                        "You created this account on : \t   \n$fetchedRegTime",
                                         style: const TextStyle(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 10),

@@ -171,7 +171,7 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                   const Padding(
                                     padding:
                                         EdgeInsets.only(left: 10, bottom: 3),
-                                    child: Text("Username :"),
+                                    child: Text("Citizen name :"),
                                   ),
                                   //username
                                   Row(
@@ -250,8 +250,7 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                                 setState(() {
                                                   selectedGender =
                                                       value.toString();
-                                                  isMale =
-                                                      true; // Set isMale to true when Male is selected
+                                                  isMale = true;
                                                 });
                                               },
                                               toggleable: isEditing,
@@ -330,8 +329,7 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                             }
                                             return null;
                                           },
-                                          enabled:
-                                              isEditing, // Always disabled for editing directly
+                                          enabled: isEditing,
                                         ),
                                       ),
                                     ),
@@ -395,7 +393,7 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                             value.length < 10) {
                                           return "Too short address";
                                         }
-                                        return null; // Return null if the input is valid
+                                        return null;
                                       },
                                     ),
                                   ),
@@ -425,7 +423,7 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                             value.length < 6) {
                                           return 'Enter 6 digits Pin code';
                                         }
-                                        return null; // Return null if the input is valid
+                                        return null;
                                       },
                                     ),
                                   ),
@@ -471,7 +469,7 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                           if (value == "Select your State") {
                                             return 'Select your State';
                                           }
-                                          return null; // Return null if the input is valid
+                                          return null;
                                         },
                                       ),
                                     ),
@@ -520,7 +518,7 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                           if (value == null || value.isEmpty) {
                                             return 'Select your City';
                                           }
-                                          return null; // Return null if the input is valid
+                                          return null;
                                         },
                                       ),
                                     ),
@@ -541,7 +539,8 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
                                     Padding(
                                       padding: const EdgeInsets.only(right: 10),
                                       child: Text(
-                                        "User registered at  : \t   \n${widget.documentSnapshot['registrationTime']}",
+                                        "Citizen registered at : \t   "
+                                        "\n${widget.documentSnapshot['registrationTime'].toString().substring(0, 20)}",
                                         style: const TextStyle(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 10),
@@ -809,7 +808,6 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
       await userRef
           .delete()
           .then((value) => showToastMsg("User deleted successfully"));
-
     } catch (error) {
       if (kDebugMode) {
         print("Error deleting user: $error");

@@ -26,7 +26,7 @@ List<Menu_admin> sidebarMenus = [
     icon: Icons.account_balance_sharp,
   ),
   Menu_admin(
-    title: "Manage NGO",
+    title: "Manage NGOs",
     icon: Icons.temple_hindu_sharp,
   ),
   Menu_admin(
@@ -34,11 +34,11 @@ List<Menu_admin> sidebarMenus = [
     icon: Icons.history_outlined,
   ),
   Menu_admin(
-    title: "Manage Alerts",
+    title: "Alerts",
     icon: Icons.crisis_alert,
   ),
   Menu_admin(
-    title: "Manage Media",
+    title: "Media",
     icon: Icons.perm_media_outlined,
   ),
   Menu_admin(

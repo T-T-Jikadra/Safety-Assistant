@@ -17,7 +17,7 @@ List<Menu_govt> sidebarMenus = [
     icon: Icons.home,
   ),
   Menu_govt(
-    title: "Govt Agency Profile",
+    title: "Profile",
     icon: Icons.person_2,
   ),
   Menu_govt(

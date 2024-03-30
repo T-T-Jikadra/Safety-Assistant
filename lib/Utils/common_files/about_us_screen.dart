@@ -1,6 +1,8 @@
 //import 'package:fff/Utils/constants.dart';
-import 'package:fff/Utils/constants.dart';
+//import 'constants.dart';
 import 'package:flutter/material.dart';
+
+import '../constants.dart';
 
 class AboutUsScreen extends StatefulWidget {
   const AboutUsScreen({super.key});
@@ -10,6 +12,18 @@ class AboutUsScreen extends StatefulWidget {
 }
 
 class _AboutUsScreenState extends State<AboutUsScreen> {
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 1650)).then((value) {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,177 +37,304 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                 bottomLeft: Radius.circular(25))),
         title: const Text("About Us"),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(20.0),
-          child: const Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: 20.0),
-              Center(
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 85.0,
-                  //add our app logo here
-                  backgroundImage: AssetImage("assets/images/logo.png"),
+      body: isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.only(
+                    left: 22, top: 5, right: 22, bottom: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 25),
+                          child: Container(
+                            height: 130,
+                            width: 130,
+                            color: Colors.transparent,
+                            margin: const EdgeInsets.all(16),
+                            child: Image.asset(
+                              'assets/images/logo.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          height: 80,
+                          width: 80,
+                          color: Colors.transparent,
+                          margin: const EdgeInsets.all(18),
+                          child: const Text(
+                            'Safety\nAssistant',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff7871db),
+                              //decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Text(
+                      'Emergency Response Support System',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 30.0),
+                    const Text(
+                      'The application is designed to help citizen in any disasters or emergency situations. ',
+                      textAlign: TextAlign.justify,
+                      softWrap: true,
+                      style: TextStyle(fontSize: 14.0, wordSpacing: 0.0),
+                    ),
+                    const SizedBox(height: 10.0),
+                    const Text(
+                      'Disaster Response',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10.0),
+                    const Text(
+                      'If there is any disaster occurs in Nation, then we are sure to help every '
+                      'citizen who are going to affect with it. We had collaborated with NGOs '
+                      'and different Government Agencies who works on disaster response field. '
+                      'These agencies are committed to work on response support with their '
+                      'full efficiency. May this can help to minimize the impact of the disaster.',
+                      textAlign: TextAlign.justify,
+                      softWrap: true,
+                      style: TextStyle(fontSize: 14.0, wordSpacing: 0.0),
+                    ),
+                    const SizedBox(height: 10.0),
+                    const Text(
+                      'Emergency Response',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10.0),
+                    const Text(
+                      'Apart from disaster, there can be emergency situation (like accidents, '
+                      'fire broke out, etc) nearby you, here also you can request for the help to '
+                      'NGOs and Government Agencies. And surely, they will come nearby you '
+                      'to help in this emergency.',
+                      textAlign: TextAlign.justify,
+                      softWrap: true,
+                      style: TextStyle(fontSize: 14.0, wordSpacing: 0.0),
+                    ),
+                    const SizedBox(height: 15.0),
+                    const Divider(
+                      height: 1,
+                    ),
+                    const SizedBox(height: 15.0),
+                    const Text(
+                      'Our Mission',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10.0),
+                    const Text(
+                      'Our mission is helping people before, during and after disasters, and our '
+                      'core values and goals help us achieve it. Our Objective is helping people '
+                      'achieve coherent warning alerts, without major disruption and minimal '
+                      'expense. The better people are informed about a hazard threat or  '
+                      'emergency, the more lives can be saved and resources preserved.',
+                      textAlign: TextAlign.justify,
+                      softWrap: true,
+                      style: TextStyle(fontSize: 14.0, wordSpacing: 0.0),
+                    ),
+                    const SizedBox(height: 15.0),
+                    const Divider(
+                      height: 1,
+                    ),
+                    const SizedBox(height: 15.0),
+                    const Text(
+                      'Our Vision',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10.0),
+                    const Text(
+                      '"To build a safer and disaster resilient India by a holistic, pro-active, technology '
+                      'driven and sustainable development strategy that involves all stakeholders and '
+                      'fosters a culture of prevention, preparedness and mitigation."',
+                      textAlign: TextAlign.justify,
+                      softWrap: true,
+                      style: TextStyle(fontSize: 14.0, wordSpacing: 0.1),
+                    ),
+                    const SizedBox(height: 15.0),
+                    const Divider(
+                      height: 1,
+                    ),
+                    const SizedBox(height: 15.0),
+                    const Text(
+                      'Acknowledgments',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10.0),
+                    const Text(
+                      'First and foremost, we express our appreciation to the developers '
+                      'and engineers whose tireless efforts have brought this application to '
+                      'fruition. Their technical prowess, innovative thinking, and unwavering '
+                      'commitment have been instrumental in creating a platform that can potentially '
+                      'save lives and mitigate the impact of disasters.',
+                      textAlign: TextAlign.justify,
+                      softWrap: true,
+                      style: TextStyle(fontSize: 14.0, wordSpacing: 0.1),
+                    ),
+                    const SizedBox(height: 6.0),
+                    const Text(
+                      'Last but not least,'
+                      'we thank the users of the CAS for their trust and engagement. It is their willingness '
+                      'to embrace new technologies and adopt proactive measures that ultimately drive the success '
+                      'and effectiveness of this initiative.',
+                      textAlign: TextAlign.justify,
+                      softWrap: true,
+                      style: TextStyle(fontSize: 14.0, wordSpacing: 0.1),
+                    ),
+                    const SizedBox(height: 15.0),
+                    const Divider(
+                      height: 1,
+                    ),
+                    const SizedBox(height: 15.0),
+                    const Text(
+                      'Our Logo',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10.0),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          alignment: Alignment.topLeft,
+                          height: 160,
+                          width: 160,
+                          color: Colors.transparent,
+                          //margin: const EdgeInsets.all(18),
+                          child: const Text(
+                            'Our Logo reflects the aspirations of '
+                            'this National Vision, of empowering all '
+                            'stakeholders to improve the effectiveness '
+                            'of Disaster Management in India. ',
+                            textAlign: TextAlign.justify,
+                            softWrap: true,
+                            style: TextStyle(fontSize: 14.0, wordSpacing: 0.1),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20, right: 10, bottom: 25, top: 10),
+                          child: Container(
+                            alignment: Alignment.centerRight,
+                            height: 120,
+                            width: 120,
+                            color: Colors.transparent,
+                            //margin: const EdgeInsets.all(16),
+                            child: Image.asset(
+                              'assets/images/logo.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Text(
+                      'The Map of India, embossed in gold, in the middle of the logo, circumscribed by  '
+                      'the National Tricolor of Saffron, White and Green represents the aspiration to contain '
+                      'the potential threat of natural and man-made disasters through Capacity Development '
+                      'of all stakeholders. The outer circle is a Golden Ring of Partnership of all Stakeholders, '
+                      'whose hand holding is an expression of their solidarity to supplement the efforts of the '
+                      'Government. ERSS in the inner circle in tranquil Blue integrates the entire process by '
+                      'empowering all stakeholders at the local, district, state and national levels. we will catalyze '
+                      'this Community Empowerment through institutional capacity development, strengthened '
+                      'public awareness and community resilience by mainstreaming disaster management in India.',
+                      textAlign: TextAlign.justify,
+                      softWrap: true,
+                      style: TextStyle(fontSize: 14.0, wordSpacing: 0.1),
+                    ),
+                    const SizedBox(height: 15.0),
+                    const Divider(
+                      height: 1,
+                    ),
+                    const SizedBox(height: 15.0),
+                    const Text(
+                      'Contact Us',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10.0),
+                    const Text(
+                      'Postal Address : NDMA Bhawan\n'
+                      '                             A-1, Safdarjung Enclave\n'
+                      '                             New Delhi - 110029',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                      ),
+                    ),
+                    const SizedBox(height: 10.0),
+                    const Text(
+                      'Telephones : +91-11-26701700\n'
+                      '                       (Mon-Fri - 9:30AM-6:00PM)\n'
+                      'Control Room: +91-11-26701728 \n'
+                      '                           (Mon-Fri 24X7)',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                      ),
+                    ),
+                    const SizedBox(height: 10.0),
+                    const Text(
+                      'Fax : +91-11-26701729',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                      ),
+                    ),
+                    const SizedBox(height: 10.0),
+                    const Text(
+                      'E-mail : controlroom@ndma.gov.in',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(height: 20.0),
-              Text(
-                'Emergency Response Support System',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-              SizedBox(height: 15.0),
-              Text(
-                'This system is made to make disasters have less impact. It\'s supposed to help in a better and easier way to prevent too much damage. Apart from disaster if you got any emergency in your nearby area you can seek help from your nearby NGO (Non Governmental Organization) and Government Agencies with just two clicks.There can be a need of Ambulance for any health emergency, need of Fire brigade to get control on fire, need of rescue teams in case of disaster like ( Earthquake , Cyclone, Flood etc) need of NGOs who can serve food and water to needy peoples. The main advantage of this system is it combines two different entity ( NGOs and Government Agencies ) so that they can work together to minimize the impact of any Disaster. This system allows citizen to get pre-alert notification about predictable disasters and news about various work that has been done by different NGOs and Government Agencies. There would be surely a Feedback mechanism so that citizen can able to send a feedback to the NGOs and Government agencies who are in service.',
-                textAlign: TextAlign.justify,
-                softWrap: true,
-                style: TextStyle(fontSize: 16.0, wordSpacing: 0.0),
-              ),
-              SizedBox(height: 30.0),
-              Text(
-                'Our Mission',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 10.0),
-              Text(
-                'Our Missions is a wide range of activities, such as dispatching '
-                'emergency services (police, fire, medical), coordinating search '
-                'and rescue operations, providing medical assistance, delivering '
-                'supplies or aid to affected areas, or any other actions required '
-                'to address the emergency or provide assistance to those in need.',
-                textAlign: TextAlign.justify,
-                softWrap: true,
-                style: TextStyle(fontSize: 16.0, wordSpacing: 0.0),
-              ),
-              SizedBox(height: 30.0),
-              Text(
-                'Privacy Policy & Terms of Service',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 10.0),
-              Text(
-                'Privacy Policy:',
-                textAlign: TextAlign.start,
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
-              ),
-              SizedBox(height: 10.0),
-              Text(
-                'In Privacy Policy It\'s include the types of data collected ('
-                'such as personal information, location data, emergency requests), '
-                'the purposes for which the data is collected is providing emergency '
-                'assistance, improving services,and also address user privacy is safeguarded, '
-                'including measures taken to secure data, protocols for data access and sharing, '
-                'and procedures for handling data breaches or incidents. Additionally,users have '
-                'rights regarding their data, such as the right to access, correct, or delete their '
-                'information, as well as how users can contact the organization with inquiries or '
-                'concerns about privacy practices.',
-                textAlign: TextAlign.justify,
-                softWrap: true,
-                style: TextStyle(fontSize: 16.0, wordSpacing: 0.2),
-              ),
-              SizedBox(height: 10.0),
-              Text(
-                'Terms of Service:',
-                textAlign: TextAlign.start,
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
-              ),
-              SizedBox(height: 10.0),
-              Text(
-                'The Terms of Services includes provisions '
-                'related to user eligibility (such as age or residency requirements), '
-                'account registration and management, acceptable Terms & condition  '
-                'of the system (including prohibited activities),outlining the responsibilities '
-                'of both users and the service provider in the event of disputes, damages, or '
-                'losses arising from system usage.Furthermore,aspects related to service availability, '
-                'modifications to the system or terms, termination of accounts or access, and dispute '
-                'resolution mechanisms.Users are usually required to agree to the Terms of Service before '
-                'using the system, and violations of these terms may result in penalties or account '
-                'suspension/termination.',
-                textAlign: TextAlign.justify,
-                style: TextStyle(fontSize: 16.0, wordSpacing: 0.2),
-              ),
-              SizedBox(height: 30.0),
-              Text(
-                'Acknowledgments',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 10.0),
-              Text(
-                'First and foremost, we express our appreciation to the developers '
-                'and engineers whose tireless efforts have brought this application to '
-                'fruition. Their technical prowess, innovative thinking, and unwavering '
-                'commitment have been instrumental in creating a platform that can potentially '
-                'save lives and mitigate the impact of disasters.\n\nLast but not least,'
-                'we thank the users of the CAS for their trust and engagement. It is their willingness to embrace new technologies and adopt proactive measures that ultimately drive the success and effectiveness of this initiative.',
-                textAlign: TextAlign.justify,
-                softWrap: true,
-                style: TextStyle(fontSize: 16.0, wordSpacing: 0.1),
-              ),
-              SizedBox(height: 30.0),
-              Text(
-                'Updates and Roadmap',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 10.0),
-              Text(
-                'out team will try our best to publish updates and new features to the application soon as soon possible.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16.0,
-                ),
-              ),
-              SizedBox(height: 30.0),
-              Text(
-                'Contact Us',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 10.0),
-              Text(
-                'You can contact us at:',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16.0,
-                ),
-              ),
-              SizedBox(height: 10.0),
-              Text(
-                'help.cas@gmail.com\n+91 9979661529',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16.0,
-                ),
-              ),
-              SizedBox(height: 20.0),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

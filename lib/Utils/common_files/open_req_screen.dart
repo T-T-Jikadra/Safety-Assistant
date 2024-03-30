@@ -1,13 +1,15 @@
-// ignore_for_file: camel_case_types, use_build_context_synchronously, non_constant_identifier_names
+// ignore_for_file: camel_case_types, use_build_context_synchronously, non_constant_identifier_names, unrelated_type_equality_checks
 
 import 'dart:async';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Models/authority_response_model.dart';
+import '../../Models/declined_request_model.dart';
 import '../../Models/request_opened_model.dart';
 import '../Utils.dart';
 import '../constants.dart';
@@ -81,6 +83,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
   String fetchedGovtWebsite = "";
 
   bool notificationSent = false;
+  TextEditingController reasonController = TextEditingController();
 
   @override
   void initState() {
@@ -110,46 +113,49 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
           child: Column(
             children: [
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    //table
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        border: Border.all(
-                          color: Colors.grey,
-                          width: 1.5,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      //table
+                      const SizedBox(height: 100),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.0),
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 1.5,
+                          ),
+                        ),
+                        child: DataTable(
+                          columnSpacing: 10.0,
+                          columns: const [
+                            DataColumn(
+                                label: Text('Field',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: colorPrimary))),
+                            DataColumn(
+                                label: Text('Data',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: colorPrimary))),
+                          ],
+                          rows: [
+                            buildDataRow('Name : ', widget.userName),
+                            buildDataRow('Request type : ', widget.title),
+                            buildDataRow('Address :', widget.add),
+                            buildDataRow('Pin Code :', widget.pin),
+                            buildDataRow('City :', widget.city),
+                            buildDataRow('Contact No : ', widget.contactNo),
+                          ],
                         ),
                       ),
-                      child: DataTable(
-                        columnSpacing: 10.0,
-                        columns: const [
-                          DataColumn(
-                              label: Text('Field',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: colorPrimary))),
-                          DataColumn(
-                              label: Text('Data',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: colorPrimary))),
-                        ],
-                        rows: [
-                          buildDataRow('Name : ', widget.userName),
-                          buildDataRow('Request type : ', widget.title),
-                          buildDataRow('Address :', widget.add),
-                          buildDataRow('Pin Code :', widget.pin),
-                          buildDataRow('City :', widget.city),
-                          buildDataRow('Contact No : ', widget.contactNo),
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Padding(
@@ -184,9 +190,11 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
                                       await Future.delayed(
                                           const Duration(milliseconds: 1200));
                                       Navigator.pop(context);
-                                      showToastMsg(
-                                          "You've chosen not to respond the emergency ..");
-                                      Navigator.pop(context);
+
+                                      showDeclinedPopUp(context);
+                                      // showToastMsg(
+                                      //     "You've chosen not to respond the emergency ..");
+                                      // Navigator.pop(context);
                                     },
                                     style: ButtonStyle(
                                         backgroundColor:
@@ -394,8 +402,8 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
         // Access the fields from the document
         setState(() {
           fetchedRid = ReqSnapshot.get('RequestId');
-          fetchedHasNGOResponded = ReqSnapshot.get('hasNGOResponded');
-          fetchedHasGovtResponded = ReqSnapshot.get('hasGovtResponded');
+          fetchedHasNGOResponded = ReqSnapshot.get('isNGOResponded');
+          fetchedHasGovtResponded = ReqSnapshot.get('isGovtResponded');
           fetchedService = ReqSnapshot.get('neededService');
           fetchedUsername = ReqSnapshot.get('userName');
           fetchedCitizenContactNo = ReqSnapshot.get('contactNumber');
@@ -601,7 +609,6 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
             .doc("Response_${widget.rid}")
             .set(respondNGOJson);
 
-
         // await FirebaseFirestore.instance
         //     .collection("clc_response")
         //     .doc("Response_${widget.rid}")
@@ -631,7 +638,6 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
             .collection('govt')
             .doc("Response_${widget.rid}")
             .set(respondGovtJson);
-
       }
 
       Timer(const Duration(milliseconds: 300), () {
@@ -662,7 +668,9 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
         .doc("Req_Open_$totalDocCount");
 
     Request_Opened_Registration ReqOpenData = Request_Opened_Registration(
-        req_open_Id: "Req_Open_$totalDocCount",req_Id: 'Req_${widget.rid}', authority_id: authority_id);
+        req_open_Id: "Req_Open_$totalDocCount",
+        req_Id: 'Req_${widget.rid}',
+        authority_id: authority_id);
 
     Map<String, dynamic> ReqOpenJson = ReqOpenData.toJsonOpenReq();
 
@@ -672,6 +680,162 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
       // An error occurred
       if (kDebugMode) {
         print('Error adding request open document : $e');
+      }
+    }
+  }
+
+  Future<void> showDeclinedPopUp(BuildContext context) async {
+    bool isValidReason = false;
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: const Text("Request decline :"),
+          content: Column(
+            children: [
+              const SizedBox(height: 15),
+              const Text("Kindly enter reason for decline :"),
+              const SizedBox(height: 15),
+              CupertinoTextField(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  color: Colors.black12,
+                ),
+                controller: reasonController,
+                placeholder: ' Enter Reason',
+                onChanged: (value) {
+                  if (value.length >= 10) {
+                    isValidReason = true;
+                  } else {
+                    isValidReason = false;
+                  }
+                },
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              onPressed: () async {
+                if (isValidReason) {
+                  // Show loading dialog
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return const Center(
+                        child: CircularProgressIndicator(color: Colors.white),
+                      );
+                    },
+                  );
+
+                  await Future.delayed(const Duration(milliseconds: 800));
+                  Navigator.pop(context); // Close loading dialog
+                  addDeclineReqToDatabase();
+                  try {
+                    // Show success message dialog
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CupertinoAlertDialog(
+                          title: const Text("Request Declined"),
+                          content: const Text(
+                              "Your have declined to this request.."),
+                          actions: <Widget>[
+                            CupertinoDialogAction(
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pop(); // Close success message dialog
+                                Navigator.of(context)
+                                    .pop(); // Close main dialog
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text("OKAY"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } catch (e) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CupertinoAlertDialog(
+                          title: const Text("Error"),
+                          content: const Text(
+                              "An error occurred while processing your request."),
+                          actions: <Widget>[
+                            CupertinoDialogAction(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text("OKAY"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CupertinoAlertDialog(
+                        title: const Text("Invalid Reason :"),
+                        content: const Text("Too short reason .."),
+                        actions: <Widget>[
+                          CupertinoDialogAction(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text("OKAY"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
+              child: const Text("Decline"),
+            ),
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Cancel"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void addDeclineReqToDatabase() async {
+    CollectionReference declineCollection =
+        FirebaseFirestore.instance.collection("clc_declined_request");
+    //for id
+    QuerySnapshot snapshot = await declineCollection.get();
+    int totalDocCount = snapshot.size;
+    totalDocCount++;
+    //Storing data to database
+    Declined_Req_Registration ResponseNGOData = Declined_Req_Registration(
+        requestId: fetchedRid,
+        decId: 'Dec_$totalDocCount',
+        username: widget.userName,
+        auth_id: iAmNGO == true ? fetchedNid : fetchedGid,
+        decline_reason: reasonController.text.trim());
+
+    Map<String, dynamic> DeclineReqJson = ResponseNGOData.toDeclineReqJson();
+
+    try {
+      await FirebaseFirestore.instance
+          .collection("clc_declined_request")
+          .doc("Dec_$totalDocCount")
+          .set(DeclineReqJson);
+    } catch (e) {
+      // An error occurred
+      if (kDebugMode) {
+        print('Error adding decline req : $e');
       }
     }
   }

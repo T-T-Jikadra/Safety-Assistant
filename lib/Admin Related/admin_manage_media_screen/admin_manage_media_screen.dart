@@ -54,13 +54,12 @@ class _Admin_Manage_Media_ScreenState extends State<Admin_Manage_Media_Screen> {
             bottom: const TabBar(
               tabs: [
                 Tab(text: 'Add media'), // First tab
-                Tab(text: 'Manage Media'), // Second tab
+                Tab(text: 'View media'), // Second tab
               ],
             ),
           ),
           body: TabBarView(
             children: [
-              // Content of the first tab add media
               SizedBox(
                 width: double.infinity,
                 child: RefreshIndicator(
@@ -88,15 +87,97 @@ class _Admin_Manage_Media_ScreenState extends State<Admin_Manage_Media_Screen> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                const Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 10),
-                                                  child: Text(
-                                                    'Selected Image : ',
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
+                                                const SizedBox(height: 8),
+                                                //title
+                                                TextFormField(
+                                                  controller: _titleController,
+                                                  keyboardType:
+                                                  TextInputType.multiline,
+                                                  decoration: InputDecoration(
+                                                    hintText: 'Add media title...',
+                                                    labelText: 'Add media title',
+                                                    prefixIcon: const Icon(
+                                                        Icons.newspaper),
+                                                    focusColor:
+                                                    Colors.deepPurple,
+                                                    border: OutlineInputBorder(
+                                                      borderRadius:
+                                                      BorderRadius.circular(
+                                                          12),
+                                                    ),
+                                                  ),
+                                                  validator: (value) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
+                                                      _FocusNode.requestFocus();
+                                                      return 'Title is required ';
+                                                    }
+                                                    if (value.isNotEmpty &&
+                                                        value.length < 5) {
+                                                      _FocusNode.requestFocus();
+                                                      return "Too short title";
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                                //upload btn
+                                                Padding(
+                                                  padding: const EdgeInsets.only(top: 8,bottom: 10),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: [
+                                                      const Text(
+                                                        'Select your image : ',
+                                                        style: TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight:
                                                             FontWeight.bold),
+                                                      ),
+                                                      const Spacer(),
+                                                      GestureDetector(
+                                                        onTap: () async {
+                                                          final picker =
+                                                          ImagePicker();
+                                                          final XFile? image =
+                                                          await picker.pickImage(
+                                                              source: ImageSource
+                                                                  .gallery);
+                                                          if (image != null) {
+                                                            pickedImage = File(
+                                                                image.path);
+                                                            setState(() {
+                                                              isPicked = true;
+                                                              _showError =
+                                                              false;
+                                                            });
+                                                          }
+                                                        },
+                                                        child: Align(
+                                                          alignment:
+                                                          AlignmentDirectional
+                                                              .center,
+                                                          child: Container(
+                                                            width: 50,
+                                                            height: 50,
+                                                            decoration: BoxDecoration(
+                                                                color: Colors
+                                                                    .grey[200],
+                                                                borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                    30)),
+                                                            child: Icon(
+                                                                Icons
+                                                                    .add_a_photo_outlined,
+                                                                size: 20,
+                                                                color: Colors
+                                                                    .deepPurple
+                                                                    .shade400),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                                 Container(
@@ -173,70 +254,6 @@ class _Admin_Manage_Media_ScreenState extends State<Admin_Manage_Media_Screen> {
                                                             ),
                                                           )),
                                                 //img selection
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      vertical: 15,
-                                                      horizontal: 5),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      const Text(
-                                                        'Select your news image here  : ',
-                                                        style: TextStyle(
-                                                            fontSize: 17,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                      const Spacer(),
-                                                      GestureDetector(
-                                                        onTap: () async {
-                                                          final picker =
-                                                              ImagePicker();
-                                                          final XFile? image =
-                                                              await picker.pickImage(
-                                                                  source: ImageSource
-                                                                      .gallery);
-                                                          if (image != null) {
-                                                            pickedImage = File(
-                                                                image.path);
-                                                            setState(() {
-                                                              isPicked = true;
-                                                              _showError =
-                                                                  false;
-                                                            });
-                                                          }
-                                                        },
-                                                        child: Align(
-                                                          alignment:
-                                                              AlignmentDirectional
-                                                                  .center,
-                                                          child: Container(
-                                                            width: 50,
-                                                            height: 50,
-                                                            decoration: BoxDecoration(
-                                                                color: Colors
-                                                                    .grey[200],
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            30)),
-                                                            child: Icon(
-                                                                Icons
-                                                                    .add_a_photo_outlined,
-                                                                size: 25,
-                                                                color: Colors
-                                                                    .deepPurple
-                                                                    .shade400),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
                                                 if (_showError)
                                                   const Padding(
                                                     padding: EdgeInsets.only(
@@ -250,62 +267,18 @@ class _Admin_Manage_Media_ScreenState extends State<Admin_Manage_Media_Screen> {
                                                               FontWeight.w500),
                                                     ),
                                                   ),
-                                                const SizedBox(height: 5),
-                                                const Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 10),
-                                                  child: Text(
-                                                    'Describe about media : ',
-                                                    style: TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 8),
-                                                TextFormField(
-                                                  controller: _titleController,
-                                                  keyboardType:
-                                                      TextInputType.multiline,
-                                                  decoration: InputDecoration(
-                                                    hintText: 'Enter title...',
-                                                    labelText: 'Media Title',
-                                                    prefixIcon: const Icon(
-                                                        Icons.newspaper),
-                                                    focusColor:
-                                                        Colors.deepPurple,
-                                                    border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12),
-                                                    ),
-                                                  ),
-                                                  validator: (value) {
-                                                    if (value == null ||
-                                                        value.isEmpty) {
-                                                      _FocusNode.requestFocus();
-                                                      return 'Heading required ';
-                                                    }
-                                                    if (value.isNotEmpty &&
-                                                        value.length < 5) {
-                                                      _FocusNode.requestFocus();
-                                                      return "Too short heading";
-                                                    }
-                                                    return null;
-                                                  },
-                                                ),
                                                 const SizedBox(height: 15),
                                                 TextFormField(
                                                   controller:
                                                       _descriptionController,
                                                   keyboardType:
                                                       TextInputType.multiline,
-                                                  maxLines: 4,
+                                                  maxLines: 7,
                                                   decoration: InputDecoration(
                                                     hintText:
-                                                        'Enter description...',
+                                                        'Add media description...',
                                                     labelText:
-                                                        'Media Description',
+                                                        'Add media Description',
                                                     prefixIcon: const Icon(Icons
                                                         .description_outlined),
                                                     focusColor:
