@@ -29,7 +29,7 @@ class _Admin_Manage_News_ScreenState extends State<Admin_Manage_News_Screen> {
               borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(25),
                   bottomLeft: Radius.circular(25))),
-          title: const Text("Manage Details"),
+          title: const Text("Media Details"),
         ),
         body: SingleChildScrollView(
           child: Column(

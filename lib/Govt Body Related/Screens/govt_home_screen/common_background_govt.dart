@@ -367,7 +367,7 @@ class _commonbg_govtState extends State<commonbg_govt> {
                                                           [
                                                           'description'],
                                                           maxLines:
-                                                          5,
+                                                          4,
                                                           overflow:
                                                           TextOverflow
                                                               .ellipsis,

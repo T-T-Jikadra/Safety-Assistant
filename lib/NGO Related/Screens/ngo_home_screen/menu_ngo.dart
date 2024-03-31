@@ -22,9 +22,7 @@ List<Menu_ngo> sidebarMenus = [
   ),
   Menu_ngo(
     title: "Other serving NGOs",
-    icon: Icons.temple_hindu_rounded,
-    // icon: Icons.add_task_sharp,
-
+    icon: Icons.add_business_rounded,
   ),
   Menu_ngo(
     title: "Response History",
@@ -40,7 +38,7 @@ List<Menu_ngo> sidebarMenus = [
   ),
   Menu_ngo(
     title: "Apply for Grant",
-    icon: Icons.local_activity_outlined,
+    icon: Icons.currency_rupee,
   ),
   Menu_ngo(
     title: "Media",

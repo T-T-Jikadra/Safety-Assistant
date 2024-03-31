@@ -23,7 +23,7 @@ class AppRoutes {
 
   static Map<String, WidgetBuilder> routes = {
 
-    on_Boarding: (context) => const LiquidPages(),
+    on_Boarding: (context) => const Onboarding_Screen(),
 
     //main: (context) => main(),
 

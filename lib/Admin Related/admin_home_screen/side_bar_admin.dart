@@ -8,9 +8,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
-import '../../../Utils/common_files/faq_screen/faq_screen.dart';
 import '../../Utils/common_files/about_us/about_us_screen.dart';
 import '../../../Components/info_card.dart';
+import '../admin_faq_screen/admin_faq_screen.dart';
 import '../admin_manage_alerts_screen/admin_manage_alert_screen.dart';
 import '../admin_manage_citizen_screen/admin_view_citizen_screen.dart';
 import '../admin_manage_govt_screen/admin_manage_govt_agency_screen.dart';
@@ -279,7 +279,7 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const FAQScreen(),
+                                      const Admin_FAQ_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);

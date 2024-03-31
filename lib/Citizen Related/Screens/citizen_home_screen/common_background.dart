@@ -15,6 +15,7 @@ import 'package:intl/intl.dart';
 import '../../../Utils/common_files/alerts/alert_screen.dart';
 import '../../../Utils/common_files/media/media_history_screen.dart';
 import '../citizen_DSG/citizen_disaster_list.dart';
+import '../citizen_helipline_screen.dart';
 import '../citizen_request_screen/citizen_request_screen.dart';
 
 class commonbg extends StatefulWidget {
@@ -32,7 +33,6 @@ class _commonbgState extends State<commonbg> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchCitizenData();
     Future.delayed(const Duration(milliseconds: 1600), () {
@@ -598,6 +598,7 @@ class _commonbgState extends State<commonbg> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        //1st
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
@@ -643,7 +644,7 @@ class _commonbgState extends State<commonbg> {
                                       child: Column(
                                         children: [
                                           Image.asset("assets/images/news.png",
-                                              height: 50, width: 50),
+                                              height: 30, width: 30),
                                           const SizedBox(height: 10),
                                           const Text("DSG"),
                                         ],
@@ -653,6 +654,7 @@ class _commonbgState extends State<commonbg> {
                                 )),
                           ),
                         ),
+                        //2nd
                         Expanded(
                           child: GestureDetector(
                             onTap: (){
@@ -698,7 +700,7 @@ class _commonbgState extends State<commonbg> {
                                       child: Column(
                                         children: [
                                           Image.asset("assets/images/guide.png",
-                                              height: 50, width: 50),
+                                              height: 30, width: 30),
                                           const SizedBox(height: 10),
                                           const Text("Media"),
                                         ],
@@ -707,7 +709,64 @@ class _commonbgState extends State<commonbg> {
                                   ),
                                 )),
                           ),
-                        )
+                        ),
+                        //3rd
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                      secondaryAnimation) =>
+                                  const Citizen_HelpLines(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                    animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            child: Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: Material(
+                                  elevation: 4,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(20)),
+                                  child: Container(
+                                    // height: 80,
+                                    decoration: const BoxDecoration(
+                                        color: Colors.white12,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15))),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      child: Column(
+                                        children: [
+                                          Image.asset("assets/images/helpline.png",
+                                              height: 30, width: 30),
+                                          const SizedBox(height: 10),
+                                          const Text("Helpline"),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )),
+                          ),
+                        ),
+
                       ],
                     ),
                   ),

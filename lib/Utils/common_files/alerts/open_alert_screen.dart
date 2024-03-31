@@ -49,6 +49,22 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
   String fetchedDos3 = '';
   String fetchedDonts3 = '';
 
+  String fetchedBefore1 = "";
+  String fetchedBefore2 = "";
+  String fetchedBefore3 = "";
+  String fetchedBefore4 = "";
+  String fetchedBefore5 = "";
+
+  String fetchedAfter1 = "";
+  String fetchedAfter2 = "";
+  String fetchedAfter3 = "";
+  String fetchedAfter4 = "";
+  String fetchedAfter5 = "";
+
+  String fetchedDuring1 = "";
+  String fetchedDuring2 = "";
+  String fetchedDuring3 = "";
+
   @override
   void initState() {
     super.initState();
@@ -248,12 +264,15 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                 children: [
                                   Expanded(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         const Icon(Iconsax.tick_circle4),
                                         const SizedBox(width: 5),
                                         SizedBox(
-                                          width: MediaQuery.of(context).size.width *
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.7, // Adjust the width as needed
                                           child: Text(
                                             fetchedDos1,
@@ -271,12 +290,15 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                 children: [
                                   Expanded(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         const Icon(Iconsax.tick_circle4),
                                         const SizedBox(width: 5),
                                         SizedBox(
-                                          width: MediaQuery.of(context).size.width *
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.7, // Adjust the width as needed
                                           child: Text(
                                             fetchedDos2,
@@ -294,12 +316,15 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                 children: [
                                   Expanded(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         const Icon(Iconsax.tick_circle4),
                                         const SizedBox(width: 5),
                                         SizedBox(
-                                          width: MediaQuery.of(context).size.width *
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.7, // Adjust the width as needed
                                           child: Text(
                                             fetchedDos3,
@@ -333,12 +358,15 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                 children: [
                                   Expanded(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         const Icon(Iconsax.shield_cross),
                                         const SizedBox(width: 5),
                                         SizedBox(
-                                          width: MediaQuery.of(context).size.width *
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.7, // Adjust the width as needed
                                           child: Text(
                                             fetchedDonts1,
@@ -356,12 +384,15 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                 children: [
                                   Expanded(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         const Icon(Iconsax.shield_cross),
                                         const SizedBox(width: 5),
                                         SizedBox(
-                                          width: MediaQuery.of(context).size.width *
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.7, // Adjust the width as needed
                                           child: Text(
                                             fetchedDonts2,
@@ -379,12 +410,15 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                 children: [
                                   Expanded(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         const Icon(Iconsax.shield_cross),
                                         const SizedBox(width: 5),
                                         SizedBox(
-                                          width: MediaQuery.of(context).size.width *
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.7, // Adjust the width as needed
                                           child: Text(
                                             fetchedDonts3,
@@ -401,7 +435,469 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 15)
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Additional Info',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.grey.withOpacity(0.3)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          child: Column(
+                            children: [
+                              //during
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.64,
+                                          child: const Text("During :",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16,
+                                                  color: Colors.deepPurple)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.arrow_circle_right),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.64,
+                                          // Adjust the width as needed
+                                          child: Text(fetchedDuring1,
+                                              textAlign: TextAlign.justify,
+                                              maxLines: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.arrow_circle_right),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.64,
+                                          // Adjust the width as needed
+                                          child: Text(fetchedDuring2,
+                                              textAlign: TextAlign.justify,
+                                              maxLines: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.arrow_circle_right),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.64,
+                                          // Adjust the width as needed
+                                          child: Text(fetchedDuring3,
+                                              textAlign: TextAlign.justify,
+                                              maxLines: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 25),
+
+                              //before
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.64,
+                                          child: const Text("Before :",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16,
+                                                  color: Colors.deepPurple)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.arrow_circle_right),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.64,
+                                          // Adjust the width as needed
+                                          child: Text(fetchedBefore1,
+                                              textAlign: TextAlign.justify,
+                                              maxLines: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.arrow_circle_right),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.64,
+                                          // Adjust the width as needed
+                                          child: Text(fetchedBefore2,
+                                              textAlign: TextAlign.justify,
+                                              maxLines: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.arrow_circle_right),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.64,
+                                          // Adjust the width as needed
+                                          child: Text(fetchedBefore3,
+                                              textAlign: TextAlign.justify,
+                                              maxLines: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.arrow_circle_right),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.64,
+                                          // Adjust the width as needed
+                                          child: Text(fetchedBefore4,
+                                              textAlign: TextAlign.justify,
+                                              maxLines: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.arrow_circle_right),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.64,
+                                          // Adjust the width as needed
+                                          child: Text(fetchedBefore5,
+                                              textAlign: TextAlign.justify,
+                                              maxLines: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 25),
+
+                              //after
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.64,
+                                          child: const Text("After :",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16,
+                                                  color: Colors.deepPurple)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.arrow_circle_right),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.64,
+                                          // Adjust the width as needed
+                                          child: Text(fetchedAfter1,
+                                              textAlign: TextAlign.justify,
+                                              maxLines: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.arrow_circle_right),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.64,
+                                          // Adjust the width as needed
+                                          child: Text(fetchedAfter2,
+                                              textAlign: TextAlign.justify,
+                                              maxLines: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.arrow_circle_right),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.64,
+                                          // Adjust the width as needed
+                                          child: Text(fetchedAfter3,
+                                              textAlign: TextAlign.justify,
+                                              maxLines: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.arrow_circle_right),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.64,
+                                          // Adjust the width as needed
+                                          child: Text(fetchedAfter4,
+                                              textAlign: TextAlign.justify,
+                                              maxLines: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(Iconsax.arrow_circle_right),
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.64,
+                                          // Adjust the width as needed
+                                          child: Text(fetchedAfter5,
+                                              textAlign: TextAlign.justify,
+                                              maxLines: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: Colors.black)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -563,6 +1059,22 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
           fetchedDonts2 = dosSnap.get("donts_2");
           fetchedDos3 = dosSnap.get("dos_3");
           fetchedDonts3 = dosSnap.get("donts_3");
+
+          fetchedBefore1 = dosSnap.get('Before_1');
+          fetchedBefore2 = dosSnap.get('Before_2');
+          fetchedBefore3 = dosSnap.get('Before_3');
+          fetchedBefore4 = dosSnap.get('Before_4');
+          fetchedBefore5 = dosSnap.get('Before_5');
+
+          fetchedAfter1 = dosSnap.get('After_1');
+          fetchedAfter2 = dosSnap.get('After_2');
+          fetchedAfter3 = dosSnap.get('After_3');
+          fetchedAfter4 = dosSnap.get('After_4');
+          fetchedAfter5 = dosSnap.get('After_5');
+
+          fetchedDuring1 = dosSnap.get('During_1');
+          fetchedDuring2 = dosSnap.get('During_2');
+          fetchedDuring3 = dosSnap.get('During_3');
         } else {
           if (kDebugMode) {
             print('Dos document does not exist');

@@ -364,7 +364,7 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                                                           [
                                                           'description'],
                                                           maxLines:
-                                                          5,
+                                                          4,
                                                           overflow:
                                                           TextOverflow
                                                               .ellipsis,

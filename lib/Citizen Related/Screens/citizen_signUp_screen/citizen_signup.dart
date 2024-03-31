@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../Components/Notification_related/notification_services.dart';
 import '../../../Models/user_registration_model.dart';
 import '../../../Utils/constants.dart';
@@ -21,8 +22,8 @@ class CitizenSignupPageScreen extends StatefulWidget {
 
   const CitizenSignupPageScreen({Key? key, required this.contactNumber})
       : super(
-    key: key,
-  );
+          key: key,
+        );
 
   @override
   State<CitizenSignupPageScreen> createState() =>
@@ -65,8 +66,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
       const SystemUiOverlayStyle(
         statusBarColor: Colors.white12,
         // Change this color to the desired color
-        statusBarIconBrightness:
-        Brightness.light,
+        statusBarIconBrightness: Brightness.light,
       ),
     );
 
@@ -97,7 +97,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 25),
                       padding: EdgeInsets.only(
-                        //for fields that are covered under keyboard
+                          //for fields that are covered under keyboard
                           bottom: MediaQuery.of(context).viewInsets.bottom,
                           left: 16,
                           right: 16),
@@ -123,7 +123,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                     child: TextFormField(
                                       focusNode: _fnameFocusNode,
                                       textCapitalization:
-                                      TextCapitalization.sentences,
+                                          TextCapitalization.sentences,
                                       controller: fnameTextController,
                                       decoration: const InputDecoration(
                                         hintText: "First Name",
@@ -158,7 +158,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                     child: TextFormField(
                                       focusNode: _lnameFocusNode,
                                       textCapitalization:
-                                      TextCapitalization.sentences,
+                                          TextCapitalization.sentences,
                                       controller: lnameTextController,
                                       decoration: const InputDecoration(
                                         hintText: "Last Name",
@@ -203,7 +203,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                     value: genderList[0],
                                     groupValue: genderRadio,
                                     padding:
-                                    const EdgeInsets.symmetric(vertical: 1),
+                                        const EdgeInsets.symmetric(vertical: 1),
                                     onChange: (value) {
                                       // Update the state when a radio button is selected
                                       setState(() {
@@ -220,7 +220,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                     value: genderList[1],
                                     groupValue: genderRadio,
                                     padding:
-                                    const EdgeInsets.symmetric(vertical: 1),
+                                        const EdgeInsets.symmetric(vertical: 1),
                                     onChange: (value) {
                                       // Update the state when a radio button is selected
                                       setState(() {
@@ -231,13 +231,13 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                 ),
                                 Padding(
                                   padding:
-                                  const EdgeInsets.only(left: 28, top: 0),
+                                      const EdgeInsets.only(left: 28, top: 0),
                                   child: CustomRadioButton(
                                     text: "Others",
                                     value: genderList[2],
                                     groupValue: genderRadio,
                                     padding:
-                                    const EdgeInsets.symmetric(vertical: 1),
+                                        const EdgeInsets.symmetric(vertical: 1),
                                     onChange: (value) {
                                       // Update the state when a radio button is selected
                                       setState(() {
@@ -281,7 +281,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                 hintText: "Enter your Mobile number",
                                 prefixIcon: Container(
                                   margin:
-                                  const EdgeInsets.fromLTRB(20, 16, 12, 16),
+                                      const EdgeInsets.fromLTRB(20, 16, 12, 16),
                                   child: SvgPicture.asset(svg_for_call),
                                 ),
                                 prefixIconConstraints: const BoxConstraints(
@@ -377,8 +377,9 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                       decoration: const InputDecoration(
                                         // border: OutlineInputBorder(),
                                         hintText: "Select your State",
-                                        prefixIcon:
-                                        Icon(CupertinoIcons.map_pin_ellipse,color: Colors.deepPurple),
+                                        prefixIcon: Icon(
+                                            CupertinoIcons.map_pin_ellipse,
+                                            color: Colors.deepPurple),
                                       ),
                                       //hint: const Text("Select your State"), // Hint text displayed initially
                                       validator: (value) {
@@ -419,8 +420,8 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                 },
                                 decoration: const InputDecoration(
                                   hintText: "Select your City",
-                                  prefixIcon:
-                                  Icon(Icons.location_city_rounded,color: Colors.deepPurple),
+                                  prefixIcon: Icon(Icons.location_city_rounded,
+                                      color: Colors.deepPurple),
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -440,8 +441,8 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                               controller: pinCodeTextController,
                               decoration: const InputDecoration(
                                 hintText: "Enter your Pin Code",
-                                prefixIcon:
-                                Icon(Icons.pin_rounded,color: Colors.deepPurple),
+                                prefixIcon: Icon(Icons.pin_rounded,
+                                    color: Colors.deepPurple),
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -472,8 +473,9 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                               controller: fullAddressTextController,
                               decoration: const InputDecoration(
                                 hintText: "Enter your full address",
-                                prefixIcon: Icon(CupertinoIcons
-                                    .pencil_ellipsis_rectangle,color: Colors.deepPurple),
+                                prefixIcon: Icon(
+                                    CupertinoIcons.pencil_ellipsis_rectangle,
+                                    color: Colors.deepPurple),
                                 contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                   vertical: 18,
@@ -501,23 +503,53 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                           //t&c
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 3,
-                                right: 100,
-                              ),
-                              child: CustomCheckboxButton(
-                                alignment: Alignment.centerLeft,
-                                text: "I accept term & conditions",
-                                value: CitizenTnC,
-                                padding:
-                                const EdgeInsets.symmetric(vertical: 1),
-                                onChange: (value) {
-                                  setState(() {
-                                    CitizenTnC = value;
-                                  });
-                                },
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 3,
+                                    right: 100,
+                                  ),
+                                  child: CustomCheckboxButton(
+                                    alignment: Alignment.centerLeft,
+                                    text: "I accept term & conditions",
+                                    value: CitizenTnC,
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 1),
+                                    onChange: (value) {
+                                      setState(() {
+                                        CitizenTnC = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: GestureDetector(
+                                    child: const Row(
+                                      children: [
+                                        Icon(
+                                          Icons.open_in_new,
+                                          color: Colors.deepPurple,
+                                          size: 18,
+                                        ),
+                                        Text("  Read our T&C",
+                                            style: TextStyle(
+                                              color: Colors.deepPurple,
+                                              fontWeight: FontWeight.w600,
+                                            )),
+                                      ],
+                                    ),
+                                    onTap: () {
+                                      const link =
+                                          "https://docs.google.com/document/d/17rpPn_I1rACn5KMSikjpuLlaw1mnlDUXF7G7XIlCR5Q/edit?usp=sharing";
+                                      launchUrl(Uri.parse(link),
+                                          mode: LaunchMode.inAppWebView);
+                                    },
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ],
@@ -581,11 +613,11 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                   //   print(userAge);
                                   // }
                                   CollectionReference citizenRequestCollection =
-                                  FirebaseFirestore.instance
-                                      .collection("clc_citizen");
+                                      FirebaseFirestore.instance
+                                          .collection("clc_citizen");
                                   //for id
                                   QuerySnapshot snapshot =
-                                  await citizenRequestCollection.get();
+                                      await citizenRequestCollection.get();
                                   int totalDocCount = snapshot.size;
                                   totalDocCount++;
                                   //Storing data to database
@@ -602,13 +634,13 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                       city: selectedCity,
                                       pinCode: pinCodeTextController.text,
                                       fullAddress:
-                                      fullAddressTextController.text,
+                                          fullAddressTextController.text,
                                       //termsAccepted: CitizenTnC,
                                       deviceToken: deviceTokenFound);
 
                                   // Convert the object to JSON
                                   Map<String, dynamic> userDataJson =
-                                  userData.toJsonCitizen();
+                                      userData.toJsonCitizen();
 
                                   // Store data in Firestore
                                   try {
@@ -631,8 +663,8 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                     Navigator.of(context).push(
                                       PageRouteBuilder(
                                         pageBuilder: (context, animation,
-                                            secondaryAnimation) =>
-                                        const CitizenHomeScreen(),
+                                                secondaryAnimation) =>
+                                            const CitizenHomeScreen(),
                                         transitionsBuilder: (context, animation,
                                             secondaryAnimation, child) {
                                           var begin = const Offset(1.0, 0.0);
@@ -640,10 +672,10 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                           var curve = Curves.ease;
 
                                           var tween = Tween(
-                                              begin: begin, end: end)
+                                                  begin: begin, end: end)
                                               .chain(CurveTween(curve: curve));
                                           var offsetAnimation =
-                                          animation.drive(tween);
+                                              animation.drive(tween);
                                           //slight fade effect
                                           //var opacityAnimation = animation.drive(tween);
 
@@ -673,7 +705,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                 shape: MaterialStateProperty.all(
                                     RoundedRectangleBorder(
                                         borderRadius:
-                                        BorderRadius.circular(18)))),
+                                            BorderRadius.circular(18)))),
                             child: const Text("Continue"))),
                   ),
                 ),
@@ -762,221 +794,4 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
       dropdownItemCity = DropdownItems.cityMap[state] ?? [];
     });
   }
-
-// /// Section Widget
-// Widget _buildGroup38RadioGroup(BuildContext context) {
-//   return Padding(
-//     padding: EdgeInsets.only(left: 8.h, right: 11.h),
-//     child: Row(
-//       children: [
-//         Padding(
-//           padding: EdgeInsets.only(bottom: 2.v),
-//           child: CustomRadioButton(
-//             text: "male",
-//             value: radioList[0],
-//             groupValue: radioGroup,
-//             padding: EdgeInsets.symmetric(vertical: 1.v),
-//             onChange: (value) {
-//               // Update the state when a radio button is selected
-//               setState(() {
-//                 radioGroup = value;
-//               });
-//             },
-//           ),
-//         ),
-//         Padding(
-//           padding: EdgeInsets.only(left: 24.h, bottom: 2.v),
-//           child: CustomRadioButton(
-//             text: "female",
-//             value: radioList[1],
-//             groupValue: radioGroup,
-//             padding: EdgeInsets.symmetric(vertical: 1.v),
-//             onChange: (value) {
-//               // Update the state when a radio button is selected
-//               setState(() {
-//                 radioGroup = value;
-//               });
-//             },
-//           ),
-//         ),
-//         Padding(
-//           padding: EdgeInsets.only(left: 28.h, top: 2.v),
-//           child: CustomRadioButton(
-//             text: "others",
-//             value: radioList[2],
-//             groupValue: radioGroup,
-//             padding: EdgeInsets.symmetric(vertical: 1.v),
-//             onChange: (value) {
-//               // Update the state when a radio button is selected
-//               setState(() {
-//                 radioGroup = value;
-//               });
-//             },
-//           ),
-//         ),
-//       ],
-//     ),
-//   );
-// }
-//
-// /// Section Widget
-// Widget _buildPhoneNumberEditText(BuildContext context) {
-//   return Padding(
-//     padding: EdgeInsets.only(
-//       left: 3.h,
-//       right: 5.h,
-//     ),
-//     child: CustomTextFormField(
-//       controller: phoneNumberEditTextController,
-//       hintText: "Phone Number",
-//       textInputType: TextInputType.phone,
-//       prefix: Container(
-//         margin: EdgeInsets.fromLTRB(20.h, 16.v, 12.h, 16.v),
-//         child: CustomImageView(
-//           imagePath: ImageConstant.imgCall,
-//           height: 24.adaptSize,
-//           width: 24.adaptSize,
-//         ),
-//       ),
-//       prefixConstraints: BoxConstraints(
-//         maxHeight: 56.v,
-//       ),
-//     ),
-//   );
-// }
-
-// // Section Widget
-// Widget _buildDateEditText(BuildContext context) {
-//   return Padding(
-//     padding: EdgeInsets.only(
-//       left: 3,
-//       right: 5,
-//     ),
-//     child: GestureDetector(
-//       onTap: () {
-//         _selectDate(context);
-//       },
-//       child: AbsorbPointer(
-//         child: TextFormField(
-//           controller: dateEditTextController,
-//           readOnly: true,
-//           decoration: InputDecoration(
-//             border: OutlineInputBorder(
-//               borderRadius: BorderRadius.circular(4.h),
-//               borderSide: BorderSide(
-//                 color: appTheme.gray500,
-//                 width: 1,
-//               ),
-//             ),
-//             hintText: "Birthdate",
-//             prefixIcon: Container(
-//               margin: EdgeInsets.fromLTRB(20.h, 16.v, 12.h, 16.v),
-//               child: SvgPicture.asset(ImageConstant.imgCalendar),
-//             ),
-//           ),
-//         ),
-//       ),
-//     ),
-//   );
-// }
-// /// Section Widget
-// Widget _buildZipcodeEditText(BuildContext context) {
-//   return Padding(
-//     padding: EdgeInsets.only(
-//       left: 3.h,
-//       right: 4.h,
-//     ),
-//     child: CustomTextFormField(
-//       controller: zipcodeEditTextController,
-//       hintText: "Zip Code",
-//       textInputType: TextInputType.number,
-//       contentPadding: EdgeInsets.symmetric(
-//         horizontal: 20.h,
-//         vertical: 18.v,
-//       ),
-//     ),
-//   );
-// }
-// /// Section Widget
-// Widget _buildFieldsColumn(BuildContext context) {
-//   return Padding(
-//     padding: EdgeInsets.only(
-//       left: 0,
-//       right: 0,
-//     ),
-//     child: Column(
-//       children: [
-//         _buildAddressEditText(context),
-//       ],
-//     ),
-//   );
-// }
-// /// Section Widget
-// Widget _buildAddressEditText(BuildContext context) {
-//   return CustomTextFormField(
-//     controller: addressEditTextController,
-//     hintText: "Address",
-//     textInputAction: TextInputAction.done,
-//     suffix: Container(
-//       margin: EdgeInsets.only(
-//         left: 30,
-//         top: 30,
-//       ),
-//       child: CustomImageView(
-//         imagePath: ImageConstant.imgSettings,
-//         height: 24.adaptSize,
-//         width: 24.adaptSize,
-//       ),
-//     ),
-//     suffixConstraints: BoxConstraints(
-//       maxHeight: 120,
-//     ),
-//     maxLines: 3,
-//     contentPadding: EdgeInsets.symmetric(
-//       horizontal: 20,
-//       vertical: 18,
-//     ),
-//   );
-// }
-// // Section Widget
-// Widget _buildCheckboxCheckBox(BuildContext context) {
-//   return Align(
-//     alignment: Alignment.centerLeft,
-//     child: Padding(
-//       padding: EdgeInsets.only(
-//         left: 3.h,
-//         right: 67.h,
-//       ),
-//       child: CustomCheckboxButton(
-//         alignment: Alignment.centerLeft,
-//         text: "I accept term & conditions",
-//         value: checkboxCheckBox,
-//         padding: EdgeInsets.symmetric(vertical: 1.v),
-//         onChange: (value) {
-//           checkboxCheckBox = value;
-//         },
-//       ),
-//     ),
-//   );
-// }
-// // Section Widget
-// Widget _buildSignUpButton(BuildContext context) {
-//   return ElevatedButton(
-//     onPressed: () {
-//       // if (_formKey.currentState!.validate()) {
-//       //   // Form is valid, do something
-//       // } else {
-//       //   // Find the first field with an error and move focus to it
-//       //   if (_firstNameFocusNode.hasFocus &&
-//       //       createCitizenAccountTextController.text.isEmpty) {
-//       //     FocusScope.of(context).requestFocus(_firstNameFocusNode);
-//       //   } else if (_lastNameFocusNode.hasFocus &&
-//       //       connectWithYourTextController.text.isEmpty) {
-//       //     FocusScope.of(context).requestFocus(_lastNameFocusNode);
-//       //   }
-//       // }
-//     },
-//     child: Text('Submit'),
-//   );
-// }
 }

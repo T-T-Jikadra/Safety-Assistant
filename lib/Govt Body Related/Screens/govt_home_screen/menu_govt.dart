@@ -1,6 +1,7 @@
 //for menu items in drawer
 // ignore_for_file: camel_case_types
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -22,9 +23,7 @@ List<Menu_govt> sidebarMenus = [
   ),
   Menu_govt(
     title: "Other Serving Government Agency ",
-    icon: Icons.temple_hindu_rounded,
-    // icon: Icons.add_task_sharp,
-
+    icon: CupertinoIcons.house_alt_fill,
   ),
   Menu_govt(
     title: "Response History",
@@ -36,7 +35,7 @@ List<Menu_govt> sidebarMenus = [
   ),
   Menu_govt(
     title: "Apply for Grant",
-    icon: Icons.local_activity_outlined,
+    icon: Icons.currency_rupee,
   ),
   Menu_govt(
     title: "Media",

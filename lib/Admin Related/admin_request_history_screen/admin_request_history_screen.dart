@@ -43,7 +43,6 @@ class _Admin_Request_History_ScreenState
             const Column(
               children: [
                 admin_req_history_list_widget(),
-
               ],
             ),
             Column(

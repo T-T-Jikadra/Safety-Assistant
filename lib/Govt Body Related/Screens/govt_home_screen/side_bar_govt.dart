@@ -8,13 +8,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Utils/common_files/alerts/alert_history_screen.dart';
-import '../../../Utils/common_files/faq_screen/faq_screen.dart';
 import '../../../Utils/common_files/about_us/about_us_screen.dart';
 import '../../../Utils/common_files/media/media_history_screen.dart';
 import '../../../Components/info_card.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../Govt_list_GovtAgency/Govt_list.dart';
 import '../../../Utils/common_files/grant/apply_grant_screen.dart';
+import '../govt_faq_screen/govt_faq_screen.dart';
 import '../govt_profile_screen.dart';
 import '../govt_respond_history_screen.dart';
 import 'menu_govt.dart';
@@ -73,7 +73,7 @@ class _SideBar_govtState extends State<SideBar_govt> {
 
                           //on tap routes ..
                           press: () async {
-                            //RiveUtils.chnageSMIBoolState(menu_govt.rive.status!);
+                            //RiveUtils.changeSMIBoolState(menu_govt.rive.status!);
                             setState(() {
                               selectedSideMenu = menu_govt;
                             });
@@ -82,29 +82,6 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                 const Duration(milliseconds: 500));
 
                             if (menu_govt.title.contains("Home")) {
-                              // Navigator.of(context).push(
-                              //   PageRouteBuilder(
-                              //     pageBuilder: (context, animation,
-                              //             secondaryAnimation) =>
-                              //         const msgScreen(),
-                              //     transitionsBuilder: (context, animation,
-                              //         secondaryAnimation, child) {
-                              //       var begin = const Offset(1.0, 0.0);
-                              //       var end = Offset.zero;
-                              //       var curve = Curves.ease;
-                              //
-                              //       var tween = Tween(begin: begin, end: end)
-                              //           .chain(CurveTween(curve: curve));
-                              //       var offsetAnimation =
-                              //           animation.drive(tween);
-                              //
-                              //       return SlideTransition(
-                              //         position: offsetAnimation,
-                              //         child: child,
-                              //       );
-                              //     },
-                              //   ),
-                              // );
                             } else if (menu_govt.title.contains("Profile")) {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
@@ -274,7 +251,7 @@ class _SideBar_govtState extends State<SideBar_govt> {
                           menu: menu_govt,
                           selectedMenu: selectedSideMenu,
                           press: () async {
-                            //RiveUtils.chnageSMIBoolState(menu_govt.rive.status!);
+                            //RiveUtils.changeSMIBoolState(menu_govt.rive.status!);
                             setState(() {
                               selectedSideMenu = menu_govt;
                             });
@@ -286,7 +263,7 @@ class _SideBar_govtState extends State<SideBar_govt> {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const FAQScreen(),
+                                      const Govt_FAQ_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);

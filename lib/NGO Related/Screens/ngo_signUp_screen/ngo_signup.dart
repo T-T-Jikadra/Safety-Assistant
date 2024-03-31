@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../Citizen Related/Screens/citizen_signUp_screen/custom_checkbox_button.dart';
 import '../../../Components/Notification_related/notification_services.dart';
 import '../../../Models/ngo_registration_model.dart';
@@ -576,34 +577,62 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                           //t&c
                           Align(
                             alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 3,
-                                right: 100,
-                              ),
-                              child: CustomCheckboxButton(
-                                alignment: Alignment.centerLeft,
-                                text: "I accept term & conditions",
-                                value: NGOTnC,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 1),
-                                onChange: (value) {
-                                  setState(() {
-                                    NGOTnC = value;
-                                  });
-                                },
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 3,
+                                    right: 100,
+                                  ),
+                                  child: CustomCheckboxButton(
+                                    alignment: Alignment.centerLeft,
+                                    text: "I accept term & conditions",
+                                    value: NGOTnC,
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 1),
+                                    onChange: (value) {
+                                      setState(() {
+                                        NGOTnC = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: GestureDetector(
+                                    child: const Row(
+                                      children: [
+                                        Icon(
+                                          Icons.open_in_new,
+                                          color: Colors.deepPurple,
+                                          size: 18,
+                                        ),
+                                        Text("  Read our T&C",
+                                            style: TextStyle(
+                                              color: Colors.deepPurple,
+                                              fontWeight: FontWeight.w600,
+                                            )),
+                                      ],
+                                    ),
+                                    onTap: () {
+                                      const link =
+                                          "https://docs.google.com/document/d/17rpPn_I1rACn5KMSikjpuLlaw1mnlDUXF7G7XIlCR5Q/edit?usp=sharing";
+                                      launchUrl(Uri.parse(link),
+                                          mode: LaunchMode.inAppWebView);
+                                    },
+                                  ),
+                                )
+                              ],
                             ),
                           ),
-                          //btn
-                          //const SizedBox(height: 5),
                         ],
                       ),
                     ),
                   ),
                 ),
                 //out of scrollbar
-                const SizedBox(height: 10),
+                const SizedBox(height: 3),
                 Padding(
                   padding: const EdgeInsets.only(right: 20, left: 20),
                   child: Container(

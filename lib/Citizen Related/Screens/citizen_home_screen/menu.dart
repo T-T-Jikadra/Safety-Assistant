@@ -21,7 +21,7 @@ List<Menu> sidebarMenus = [
   ),
   Menu(
     title: "Serving NGO / Government Agencies",
-    icon: Icons.temple_hindu_rounded,
+    icon: Icons.add_business_rounded,
   ),
   Menu(
     title: "Request History",

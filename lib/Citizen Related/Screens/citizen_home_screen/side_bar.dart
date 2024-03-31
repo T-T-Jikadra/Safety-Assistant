@@ -6,15 +6,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Utils/common_files/alerts/alert_history_screen.dart';
-
-// import '../../../Admin Related/news media/admin_send_media_screen.dart';
 import '../../../Utils/common_files/media/media_history_screen.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
-import '../../../Utils/common_files/faq_screen/faq_screen.dart';
 import '../citizen_DSG/citizen_disaster_list.dart';
 import '../citizen_NGO-GA_list/citizen_NGO-GA_list_screen.dart';
 import '../../../Utils/common_files/about_us/about_us_screen.dart';
 import '../citizen_donation_history_screen.dart';
+import '../citizen_faq_screen/citizen_faq_screen.dart';
 import '../citizen_request_screen/citizen_req_history_screen.dart';
 import '../../Screens/citizen_profile_screen.dart';
 import '../../../Components/info_card.dart';
@@ -34,7 +32,6 @@ class _SideBarState extends State<SideBar> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchCitizenData();
   }
@@ -165,7 +162,7 @@ class _SideBarState extends State<SideBar> {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const Donation_History_Screen(),
+                                      const Citizen_Donation_History_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -296,7 +293,7 @@ class _SideBarState extends State<SideBar> {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const FAQScreen(),
+                                      const Citizen_FAQ_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);

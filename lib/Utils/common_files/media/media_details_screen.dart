@@ -44,6 +44,7 @@ class _Media_Details_ScreenState extends State<Media_Details_Screen> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  const SizedBox(height: 10),
                   Row(
                     children: [
                       const Spacer(),
@@ -54,6 +55,7 @@ class _Media_Details_ScreenState extends State<Media_Details_Screen> {
                               DateTime.parse(
                                   widget.documentSnapshot['sentTime'])),
                           style: const TextStyle(fontSize: 12)),
+                      const SizedBox(width: 15)
                     ],
                   ),
                 ],

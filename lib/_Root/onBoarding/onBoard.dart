@@ -1,282 +1,124 @@
-// ignore_for_file: file_names
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:liquid_swipe/liquid_swipe.dart';
-import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../Components/check_for_internet/check_internet.dart';
-import '../../Utils/themes/theme.dart';
 import '../type of user/select_user_type_screen.dart';
+import 'onBoarding_items.dart';
 
+class Onboarding_Screen extends StatefulWidget {
+  const Onboarding_Screen({super.key});
 
-class LiquidPages extends StatelessWidget {
-  const LiquidPages({super.key});
+  @override
+  State<Onboarding_Screen> createState() => _Onboarding_ScreenState();
+}
+
+class _Onboarding_ScreenState extends State<Onboarding_Screen> {
+  final controller = OnboardingItems();
+  final pageController = PageController();
+
+  bool isLastPage = false;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'CAS',
-      debugShowCheckedModeBanner: false,
-      theme: TAppTheme.lightTheme,
-      darkTheme: TAppTheme.darkTheme,
-      themeMode: ThemeMode.system,
-      home: const liquidpages(),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      bottomSheet: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        child: isLastPage
+            ? getStarted()
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  //Skip Button
+                  TextButton(
+                      onPressed: () => pageController
+                          .jumpToPage(controller.items.length - 1),
+                      child: const Text("Skip")),
+
+                  //Indicator
+                  SmoothPageIndicator(
+                    controller: pageController,
+                    count: controller.items.length,
+                    onDotClicked: (index) => pageController.animateToPage(index,
+                        duration: const Duration(milliseconds: 600),
+                        curve: Curves.easeIn),
+                    effect: const WormEffect(
+                      dotHeight: 10,
+                      dotWidth: 10,
+                      activeDotColor: Color(0xFF7871db),
+                    ),
+                  ),
+
+                  //Next Button
+                  TextButton(
+                      onPressed: () => pageController.nextPage(
+                          duration: const Duration(milliseconds: 600),
+                          curve: Curves.easeIn),
+                      child: const Text("Next")),
+                ],
+              ),
+      ),
+      body: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 15),
+        child: PageView.builder(
+            onPageChanged: (index) => setState(
+                () => isLastPage = controller.items.length - 1 == index),
+            itemCount: controller.items.length,
+            controller: pageController,
+            itemBuilder: (context, index) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(controller.items[index].image),
+                  const SizedBox(height: 50),
+                  Text(
+                    controller.items[index].title,
+                    style: const TextStyle(
+                        color: Color(0xFF7871db),
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 30),
+                  Text(controller.items[index].descriptions,
+                      style: const TextStyle(color: Colors.black, fontSize: 17),
+                      textAlign: TextAlign.center),
+                ],
+              );
+            }),
+      ),
     );
   }
-}
 
-// ignore: camel_case_types
-class liquidpages extends StatefulWidget {
-  const liquidpages({super.key});
+  //Now the problem is when press get started button
+  // after re run the app we see again the onboarding screen
+  // so lets do one time onboarding
 
-  @override
-  State<liquidpages> createState() => _liquidpagesState();
-}
+  //Get started button
 
-// ignore: camel_case_types
-class _liquidpagesState extends State<liquidpages> {
-  final lController = LiquidController();
-  int currentPage = 0;
+  Widget getStarted() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: const Color(0xFF7871db)),
+      width: MediaQuery.of(context).size.width * .9,
+      height: 55,
+      child: TextButton(
+          onPressed: () async {
+            final pres = await SharedPreferences.getInstance();
+            pres.setBool("onboarding", true);
 
-  @override
-  //initState method
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    //for internet connection checkup
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    InternetPopup().initialize(context: context);
-    final size = MediaQuery.of(context).size;
-
-    return Scaffold(
-        body: Directionality(
-      textDirection: TextDirection.ltr,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          const Text("Hello,"),
-          LiquidSwipe(
-            liquidController: lController,
-            onPageChangeCallback: onPageChnagedCallback,
-            pages: [
-              //1st
-              Container(
-                padding: const EdgeInsets.all(10),
-                //color: Colors.white,
-                color: const Color(0xFFffebcd),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image(
-                        image: const AssetImage(
-                            "assets/images/electricity_user_1.jpg"),
-                        height: size.height * 0.5),
-                    const Column(
-                      children: [
-                        Text("Think Beyond Limit ...",
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 20)),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          "Explore now ...",
-                          style: TextStyle(color: Colors.black, fontSize: 14),
-                        ),
-                      ],
-                    ),
-                    const Text("1/4 ...",
-                        style: TextStyle(color: Colors.black, fontSize: 20)),
-                    const SizedBox(
-                      height: 100,
-                    )
-                  ],
-                ),
-              ),
-              //2nd
-              Container(
-                padding: const EdgeInsets.all(10),
-                //color: Colors.green,
-                color: const Color(0xFFaaf0d1),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: Lottie.asset("assets/json/otp_lottie.json",
-                          //width: 250,
-                          height: size.height * 0.5,
-                          fit: BoxFit.fitWidth),
-                    )
-                    // ,Image(
-                    //     image: const AssetImage("i mg/ss.png"),
-                    //     height: size.height * 0.5),
-                    ,
-                    const Column(
-                      children: [
-                        Text("Customise Your Stuffs ...",
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 20)),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text("As your thinking capability ...",
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 14)),
-                      ],
-                    ),
-                    const Text("2/4 ..",
-                        style: TextStyle(color: Colors.black, fontSize: 20)),
-                    const SizedBox(
-                      height: 100,
-                    )
-                  ],
-                ),
-              ),
-              //3rd
-              Container(
-                padding: const EdgeInsets.all(10),
-                //color: Colors.blueGrey,
-                color: const Color(0xFFe9969a),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: SvgPicture.asset("assets/svg/services_help.svg"),
-                    ),
-                    const Column(
-                      children: [
-                        Text("Thing Beyond Limit ...",
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 20)),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text("Explore now ...",
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 14)),
-                      ],
-                    ),
-                    const Text("3/4 ...",
-                        style: TextStyle(color: Colors.black, fontSize: 20)),
-                    const SizedBox(
-                      height: 100,
-                    )
-                  ],
-                ),
-              ),
-              //4th
-              Container(
-                color: const Color(0xFFd3d3d3),
-                child: Column(
-                  //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Center(
-                      child: SvgPicture.asset("assets/svg/services_help.svg"),
-                    ),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    const Text("4/4 ...",
-                        style: TextStyle(color: Colors.black, fontSize: 20)),
-                  ],
-                ),
-              ),
-              //5th
-              Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.blue, Colors.white],
-                  ),
-                ),
-              ),
-            ],
-            slideIconWidget: const Icon(Icons.arrow_back_ios),
-            enableSideReveal: true,
-            fullTransitionValue: 750,
-            preferDragFromRevealedArea: true,
-            //waveType: WaveType.circularReveal,
-            //disableUserGesture: true,
-          ),
-
-          //Round button
-          Positioned(
-              bottom: 55,
-              child: OutlinedButton(
-                onPressed: () {
-                  int nextPage = lController.currentPage + 1;
-                  lController.animateToPage(page: nextPage);
-                  if (nextPage == 5) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SelectOptionPageScreen()),
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  side: const BorderSide(color: Colors.black26),
-                  shape: const CircleBorder(),
-                  padding: const EdgeInsets.all(20),
-                ),
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: const BoxDecoration(
-                      color: Colors.black, shape: BoxShape.circle),
-                  child: const Icon(Icons.arrow_forward_ios),
-                ),
-              )),
-          //skip text button
-          Positioned(
-              top: 40,
-              right: 20,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SelectOptionPageScreen()),
-                  );
-                  //lController.jumpToPage(page: 2);
-                },
-                child: const Text(
-                  "Skip",
-                  style: TextStyle(color: Colors.black54),
-                ),
-              )),
-          // 5 dots
-          Positioned(
-              bottom: 20,
-              child: AnimatedSmoothIndicator(
-                activeIndex: lController.currentPage,
-                count: 5,
-                effect: const WormEffect(
-                    activeDotColor: Colors.black, dotHeight: 5.0),
-              ))
-        ],
-      ),
-    ));
-  }
-
-  void onPageChnagedCallback(int activePageIndex) {
-    setState(() {
-      currentPage = activePageIndex;
-    });
+            //After we press get started button this onboarding value become true
+            // same key
+            if (!mounted) return;
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => const SelectOptionPageScreen()));
+          },
+          child: const Text(
+            "Get started",
+            style: TextStyle(color: Colors.white),
+          )),
+    );
   }
 }

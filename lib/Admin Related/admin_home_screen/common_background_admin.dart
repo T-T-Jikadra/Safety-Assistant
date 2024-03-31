@@ -651,7 +651,7 @@ class _commonbg_adminState extends State<commonbg_admin> {
                                                                           [
                                                                           'description'],
                                                                       maxLines:
-                                                                          5,
+                                                                          4,
                                                                       overflow:
                                                                           TextOverflow
                                                                               .ellipsis,
@@ -951,7 +951,7 @@ class _commonbg_adminState extends State<commonbg_admin> {
         numberOfGovt = govtSnap.size;
         numberOfReq = reqSnap.size;
         // numberOfResponse = resSnap.size;
-        numberOfResponse = 12;
+        numberOfResponse = 34;
       });
     } catch (e) {
       if (kDebugMode) {

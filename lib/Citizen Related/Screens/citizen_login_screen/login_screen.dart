@@ -26,7 +26,6 @@ class _CitizenLoginScreenState extends State<CitizenLoginScreen> {
   @override
   //initState method
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     //for token mechanism

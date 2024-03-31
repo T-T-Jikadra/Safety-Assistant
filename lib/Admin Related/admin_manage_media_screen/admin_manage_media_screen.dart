@@ -408,7 +408,7 @@ class _Admin_Manage_Media_ScreenState extends State<Admin_Manage_Media_Screen> {
                                               .showSnackBar(
                                             const SnackBar(
                                                 content: Text(
-                                                    'News released successfully')),
+                                                    'Media released successfully')),
                                           );
                                         } else {
                                           // If image upload fails, show error message
@@ -417,11 +417,10 @@ class _Admin_Manage_Media_ScreenState extends State<Admin_Manage_Media_Screen> {
                                               .showSnackBar(
                                             const SnackBar(
                                                 content: Text(
-                                                    'Failed to release news')),
+                                                    'Failed to release media')),
                                           );
                                         }
                                       } else {
-                                        // If form is not valid, dismiss progress indicator and show error messages
                                         Navigator.pop(
                                             context); // Dismiss progress indicator
                                       }
@@ -432,7 +431,7 @@ class _Admin_Manage_Media_ScreenState extends State<Admin_Manage_Media_Screen> {
                                                 borderRadius:
                                                     BorderRadius.circular(
                                                         18)))),
-                                    child: const Text("Release news"))),
+                                    child: const Text("Release media"))),
                           ),
                         ),
                       ],
@@ -791,7 +790,7 @@ class _Admin_Manage_Media_ScreenState extends State<Admin_Manage_Media_Screen> {
           .doc("News_${totalDocCount.toString()}")
           .set(AdminAlertJson)
           .then((value) =>
-              showMsgDialog(context, 'News published successfully ..'));
+              showMsgDialog(context, 'Media published successfully ..'));
     } catch (e) {
       // An error occurred
       if (kDebugMode) {

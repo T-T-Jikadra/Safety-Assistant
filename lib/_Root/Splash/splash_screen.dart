@@ -14,7 +14,6 @@ import '../../NGO Related/Screens/ngo_home_screen/home_screen_ngo.dart';
 import '../../Utils/themes/theme.dart';
 import '../../Citizen Related/Screens/citizen_home_screen/home_screen_citizen.dart';
 import '../onBoarding/onBoard.dart';
-import '../type of user/select_user_type_screen.dart';
 
 class splash extends StatelessWidget {
   const splash({super.key});
@@ -36,7 +35,7 @@ class splash extends StatelessWidget {
       //Paths of the screens in key value pair ..
       routes: <String, WidgetBuilder>{
         '/otpScreen': (BuildContext ctx) => OtpScreen(),
-        '/liquidpages': (BuildContext ctx) => const liquidpages(),
+        '/liquidpages': (BuildContext ctx) => const Onboarding_Screen(),
         '/homeScreen': (BuildContext ctx) => const CitizenHomeScreen(),
         '/GovtHomeScreen': (BuildContext ctx) => const GovtHomeScreen(),
         '/NGOHomeScreen': (BuildContext ctx) => const NGOHomeScreen(),
@@ -215,11 +214,11 @@ class _SplashScreenState extends State<SplashScreen> {
         Get.offAll(() => const CitizenHomeScreen());
       }
     } else {
-      Get.offAll(() => const SelectOptionPageScreen());
+      Get.offAll(() => const Onboarding_Screen());
 
       // Handle invalid userType
       if (kDebugMode) {
-        print("Invalid userType: $userType");
+        print("Invalid userType : $userType");
       }
     }
   }
@@ -262,7 +261,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const liquidpages(),
+            builder: (context) => const Onboarding_Screen(),
           ));
     }
   }

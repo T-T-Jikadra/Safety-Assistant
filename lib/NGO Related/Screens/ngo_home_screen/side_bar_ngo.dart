@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Utils/common_files/alerts/alert_history_screen.dart';
-import '../../../Utils/common_files/faq_screen/faq_screen.dart';
 import '../../../Utils/common_files/about_us/about_us_screen.dart';
 import '../../../Utils/common_files/grant/apply_grant_screen.dart';
 import '../../../Utils/common_files/media/media_history_screen.dart';
@@ -15,6 +14,7 @@ import '../../../Components/info_card.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../NGO_list/NGO_list.dart';
 import '../ngo_donation_history.dart';
+import '../ngo_faq_screen/ngo_faq_screen.dart';
 import '../ngo_profile_screen.dart';
 import '../ngo_respond_history.dart';
 import 'menu_ngo.dart';
@@ -187,7 +187,7 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const NGO_Donation_History(),
+                                      const NGO_Donation_History_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -318,7 +318,7 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const FAQScreen(),
+                                      const NGO_FAQ_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
