@@ -3,6 +3,7 @@ class UserRegistration {
   final String cid;
   final String firstName;
   final String lastName;
+  final String profilePic;
   final String gender;
   final String phoneNumber;
   final DateTime birthDate;
@@ -17,6 +18,7 @@ class UserRegistration {
     required this.cid,
     required this.firstName,
     required this.lastName,
+    required this.profilePic,
     required this.gender,
     required this.phoneNumber,
     required this.birthDate,
@@ -25,16 +27,15 @@ class UserRegistration {
     required this.pinCode,
     required this.fullAddress,
     required this.deviceToken,
-    DateTime?
-        registrationTime,
-  }) : registrationTime =
-            registrationTime ?? DateTime.now();
+    DateTime? registrationTime,
+  }) : registrationTime = registrationTime ?? DateTime.now();
 
   Map<String, dynamic> toJsonCitizen() {
     return {
       'cid': cid,
       'firstName': firstName,
       'lastName': lastName,
+      'profilePic': profilePic,
       'gender': gender,
       'phoneNumber': phoneNumber,
       'birthDate': birthDate,

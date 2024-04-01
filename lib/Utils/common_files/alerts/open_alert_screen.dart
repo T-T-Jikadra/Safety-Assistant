@@ -155,14 +155,16 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.65,
-                                        // height:
-                                        //     MediaQuery.of(context).size.height * 0.3,
-                                        child: Flexible(
-                                          child: Text(widget.desc,
-                                              maxLines: 5,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  fontSize: 16)),
+                                        child: Row(
+                                          children: [
+                                            Flexible(
+                                              child: Text(widget.desc,
+                                                  maxLines: 5,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontSize: 16)),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
@@ -439,7 +441,6 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                       const Text(
                         'Additional Info',
                         style: TextStyle(
-                            color: Colors.black,
                             fontSize: 18,
                             fontWeight: FontWeight.w500),
                       ),
@@ -498,8 +499,7 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
                                               overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  color: Colors.black)),
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -526,8 +526,7 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
                                               overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  color: Colors.black)),
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -554,8 +553,7 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
                                               overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  color: Colors.black)),
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -608,8 +606,7 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
                                               overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  color: Colors.black)),
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -636,8 +633,7 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
                                               overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  color: Colors.black)),
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -664,8 +660,7 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
                                               overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  color: Colors.black)),
+                                             ),
                                         ),
                                       ],
                                     ),
@@ -692,8 +687,7 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
                                               overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  color: Colors.black)),
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -720,8 +714,7 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
                                               overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  color: Colors.black)),
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -774,8 +767,7 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
                                               overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  color: Colors.black)),
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -802,8 +794,7 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
                                               overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  color: Colors.black)),
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -830,8 +821,7 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
                                               overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  color: Colors.black)),
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -858,8 +848,7 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
                                               overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  color: Colors.black)),
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -886,8 +875,7 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
                                               overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  color: Colors.black)),
+                                              ),
                                         ),
                                       ],
                                     ),
@@ -898,6 +886,7 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 15),
                     ],
                   ),
                 ),

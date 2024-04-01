@@ -3,6 +3,7 @@ class GovtRegistration {
   final String gid;
   final String GovtAgencyName;
   final String GovtAgencyARegNo;
+  final String profilePic;
   final String services;
   final String contactNumber;
   final String email;
@@ -20,6 +21,7 @@ class GovtRegistration {
       {required this.gid,
       required this.GovtAgencyName,
       required this.GovtAgencyARegNo,
+        required this.profilePic,
       required this.services,
       required this.contactNumber,
       required this.email,
@@ -39,6 +41,7 @@ class GovtRegistration {
       'gid': gid,
       'GovtAgencyName': GovtAgencyName,
       'GovtAgencyRegNo': GovtAgencyARegNo,
+      'profilePic': profilePic,
       'services': services,
       'contactNumber': "+91$contactNumber",
       'website': website,

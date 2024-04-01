@@ -1,14 +1,17 @@
-// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages, unrelated_type_equality_checks, use_build_context_synchronously
+// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages, unrelated_type_equality_checks, use_build_context_synchronously, avoid_print
 
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import '../../Utils/Utils.dart';
 import '../../Utils/dropdown_Items.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
@@ -25,6 +28,7 @@ class _UserProfileState extends State<UserProfile> {
 
   String fetchedFname = "";
   String fetchedLname = "";
+  String profileUrl = '';
   String? fetchedGender = "";
   late Timestamp fetchedBirthDate = Timestamp.now();
   String? fetchedPhone = "";
@@ -48,6 +52,9 @@ class _UserProfileState extends State<UserProfile> {
   TextEditingController pincodeTextController = TextEditingController();
   TextEditingController stateTextController = TextEditingController();
   TextEditingController cityTextController = TextEditingController();
+
+  late File pickedImage;
+  bool isPicked = false;
 
   @override
   void initState() {
@@ -112,15 +119,154 @@ class _UserProfileState extends State<UserProfile> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            // Center(
+                            //   child: CircleAvatar(
+                            //     radius: 37,
+                            //     backgroundImage: isMale
+                            //         ? const AssetImage("assets/images/man.png")
+                            //         : const AssetImage(
+                            //             "assets/images/woman.png"),
+                            //   ),
+                            // ),
                             Center(
-                              child: CircleAvatar(
-                                radius: 37,
-                                backgroundImage: isMale
-                                    ? const AssetImage("assets/images/man.png")
-                                    : const AssetImage(
-                                        "assets/images/woman.png"),
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    height: 90,
+                                    width: 90,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            color: Colors.deepPurple,
+                                            width: 3)),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(75),
+                                      child: isPicked
+                                          ? Image.file(
+                                              pickedImage,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : Image.network(
+                                              profileUrl,
+                                              fit: BoxFit.cover,
+                                              loadingBuilder: (context, child,
+                                                  loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                }
+                                                return const Center(
+                                                    child:
+                                                        CircularProgressIndicator());
+                                              },
+                                              errorBuilder:
+                                                  (context, object, stack) {
+                                                return const Icon(Iconsax.user,
+                                                    size: 30,
+                                                    color: Colors.red);
+                                              },
+                                            ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                      bottom: 0,
+                                      right: 0,
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.blue,
+                                              border: Border.all(
+                                                  width: 4,
+                                                  color: Colors.white)),
+                                          child: GestureDetector(
+                                              onTap: () async {
+                                                final picker = ImagePicker();
+                                                final XFile? image =
+                                                    await picker.pickImage(
+                                                        source: ImageSource
+                                                            .gallery);
+                                                if (image != null) {
+                                                  showDialog(
+                                                    context: context,
+                                                    barrierDismissible: false,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return const Dialog(
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  top: 35,
+                                                                  bottom: 25,
+                                                                  left: 20,
+                                                                  right: 20),
+                                                          child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              SizedBox(
+                                                                  height: 15),
+                                                              CircularProgressIndicator(
+                                                                  color: Colors
+                                                                      .blue),
+                                                              SizedBox(
+                                                                  height: 30),
+                                                              Text(
+                                                                  'Processing ...')
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+                                                  pickedImage =
+                                                      File(image.path);
+                                                  // Upload image to Firebase Storage
+                                                  String? imageUrl =
+                                                      await uploadImageToStorage(
+                                                          pickedImage);
+
+                                                  // Remove progress indicator
+                                                  Navigator.pop(context);
+
+                                                  if (imageUrl != null) {
+                                                    await uploadDataToFirestore(
+                                                        imageUrl);
+
+                                                    // Show success message
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      const SnackBar(
+                                                          content: Text(
+                                                              'Profile picture uploaded successfully')),
+                                                    );
+                                                  } else {
+                                                    // If image upload fails, show error message
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      const SnackBar(
+                                                          content: Text(
+                                                              'Failed to upload picture')),
+                                                    );
+                                                  }
+                                                  setState(() {
+                                                    isPicked = true;
+                                                  });
+                                                }
+                                              },
+                                              child: const Icon(Icons.add,
+                                                  size: 25)))),
+                                ],
                               ),
                             ),
+
                             const SizedBox(height: 15),
                             AbsorbPointer(
                               absorbing: !isEditing,
@@ -565,6 +711,7 @@ class _UserProfileState extends State<UserProfile> {
         setState(() {
           fetchedFname = citizenSnapshot.get('firstName');
           fetchedLname = citizenSnapshot.get('lastName');
+          profileUrl = citizenSnapshot.get('profilePic');
           fetchedGender = citizenSnapshot.get('gender');
           selectedGender = fetchedGender!;
           if (fetchedGender == 'Female') {
@@ -700,6 +847,42 @@ class _UserProfileState extends State<UserProfile> {
         (currentDate.month == birthDate.month &&
             currentDate.day < birthDate.day)) {
       userAge--;
+    }
+  }
+
+  Future<String?> uploadImageToStorage(File imageFile) async {
+    try {
+      firebase_storage.Reference storageRef = firebase_storage
+          .FirebaseStorage.instance
+          .ref()
+          .child('citizen')
+          .child(fetchedPhone!)
+          .child('${DateTime.now().microsecondsSinceEpoch}.jpg');
+
+      firebase_storage.UploadTask uploadTask = storageRef.putFile(imageFile);
+      await uploadTask
+          .whenComplete(() => print("Profile picture uploaded to Storage"));
+      String imageURL = await storageRef.getDownloadURL();
+      return imageURL;
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error while uploading profile picture : $e");
+      }
+    }
+    return null;
+  }
+
+  uploadDataToFirestore(String imageUrl) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("clc_citizen")
+          .doc(fetchedPhone)
+          .update({"profilePic": imageUrl});
+    } catch (e) {
+      // An error occurred
+      if (kDebugMode) {
+        print('Error adding picture data to firestore : $e');
+      }
     }
   }
 }

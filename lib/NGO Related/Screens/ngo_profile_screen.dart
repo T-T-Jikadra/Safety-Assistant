@@ -1,13 +1,17 @@
-// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages, unrelated_type_equality_checks, use_build_context_synchronously, camel_case_types
+// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages, unrelated_type_equality_checks, use_build_context_synchronously, camel_case_types, avoid_print
+
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../Utils/Utils.dart';
 import '../../Utils/constants.dart';
 import '../../Utils/dropdown_Items.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class NGO_Profile extends StatefulWidget {
   const NGO_Profile({super.key});
@@ -24,6 +28,7 @@ class _NGO_ProfileState extends State<NGO_Profile> {
   String fetchedNid = "";
   String fetchedNGOName = "";
   String fetchedNGORegNo = "";
+  String profileUrl = '';
   String fetchedServices = '';
   String fetchedContactNo = "";
   String fetchedWebsite = '';
@@ -48,6 +53,9 @@ class _NGO_ProfileState extends State<NGO_Profile> {
   TextEditingController pincodeTextController = TextEditingController();
   TextEditingController cityTextController = TextEditingController();
   TextEditingController stateTextController = TextEditingController();
+
+  late File pickedImage;
+  bool isPicked = false;
 
   @override
   void initState() {
@@ -122,6 +130,137 @@ class _NGO_ProfileState extends State<NGO_Profile> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Center(
+                            child: Stack(
+                              children: [
+                                Container(
+                                  height: 90,
+                                  width: 90,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          color: Colors.deepPurple, width: 3)),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(75),
+                                    child: isPicked
+                                        ? Image.file(
+                                            pickedImage,
+                                            fit: BoxFit.cover,
+                                          )
+                                        : Image.network(
+                                            profileUrl,
+                                            fit: BoxFit.cover,
+                                            loadingBuilder: (context, child,
+                                                loadingProgress) {
+                                              if (loadingProgress == null) {
+                                                return child;
+                                              }
+                                              return const Center(
+                                                  child:
+                                                      CircularProgressIndicator());
+                                            },
+                                            errorBuilder:
+                                                (context, object, stack) {
+                                              return Image.network(
+                                                  'https://static.vecteezy.com/system/resources/previews/017/139/963/non_2x/ngo-icon-free-vector.jpg');
+                                            },
+                                          ),
+                                  ),
+                                ),
+                                Positioned(
+                                    bottom: 0,
+                                    right: 0,
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.blue,
+                                            border: Border.all(
+                                                width: 4, color: Colors.white)),
+                                        child: GestureDetector(
+                                            onTap: () async {
+                                              final picker = ImagePicker();
+                                              final XFile? image =
+                                                  await picker.pickImage(
+                                                      source:
+                                                          ImageSource.gallery);
+                                              if (image != null) {
+                                                showDialog(
+                                                  context: context,
+                                                  barrierDismissible: false,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return const Dialog(
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                top: 35,
+                                                                bottom: 25,
+                                                                left: 20,
+                                                                right: 20),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            SizedBox(
+                                                                height: 15),
+                                                            CircularProgressIndicator(
+                                                                color: Colors
+                                                                    .blue),
+                                                            SizedBox(
+                                                                height: 30),
+                                                            Text(
+                                                                'Processing ...')
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                                pickedImage = File(image.path);
+                                                // Upload image to Firebase Storage
+                                                String? imageUrl =
+                                                    await uploadImageToStorage(
+                                                        pickedImage);
+
+                                                // Remove progress indicator
+                                                Navigator.pop(context);
+
+                                                if (imageUrl != null) {
+                                                  await uploadDataToFirestore(
+                                                      imageUrl);
+
+                                                  // Show success message
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    const SnackBar(
+                                                        content: Text(
+                                                            'Profile picture uploaded successfully')),
+                                                  );
+                                                } else {
+                                                  // If image upload fails, show error message
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    const SnackBar(
+                                                        content: Text(
+                                                            'Failed to upload picture')),
+                                                  );
+                                                }
+                                                setState(() {
+                                                  isPicked = true;
+                                                });
+                                              }
+                                            },
+                                            child: const Icon(Icons.add,
+                                                size: 25)))),
+                              ],
+                            ),
+                          ),
                           Form(
                             key: _formKey,
                             child: AbsorbPointer(
@@ -142,7 +281,7 @@ class _NGO_ProfileState extends State<NGO_Profile> {
                                             Text("Credit score : $fetchedScore",
                                                 style: const TextStyle(
                                                     fontWeight:
-                                                    FontWeight.w600)),
+                                                        FontWeight.w600)),
                                             const SizedBox(width: 3),
                                           ],
                                         ),
@@ -572,6 +711,7 @@ class _NGO_ProfileState extends State<NGO_Profile> {
           fetchedNid = govtSnapshot.get('nid');
           fetchedNGOName = govtSnapshot.get('nameOfNGO');
           fetchedNGORegNo = govtSnapshot.get('NGORegNo');
+          profileUrl = govtSnapshot.get("profilePic");
           fetchedServices = govtSnapshot.get('services');
           fetchedContactNo = govtSnapshot.get('contactNumber');
           fetchedWebsite = govtSnapshot.get('website');
@@ -583,7 +723,6 @@ class _NGO_ProfileState extends State<NGO_Profile> {
           fetchedRegTime = govtSnapshot.get('registrationTime');
           fetchedRegTime = fetchedRegTime.substring(0, 16);
           fetchedScore = govtSnapshot.get('creditScore');
-
         });
       } else {
         if (kDebugMode) {
@@ -729,5 +868,41 @@ class _NGO_ProfileState extends State<NGO_Profile> {
     setState(() {
       dropdownItemCity = DropdownItems.cityMap[state] ?? [];
     });
+  }
+
+  Future<String?> uploadImageToStorage(File imageFile) async {
+    try {
+      firebase_storage.Reference storageRef = firebase_storage
+          .FirebaseStorage.instance
+          .ref()
+          .child('ngo')
+          .child(fetchedEmail)
+          .child('${DateTime.now().microsecondsSinceEpoch}.jpg');
+
+      firebase_storage.UploadTask uploadTask = storageRef.putFile(imageFile);
+      await uploadTask
+          .whenComplete(() => print("Profile picture uploaded to Storage"));
+      String imageURL = await storageRef.getDownloadURL();
+      return imageURL;
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error while uploading profile picture : $e");
+      }
+    }
+    return null;
+  }
+
+  uploadDataToFirestore(String imageUrl) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("clc_ngo")
+          .doc(fetchedEmail)
+          .update({"profilePic": imageUrl});
+    } catch (e) {
+      // An error occurred
+      if (kDebugMode) {
+        print('Error adding picture data to firestore : $e');
+      }
+    }
   }
 }

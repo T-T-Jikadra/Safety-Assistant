@@ -3,6 +3,7 @@ class NGORegistration {
   final String nid;
   final String ngoName;
   final String ngoRegNo;
+  final String profilePic;
   final String services;
   final String contactNumber;
   final String email;
@@ -20,6 +21,7 @@ class NGORegistration {
       {required this.nid,
       required this.ngoName,
       required this.ngoRegNo,
+        required this.profilePic,
       required this.services,
       required this.contactNumber,
       required this.email,
@@ -39,6 +41,7 @@ class NGORegistration {
       'nid': nid,
       'nameOfNGO': ngoName,
       'NGORegNo': ngoRegNo,
+      'profilePic': profilePic,
       'services': services,
       'contactNumber': "+91$contactNumber",
       'website': website,

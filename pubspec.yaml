@@ -134,8 +134,8 @@ flutter:
     - assets/
     - assets/images/
     - assets/json/
-    - assets/avaters/
-    - assets/Backgrounds/
+  # - assets/avaters/
+  # - assets/Backgrounds/
     - assets/icons/
     - assets/RiveAssets/
     - assets/svg/

@@ -104,7 +104,8 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                             children: [
                               Row(
                                 children: [
-                                  const Icon(CupertinoIcons.exclamationmark_octagon_fill),
+                                  const Icon(CupertinoIcons
+                                      .exclamationmark_octagon_fill),
                                   const SizedBox(width: 12),
                                   Column(
                                     crossAxisAlignment:
@@ -139,14 +140,19 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.65,
-                                        child: Flexible(
-                                          child: Text(
-                                              widget.documentSnapshot[
-                                                  'description'],
-                                              maxLines: 5,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  fontSize: 16)),
+                                        child: Row(
+                                          children: [
+                                            Flexible(
+                                              child: Text(
+                                                  widget.documentSnapshot[
+                                                      'description'],
+                                                  maxLines: 5,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                      fontSize: 16)),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
@@ -424,9 +430,7 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                       const Text(
                         'Additional Info',
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500),
+                            fontSize: 18, fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(height: 20),
                       Container(
@@ -445,18 +449,18 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                       children: [
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.64,
                                           child: const Text("During :",
                                               style: TextStyle(
-                                                  fontWeight:
-                                                  FontWeight.w600,
-                                                  fontSize: 16,color: Colors.deepPurple)),
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16,
+                                                  color: Colors.deepPurple)),
                                         ),
                                       ],
                                     ),
@@ -469,24 +473,23 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
-                                        const Icon(
-                                            Iconsax.arrow_circle_right),
+                                        const Icon(Iconsax.arrow_circle_right),
                                         const SizedBox(width: 5),
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.64,
                                           // Adjust the width as needed
                                           child: Text(
-                                              fetchedDuring1,
-                                              textAlign: TextAlign.justify,
-                                              maxLines: 5,
-                                              overflow:
-                                              TextOverflow.ellipsis,
-                                              style: const TextStyle(color: Colors.black)),                                                ),
+                                            fetchedDuring1,
+                                            textAlign: TextAlign.justify,
+                                            maxLines: 5,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -498,24 +501,22 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
-                                        const Icon(
-                                            Iconsax.arrow_circle_right),
+                                        const Icon(Iconsax.arrow_circle_right),
                                         const SizedBox(width: 5),
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.64,
                                           // Adjust the width as needed
-                                          child: Text(
-                                              fetchedDuring2,
+                                          child: Text(fetchedDuring2,
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
-                                              overflow:
-                                              TextOverflow.ellipsis,
-                                              style: const TextStyle(color: Colors.black)),                                                ),
+                                              overflow: TextOverflow.ellipsis,
+                                              ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -527,24 +528,22 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
-                                        const Icon(
-                                            Iconsax.arrow_circle_right),
+                                        const Icon(Iconsax.arrow_circle_right),
                                         const SizedBox(width: 5),
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.64,
                                           // Adjust the width as needed
-                                          child: Text(
-                                              fetchedDuring3,
+                                          child: Text(fetchedDuring3,
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
-                                              overflow:
-                                              TextOverflow.ellipsis,
-                                              style: const TextStyle(color: Colors.black)),                                                ),
+                                              overflow: TextOverflow.ellipsis,
+                                              ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -558,18 +557,18 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                       children: [
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.64,
                                           child: const Text("Before :",
                                               style: TextStyle(
-                                                  fontWeight:
-                                                  FontWeight.w600,
-                                                  fontSize: 16,color: Colors.deepPurple)),
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16,
+                                                  color: Colors.deepPurple)),
                                         ),
                                       ],
                                     ),
@@ -582,24 +581,22 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
-                                        const Icon(
-                                            Iconsax.arrow_circle_right),
+                                        const Icon(Iconsax.arrow_circle_right),
                                         const SizedBox(width: 5),
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.64,
                                           // Adjust the width as needed
-                                          child: Text(
-                                              fetchedBefore1,
+                                          child: Text(fetchedBefore1,
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
-                                              overflow:
-                                              TextOverflow.ellipsis,
-                                              style: const TextStyle(color: Colors.black)),                                                ),
+                                              overflow: TextOverflow.ellipsis,
+                                              ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -611,24 +608,22 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
-                                        const Icon(
-                                            Iconsax.arrow_circle_right),
+                                        const Icon(Iconsax.arrow_circle_right),
                                         const SizedBox(width: 5),
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.64,
                                           // Adjust the width as needed
-                                          child: Text(
-                                              fetchedBefore2,
+                                          child: Text(fetchedBefore2,
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
-                                              overflow:
-                                              TextOverflow.ellipsis,
-                                              style: const TextStyle(color: Colors.black)),                                                ),
+                                              overflow: TextOverflow.ellipsis,
+                                             ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -640,24 +635,22 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
-                                        const Icon(
-                                            Iconsax.arrow_circle_right),
+                                        const Icon(Iconsax.arrow_circle_right),
                                         const SizedBox(width: 5),
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.64,
                                           // Adjust the width as needed
-                                          child: Text(
-                                              fetchedBefore3,
+                                          child: Text(fetchedBefore3,
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
-                                              overflow:
-                                              TextOverflow.ellipsis,
-                                              style: const TextStyle(color: Colors.black)),                                                ),
+                                              overflow: TextOverflow.ellipsis,
+                                              ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -669,24 +662,22 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
-                                        const Icon(
-                                            Iconsax.arrow_circle_right),
+                                        const Icon(Iconsax.arrow_circle_right),
                                         const SizedBox(width: 5),
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.64,
                                           // Adjust the width as needed
-                                          child: Text(
-                                              fetchedBefore4,
+                                          child: Text(fetchedBefore4,
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
-                                              overflow:
-                                              TextOverflow.ellipsis,
-                                              style: const TextStyle(color: Colors.black)),                                                ),
+                                              overflow: TextOverflow.ellipsis,
+                                              ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -698,24 +689,22 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
-                                        const Icon(
-                                            Iconsax.arrow_circle_right),
+                                        const Icon(Iconsax.arrow_circle_right),
                                         const SizedBox(width: 5),
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.64,
                                           // Adjust the width as needed
-                                          child: Text(
-                                              fetchedBefore5,
+                                          child: Text(fetchedBefore5,
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
-                                              overflow:
-                                              TextOverflow.ellipsis,
-                                              style: const TextStyle(color: Colors.black)),                                                ),
+                                              overflow: TextOverflow.ellipsis,
+                                              ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -729,18 +718,18 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                       children: [
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.64,
                                           child: const Text("After :",
                                               style: TextStyle(
-                                                  fontWeight:
-                                                  FontWeight.w600,
-                                                  fontSize: 16,color: Colors.deepPurple)),
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16,
+                                                  color: Colors.deepPurple)),
                                         ),
                                       ],
                                     ),
@@ -753,24 +742,22 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
-                                        const Icon(
-                                            Iconsax.arrow_circle_right),
+                                        const Icon(Iconsax.arrow_circle_right),
                                         const SizedBox(width: 5),
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.64,
                                           // Adjust the width as needed
-                                          child: Text(
-                                              fetchedAfter1,
+                                          child: Text(fetchedAfter1,
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
-                                              overflow:
-                                              TextOverflow.ellipsis,
-                                              style: const TextStyle(color: Colors.black)),                                                ),
+                                              overflow: TextOverflow.ellipsis,
+                                              ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -782,24 +769,22 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
-                                        const Icon(
-                                            Iconsax.arrow_circle_right),
+                                        const Icon(Iconsax.arrow_circle_right),
                                         const SizedBox(width: 5),
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.64,
                                           // Adjust the width as needed
-                                          child: Text(
-                                              fetchedAfter2,
+                                          child: Text(fetchedAfter2,
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
-                                              overflow:
-                                              TextOverflow.ellipsis,
-                                              style: const TextStyle(color: Colors.black)),                                                ),
+                                              overflow: TextOverflow.ellipsis,
+                                             ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -811,24 +796,22 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
-                                        const Icon(
-                                            Iconsax.arrow_circle_right),
+                                        const Icon(Iconsax.arrow_circle_right),
                                         const SizedBox(width: 5),
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.64,
                                           // Adjust the width as needed
-                                          child: Text(
-                                              fetchedAfter3,
+                                          child: Text(fetchedAfter3,
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
-                                              overflow:
-                                              TextOverflow.ellipsis,
-                                              style: const TextStyle(color: Colors.black)),                                                ),
+                                              overflow: TextOverflow.ellipsis,
+                                              ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -840,24 +823,22 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
-                                        const Icon(
-                                            Iconsax.arrow_circle_right),
+                                        const Icon(Iconsax.arrow_circle_right),
                                         const SizedBox(width: 5),
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.64,
                                           // Adjust the width as needed
-                                          child: Text(
-                                              fetchedAfter4,
+                                          child: Text(fetchedAfter4,
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
-                                              overflow:
-                                              TextOverflow.ellipsis,
-                                              style: const TextStyle(color: Colors.black)),                                                ),
+                                              overflow: TextOverflow.ellipsis,
+                                              ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -869,24 +850,22 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                                   Expanded(
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
-                                        const Icon(
-                                            Iconsax.arrow_circle_right),
+                                        const Icon(Iconsax.arrow_circle_right),
                                         const SizedBox(width: 5),
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.64,
                                           // Adjust the width as needed
-                                          child: Text(
-                                              fetchedAfter5,
+                                          child: Text(fetchedAfter5,
                                               textAlign: TextAlign.justify,
                                               maxLines: 5,
-                                              overflow:
-                                              TextOverflow.ellipsis,
-                                              style: const TextStyle(color: Colors.black)),                                                ),
+                                              overflow: TextOverflow.ellipsis,
+                                              ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -896,7 +875,7 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
                           ),
                         ),
                       ),
-
+                      const SizedBox(height: 15),
                     ],
                   ),
                 ),
@@ -919,7 +898,6 @@ class _Alert_Details_ScreenState extends State<Alert_Details_Screen> {
           fetchedDonts2 = dosSnap.get("donts_2");
           fetchedDos3 = dosSnap.get("dos_3");
           fetchedDonts3 = dosSnap.get("donts_3");
-
 
           fetchedBefore1 = dosSnap.get('Before_1');
           fetchedBefore2 = dosSnap.get('Before_2');

@@ -625,6 +625,7 @@ class _CitizenSignupPageScreenState extends State<CitizenSignupPageScreen> {
                                       cid: "c$totalDocCount",
                                       firstName: fnameTextController.text,
                                       lastName: lnameTextController.text,
+                                      profilePic: "",
                                       gender: genderRadio ?? "",
                                       // Assuming genderRadio is nullable String
                                       phoneNumber: widget.contactNumber,

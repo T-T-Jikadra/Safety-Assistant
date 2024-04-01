@@ -34,10 +34,10 @@ class _NGO_FAQ_ScreenState extends State<NGO_FAQ_Screen> {
                   showDivider: false,
                   question: "How to login?",
                   answer:
-                      "A phone number is required for login. An OTP will be sent to your phone number for login."),
+                      "A Registered email and NGO Registration number is required for Login. After Entering these both field you need enter your password then after you can Login to the Application."),
               FAQ(
                   question:
-                      "How can I  Response someone who has requested for help?",
+                      "How can I Response someone who has requested for help?",
                   answer:
                       "Whenever someone is in the situation of emergency or in need of help they will request you through the Application and you will be notified immediately and will get the full information of person who has requested."),
               FAQ(

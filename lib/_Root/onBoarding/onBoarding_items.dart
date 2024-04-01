@@ -25,7 +25,7 @@ class OnboardingItems{
         title: "Join With Us",
         descriptions: "Let's join hands to minimize disaster impact. Our system brings NGOs and Government Agencies "
             "together, ensuring swift response and aid during emergencies and gives maximum relief to the Citizen.",
-        image: "assets/images/onboarding4.png"),
+        image: "assets/images/onboarding4_.png"),
 
   ];
 }
