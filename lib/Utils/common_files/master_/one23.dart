@@ -1,22 +1,23 @@
-// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages
+// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages, camel_case_types
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
-import '../../../Admin Related/admin_request_history_screen/admin_request_details_screen.dart';
 import '../../Utils.dart';
+import 'open_request_master.dart';
 
-class RequestsPage extends StatefulWidget {
-  const RequestsPage({super.key});
+class Latest_Req_Screen extends StatefulWidget {
+  const Latest_Req_Screen({super.key});
 
   @override
-  _RequestsPageState createState() => _RequestsPageState();
+  _Latest_Req_ScreenState createState() => _Latest_Req_ScreenState();
 }
 
-class _RequestsPageState extends State<RequestsPage> {
+class _Latest_Req_ScreenState extends State<Latest_Req_Screen> {
   late SharedPreferences prefs;
   List<String> readRequestIds = [];
+  String userName = '';
 
   @override
   void initState() {
@@ -34,7 +35,14 @@ class _RequestsPageState extends State<RequestsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Requests'),
+          elevation: 50,
+          backgroundColor: Colors.black12,
+          centerTitle: true,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(25),
+                  bottomLeft: Radius.circular(25))),
+          title: const Text("Requests"),
         ),
         body: Column(
           children: [
@@ -79,46 +87,76 @@ class _RequestsPageState extends State<RequestsPage> {
 
                                         return GestureDetector(
                                           onTap: () async {
-                                            Navigator.of(context).push(
-                                              PageRouteBuilder(
-                                                pageBuilder: (context,
-                                                        animation,
-                                                        secondaryAnimation) =>
-                                                    Admin_Request_Details_Screen(
-                                                  documentSnapshot: snapshot
-                                                      .data!.docs[index],
+                                            FirebaseFirestore.instance
+                                                .collection("clc_citizen")
+                                                .where("cid",
+                                                    isEqualTo: snapshot.data!
+                                                        .docs[index]['cid'])
+                                                .get()
+                                                .then(
+                                                    (QuerySnapshot querySnap) {
+                                              userName =
+                                                  "${querySnap.docs.first['firstName']} ${querySnap.docs.first['lastName']}";
+                                              // };
+                                              Navigator.of(context).push(
+                                                PageRouteBuilder(
+                                                  pageBuilder: (context,
+                                                          animation,
+                                                          secondaryAnimation) =>
+                                                      Open_Req_Screen_Master(
+                                                    pin: snapshot.data!
+                                                        .docs[index]['pinCode'],
+                                                    title: snapshot
+                                                            .data!.docs[index]
+                                                        ['neededService'],
+                                                    add: snapshot
+                                                            .data!.docs[index]
+                                                        ['fullAddress'],
+                                                    city: snapshot.data!
+                                                        .docs[index]['city'],
+                                                    contactNo: snapshot
+                                                            .data!.docs[index]
+                                                        ['contactNumber'],
+                                                    userName: userName,
+                                                    rid: snapshot
+                                                            .data!.docs[index]
+                                                        ['RequestId'],
+                                                  ),
+                                                  transitionsBuilder: (context,
+                                                      animation,
+                                                      secondaryAnimation,
+                                                      child) {
+                                                    var begin =
+                                                        const Offset(1.0, 0.0);
+                                                    var end = Offset.zero;
+                                                    var curve = Curves.ease;
+
+                                                    var tween = Tween(
+                                                            begin: begin,
+                                                            end: end)
+                                                        .chain(CurveTween(
+                                                            curve: curve));
+                                                    var offsetAnimation =
+                                                        animation.drive(tween);
+
+                                                    return SlideTransition(
+                                                      position: offsetAnimation,
+                                                      child: child,
+                                                    );
+                                                  },
                                                 ),
-                                                transitionsBuilder: (context,
-                                                    animation,
-                                                    secondaryAnimation,
-                                                    child) {
-                                                  var begin =
-                                                      const Offset(1.0, 0.0);
-                                                  var end = Offset.zero;
-                                                  var curve = Curves.ease;
+                                              );
+                                            });
 
-                                                  var tween = Tween(
-                                                          begin: begin,
-                                                          end: end)
-                                                      .chain(CurveTween(
-                                                          curve: curve));
-                                                  var offsetAnimation =
-                                                      animation.drive(tween);
-
-                                                  return SlideTransition(
-                                                    position: offsetAnimation,
-                                                    child: child,
-                                                  );
-                                                },
-                                              ),
-                                            );
                                             if (!isRead) {
                                               await _markRequestAsRead(
                                                   requestId);
                                             }
                                           },
                                           child: Card(
-                                            color: isRead ? null : Colors.yellow[100],
+                                            color: isRead
+                                                ? Colors.white
+                                                : Colors.yellow[100],
                                             margin: const EdgeInsets.only(
                                                 bottom: 13, left: 7, right: 7),
                                             // Set margin to zero to remove white spaces
@@ -242,7 +280,7 @@ class _RequestsPageState extends State<RequestsPage> {
                                                         ),
                                                       ),
                                                       const SizedBox(height: 2),
-                                                       Padding(
+                                                      Padding(
                                                         padding:
                                                             const EdgeInsets
                                                                 .only(
@@ -259,20 +297,21 @@ class _RequestsPageState extends State<RequestsPage> {
                                                                 size: 16,
                                                                 color: Colors
                                                                     .black54),
-                                                            const SizedBox(width: 3),
+                                                            const SizedBox(
+                                                                width: 3),
                                                             Text(
                                                                 DateFormat(
-                                                                    'dd-MM-yyyy , HH:mm')
-                                                                    .format(DateTime
-                                                                    .parse(snapshot
-                                                                    .data!
-                                                                    .docs[index]
-                                                                [
-                                                                'reqTime'])),
+                                                                        'dd-MM-yyyy , HH:mm')
+                                                                    .format(DateTime.parse(snapshot
+                                                                            .data!
+                                                                            .docs[index]
+                                                                        [
+                                                                        'reqTime'])),
                                                                 style: const TextStyle(
-                                                                    color:
-                                                                    Colors.black38,
-                                                                    fontSize: 12)),
+                                                                    color: Colors
+                                                                        .black38,
+                                                                    fontSize:
+                                                                        12)),
                                                           ],
                                                         ),
                                                       ),

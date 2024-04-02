@@ -98,27 +98,34 @@ class _Onboarding_ScreenState extends State<Onboarding_Screen> {
   //Get started button
 
   Widget getStarted() {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: const Color(0xFF7871db)),
-      width: MediaQuery.of(context).size.width * .9,
-      height: 55,
-      child: TextButton(
-          onPressed: () async {
-            final pres = await SharedPreferences.getInstance();
-            pres.setBool("onboarding", true);
+    return Padding(
+      padding: const EdgeInsets.only(right: 8, left: 8),
+      child: Container(
+        padding: const EdgeInsets.only(bottom: 8),
+        width: double.infinity,
+        child: ClipRRect(
+            child: ElevatedButton(
+                onPressed: () async {
+                  final pres = await SharedPreferences.getInstance();
+                  pres.setBool("onboarding", true);
 
-            //After we press get started button this onboarding value become true
-            // same key
-            if (!mounted) return;
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => const SelectOptionPageScreen()));
-          },
-          child: const Text(
-            "Get started",
-            style: TextStyle(color: Colors.white),
-          )),
+                  //After we press get started button this onboarding value become true
+                  // same key
+                  if (!mounted) return;
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const SelectOptionPageScreen()));
+                },
+                style: ButtonStyle(
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18)))),
+                child: const Text(
+                  "get started",
+                  style: TextStyle(color: Colors.white),
+                ))),
+      ),
     );
   }
 }

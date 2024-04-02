@@ -48,12 +48,9 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
 
   @override
   void initState() {
-    fetchCitizenData();
-    Future.delayed(const Duration(milliseconds: 1600), () {
-      setState(() {
-        isFetched = true;
-      });
-    });
+    fetchCitizenData().then((value) => setState(() {
+          isFetched = true;
+        }));
     super.initState();
     selectedService = DropdownItems.dropdownItemRequestTypes.first;
     //listen to  incoming msg...
@@ -96,8 +93,8 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 25),
                       padding: const EdgeInsets.only(
-                        //for fields that are covered under keyboard ..
-                        // bottom: MediaQuery.of(context).viewInsets.bottom,
+                          //for fields that are covered under keyboard ..
+                          // bottom: MediaQuery.of(context).viewInsets.bottom,
                           left: 2,
                           right: 2),
                       child: Column(
@@ -200,48 +197,48 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                           if (selectedRadioAddress == 1)
                             isFetched
                                 ? Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 8),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(19.0),
-                                border: Border.all(
-                                  color: Colors.grey,
-                                  width: 1.0,
-                                ),
-                              ),
-                              child: DataTable(
-                                columnSpacing: 10.0,
-                                columns: const [
-                                  DataColumn(
-                                      label: Text('Field',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: colorPrimary))),
-                                  DataColumn(
-                                      label: Text('Data',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: colorPrimary))),
-                                ],
-                                rows: [
-                                  buildDataRow('Name', fetchedFname),
-                                  buildDataRow(
-                                      'Address', fetchedFullAddress),
-                                  buildDataRow(
-                                      'Pin Code', fetchedPinCode),
-                                  buildDataRow('City', fetchedCity),
-                                  buildDataRow('State', fetchedState),
-                                ],
-                              ),
-                            )
-                            // Text(
-                            //         "$fetchedFname \n $fetchedFullAddress \n $fetchedPinCode \n $fetchedCity \n $fetchedState ",
-                            //         style: const TextStyle(fontSize: 14),
-                            //       )
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 8),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(19.0),
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    child: DataTable(
+                                      columnSpacing: 10.0,
+                                      columns: const [
+                                        DataColumn(
+                                            label: Text('Field',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: colorPrimary))),
+                                        DataColumn(
+                                            label: Text('Data',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: colorPrimary))),
+                                      ],
+                                      rows: [
+                                        buildDataRow('Name', fetchedFname),
+                                        buildDataRow(
+                                            'Address', fetchedFullAddress),
+                                        buildDataRow(
+                                            'Pin Code', fetchedPinCode),
+                                        buildDataRow('City', fetchedCity),
+                                        buildDataRow('State', fetchedState),
+                                      ],
+                                    ),
+                                  )
+                                // Text(
+                                //         "$fetchedFname \n $fetchedFullAddress \n $fetchedPinCode \n $fetchedCity \n $fetchedState ",
+                                //         style: const TextStyle(fontSize: 14),
+                                //       )
                                 : const SpinKitThreeBounce(
-                              color: Colors.blueGrey,
-                              size: 20,
-                            ),
+                                    color: Colors.blueGrey,
+                                    size: 20,
+                                  ),
                           if (selectedRadioAddress == 2)
                             AnimatedSize(
                               duration: const Duration(milliseconds: 300),
@@ -285,7 +282,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                             maxLength: 6,
                                             decoration: const InputDecoration(
                                                 prefixIcon:
-                                                Icon(Icons.pin_rounded),
+                                                    Icon(Icons.pin_rounded),
                                                 hintText: 'Enter Pincode',
                                                 labelText: "Pincode"),
                                             validator: selectedRadioAddress != 1
@@ -330,9 +327,9 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                         mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                         children: [
                                           SizedBox(height: 15),
                                           CircularProgressIndicator(
@@ -356,10 +353,10 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                         .runTransaction((transaction) async {
                                       // Get the current count of requests
                                       DocumentSnapshot snapshot =
-                                      await transaction.get(
-                                          FirebaseFirestore.instance
-                                              .collection("clc_request")
-                                              .doc("request_count"));
+                                          await transaction.get(
+                                              FirebaseFirestore.instance
+                                                  .collection("clc_request")
+                                                  .doc("request_count"));
                                       totalDocCount = (snapshot.exists)
                                           ? snapshot.get('count')
                                           : 0;
@@ -375,28 +372,28 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                     var ngoQuerySnapshot = await FirebaseFirestore
                                         .instance
                                         .collection('clc_ngo')
-                                    //added new ***
-                                    // .where('services', whereIn: selectedServiceWords)
+                                        //added new ***
+                                        // .where('services', whereIn: selectedServiceWords)
                                         .where('city', isEqualTo: fetchedCity)
                                         .get();
 
                                     for (var ngoDoc in ngoQuerySnapshot.docs) {
                                       String deviceToken =
-                                      ngoDoc.data()['deviceToken'];
+                                          ngoDoc.data()['deviceToken'];
                                       sendNotificationToDevice(
                                           deviceToken, totalDocCount);
                                     }
 
                                     var govtQuerySnapshot =
-                                    await FirebaseFirestore.instance
-                                        .collection('clc_govt')
-                                        .where('city',
-                                        isEqualTo: fetchedCity)
-                                        .get();
+                                        await FirebaseFirestore.instance
+                                            .collection('clc_govt')
+                                            .where('city',
+                                                isEqualTo: fetchedCity)
+                                            .get();
 
                                     for (var doc in govtQuerySnapshot.docs) {
                                       String deviceToken =
-                                      doc.data()['deviceToken'];
+                                          doc.data()['deviceToken'];
                                       sendNotificationToDevice(
                                           deviceToken, totalDocCount);
                                     }
@@ -416,47 +413,47 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                   showMsgDialog(
                                       context,
                                       'You have already requested for your request ,'
-                                          '\n Nearby authority will contact you soon ');
+                                      '\n Nearby authority will contact you soon ');
                                 }
                               } else {
                                 if (_formKey.currentState!.validate()) {
                                   if (!notificationSent) {
                                     CollectionReference
-                                    citizenRequestCollection =
-                                    FirebaseFirestore.instance
-                                        .collection("clc_request");
+                                        citizenRequestCollection =
+                                        FirebaseFirestore.instance
+                                            .collection("clc_request");
                                     try {
                                       QuerySnapshot snapshot =
-                                      await citizenRequestCollection.get();
+                                          await citizenRequestCollection.get();
                                       int totalDocCount = snapshot.size;
                                       totalDocCount++;
                                       //sends request/alert to only NGO which are of the currents user's city
                                       var ngoQuerySnapshot = await FirebaseFirestore
                                           .instance
                                           .collection('clc_ngo')
-                                      //added new ***
-                                      // .where('services', whereIn: selectedServiceWords)
+                                          //added new ***
+                                          // .where('services', whereIn: selectedServiceWords)
                                           .where('city', isEqualTo: fetchedCity)
                                           .get();
 
                                       for (var ngoDoc
-                                      in ngoQuerySnapshot.docs) {
+                                          in ngoQuerySnapshot.docs) {
                                         String deviceToken =
-                                        ngoDoc.data()['deviceToken'];
+                                            ngoDoc.data()['deviceToken'];
                                         sendNotificationToDevice(
                                             deviceToken, totalDocCount);
                                       }
 
                                       var govtQuerySnapshot =
-                                      await FirebaseFirestore.instance
-                                          .collection('clc_govt')
-                                          .where('city',
-                                          isEqualTo: fetchedCity)
-                                          .get();
+                                          await FirebaseFirestore.instance
+                                              .collection('clc_govt')
+                                              .where('city',
+                                                  isEqualTo: fetchedCity)
+                                              .get();
 
                                       for (var doc in govtQuerySnapshot.docs) {
                                         String deviceToken =
-                                        doc.data()['deviceToken'];
+                                            doc.data()['deviceToken'];
                                         sendNotificationToDevice(
                                             deviceToken, totalDocCount);
                                       }
@@ -476,7 +473,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                     showMsgDialog(
                                         context,
                                         'You have already requested for your request ,'
-                                            '\n Nearby authority will contact you soon ');
+                                        '\n Nearby authority will contact you soon ');
                                   }
                                 } else {
                                   Navigator.pop(context);
@@ -487,7 +484,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                 shape: MaterialStateProperty.all(
                                     RoundedRectangleBorder(
                                         borderRadius:
-                                        BorderRadius.circular(18)))),
+                                            BorderRadius.circular(18)))),
                             child: const Text("Request now"))),
                   ),
                 ),
@@ -563,7 +560,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
             ? fetchedFullAddress
             : addressController.text,
         'pincode':
-        selectedRadioAddress == 1 ? fetchedPinCode : pincodeController.text,
+            selectedRadioAddress == 1 ? fetchedPinCode : pincodeController.text,
         'username': fetchedFname,
         'city': fetchedCity,
         'phoneNumber': fetchedPhone,
@@ -578,7 +575,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization':
-        'key=AAAAqhgqKGQ:APA91bEi_iwrEhn8BbQOG7pfFwUikl3Kp0K1sKAoOadF9Evb8Off1U5EqwljkoMprm5uO-aS_wctndIRoJum30YbvyJIBA5W4TF-EBmL8DRTrY1kHTTsDXaW8wWPLBSrbcgPobzzm8No'
+            'key=AAAAqhgqKGQ:APA91bEi_iwrEhn8BbQOG7pfFwUikl3Kp0K1sKAoOadF9Evb8Off1U5EqwljkoMprm5uO-aS_wctndIRoJum30YbvyJIBA5W4TF-EBmL8DRTrY1kHTTsDXaW8wWPLBSrbcgPobzzm8No'
       },
     );
   }
@@ -597,7 +594,7 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
         state: fetchedState,
         city: fetchedCity,
         pinCode:
-        selectedRadioAddress == 1 ? fetchedPinCode : pincodeController.text,
+            selectedRadioAddress == 1 ? fetchedPinCode : pincodeController.text,
         fullAddress: selectedRadioAddress == 1
             ? fetchedFullAddress
             : addressController.text,

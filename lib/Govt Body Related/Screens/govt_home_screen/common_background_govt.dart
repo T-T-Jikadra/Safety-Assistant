@@ -13,6 +13,7 @@ import '../../../Utils/Utils.dart';
 import 'package:intl/intl.dart';
 
 import '../../../Utils/common_files/alerts/alert_screen.dart';
+import '../../../Utils/common_files/master_/one23.dart';
 import '../../../Utils/common_files/media/media_history_screen.dart';
 import '../govt_respond_history_screen.dart';
 
@@ -89,6 +90,37 @@ class _commonbg_govtState extends State<commonbg_govt> {
                     size: 20,
                   ),
                   const Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                          const Latest_Req_Screen(),
+                          transitionsBuilder: (context, animation,
+                              secondaryAnimation, child) {
+                            var begin = const Offset(1.0, 0.0);
+                            var end = Offset.zero;
+                            var curve = Curves.ease;
+
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+                            var offsetAnimation = animation.drive(tween);
+
+                            return SlideTransition(
+                              position: offsetAnimation,
+                              child: child,
+                            );
+                          },
+                        ),
+                      );
+                    },
+                    child: Image.asset('assets/images/bell.png',
+                        width: 30, height: 30),
+                  ),
+                  const SizedBox(width: 5),
+                  const Icon(Icons.notifications_active_outlined,
+                      size: 30, color: Colors.deepPurple),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: SvgPicture.asset("assets/images/logo_svg.svg",
