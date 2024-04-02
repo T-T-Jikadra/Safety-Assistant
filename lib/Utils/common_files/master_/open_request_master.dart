@@ -170,8 +170,7 @@ class _Open_Req_Screen_MasterState extends State<Open_Req_Screen_Master> {
               Padding(
                 padding: const EdgeInsets.only(right: 15, left: 15),
                 child:
-                    // fetchedIsTnxComplete == "false"
-                    //     ?
+                    // fetchedIsTnxComplete == "false"  ?
                     Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   // Align buttons to the sides
@@ -187,12 +186,12 @@ class _Open_Req_Screen_MasterState extends State<Open_Req_Screen_Master> {
                               child: isDeclinePressed
                                   ? ElevatedButton(
                                       onPressed: () async {
-                                        showDialogAlert(context, "You've already declined to this request..");
+                                        showDialogAlert(context,
+                                            "You have already reacted to the request");
                                       },
                                       style: ButtonStyle(
-                                          backgroundColor:
-                                              const MaterialStatePropertyAll(
-                                                  Colors.blueGrey),
+                                          backgroundColor: MaterialStatePropertyAll(
+                                              Colors.deepOrange.shade300),
                                           shape: MaterialStateProperty.all(
                                               RoundedRectangleBorder(
                                                   borderRadius:
@@ -214,7 +213,6 @@ class _Open_Req_Screen_MasterState extends State<Open_Req_Screen_Master> {
                                         await Future.delayed(
                                             const Duration(milliseconds: 1200));
                                         Navigator.pop(context);
-                                        _saveDeclineState(widget.rid);
 
                                         showDeclinedPopUp(context);
                                         // showToastMsg(
@@ -244,12 +242,13 @@ class _Open_Req_Screen_MasterState extends State<Open_Req_Screen_Master> {
                             child: isAcceptPressed
                                 ? ElevatedButton(
                                     onPressed: () async {
-                                      showDialogAlert(context, "You've already responded to this request..");
+                                      showDialogAlert(context,
+                                          "You have already reacted to the request");
                                     },
                                     style: ButtonStyle(
                                         backgroundColor:
-                                            const MaterialStatePropertyAll(
-                                                Colors.blueGrey),
+                                            MaterialStatePropertyAll(
+                                                Colors.green.shade200),
                                         shape: MaterialStateProperty.all(
                                             RoundedRectangleBorder(
                                                 borderRadius:
@@ -325,6 +324,7 @@ class _Open_Req_Screen_MasterState extends State<Open_Req_Screen_Master> {
                                               //send response to  req sender
                                               sendNotificationToDevice(
                                                   deviceToken, widget.rid);
+                                              _saveDeclineState(widget.rid);
                                               _saveAcceptState(widget.rid);
                                             }
                                           });
@@ -390,7 +390,7 @@ class _Open_Req_Screen_MasterState extends State<Open_Req_Screen_Master> {
       // Fetch data from Firestore
       DocumentSnapshot ReqSnapshot = await FirebaseFirestore.instance
           .collection('clc_request')
-          .doc("${widget.rid}")
+          .doc(widget.rid)
           .get();
 
       // Check if the document exists
@@ -709,6 +709,9 @@ class _Open_Req_Screen_MasterState extends State<Open_Req_Screen_Master> {
                           actions: <Widget>[
                             CupertinoDialogAction(
                               onPressed: () {
+                                //saves declined pref
+                                _saveDeclineState(widget.rid);
+                                _saveAcceptState(widget.rid);
                                 Navigator.of(context)
                                     .pop(); // Close success message dialog
                                 Navigator.of(context)

@@ -79,26 +79,26 @@ class _commonbg_govtState extends State<commonbg_govt> {
                   const SizedBox(width: 8),
                   isFetched
                       ? Text(
-                    "$fetchedCity, $fetchedState",
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                  )
+                          "$fetchedCity, $fetchedState",
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        )
                       : const SpinKitThreeBounce(
-                    color: Colors.blueGrey,
-                    size: 20,
-                  ),
+                          color: Colors.blueGrey,
+                          size: 20,
+                        ),
                   const Spacer(),
-                  GestureDetector(
-                    onTap: () {
+                  IconButton(
+                    onPressed: () {
                       Navigator.of(context).push(
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
                           const Latest_Req_Screen(),
-                          transitionsBuilder: (context, animation,
-                              secondaryAnimation, child) {
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
                             var begin = const Offset(1.0, 0.0);
                             var end = Offset.zero;
                             var curve = Curves.ease;
@@ -115,12 +115,9 @@ class _commonbg_govtState extends State<commonbg_govt> {
                         ),
                       );
                     },
-                    child: Image.asset('assets/images/bell.png',
-                        width: 30, height: 30),
+                    icon: const Icon(Icons.notifications_active_outlined,
+                        size: 30, color: Color(0xFF2c4178)),
                   ),
-                  const SizedBox(width: 5),
-                  const Icon(Icons.notifications_active_outlined,
-                      size: 30, color: Colors.deepPurple),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: SvgPicture.asset("assets/images/logo_svg.svg",
@@ -132,8 +129,7 @@ class _commonbg_govtState extends State<commonbg_govt> {
             const SizedBox(height: 30),
             //latest alert
             Padding(
-              padding:
-              const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               child: Container(
                 width: double.infinity,
                 decoration: const BoxDecoration(
@@ -141,8 +137,8 @@ class _commonbg_govtState extends State<commonbg_govt> {
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -168,30 +164,25 @@ class _commonbg_govtState extends State<commonbg_govt> {
                                   SizedBox(
                                     width: 5,
                                   ),
-                                  Icon(Icons.arrow_forward,
-                                      color: Colors.teal),
+                                  Icon(Icons.arrow_forward, color: Colors.teal),
                                 ],
                               ),
                               onPressed: () {
                                 Navigator.of(context).push(
                                   PageRouteBuilder(
                                     pageBuilder: (context, animation,
-                                        secondaryAnimation) =>
-                                    const Alert_History_Screen(),
-                                    transitionsBuilder: (context,
-                                        animation,
-                                        secondaryAnimation,
-                                        child) {
+                                            secondaryAnimation) =>
+                                        const Alert_History_Screen(),
+                                    transitionsBuilder: (context, animation,
+                                        secondaryAnimation, child) {
                                       var begin = const Offset(1.0, 0.0);
                                       var end = Offset.zero;
                                       var curve = Curves.ease;
 
-                                      var tween = Tween(
-                                          begin: begin, end: end)
-                                          .chain(
-                                          CurveTween(curve: curve));
+                                      var tween = Tween(begin: begin, end: end)
+                                          .chain(CurveTween(curve: curve));
                                       var offsetAnimation =
-                                      animation.drive(tween);
+                                          animation.drive(tween);
 
                                       return SlideTransition(
                                         position: offsetAnimation,
@@ -214,297 +205,280 @@ class _commonbg_govtState extends State<commonbg_govt> {
               child: StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection("clc_alert")
-                  //.where("contactNumber", isEqualTo: mobileNo)
+                      //.where("contactNumber", isEqualTo: mobileNo)
                       .orderBy('sentTime', descending: true)
                       .limit(5)
                       .snapshots(),
                   builder: (context, snapshot) {
-                    if (snapshot.connectionState ==
-                        ConnectionState.active) {
+                    if (snapshot.connectionState == ConnectionState.active) {
                       if (snapshot.hasData) {
                         return Padding(
                             padding: const EdgeInsets.only(
                                 left: 7, right: 7, top: 10),
                             child: snapshot.data!.docs.isEmpty
                                 ? const Center(
-                              child: Text(
-                                'No records found for an alert !',
-                                style: TextStyle(
-                                  fontSize: 19,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            )
+                                    child: Text(
+                                      'No records found for an alert !',
+                                      style: TextStyle(
+                                        fontSize: 19,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  )
                                 : SizedBox(
-                              height: MediaQuery.of(context)
-                                  .size
-                                  .height *
-                                  0.33,
-                              width: double.infinity,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount:
-                                snapshot.data!.docs.length,
-                                itemBuilder: (context, index) {
-                                  String level = snapshot
-                                      .data!.docs[index]['level'];
-                                  Color cardColor =
-                                  getColorForLevel(level);
-                                  //snapshot.data!.docs[index]['sentTime'];
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        PageRouteBuilder(
-                                          pageBuilder: (context,
-                                              animation,
-                                              secondaryAnimation) =>
-                                              Alert_Details_Screen(
-                                                documentSnapshot:
-                                                snapshot.data!
-                                                    .docs[index],
+                                    height: MediaQuery.of(context).size.height *
+                                        0.33,
+                                    width: double.infinity,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: snapshot.data!.docs.length,
+                                      itemBuilder: (context, index) {
+                                        String level =
+                                            snapshot.data!.docs[index]['level'];
+                                        Color cardColor =
+                                            getColorForLevel(level);
+                                        //snapshot.data!.docs[index]['sentTime'];
+                                        return GestureDetector(
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                              PageRouteBuilder(
+                                                pageBuilder: (context,
+                                                        animation,
+                                                        secondaryAnimation) =>
+                                                    Alert_Details_Screen(
+                                                  documentSnapshot: snapshot
+                                                      .data!.docs[index],
+                                                ),
+                                                transitionsBuilder: (context,
+                                                    animation,
+                                                    secondaryAnimation,
+                                                    child) {
+                                                  var begin =
+                                                      const Offset(1.0, 0.0);
+                                                  var end = Offset.zero;
+                                                  var curve = Curves.ease;
+
+                                                  var tween = Tween(
+                                                          begin: begin,
+                                                          end: end)
+                                                      .chain(CurveTween(
+                                                          curve: curve));
+                                                  var offsetAnimation =
+                                                      animation.drive(tween);
+
+                                                  return SlideTransition(
+                                                    position: offsetAnimation,
+                                                    child: child,
+                                                  );
+                                                },
                                               ),
-                                          transitionsBuilder:
-                                              (context,
-                                              animation,
-                                              secondaryAnimation,
-                                              child) {
-                                            var begin =
-                                            const Offset(
-                                                1.0, 0.0);
-                                            var end = Offset.zero;
-                                            var curve = Curves.ease;
-
-                                            var tween = Tween(
-                                                begin: begin,
-                                                end: end)
-                                                .chain(CurveTween(
-                                                curve: curve));
-                                            var offsetAnimation =
-                                            animation
-                                                .drive(tween);
-
-                                            return SlideTransition(
-                                              position:
-                                              offsetAnimation,
-                                              child: child,
                                             );
                                           },
-                                        ),
-                                      );
-                                    },
-                                    child: SizedBox(
-                                      width: MediaQuery.of(context)
-                                          .size
-                                          .width *
-                                          0.75,
-                                      child: Card(
-                                        color: cardColor,
-                                        margin:
-                                        const EdgeInsets.only(
-                                            bottom: 13,
-                                            left: 7,
-                                            right: 7),
-                                        // Set margin to zero to remove white spaces
-                                        elevation: 3,
-                                        shape:
-                                        RoundedRectangleBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(
-                                              15),
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment
-                                              .start,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                              const EdgeInsets
-                                                  .symmetric(
-                                                  vertical: 5,
-                                                  horizontal:
-                                                  7),
+                                          child: SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.75,
+                                            child: Card(
+                                              color: cardColor,
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 13,
+                                                  left: 7,
+                                                  right: 7),
+                                              // Set margin to zero to remove white spaces
+                                              elevation: 3,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                              ),
                                               child: Column(
                                                 crossAxisAlignment:
-                                                CrossAxisAlignment
-                                                    .start,
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  ListTile(
-                                                    leading:
-                                                    CircleAvatar(
-                                                      maxRadius: 14,
-                                                      backgroundColor:
-                                                      Colors
-                                                          .grey,
-                                                      child: Text(
-                                                          "${index + 1}"),
-                                                    ),
-                                                    title: Column(
-                                                      mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .start,
-                                                      crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .start,
-                                                      children: [
-                                                        Text(
-                                                            snapshot
-                                                                .data!
-                                                                .docs[index]['typeofDisaster'],
-                                                            style: const TextStyle(
-                                                              fontSize:
-                                                              15,
-                                                              color:
-                                                              Colors.black,
-                                                            )),
-                                                        const SizedBox(
-                                                            height:
-                                                            3),
-                                                        Text(
-                                                            "${snapshot.data!.docs[index]['state']} \t"
-                                                                " ${snapshot.data!.docs[index]['city']}",
-                                                            style:
-                                                            const TextStyle(
-                                                              color:
-                                                              Colors.black,
-                                                              fontSize:
-                                                              13,
-                                                            )),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                      height: 10),
-                                                  const Divider(
-                                                      height: 2,
-                                                      color: Colors
-                                                          .black54),
-                                                  const SizedBox(
-                                                      height: 10),
                                                   Padding(
                                                     padding: const EdgeInsets
                                                         .symmetric(
-                                                        horizontal:
-                                                        10),
-                                                    child: SizedBox(
-                                                      width: MediaQuery.of(
-                                                          context)
-                                                          .size
-                                                          .width *
-                                                          0.65,
-                                                      child: Text(
-                                                          snapshot.data!.docs[
-                                                          index]
-                                                          [
-                                                          'description'],
-                                                          maxLines:
-                                                          4,
-                                                          overflow:
-                                                          TextOverflow
-                                                              .ellipsis,
-                                                          textAlign:
-                                                          TextAlign
-                                                              .justify,
-                                                          style: const TextStyle(
-                                                              color: Colors
-                                                                  .black,
-                                                              fontSize:
-                                                              15)),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                      height: 5),
-                                                  Padding(
-                                                    padding:
-                                                    const EdgeInsets
-                                                        .only(
-                                                        left:
-                                                        15,
-                                                        top: 5),
-                                                    child: Row(
+                                                        vertical: 5,
+                                                        horizontal: 7),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
-                                                        const Text(
-                                                          "Level : ",
-                                                          style:
-                                                          TextStyle(
-                                                            color: Colors
-                                                                .black,
+                                                        ListTile(
+                                                          leading: CircleAvatar(
+                                                            maxRadius: 14,
+                                                            backgroundColor:
+                                                                Colors.grey,
+                                                            child: Text(
+                                                                "${index + 1}"),
+                                                          ),
+                                                          title: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                  snapshot.data!
+                                                                              .docs[
+                                                                          index]
+                                                                      [
+                                                                      'typeofDisaster'],
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontSize:
+                                                                        15,
+                                                                    color: Colors
+                                                                        .black,
+                                                                  )),
+                                                              const SizedBox(
+                                                                  height: 3),
+                                                              Text(
+                                                                  "${snapshot.data!.docs[index]['state']} \t"
+                                                                  " ${snapshot.data!.docs[index]['city']}",
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        13,
+                                                                  )),
+                                                            ],
                                                           ),
                                                         ),
-                                                        Text(
-                                                            snapshot.data!.docs[index]
-                                                            [
-                                                            'level'],
-                                                            style: const TextStyle(
-                                                                color:
-                                                                Colors.black,
-                                                                fontWeight: FontWeight.bold)),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                      height: 4),
-                                                  Padding(
-                                                    padding:
-                                                    const EdgeInsets
-                                                        .only(
-                                                        right:
-                                                        10,
-                                                        bottom:
-                                                        3),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .end,
-                                                      children: [
-                                                        const Icon(
-                                                            Icons
-                                                                .watch_later_outlined,
-                                                            size:
-                                                            16,
-                                                            color: Colors
-                                                                .black54),
                                                         const SizedBox(
-                                                            width:
-                                                            3),
-                                                        Text(
-                                                            DateFormat('dd-MM-yyyy , HH:mm').format(DateTime.parse(snapshot.data!.docs[index]
-                                                            [
-                                                            'sentTime'])),
-                                                            style: const TextStyle(
-                                                                color:
-                                                                Colors.black54,
-                                                                fontSize: 12)),
+                                                            height: 10),
+                                                        const Divider(
+                                                            height: 2,
+                                                            color:
+                                                                Colors.black54),
+                                                        const SizedBox(
+                                                            height: 10),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal:
+                                                                      10),
+                                                          child: SizedBox(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.65,
+                                                            child: Text(
+                                                                snapshot.data!
+                                                                            .docs[
+                                                                        index][
+                                                                    'description'],
+                                                                maxLines: 4,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .justify,
+                                                                style: const TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        15)),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 5),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 15,
+                                                                  top: 5),
+                                                          child: Row(
+                                                            children: [
+                                                              const Text(
+                                                                "Level : ",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                  snapshot.data!
+                                                                              .docs[
+                                                                          index]
+                                                                      ['level'],
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold)),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 4),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  right: 10,
+                                                                  bottom: 3),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              const Icon(
+                                                                  Icons
+                                                                      .watch_later_outlined,
+                                                                  size: 16,
+                                                                  color: Colors
+                                                                      .black54),
+                                                              const SizedBox(
+                                                                  width: 3),
+                                                              Text(
+                                                                  DateFormat('dd-MM-yyyy , HH:mm').format(DateTime.parse(snapshot
+                                                                          .data!
+                                                                          .docs[index]
+                                                                      [
+                                                                      'sentTime'])),
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .black54,
+                                                                      fontSize:
+                                                                          12)),
+                                                            ],
+                                                          ),
+                                                        ),
                                                       ],
                                                     ),
                                                   ),
                                                 ],
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      ),
+                                          ),
+                                        );
+                                      },
                                     ),
-                                  );
-                                },
-                              ),
-                            ));
+                                  ));
                       }
                     } else if (snapshot.hasError) {
                       showToastMsg(snapshot.hasError.toString());
                     } else {
-                      return const Center(
-                          child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     }
-                    return const Center(
-                        child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }),
             ),
             const SizedBox(height: 15),
             Padding(
-              padding:
-              const EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 2),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -514,9 +488,9 @@ class _commonbg_govtState extends State<commonbg_govt> {
                       onTap: () {
                         Navigator.of(context).push(
                           PageRouteBuilder(
-                            pageBuilder: (context, animation,
-                                secondaryAnimation) =>
-                            const Govt_Response_History_Screen(),
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    const Govt_Response_History_Screen(),
                             transitionsBuilder: (context, animation,
                                 secondaryAnimation, child) {
                               var begin = const Offset(1.0, 0.0);
@@ -525,8 +499,7 @@ class _commonbg_govtState extends State<commonbg_govt> {
 
                               var tween = Tween(begin: begin, end: end)
                                   .chain(CurveTween(curve: curve));
-                              var offsetAnimation =
-                              animation.drive(tween);
+                              var offsetAnimation = animation.drive(tween);
 
                               return SlideTransition(
                                 position: offsetAnimation,
@@ -538,25 +511,24 @@ class _commonbg_govtState extends State<commonbg_govt> {
                       },
                       child: Padding(
                           padding: const EdgeInsets.only(right: 8),
-                          child: Material(
+                          child: Card(
                             elevation: 4,
-                            borderRadius: const BorderRadius.all(
-                                Radius.circular(20)),
+                            color: Colors.white,
                             child: Container(
                               // height: 80,
                               decoration: const BoxDecoration(
-                                  color: Colors.white12,
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(15))),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15))),
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 child: Column(
                                   children: [
                                     Image.asset("assets/images/response.png",
                                         height: 50, width: 50),
                                     const SizedBox(height: 10),
-                                    const Text("Responses"),
+                                    const Text("Responses",
+                                        style: TextStyle(color: Colors.black)),
                                   ],
                                 ),
                               ),
@@ -566,12 +538,12 @@ class _commonbg_govtState extends State<commonbg_govt> {
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         Navigator.of(context).push(
                           PageRouteBuilder(
-                            pageBuilder: (context, animation,
-                                secondaryAnimation) =>
-                            const Media_History_Screen(),
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    const Media_History_Screen(),
                             transitionsBuilder: (context, animation,
                                 secondaryAnimation, child) {
                               var begin = const Offset(1.0, 0.0);
@@ -580,8 +552,7 @@ class _commonbg_govtState extends State<commonbg_govt> {
 
                               var tween = Tween(begin: begin, end: end)
                                   .chain(CurveTween(curve: curve));
-                              var offsetAnimation =
-                              animation.drive(tween);
+                              var offsetAnimation = animation.drive(tween);
 
                               return SlideTransition(
                                 position: offsetAnimation,
@@ -593,25 +564,24 @@ class _commonbg_govtState extends State<commonbg_govt> {
                       },
                       child: Padding(
                           padding: const EdgeInsets.only(right: 8),
-                          child: Material(
+                          child: Card(
+                            color: Colors.white,
                             elevation: 4,
-                            borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
                             child: Container(
                               // height: 80,
                               decoration: const BoxDecoration(
-                                  color: Colors.white12,
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(15))),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15))),
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 child: Column(
                                   children: [
                                     Image.asset("assets/images/guide.png",
                                         height: 50, width: 50),
                                     const SizedBox(height: 10),
-                                    const Text("Media"),
+                                    const Text("Media",
+                                        style: TextStyle(color: Colors.black)),
                                   ],
                                 ),
                               ),

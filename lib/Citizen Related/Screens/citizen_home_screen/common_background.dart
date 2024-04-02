@@ -590,7 +590,7 @@ class _commonbgState extends State<commonbg> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  //2 box
+                  //3 box
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 15, vertical: 2),
@@ -628,10 +628,9 @@ class _commonbgState extends State<commonbg> {
                             },
                             child: Padding(
                                 padding: const EdgeInsets.only(right: 8),
-                                child: Material(
+                                child: Card(
+                                  color: Colors.white,
                                   elevation: 4,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(20)),
                                   child: Container(
                                     // height: 80,
                                     decoration: const BoxDecoration(
@@ -646,7 +645,8 @@ class _commonbgState extends State<commonbg> {
                                           Image.asset("assets/images/news.png",
                                               height: 30, width: 30),
                                           const SizedBox(height: 10),
-                                          const Text("DSG"),
+                                          const Text("DSG",
+                                              style: TextStyle(color: Colors.black)),
                                         ],
                                       ),
                                     ),
@@ -684,10 +684,9 @@ class _commonbgState extends State<commonbg> {
                             },
                             child: Padding(
                                 padding: const EdgeInsets.only(right: 8),
-                                child: Material(
+                                child: Card(
+                                  color: Colors.white,
                                   elevation: 4,
-                                  borderRadius:
-                                      const BorderRadius.all(Radius.circular(20)),
                                   child: Container(
                                     // height: 80,
                                     decoration: const BoxDecoration(
@@ -702,7 +701,8 @@ class _commonbgState extends State<commonbg> {
                                           Image.asset("assets/images/guide.png",
                                               height: 30, width: 30),
                                           const SizedBox(height: 10),
-                                          const Text("Media"),
+                                          const Text("Media",
+                                              style: TextStyle(color: Colors.black)),
                                         ],
                                       ),
                                     ),
@@ -740,10 +740,9 @@ class _commonbgState extends State<commonbg> {
                             },
                             child: Padding(
                                 padding: const EdgeInsets.only(right: 8),
-                                child: Material(
+                                child: Card(
+                                  color: Colors.white,
                                   elevation: 4,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(20)),
                                   child: Container(
                                     // height: 80,
                                     decoration: const BoxDecoration(
@@ -758,7 +757,8 @@ class _commonbgState extends State<commonbg> {
                                           Image.asset("assets/images/helpline.png",
                                               height: 30, width: 30),
                                           const SizedBox(height: 10),
-                                          const Text("Helpline"),
+                                          const Text("Helpline",
+                                              style: TextStyle(color: Colors.black)),
                                         ],
                                       ),
                                     ),

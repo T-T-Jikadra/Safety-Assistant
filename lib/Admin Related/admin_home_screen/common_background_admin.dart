@@ -790,14 +790,11 @@ class _commonbg_adminState extends State<commonbg_admin> {
                             },
                             child: Padding(
                                 padding: const EdgeInsets.only(right: 8),
-                                child: Material(
+                                child: Card(
+                                  color: Colors.white,
                                   elevation: 4,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(20)),
                                   child: Container(
-                                    // height: 80,
                                     decoration: const BoxDecoration(
-                                        color: Colors.white,
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(15))),
                                     child: Padding(
@@ -848,14 +845,11 @@ class _commonbg_adminState extends State<commonbg_admin> {
                             },
                             child: Padding(
                                 padding: const EdgeInsets.only(right: 8),
-                                child: Material(
+                                child: Card(
                                   elevation: 4,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(20)),
+                                  color: Colors.white,
                                   child: Container(
-                                    // height: 80,
                                     decoration: const BoxDecoration(
-                                        color: Colors.white,
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(15))),
                                     child: Padding(

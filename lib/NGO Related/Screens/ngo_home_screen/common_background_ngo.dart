@@ -89,7 +89,6 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                           size: 20,
                         ),
                   const Spacer(),
-                  // const SizedBox(width: 5),
                   IconButton(
                     onPressed: () {
                       Navigator.of(context).push(
@@ -510,10 +509,9 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                       },
                       child: Padding(
                           padding: const EdgeInsets.only(right: 8),
-                          child: Material(
+                          child: Card(
                             elevation: 4,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(20)),
+                            color: Colors.white,
                             child: Container(
                               // height: 80,
                               decoration: const BoxDecoration(
@@ -526,9 +524,10 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                                 child: Column(
                                   children: [
                                     Image.asset("assets/images/response.png",
-                                        height: 50, width: 50),
+                                        height: 40, width: 40),
                                     const SizedBox(height: 10),
-                                    const Text("Responses"),
+                                    const Text("Responses",
+                                        style: TextStyle(color: Colors.black)),
                                   ],
                                 ),
                               ),
@@ -564,14 +563,12 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                       },
                       child: Padding(
                           padding: const EdgeInsets.only(right: 8),
-                          child: Material(
+                          child: Card(
+                            color: Colors.white,
                             elevation: 4,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(20)),
                             child: Container(
                               // height: 80,
                               decoration: const BoxDecoration(
-                                  color: Colors.white12,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(15))),
                               child: Padding(
@@ -580,9 +577,10 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                                 child: Column(
                                   children: [
                                     Image.asset("assets/images/guide.png",
-                                        height: 50, width: 50),
+                                        height: 40, width: 40),
                                     const SizedBox(height: 10),
-                                    const Text("Media"),
+                                    const Text("Media",
+                                        style: TextStyle(color: Colors.black)),
                                   ],
                                 ),
                               ),
