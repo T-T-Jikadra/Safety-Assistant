@@ -44,77 +44,81 @@ class _Admin_Manage_NGO_ScreenState extends State<Admin_Manage_NGO_Screen> {
                   bottomLeft: Radius.circular(25))),
           title: const Text("Registered NGOs"),
         ),
-        body: Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: RefreshIndicator(
-              onRefresh: _refreshData,
-              child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection("clc_ngo")
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.active) {
-                    if (snapshot.hasData) {
-                      return Padding(
-                        padding:
-                            const EdgeInsets.only(left: 10, right: 10, top: 10),
-                        child: snapshot.data!.docs.isEmpty
-                            ? const Center(
-                                child: Text(
-                                  'No records found !',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey,
+        body: Column(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: RefreshIndicator(
+                  onRefresh: _refreshData,
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection("clc_ngo")
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.active) {
+                        if (snapshot.hasData) {
+                          return Padding(
+                            padding:
+                                const EdgeInsets.only(left: 10, right: 10, top: 10),
+                            child: snapshot.data!.docs.isEmpty
+                                ? const Center(
+                                    child: Text(
+                                      'No records found !',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  )
+                                : Scrollbar(
+                                    child: ListView.builder(
+                                      itemCount: snapshot.data!.docs.length,
+                                      itemBuilder: (context, index) {
+                                        return Admin_NGOListTile(
+                                          NGOSnapshot: snapshot.data!.docs[index],
+                                          index: "${index + 1}",
+                                          nameOfNGO: snapshot.data!.docs[index]
+                                              ["nameOfNGO"],
+                                          regNo: snapshot.data!.docs[index]
+                                              ["NGORegNo"],
+                                          serviceList: snapshot.data!.docs[index]
+                                              ["services"],
+                                          contact: snapshot.data!.docs[index]
+                                              ["contactNumber"],
+                                          email: snapshot.data!.docs[index]
+                                              ["email"],
+                                          website: snapshot.data!.docs[index]
+                                              ["website"],
+                                          state: snapshot.data!.docs[index]
+                                              ["state"],
+                                          city: snapshot.data!.docs[index]["city"],
+                                          pinCode: snapshot.data!.docs[index]
+                                              ["pinCode"],
+                                          address: snapshot.data!.docs[index]
+                                              ["fullAddress"],
+                                          pwd: snapshot.data!.docs[index]
+                                              ["password"],
+                                          // Add more fields as needed
+                                        );
+                                      },
+                                    ),
                                   ),
-                                ),
-                              )
-                            : Scrollbar(
-                                child: ListView.builder(
-                                  itemCount: snapshot.data!.docs.length,
-                                  itemBuilder: (context, index) {
-                                    return Admin_NGOListTile(
-                                      NGOSnapshot: snapshot.data!.docs[index],
-                                      index: "${index + 1}",
-                                      nameOfNGO: snapshot.data!.docs[index]
-                                          ["nameOfNGO"],
-                                      regNo: snapshot.data!.docs[index]
-                                          ["NGORegNo"],
-                                      serviceList: snapshot.data!.docs[index]
-                                          ["services"],
-                                      contact: snapshot.data!.docs[index]
-                                          ["contactNumber"],
-                                      email: snapshot.data!.docs[index]
-                                          ["email"],
-                                      website: snapshot.data!.docs[index]
-                                          ["website"],
-                                      state: snapshot.data!.docs[index]
-                                          ["state"],
-                                      city: snapshot.data!.docs[index]["city"],
-                                      pinCode: snapshot.data!.docs[index]
-                                          ["pinCode"],
-                                      address: snapshot.data!.docs[index]
-                                          ["fullAddress"],
-                                      pwd: snapshot.data!.docs[index]
-                                          ["password"],
-                                      // Add more fields as needed
-                                    );
-                                  },
-                                ),
-                              ),
-                      );
-                    }
-                  } else if (snapshot.hasError) {
-                    showToastMsg(snapshot.error.toString());
-                  } else {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  return const Center(child: CircularProgressIndicator());
-                },
+                          );
+                        }
+                      } else if (snapshot.hasError) {
+                        showToastMsg(snapshot.error.toString());
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      return const Center(child: CircularProgressIndicator());
+                    },
+                  ),
+                ),
               ),
             ),
-          ),
+          ],
         ));
   }
 

@@ -45,77 +45,81 @@ class _Admin_Manage_Govt_Agency_ScreenState
                   bottomLeft: Radius.circular(25))),
           title: const Text("Registered Govt Agencies"),
         ),
-        body: Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: RefreshIndicator(
-              onRefresh: _refreshData,
-              child: StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection("clc_govt")
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.active) {
-                      if (snapshot.hasData) {
-                        return Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10, right: 10, top: 10),
-                          child: snapshot.data!.docs.isEmpty
-                              ? const Center(
-                                  child: Text(
-                                    'No records found !',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey,
+        body: Column(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: RefreshIndicator(
+                  onRefresh: _refreshData,
+                  child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection("clc_govt")
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.active) {
+                          if (snapshot.hasData) {
+                            return Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10, right: 10, top: 10),
+                              child: snapshot.data!.docs.isEmpty
+                                  ? const Center(
+                                      child: Text(
+                                        'No records found !',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    )
+                                  : Scrollbar(
+                                      child: ListView.builder(
+                                          itemCount: snapshot.data!.docs.length,
+                                          itemBuilder: (context, index) {
+                                            return Admin_GovtListTile(
+                                              GovtSnapshot:
+                                                  snapshot.data!.docs[index],
+                                              index: "${index + 1}",
+                                              govtAgencyName: snapshot.data!
+                                                  .docs[index]["GovtAgencyName"],
+                                              regNo: snapshot.data!.docs[index]
+                                                  ["GovtAgencyRegNo"],
+                                              serviceList: snapshot
+                                                  .data!.docs[index]["services"],
+                                              contact: snapshot.data!.docs[index]
+                                                  ["contactNumber"],
+                                              email: snapshot.data!.docs[index]
+                                                  ["email"],
+                                              website: snapshot.data!.docs[index]
+                                                  ["website"],
+                                              state: snapshot.data!.docs[index]
+                                                  ["state"],
+                                              city: snapshot.data!.docs[index]
+                                                  ["city"],
+                                              pinCode: snapshot.data!.docs[index]
+                                                  ["pinCode"],
+                                              address: snapshot.data!.docs[index]
+                                                  ["fullAddress"],
+                                              pwd: snapshot.data!.docs[index]
+                                                  ["password"],
+                                              // Add more fields as needed
+                                            );
+                                          }),
                                     ),
-                                  ),
-                                )
-                              : Scrollbar(
-                                  child: ListView.builder(
-                                      itemCount: snapshot.data!.docs.length,
-                                      itemBuilder: (context, index) {
-                                        return Admin_GovtListTile(
-                                          GovtSnapshot:
-                                              snapshot.data!.docs[index],
-                                          index: "${index + 1}",
-                                          govtAgencyName: snapshot.data!
-                                              .docs[index]["GovtAgencyName"],
-                                          regNo: snapshot.data!.docs[index]
-                                              ["GovtAgencyRegNo"],
-                                          serviceList: snapshot
-                                              .data!.docs[index]["services"],
-                                          contact: snapshot.data!.docs[index]
-                                              ["contactNumber"],
-                                          email: snapshot.data!.docs[index]
-                                              ["email"],
-                                          website: snapshot.data!.docs[index]
-                                              ["website"],
-                                          state: snapshot.data!.docs[index]
-                                              ["state"],
-                                          city: snapshot.data!.docs[index]
-                                              ["city"],
-                                          pinCode: snapshot.data!.docs[index]
-                                              ["pinCode"],
-                                          address: snapshot.data!.docs[index]
-                                              ["fullAddress"],
-                                          pwd: snapshot.data!.docs[index]
-                                              ["password"],
-                                          // Add more fields as needed
-                                        );
-                                      }),
-                                ),
-                        );
-                      }
-                    } else if (snapshot.hasError) {
-                      showToastMsg(snapshot.hasError.toString());
-                    } else {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    return const Center(child: CircularProgressIndicator());
-                  }),
+                            );
+                          }
+                        } else if (snapshot.hasError) {
+                          showToastMsg(snapshot.hasError.toString());
+                        } else {
+                          return const Center(child: CircularProgressIndicator());
+                        }
+                        return const Center(child: CircularProgressIndicator());
+                      }),
+                ),
+              ),
             ),
-          ),
+          ],
         ));
   }
 

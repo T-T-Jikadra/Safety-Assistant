@@ -44,32 +44,6 @@ class _Citizen_Details_ScreenState extends State<Citizen_Details_Screen> {
   TextEditingController stateTextController = TextEditingController();
   TextEditingController cityTextController = TextEditingController();
 
-  //ngo
-  bool hasNGOResponded = false;
-  String fetchedNid = '';
-  String fetchedNGOFid = '';
-  bool hasNGOFeedbackSent = false;
-  String fetchedNGOName = '';
-  String fetchedNGORegNo = '';
-  String fetchedNGOAddress = '';
-  String fetchedNGOContact = '';
-  String fetchedNGOEmail = '';
-  String fetchedNGOWebsite = '';
-  String fetchedNGORespondTime = '';
-
-  //govt
-  bool hasGovtResponded = false;
-  String fetchedGid = '';
-  String fetchedGovtFid = '';
-  bool hasGovtFeedbackSent = false;
-  String fetchedGovtName = '';
-  String fetchedGovtRegNo = '';
-  String fetchedGovtAddress = '';
-  String fetchedGovtContact = '';
-  String fetchedGovtEmail = '';
-  String fetchedGovtWebsite = '';
-  String fetchedGovtRespondTime = '';
-
   @override
   void initState() {
     super.initState();

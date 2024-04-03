@@ -31,9 +31,7 @@ class _Request_History_ScreenState extends State<Request_History_Screen> {
       ),
       body: const Column(
         children: [
-          Expanded(
-            child: req_history_list_widget(),
-          ),
+          req_history_list_widget()
         ],
       ),
     );

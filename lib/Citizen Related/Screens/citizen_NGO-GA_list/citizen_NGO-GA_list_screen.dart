@@ -32,8 +32,7 @@ class _NGO_GA_ListScreenState extends State<NGO_GA_ListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: DefaultTabController(
+    return DefaultTabController(
         length: 2, // Number of tabs
         child: Scaffold(
           //backgroundColor: Colors.white,
@@ -225,8 +224,7 @@ class _NGO_GA_ListScreenState extends State<NGO_GA_ListScreen> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 
   void updateCityList(String state) {
@@ -285,8 +283,7 @@ class _ngo_listState extends State<ngo_list> {
                             itemBuilder: (context, index) {
                               return NgoTile(
                                 index: "${index + 1}",
-                                auth_id: snapshot.data!.docs[index]
-                                ["nid"],
+                                auth_id: snapshot.data!.docs[index]["nid"],
                                 nameOfNGO: snapshot.data!.docs[index]
                                     ["nameOfNGO"],
                                 regNo: snapshot.data!.docs[index]["NGORegNo"],
@@ -301,7 +298,7 @@ class _ngo_listState extends State<ngo_list> {
                                 pinCode: snapshot.data!.docs[index]["pinCode"],
                                 address: snapshot.data!.docs[index]
                                     ["fullAddress"],
-                                pwd: snapshot.data!.docs[index]["password"],
+                                upi: snapshot.data!.docs[index]["upiId"],
                                 // Add more fields as needed
                               );
                             },
@@ -343,7 +340,7 @@ class NgoTile extends StatefulWidget {
   final String city;
   final String pinCode;
   final String address;
-  final String pwd;
+  final String upi;
 
   const NgoTile({
     Key? key,
@@ -359,7 +356,7 @@ class NgoTile extends StatefulWidget {
     required this.city,
     required this.pinCode,
     required this.address,
-    required this.pwd,
+    required this.upi,
   }) : super(key: key);
 
   @override
@@ -544,32 +541,37 @@ class _NgoTileState extends State<NgoTile> with SingleTickerProviderStateMixin {
                                 child: TextButton(
                                     style: ButtonStyle(
                                       backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.deepPurple.shade300),
+                                          MaterialStateProperty.all<Color>(
+                                              Colors.deepPurple.shade300),
                                       foregroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.white),
+                                          MaterialStateProperty.all<Color>(
+                                              Colors.white),
                                     ),
                                     onPressed: () async {
                                       Navigator.of(context).push(
                                         PageRouteBuilder(
                                           pageBuilder: (context, animation,
-                                              secondaryAnimation) =>
+                                                  secondaryAnimation) =>
                                               Citizen_Donate_Screen(
-                                                authority_name: widget.nameOfNGO,
-                                                authority_id: widget.auth_id,
-                                                authority_email: widget.email,
-                                              ),
-                                          transitionsBuilder: (context, animation,
-                                              secondaryAnimation, child) {
+                                            authority_name: widget.nameOfNGO,
+                                            authority_id: widget.auth_id,
+                                            authority_email: widget.email,
+                                            authority_upi: widget.upi,
+                                          ),
+                                          transitionsBuilder: (context,
+                                              animation,
+                                              secondaryAnimation,
+                                              child) {
                                             var begin = const Offset(1.0, 0.0);
                                             var end = Offset.zero;
                                             var curve = Curves.ease;
 
-                                            var tween = Tween(begin: begin, end: end)
-                                                .chain(CurveTween(curve: curve));
+                                            var tween = Tween(
+                                                    begin: begin, end: end)
+                                                .chain(
+                                                    CurveTween(curve: curve));
                                             var offsetAnimation =
-                                            animation.drive(tween);
+                                                animation.drive(tween);
 
                                             return SlideTransition(
                                               position: offsetAnimation,
@@ -693,8 +695,7 @@ class _govt_listState extends State<govt_list> {
                               itemBuilder: (context, index) {
                                 return govtTile(
                                   index: "${index + 1}",
-                                  auth_id: snapshot.data!.docs[index]
-                                  ["gid"],
+                                  auth_id: snapshot.data!.docs[index]["gid"],
                                   govtAgencyName: snapshot.data!.docs[index]
                                       ["GovtAgencyName"],
                                   regNo: snapshot.data!.docs[index]

@@ -674,6 +674,7 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                       GovtAgencyARegNo:
                                           regNoGovtTextController.text.trim(),
                                       profilePic: "",
+                                      aboutGovt: "",
                                       services:
                                           serviceGovtTextController.text.trim(),
                                       contactNumber: contactNoGovtTextController

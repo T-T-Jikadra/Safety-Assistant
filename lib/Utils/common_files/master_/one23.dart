@@ -1,5 +1,7 @@
-// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages, camel_case_types
+// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages, camel_case_types, use_build_context_synchronously, non_constant_identifier_names
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,14 +17,27 @@ class Latest_Req_Screen extends StatefulWidget {
 }
 
 class _Latest_Req_ScreenState extends State<Latest_Req_Screen> {
+  String? finalUserType = "";
+  String iAmNGO = '';
+  String iAmGovt = '';
   late SharedPreferences prefs;
   List<String> readRequestIds = [];
-  String userName = '';
+  final ScrollController _scrollController = ScrollController();
+
+  String authority_id = '';
+  String fetchedNid = "";
+  String authority_state = "";
+  String authority_city = "";
+
+  String fetchedGid = "";
+  String fetchedGovtState = "";
 
   @override
   void initState() {
     super.initState();
     _initSharedPreferences();
+    //check if its NGO or Govt
+    getUserType();
   }
 
   Future<void> _initSharedPreferences() async {
@@ -54,7 +69,7 @@ class _Latest_Req_ScreenState extends State<Latest_Req_Screen> {
                   child: StreamBuilder(
                       stream: FirebaseFirestore.instance
                           .collection("clc_request")
-                          // .where("contactNumber", isEqualTo: mobileNo)
+                          .where("city", isEqualTo: authority_city)
                           .orderBy('reqTime', descending: true)
                           // .limit(25)
                           .snapshots(),
@@ -78,6 +93,7 @@ class _Latest_Req_ScreenState extends State<Latest_Req_Screen> {
                                       ),
                                     )
                                   : ListView.builder(
+                                      controller: _scrollController,
                                       itemCount: snapshot.data!.docs.length,
                                       itemBuilder: (context, index) {
                                         final requestId = snapshot
@@ -85,19 +101,38 @@ class _Latest_Req_ScreenState extends State<Latest_Req_Screen> {
                                         final isRead =
                                             readRequestIds.contains(requestId);
 
-                                        return GestureDetector(
-                                          onTap: () async {
-                                            FirebaseFirestore.instance
-                                                .collection("clc_citizen")
-                                                .where("cid",
-                                                    isEqualTo: snapshot.data!
-                                                        .docs[index]['cid'])
-                                                .get()
-                                                .then(
-                                                    (QuerySnapshot querySnap) {
-                                              userName =
+                                        final reqTimeStr = snapshot.data!
+                                            .docs[index]['reqTime'] as String;
+                                        final reqTime =
+                                            DateTime.parse(reqTimeStr);
+
+                                        // final request_Id = reqTime.toDate();
+
+                                        // Get the current time
+                                        final currentTime = DateTime.now();
+
+                                        // Calculate the difference in hours between current time and request time
+                                        final differenceInHours = currentTime
+                                            .difference(reqTime)
+                                            .inHours;
+
+                                        if (differenceInHours <= 24) {
+                                          return GestureDetector(
+                                            onTap: () async {
+                                              QuerySnapshot querySnap =
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection("clc_citizen")
+                                                      .where("cid",
+                                                          isEqualTo: snapshot
+                                                                  .data!
+                                                                  .docs[index]
+                                                              ['cid'])
+                                                      .get();
+
+                                              String userName =
                                                   "${querySnap.docs.first['firstName']} ${querySnap.docs.first['lastName']}";
-                                              // };
+
                                               Navigator.of(context).push(
                                                 PageRouteBuilder(
                                                   pageBuilder: (context,
@@ -146,182 +181,189 @@ class _Latest_Req_ScreenState extends State<Latest_Req_Screen> {
                                                   },
                                                 ),
                                               );
-                                            });
 
-                                            if (!isRead) {
-                                              await _markRequestAsRead(
-                                                  requestId);
-                                            }
-                                          },
-                                          child: Card(
-                                            color: isRead
-                                                ? Colors.white
-                                                : Colors.yellow[100],
-                                            margin: const EdgeInsets.only(
-                                                bottom: 13, left: 7, right: 7),
-                                            // Set margin to zero to remove white spaces
-                                            elevation: 3,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      vertical: 5,
-                                                      horizontal: 7),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      ListTile(
-                                                        //tileColor: isRead ? null : Colors.yellow[100],
-                                                        leading: CircleAvatar(
-                                                          maxRadius: 14,
-                                                          backgroundColor:
-                                                              Colors.grey,
-                                                          child: Text(
-                                                              "${index + 1}"),
+                                              if (!isRead) {
+                                                await _markRequestAsRead(
+                                                    requestId);
+                                              }
+                                            },
+                                            child: Card(
+                                              color: isRead
+                                                  ? Colors.white
+                                                  : Colors.yellow[100],
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 13,
+                                                  left: 7,
+                                                  right: 7),
+                                              // Set margin to zero to remove white spaces
+                                              elevation: 3,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        vertical: 5,
+                                                        horizontal: 7),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        ListTile(
+                                                          //tileColor: isRead ? null : Colors.yellow[100],
+                                                          leading: CircleAvatar(
+                                                            maxRadius: 14,
+                                                            backgroundColor:
+                                                                Colors.grey,
+                                                            child: Text(
+                                                                "${index + 1}"),
+                                                          ),
+                                                          //textColor: Colors.white,
+
+                                                          title: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              const Text(
+                                                                  "Requested service : ",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          13)),
+                                                              const SizedBox(
+                                                                  height: 3),
+                                                              Text(
+                                                                  snapshot.data!
+                                                                              .docs[
+                                                                          index]
+                                                                      [
+                                                                      'neededService'],
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        15,
+                                                                  )),
+                                                              // Text(
+                                                              //   snapshot.data!.docs[index]
+                                                              //       ['userName'],
+                                                              //   style: TextStyle(
+                                                              //
+                                                              //     fontWeight: FontWeight.w700,
+                                                              //     color: Colors.black
+                                                              //         .withOpacity(0.6),
+                                                              //   ),
+                                                              // ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                        //textColor: Colors.white,
-
-                                                        title: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            const Text(
-                                                                "Requested service : ",
+                                                        //const SizedBox(height: 4),
+                                                        // Padding(
+                                                        //   padding:
+                                                        //       const EdgeInsets.symmetric(
+                                                        //           horizontal: 3),
+                                                        //   child: Row(
+                                                        //     children: [
+                                                        //       const Text("Request type : ",
+                                                        //           style: TextStyle(
+                                                        //               fontWeight:
+                                                        //                   FontWeight.bold)),
+                                                        //       Text(
+                                                        //           snapshot.data!.docs[index]
+                                                        //               ['neededService'],
+                                                        //           style: const TextStyle(
+                                                        //               color: Colors.black)),
+                                                        //     ],
+                                                        //   ),
+                                                        // ),
+                                                        const SizedBox(
+                                                            height: 2),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 15,
+                                                                  top: 5),
+                                                          child: Row(
+                                                            children: [
+                                                              const Text(
+                                                                "City : ",
                                                                 style: TextStyle(
                                                                     color: Colors
-                                                                        .black,
-                                                                    fontSize:
-                                                                        13)),
-                                                            const SizedBox(
-                                                                height: 3),
-                                                            Text(
-                                                                snapshot.data!
-                                                                            .docs[
-                                                                        index][
-                                                                    'neededService'],
-                                                                style:
-                                                                    const TextStyle(
+                                                                        .black),
+                                                              ),
+                                                              Text(
+                                                                  snapshot.data!
+                                                                              .docs[
+                                                                          index]
+                                                                      ['city'],
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold)),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 2),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  right: 10,
+                                                                  bottom: 3),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              const Icon(
+                                                                  Icons
+                                                                      .watch_later_outlined,
+                                                                  size: 16,
                                                                   color: Colors
-                                                                      .black,
-                                                                  fontSize: 15,
-                                                                )),
-                                                            // Text(
-                                                            //   snapshot.data!.docs[index]
-                                                            //       ['userName'],
-                                                            //   style: TextStyle(
-                                                            //
-                                                            //     fontWeight: FontWeight.w700,
-                                                            //     color: Colors.black
-                                                            //         .withOpacity(0.6),
-                                                            //   ),
-                                                            // ),
-                                                          ],
+                                                                      .black54),
+                                                              const SizedBox(
+                                                                  width: 3),
+                                                              Text(
+                                                                  DateFormat('dd-MM-yyyy , HH:mm').format(DateTime.parse(snapshot
+                                                                          .data!
+                                                                          .docs[index]
+                                                                      [
+                                                                      'reqTime'])),
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .black38,
+                                                                      fontSize:
+                                                                          12)),
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
-                                                      //const SizedBox(height: 4),
-                                                      // Padding(
-                                                      //   padding:
-                                                      //       const EdgeInsets.symmetric(
-                                                      //           horizontal: 3),
-                                                      //   child: Row(
-                                                      //     children: [
-                                                      //       const Text("Request type : ",
-                                                      //           style: TextStyle(
-                                                      //               fontWeight:
-                                                      //                   FontWeight.bold)),
-                                                      //       Text(
-                                                      //           snapshot.data!.docs[index]
-                                                      //               ['neededService'],
-                                                      //           style: const TextStyle(
-                                                      //               color: Colors.black)),
-                                                      //     ],
-                                                      //   ),
-                                                      // ),
-                                                      const SizedBox(height: 2),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                                left: 15,
-                                                                top: 5),
-                                                        child: Row(
-                                                          children: [
-                                                            const Text(
-                                                              "City : ",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .black),
-                                                            ),
-                                                            Text(
-                                                                snapshot.data!
-                                                                            .docs[
-                                                                        index]
-                                                                    ['city'],
-                                                                style: const TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold)),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      const SizedBox(height: 2),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                                right: 10,
-                                                                bottom: 3),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
-                                                          children: [
-                                                            const Icon(
-                                                                Icons
-                                                                    .watch_later_outlined,
-                                                                size: 16,
-                                                                color: Colors
-                                                                    .black54),
-                                                            const SizedBox(
-                                                                width: 3),
-                                                            Text(
-                                                                DateFormat(
-                                                                        'dd-MM-yyyy , HH:mm')
-                                                                    .format(DateTime.parse(snapshot
-                                                                            .data!
-                                                                            .docs[index]
-                                                                        [
-                                                                        'reqTime'])),
-                                                                style: const TextStyle(
-                                                                    color: Colors
-                                                                        .black38,
-                                                                    fontSize:
-                                                                        12)),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        );
+                                          );
+                                        } else {
+                                          // If the request is older than 24 hours, return an empty container
+                                          return Container();
+                                        }
                                       }),
                             );
                           }
@@ -361,5 +403,83 @@ class _Latest_Req_ScreenState extends State<Latest_Req_Screen> {
   Future<void> _refreshData() async {
     await Future.delayed(const Duration(milliseconds: 1200));
     setState(() {});
+  }
+
+  //to check usertype
+  Future<void> getUserType() async {
+    final SharedPreferences sharedPref = await SharedPreferences.getInstance();
+    var obtainedUserType = sharedPref.getString("userType");
+    setState(() {
+      finalUserType = obtainedUserType;
+      if (finalUserType == "NGO") {
+        iAmNGO = 'true';
+        fetchNGOData();
+      } else if (finalUserType == "Govt") {
+        iAmGovt = 'true';
+        fetchGovtData();
+      }
+    });
+  }
+
+  Future<void> fetchNGOData() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+
+      // Fetch data from Firestore
+      DocumentSnapshot NGOSnapshot = await FirebaseFirestore.instance
+          .collection('clc_ngo')
+          .doc(user?.email)
+          .get();
+
+      // Check if the document exists
+      if (NGOSnapshot.exists) {
+        // Access the fields from the document
+        setState(() {
+          authority_id = fetchedNid = NGOSnapshot.get('nid');
+          authority_state = NGOSnapshot.get('state');
+          authority_city = NGOSnapshot.get('city');
+        });
+      } else {
+        if (kDebugMode) {
+          print('Document does not exist');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching NGO data: $e');
+      }
+    }
+  }
+
+  Future<void> fetchGovtData() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+
+      // Fetch data from Firestore
+      DocumentSnapshot GovtSnapshot = await FirebaseFirestore.instance
+          .collection('clc_govt')
+          .doc(user?.email)
+          .get();
+      //print(user!.email);
+      //print(GovtSnapshot.get('GovtAgencyRegNo'));
+
+      // Check if the document exists
+      if (GovtSnapshot.exists) {
+        // Access the fields from the document
+        setState(() {
+          authority_id = fetchedGid = GovtSnapshot.get('gid');
+          authority_state = GovtSnapshot.get('state');
+          authority_city = GovtSnapshot.get('city');
+        });
+      } else {
+        if (kDebugMode) {
+          print('Document does not exist');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching NGO data: $e');
+      }
+    }
   }
 }

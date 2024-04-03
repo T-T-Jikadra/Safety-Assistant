@@ -1,6 +1,5 @@
 // ignore_for_file: camel_case_types, use_build_context_synchronously
 
-import 'package:fff/Admin%20Related/admin_donation_history.dart';
 import 'package:fff/Admin%20Related/admin_home_screen/menu_admin.dart';
 import 'package:fff/Admin%20Related/admin_home_screen/side_menu_admin.dart';
 import 'package:fff/Utils/constants.dart';
@@ -9,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../../../Components/info_card.dart';
+import '../../Utils/common_files/about_us/about_us_screen.dart';
+import '../admin_donation_screen/admin_donation_history_screen.dart';
 import '../admin_faq_screen/admin_faq_screen.dart';
 import '../admin_manage_alerts_screen/admin_manage_alert_screen.dart';
 import '../admin_manage_citizen_screen/admin_view_citizen_screen.dart';
@@ -302,7 +303,7 @@ class _SideBar_AdminState extends State<SideBar_Admin> {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const Admin_FAQ_Screen(),
+                                      const AboutUsScreen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);

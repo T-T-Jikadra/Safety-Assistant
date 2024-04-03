@@ -14,6 +14,7 @@ class GovtRegistration {
   final String pinCode;
   final String fullAddress;
   final String password;
+  final String aboutGovt;
   final DateTime registrationTime;
   final String deviceToken;
 
@@ -33,6 +34,7 @@ class GovtRegistration {
       required this.fullAddress,
       required this.password,
       required this.deviceToken,
+        required this.aboutGovt,
       DateTime? registrationTime})
       : registrationTime = registrationTime ?? DateTime.now();
 
@@ -42,6 +44,7 @@ class GovtRegistration {
       'GovtAgencyName': GovtAgencyName,
       'GovtAgencyRegNo': GovtAgencyARegNo,
       'profilePic': profilePic,
+      'aboutGovt': aboutGovt,
       'services': services,
       'contactNumber': "+91$contactNumber",
       'website': website,

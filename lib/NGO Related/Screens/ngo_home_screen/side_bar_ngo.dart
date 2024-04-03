@@ -13,7 +13,7 @@ import '../../../Utils/common_files/media/media_history_screen.dart';
 import '../../../Components/info_card.dart';
 import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../NGO_list/NGO_list.dart';
-import '../ngo_donation_history.dart';
+import '../ngo_donation_screen/ngo_donation_history_screen.dart';
 import '../ngo_faq_screen/ngo_faq_screen.dart';
 import '../ngo_profile_screen.dart';
 import '../ngo_respond_history.dart';
@@ -73,7 +73,6 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
 
                           //on tap routes ..
                           press: () async {
-                            //RiveUtils.chnageSMIBoolState(menu_ngo.rive.status!);
                             setState(() {
                               selectedSideMenu = menu_ngo;
                             });
@@ -82,30 +81,6 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                                 const Duration(milliseconds: 500));
 
                             if (menu_ngo.title.contains("Home")) {
-                              // ignore: use_build_context_synchronously
-                              // Navigator.of(context).push(
-                              //   PageRouteBuilder(
-                              //     pageBuilder: (context, animation,
-                              //             secondaryAnimation) =>
-                              //         const msgScreen(),
-                              //     transitionsBuilder: (context, animation,
-                              //         secondaryAnimation, child) {
-                              //       var begin = const Offset(1.0, 0.0);
-                              //       var end = Offset.zero;
-                              //       var curve = Curves.ease;
-                              //
-                              //       var tween = Tween(begin: begin, end: end)
-                              //           .chain(CurveTween(curve: curve));
-                              //       var offsetAnimation =
-                              //           animation.drive(tween);
-                              //
-                              //       return SlideTransition(
-                              //         position: offsetAnimation,
-                              //         child: child,
-                              //       );
-                              //     },
-                              //   ),
-                              // );
                             } else if (menu_ngo.title.contains("Profile")) {
                               //ignore: use_build_context_synchronously
                               Navigator.of(context).push(
@@ -305,7 +280,6 @@ class _SideBar_ngoState extends State<SideBar_ngo> {
                           menu: menu_ngo,
                           selectedMenu: selectedSideMenu,
                           press: () async {
-                            //RiveUtils.chnageSMIBoolState(menu_ngo.rive.status!);
                             setState(() {
                               selectedSideMenu = menu_ngo;
                             });

@@ -11,7 +11,7 @@ import '../../../_Root/type of user/select_user_type_screen.dart';
 import '../citizen_DSG/citizen_disaster_list.dart';
 import '../citizen_NGO-GA_list/citizen_NGO-GA_list_screen.dart';
 import '../../../Utils/common_files/about_us/about_us_screen.dart';
-import '../citizen_donation_history_screen.dart';
+import '../citizen_donation_screen/citizen_donation_history_screen.dart';
 import '../citizen_faq_screen/citizen_faq_screen.dart';
 import '../citizen_request_screen/citizen_req_history_screen.dart';
 import '../../Screens/citizen_profile_screen.dart';

@@ -685,6 +685,8 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                           nameOfNGOTextController.text.trim(),
                                       ngoRegNo: regNoTextController.text.trim(),
                                       profilePic: "",
+                                      aboutNGO: "",
+                                      upiId: "",
                                       services:
                                           servicesTextController.text.trim(),
                                       contactNumber:

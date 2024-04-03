@@ -231,10 +231,6 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                                       ],
                                     ),
                                   )
-                                // Text(
-                                //         "$fetchedFname \n $fetchedFullAddress \n $fetchedPinCode \n $fetchedCity \n $fetchedState ",
-                                //         style: const TextStyle(fontSize: 14),
-                                //       )
                                 : const SpinKitThreeBounce(
                                     color: Colors.blueGrey,
                                     size: 20,
@@ -247,7 +243,6 @@ class _userRequest_ScreenState extends State<userRequest_Screen> {
                               child: Form(
                                 key: _formKey,
                                 child: SizedBox(
-                                  //height: isExpanded ? null : 0,
                                   child: AnimatedOpacity(
                                     opacity: showTextField ? 1.0 : 0.0,
                                     duration: const Duration(milliseconds: 300),
