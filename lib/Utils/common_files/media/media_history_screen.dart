@@ -68,7 +68,7 @@ class _media_history_list_widgetState extends State<media_history_list_widget> {
                       child: snapshot.data!.docs.isEmpty
                           ? const Center(
                               child: Text(
-                                'No records found for news !',
+                                'No records found for media !',
                                 style: TextStyle(
                                   fontSize: 19,
                                   fontWeight: FontWeight.bold,

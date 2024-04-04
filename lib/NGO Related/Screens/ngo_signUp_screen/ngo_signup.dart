@@ -670,14 +670,22 @@ class _NGOSignupPageScreenState extends State<NGOSignupPageScreen> {
                                 if (!NGOTnC) {
                                   return;
                                 } else {
-                                  CollectionReference citizenRequestCollection =
-                                      FirebaseFirestore.instance
-                                          .collection("clc_ngo");
                                   //for id
-                                  QuerySnapshot snapshot =
-                                      await citizenRequestCollection.get();
-                                  int totalDocCount = snapshot.size;
-                                  totalDocCount++;
+                                  int totalDocCount = 0;
+                                  await FirebaseFirestore.instance.runTransaction((transaction) async {
+                                    // Get the current count of requests
+                                    DocumentSnapshot snapshot = await transaction.get(FirebaseFirestore
+                                        .instance
+                                        .collection("clc_ngo")
+                                        .doc("ngo_count"));
+                                    totalDocCount = (snapshot.exists) ? snapshot.get('count') : 0;
+                                    totalDocCount++;
+
+                                    transaction.set(
+                                        FirebaseFirestore.instance.collection("clc_ngo").doc("ngo_count"),
+                                        {'count': totalDocCount});
+                                  });
+
                                   //Storing data to database
                                   NGORegistration NGOData = NGORegistration(
                                       nid: "n$totalDocCount",

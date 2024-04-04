@@ -137,158 +137,6 @@ class _User_Feedback_ScreenState extends State<User_Feedback_Screen> {
                   ),
 
                   const SizedBox(height: 5),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(8.0),
-                  //   child: Row(
-                  //     children: [
-                  //       const Text('Selected Rating:'),
-                  //       const SizedBox(width: 10),
-                  //       Text(_starRating.toString()),
-                  //     ],
-                  //   ),
-                  // ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(8.0),
-                  //   child: Row(
-                  //     children: [
-                  //       const Text('Select emojis:'),
-                  //       const SizedBox(width: 10),
-                  //       // Display different emojis based on star rating
-                  //       _starRating == 1
-                  //           ? const Text('Poor')
-                  //           : _starRating == 2
-                  //               ? const Text('Fair')
-                  //               : _starRating == 3
-                  //                   ? const Text('Average')
-                  //                   : _starRating == 4
-                  //                       ? const Text('Good')
-                  //                       : _starRating == 5
-                  //                           ? const Text('Excellent')
-                  //                           : const Text(''),
-                  //     ],
-                  //   ),
-                  // ),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 7),
-                  //   //btn
-                  //   child: Container(
-                  //     decoration: const BoxDecoration(
-                  //       color: Colors.white,
-                  //       borderRadius: BorderRadius.all(Radius.circular(12)),
-                  //     ),
-                  //     child: Padding(
-                  //       padding:
-                  //           const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  //       child: Column(
-                  //         mainAxisAlignment: MainAxisAlignment.start,
-                  //         crossAxisAlignment: CrossAxisAlignment.start,
-                  //         children: [
-                  //           const Padding(
-                  //             padding: EdgeInsets.only(left: 10, top: 5),
-                  //             child: Text('What can be improved ?',
-                  //                 style: TextStyle(
-                  //                     fontSize: 17, fontWeight: FontWeight.w600)),
-                  //           ),
-                  //           const SizedBox(height: 15),
-                  //           // Display custom checkboxes
-                  //           Wrap(
-                  //             children: [
-                  //               Row(
-                  //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //                 children: [
-                  //                   GestureDetector(
-                  //                     onTap: () => _toggleCheckbox(0),
-                  //                     child: Container(
-                  //                       margin: const EdgeInsets.all(5),
-                  //                       padding: const EdgeInsets.all(8),
-                  //                       decoration: BoxDecoration(
-                  //                         color: _checkboxValues[0]
-                  //                             ? Colors.green.shade200
-                  //                             : Colors.grey.shade200,
-                  //                         borderRadius: BorderRadius.circular(5),
-                  //                         border: Border.all(color: Colors.grey),
-                  //                       ),
-                  //                       child: const Padding(
-                  //                         padding:
-                  //                             EdgeInsets.symmetric(horizontal: 20),
-                  //                         child: Text('Checkbox 1'),
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                   const SizedBox(width: 10),
-                  //                   GestureDetector(
-                  //                     onTap: () => _toggleCheckbox(1),
-                  //                     child: Container(
-                  //                       margin: const EdgeInsets.all(5),
-                  //                       padding: const EdgeInsets.all(8),
-                  //                       decoration: BoxDecoration(
-                  //                         color: _checkboxValues[1]
-                  //                             ? Colors.green.shade200
-                  //                             : Colors.grey.shade200,
-                  //                         borderRadius: BorderRadius.circular(5),
-                  //                         border: Border.all(color: Colors.grey),
-                  //                       ),
-                  //                       child: const Padding(
-                  //                         padding:
-                  //                             EdgeInsets.symmetric(horizontal: 20),
-                  //                         child: Text('Checkbox 2'),
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //               const SizedBox(height: 13),
-                  //               Row(
-                  //                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //                 children: [
-                  //                   GestureDetector(
-                  //                     onTap: () => _toggleCheckbox(2),
-                  //                     child: Container(
-                  //                       margin: const EdgeInsets.all(5),
-                  //                       padding: const EdgeInsets.all(8),
-                  //                       decoration: BoxDecoration(
-                  //                         color: _checkboxValues[2]
-                  //                             ? Colors.green.shade200
-                  //                             : Colors.grey.shade200,
-                  //                         borderRadius: BorderRadius.circular(5),
-                  //                         border: Border.all(color: Colors.grey),
-                  //                       ),
-                  //                       child: const Padding(
-                  //                         padding:
-                  //                             EdgeInsets.symmetric(horizontal: 20),
-                  //                         child: Text('Checkbox 4'),
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                   const SizedBox(width: 10),
-                  //                   GestureDetector(
-                  //                     onTap: () => _toggleCheckbox(3),
-                  //                     child: Container(
-                  //                       margin: const EdgeInsets.all(5),
-                  //                       padding: const EdgeInsets.all(8),
-                  //                       decoration: BoxDecoration(
-                  //                         color: _checkboxValues[3]
-                  //                             ? Colors.green.shade200
-                  //                             : Colors.grey.shade200,
-                  //                         borderRadius: BorderRadius.circular(5),
-                  //                         border: Border.all(color: Colors.grey),
-                  //                       ),
-                  //                       child: const Padding(
-                  //                         padding:
-                  //                             EdgeInsets.symmetric(horizontal: 20),
-                  //                         child: Text('Checkbox 5'),
-                  //                       ),
-                  //                     ),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
 
                   //other
                   Padding(
@@ -490,15 +338,21 @@ class _User_Feedback_ScreenState extends State<User_Feedback_Screen> {
                   },
                 );
                 await Future.delayed(const Duration(milliseconds: 1300));
-
-                CollectionReference citizenFeedbackCollection =
-                    FirebaseFirestore.instance.collection("clc_feedback");
-
                 try {
-                  QuerySnapshot snapshot =
-                      await citizenFeedbackCollection.get();
-                  int totalDocCount = snapshot.size;
-                  totalDocCount++;
+                  int totalDocCount = 0;
+                  await FirebaseFirestore.instance.runTransaction((transaction) async {
+                    // Get the current count of requests
+                    DocumentSnapshot snapshot = await transaction.get(FirebaseFirestore
+                        .instance
+                        .collection("clc_feedback")
+                        .doc("feedback_count"));
+                    totalDocCount = (snapshot.exists) ? snapshot.get('count') : 0;
+                    totalDocCount++;
+
+                    transaction.set(
+                        FirebaseFirestore.instance.collection("clc_feedback").doc("feedback_count"),
+                        {'count': totalDocCount});
+                  });
 
                   //govt
                   if (widget.authority_id.startsWith("g")) {

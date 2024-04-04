@@ -7,16 +7,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import '../../Utils.dart';
-import 'open_request_master.dart';
+import 'active_requests_details_screen.dart';
 
-class Latest_Req_Screen extends StatefulWidget {
-  const Latest_Req_Screen({super.key});
+class Active_Req_Screen extends StatefulWidget {
+  const Active_Req_Screen({super.key});
 
   @override
-  _Latest_Req_ScreenState createState() => _Latest_Req_ScreenState();
+  _Active_Req_ScreenState createState() => _Active_Req_ScreenState();
 }
 
-class _Latest_Req_ScreenState extends State<Latest_Req_Screen> {
+class _Active_Req_ScreenState extends State<Active_Req_Screen> {
   String? finalUserType = "";
   String iAmNGO = '';
   String iAmGovt = '';
@@ -108,10 +108,8 @@ class _Latest_Req_ScreenState extends State<Latest_Req_Screen> {
 
                                         // final request_Id = reqTime.toDate();
 
-                                        // Get the current time
                                         final currentTime = DateTime.now();
 
-                                        // Calculate the difference in hours between current time and request time
                                         final differenceInHours = currentTime
                                             .difference(reqTime)
                                             .inHours;
@@ -138,7 +136,7 @@ class _Latest_Req_ScreenState extends State<Latest_Req_Screen> {
                                                   pageBuilder: (context,
                                                           animation,
                                                           secondaryAnimation) =>
-                                                      Open_Req_Screen_Master(
+                                                      Active_Req_Details_Screen(
                                                     pin: snapshot.data!
                                                         .docs[index]['pinCode'],
                                                     title: snapshot

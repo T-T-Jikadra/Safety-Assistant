@@ -1005,12 +1005,20 @@ class _Open_Alert_ScreenState extends State<Open_Alert_Screen> {
 //Storing alert open data to database
   void addAlertOpenedToDatabase() async {
     //for unique doc numbering
-    CollectionReference alertOpenCollection =
-        FirebaseFirestore.instance.collection("clc_opened_alerts");
+    int totalDocCount = 0;
+    await FirebaseFirestore.instance.runTransaction((transaction) async {
+      // Get the current count of requests
+      DocumentSnapshot snapshot = await transaction.get(FirebaseFirestore
+          .instance
+          .collection("clc_opened_alerts")
+          .doc("alert_opened_count"));
+      totalDocCount = (snapshot.exists) ? snapshot.get('count') : 0;
+      totalDocCount++;
 
-    QuerySnapshot snapshot = await alertOpenCollection.get();
-    int totalDocCount = snapshot.size;
-    totalDocCount++;
+      transaction.set(
+          FirebaseFirestore.instance.collection("clc_opened_alerts").doc("alert_opened_count"),
+          {'count': totalDocCount});
+    });
 
     var AlertOpenDocRef = FirebaseFirestore.instance
         .collection("clc_opened_alerts")

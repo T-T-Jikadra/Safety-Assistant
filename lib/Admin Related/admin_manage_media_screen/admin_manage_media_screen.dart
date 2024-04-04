@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages, use_build_context_synchronously, avoid_print
+// ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages, use_build_context_synchronously, avoid_print, camel_case_types
 
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,7 +11,6 @@ import '../../Models/send_news_model.dart';
 import '../../Utils/Utils.dart';
 import 'admin_view_media_screen.dart';
 
-// ignore: camel_case_types
 class Admin_Manage_Media_Screen extends StatefulWidget {
   const Admin_Manage_Media_Screen({super.key});
 
@@ -20,7 +19,6 @@ class Admin_Manage_Media_Screen extends StatefulWidget {
       _Admin_Manage_Media_ScreenState();
 }
 
-// ignore: camel_case_types
 class _Admin_Manage_Media_ScreenState extends State<Admin_Manage_Media_Screen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _descriptionController = TextEditingController();
@@ -38,8 +36,7 @@ class _Admin_Manage_Media_ScreenState extends State<Admin_Manage_Media_Screen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: DefaultTabController(
+    return DefaultTabController(
         length: 2, // Number of tabs
         child: Scaffold(
           appBar: AppBar(
@@ -466,7 +463,7 @@ class _Admin_Manage_Media_ScreenState extends State<Admin_Manage_Media_Screen> {
                                     child: snapshot.data!.docs.isEmpty
                                         ? const Center(
                                             child: Text(
-                                              'No records found for news !',
+                                              'No records found for media !',
                                               style: TextStyle(
                                                 fontSize: 19,
                                                 fontWeight: FontWeight.bold,
@@ -736,8 +733,7 @@ class _Admin_Manage_Media_ScreenState extends State<Admin_Manage_Media_Screen> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 
   Future<String?> uploadImageToStorage(File imageFile) async {

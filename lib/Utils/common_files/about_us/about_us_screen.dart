@@ -58,9 +58,25 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                             width: 130,
                             color: Colors.transparent,
                             margin: const EdgeInsets.all(16),
-                            child: Image.asset(
-                              'assets/images/logo.png',
-                              fit: BoxFit.cover,
+                            child: FutureBuilder(
+                              future: _loadImage(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<Image> snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Center(
+                                    child:
+                                        CircularProgressIndicator(),
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return const Center(
+                                    child: Text(
+                                        'Error loading image'),
+                                  );
+                                } else {
+                                  return snapshot.data!;
+                                }
+                              },
                             ),
                           ),
                         ),
@@ -336,5 +352,14 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
               ),
             ),
     );
+  }
+
+  Future<Image> _loadImage() async {
+    final image = Image.asset(
+      'assets/images/logo.png',
+      fit: BoxFit.cover,
+    );
+    await Future.delayed(const Duration(milliseconds: 800));
+    return image;
   }
 }

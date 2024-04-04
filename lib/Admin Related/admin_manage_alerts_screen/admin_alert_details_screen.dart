@@ -1024,7 +1024,20 @@ class _Admin_Alert_Details_ScreenState
     return null;
   }
 
-  void deleteAlert() {
+  Future<void> deleteAlert() async {
+    int totalDocCount = 0;
+    await FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentSnapshot snapshot = await transaction.get(FirebaseFirestore
+          .instance
+          .collection("clc_alert")
+          .doc("alert_count"));
+      totalDocCount = (snapshot.exists) ? snapshot.get('count') : 0;
+      totalDocCount--;
+
+      transaction.set(
+          FirebaseFirestore.instance.collection("clc_alert").doc("alert_count"),
+          {'count': totalDocCount});
+    });
     //delete feedback doc
     DocumentReference feedbackRef = FirebaseFirestore.instance
         .collection("clc_alert")

@@ -54,7 +54,7 @@ class _Media_Details_ScreenState extends State<Media_Details_Screen> {
                           DateFormat('dd-MM-yyyy , HH:mm').format(
                               DateTime.parse(
                                   widget.documentSnapshot['sentTime'])),
-                          style: const TextStyle(fontSize: 12)),
+                          style: const TextStyle(fontSize: 10)),
                       const SizedBox(width: 15)
                     ],
                   ),

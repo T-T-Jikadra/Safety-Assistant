@@ -89,7 +89,7 @@ class _Citizen_Donate_ScreenState extends State<Citizen_Donate_Screen> {
           ? const Center(child: CircularProgressIndicator())
           : SizedBox(
               child: widget.authority_upi.isEmpty
-                  ? Center(
+                  ? const Center(
                       child: NoUPIFound(),
                     )
                   : Column(
@@ -991,6 +991,8 @@ class _Citizen_Donate_ScreenState extends State<Citizen_Donate_Screen> {
 }
 
 class NoUPIFound extends StatelessWidget {
+  const NoUPIFound({super.key});
+
   @override
   Widget build(BuildContext context) {
     // Call showDialog when authority_upi is empty

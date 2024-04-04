@@ -48,6 +48,7 @@ class _Admin_Manage_News_ScreenState extends State<Admin_Manage_News_Screen> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
                         const Spacer(),
@@ -57,7 +58,8 @@ class _Admin_Manage_News_ScreenState extends State<Admin_Manage_News_Screen> {
                             DateFormat('dd-MM-yyyy , HH:mm').format(
                                 DateTime.parse(
                                     widget.documentSnapshot['sentTime'])),
-                            style: const TextStyle(fontSize: 12)),
+                            style: const TextStyle(fontSize: 10)),
+                        const SizedBox(width: 15)
                       ],
                     ),
                   ],
@@ -98,18 +100,6 @@ class _Admin_Manage_News_ScreenState extends State<Admin_Manage_News_Screen> {
                           ),
                         ),
                         const SizedBox(height: 25),
-                        // Row(
-                        //   children: [
-                        //     const Spacer(),
-                        //     const Icon(Icons.watch_later_outlined, size: 16),
-                        //     const SizedBox(width: 5),
-                        //     Text(
-                        //         DateFormat('dd-MM-yyyy , HH:mm').format(
-                        //             DateTime.parse(
-                        //                 widget.documentSnapshot['sentTime'])),
-                        //         style: const TextStyle(fontSize: 12)),
-                        //   ],
-                        // ),
                         const SizedBox(height: 30)
                       ],
                     ),
@@ -191,7 +181,18 @@ class _Admin_Manage_News_ScreenState extends State<Admin_Manage_News_Screen> {
         ));
   }
 
-  void deleteMedia() {
+  Future<void> deleteMedia() async {
+    int totalDocCount = 0;
+    await FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentSnapshot snapshot = await transaction.get(
+          FirebaseFirestore.instance.collection("clc_news").doc("news_count"));
+      totalDocCount = (snapshot.exists) ? snapshot.get('count') : 0;
+      totalDocCount--;
+
+      transaction.set(
+          FirebaseFirestore.instance.collection("clc_news").doc("news_count"),
+          {'count': totalDocCount});
+    });
     //delete feedback doc
     DocumentReference feedbackRef = FirebaseFirestore.instance
         .collection("clc_news")

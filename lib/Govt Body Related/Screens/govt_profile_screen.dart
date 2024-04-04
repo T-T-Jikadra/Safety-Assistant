@@ -133,7 +133,7 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                 child: CircularProgressIndicator(),
               )
             : TabBarView(
-              children: [
+                children: [
                   Column(
                     children: [
                       Expanded(
@@ -144,7 +144,8 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                               Expanded(
                                 child: SingleChildScrollView(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Center(
                                         child: Stack(
@@ -159,32 +160,32 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                                       width: 3)),
                                               child: ClipRRect(
                                                 borderRadius:
-                                                BorderRadius.circular(75),
+                                                    BorderRadius.circular(75),
                                                 child: isPicked
                                                     ? Image.file(
-                                                  pickedImage,
-                                                  fit: BoxFit.cover,
-                                                )
+                                                        pickedImage,
+                                                        fit: BoxFit.cover,
+                                                      )
                                                     : Image.network(
-                                                  profileUrl,
-                                                  fit: BoxFit.cover,
-                                                  loadingBuilder: (context,
-                                                      child,
-                                                      loadingProgress) {
-                                                    if (loadingProgress ==
-                                                        null) {
-                                                      return child;
-                                                    }
-                                                    return const Center(
-                                                        child:
-                                                        CircularProgressIndicator());
-                                                  },
-                                                  errorBuilder: (context,
-                                                      object, stack) {
-                                                    return Image.network(
-                                                        'https://i.pinimg.com/originals/b4/8a/b9/b48ab9f9b9e169a2a308728d1ba2fa82.jpg');
-                                                  },
-                                                ),
+                                                        profileUrl,
+                                                        fit: BoxFit.cover,
+                                                        loadingBuilder: (context,
+                                                            child,
+                                                            loadingProgress) {
+                                                          if (loadingProgress ==
+                                                              null) {
+                                                            return child;
+                                                          }
+                                                          return const Center(
+                                                              child:
+                                                                  CircularProgressIndicator());
+                                                        },
+                                                        errorBuilder: (context,
+                                                            object, stack) {
+                                                          return Image.network(
+                                                              'https://i.pinimg.com/originals/b4/8a/b9/b48ab9f9b9e169a2a308728d1ba2fa82.jpg');
+                                                        },
+                                                      ),
                                               ),
                                             ),
                                             Positioned(
@@ -196,54 +197,56 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                                         color: Colors.blue,
                                                         border: Border.all(
                                                             width: 4,
-                                                            color: Colors.white)),
+                                                            color:
+                                                                Colors.white)),
                                                     child: GestureDetector(
                                                         onTap: () async {
                                                           final picker =
-                                                          ImagePicker();
+                                                              ImagePicker();
                                                           final XFile? image =
-                                                          await picker.pickImage(
-                                                              source:
-                                                              ImageSource
-                                                                  .gallery);
+                                                              await picker.pickImage(
+                                                                  source: ImageSource
+                                                                      .gallery);
                                                           if (image != null) {
                                                             showDialog(
                                                               context: context,
                                                               barrierDismissible:
-                                                              false,
-                                                              builder: (BuildContext
-                                                              context) {
+                                                                  false,
+                                                              builder:
+                                                                  (BuildContext
+                                                                      context) {
                                                                 return const Dialog(
-                                                                  child: Padding(
-                                                                    padding: EdgeInsets
-                                                                        .only(
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsets.only(
                                                                         top: 35,
                                                                         bottom:
-                                                                        25,
+                                                                            25,
                                                                         left:
-                                                                        20,
+                                                                            20,
                                                                         right:
-                                                                        20),
-                                                                    child: Column(
+                                                                            20),
+                                                                    child:
+                                                                        Column(
                                                                       mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .min,
+                                                                          MainAxisSize
+                                                                              .min,
                                                                       crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .center,
+                                                                          CrossAxisAlignment
+                                                                              .center,
                                                                       mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
+                                                                          MainAxisAlignment
+                                                                              .center,
                                                                       children: [
                                                                         SizedBox(
                                                                             height:
-                                                                            15),
+                                                                                15),
                                                                         CircularProgressIndicator(
-                                                                            color: Colors
-                                                                                .blue),
+                                                                            color:
+                                                                                Colors.blue),
                                                                         SizedBox(
                                                                             height:
-                                                                            30),
+                                                                                30),
                                                                         Text(
                                                                             'Processing ...')
                                                                       ],
@@ -252,23 +255,25 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                                                 );
                                                               },
                                                             );
-                                                            pickedImage =
-                                                                File(image.path);
+                                                            pickedImage = File(
+                                                                image.path);
                                                             // Upload image to Firebase Storage
                                                             String? imageUrl =
-                                                            await uploadImageToStorage(
-                                                                pickedImage);
+                                                                await uploadImageToStorage(
+                                                                    pickedImage);
 
                                                             // Remove progress indicator
-                                                            Navigator.pop(context);
+                                                            Navigator.pop(
+                                                                context);
 
-                                                            if (imageUrl != null) {
+                                                            if (imageUrl !=
+                                                                null) {
                                                               await uploadDataToFirestore(
                                                                   imageUrl);
 
                                                               // Show success message
-                                                              ScaffoldMessenger.of(
-                                                                  context)
+                                                              ScaffoldMessenger
+                                                                      .of(context)
                                                                   .showSnackBar(
                                                                 const SnackBar(
                                                                     content: Text(
@@ -276,8 +281,8 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                                               );
                                                             } else {
                                                               // If image upload fails, show error message
-                                                              ScaffoldMessenger.of(
-                                                                  context)
+                                                              ScaffoldMessenger
+                                                                      .of(context)
                                                                   .showSnackBar(
                                                                 const SnackBar(
                                                                     content: Text(
@@ -289,7 +294,8 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                                             });
                                                           }
                                                         },
-                                                        child: const Icon(Icons.add,
+                                                        child: const Icon(
+                                                            Icons.add,
                                                             size: 25)))),
                                           ],
                                         ),
@@ -299,23 +305,32 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                         child: AbsorbPointer(
                                           absorbing: !isEditing,
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Row(
                                                 children: [
                                                   const Spacer(),
                                                   Padding(
-                                                    padding: const EdgeInsets.only(
-                                                        top: 15, left: 10, bottom: 3),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 15,
+                                                            left: 10,
+                                                            bottom: 3),
                                                     child: Row(
                                                       children: [
-                                                        const Icon(Iconsax.medal_star),
-                                                        const SizedBox(width: 3),
-                                                        Text("Credit score : $fetchedScore",
+                                                        const Icon(
+                                                            Iconsax.medal_star),
+                                                        const SizedBox(
+                                                            width: 3),
+                                                        Text(
+                                                            "Credit score : $fetchedScore",
                                                             style: const TextStyle(
                                                                 fontWeight:
-                                                                    FontWeight.w600)),
-                                                        const SizedBox(width: 3),
+                                                                    FontWeight
+                                                                        .w600)),
+                                                        const SizedBox(
+                                                            width: 3),
                                                       ],
                                                     ),
                                                   ),
@@ -323,21 +338,27 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                               ),
                                               const Padding(
                                                 padding: EdgeInsets.only(
-                                                    top: 10, left: 10, bottom: 3),
-                                                child: Text("Name of Govt Agency :"),
+                                                    top: 10,
+                                                    left: 10,
+                                                    bottom: 3),
+                                                child: Text(
+                                                    "Name of Govt Agency :"),
                                               ),
                                               //username
                                               SizedBox(
                                                 child: TextFormField(
-                                                  controller: nameTextController,
+                                                  controller:
+                                                      nameTextController,
                                                   decoration: InputDecoration(
                                                     prefixIcon: const Icon(
-                                                        CupertinoIcons.person_alt),
+                                                        CupertinoIcons
+                                                            .person_alt),
                                                     hintText: fetchedGovtName,
                                                   ),
                                                   enabled: isEditing,
                                                   validator: (value) {
-                                                    if (value == null || value.isEmpty) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
                                                       return 'Enter Govt agency name';
                                                     }
                                                     if (value.isNotEmpty &&
@@ -351,17 +372,18 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                               const SizedBox(height: 12),
                                               //reg no
                                               const Padding(
-                                                padding:
-                                                    EdgeInsets.only(left: 10, bottom: 3),
-                                                child: Text("Registration Number :"),
+                                                padding: EdgeInsets.only(
+                                                    left: 10, bottom: 3),
+                                                child: Text(
+                                                    "Registration Number :"),
                                               ),
                                               SizedBox(
                                                 height: 55,
                                                 child: TextFormField(
                                                   enabled: false,
                                                   decoration: InputDecoration(
-                                                    prefixIcon:
-                                                        const Icon(Icons.app_registration),
+                                                    prefixIcon: const Icon(
+                                                        Icons.app_registration),
                                                     hintText: fetchedGovtRegNo,
                                                   ),
                                                 ),
@@ -369,8 +391,8 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                               const SizedBox(height: 12),
                                               //service
                                               const Padding(
-                                                padding:
-                                                    EdgeInsets.only(left: 10, bottom: 3),
+                                                padding: EdgeInsets.only(
+                                                    left: 10, bottom: 3),
                                                 child: Text("Services :"),
                                               ),
                                               Padding(
@@ -385,48 +407,56 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                                       context,
                                                     );
                                                   },
-                                                  controller: serviceGovtTextController,
+                                                  controller:
+                                                      serviceGovtTextController,
                                                   readOnly: true,
                                                   decoration: const InputDecoration(
                                                       hintText:
                                                           "Select Services NGO can provide",
                                                       prefixIcon: Icon(
-                                                          CupertinoIcons.square_list_fill)),
+                                                          CupertinoIcons
+                                                              .square_list_fill)),
                                                   validator: (value) {
-                                                    if (value == null || value.isEmpty) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
                                                       return 'Select your services from list';
                                                     }
                                                     return null;
                                                   },
                                                   onEditingComplete: () {
-                                                    FocusScope.of(context).nextFocus();
+                                                    FocusScope.of(context)
+                                                        .nextFocus();
                                                   },
                                                 ),
                                               ),
                                               const SizedBox(height: 12),
                                               //contact
                                               const Padding(
-                                                padding:
-                                                    EdgeInsets.only(left: 10, bottom: 3),
+                                                padding: EdgeInsets.only(
+                                                    left: 10, bottom: 3),
                                                 child: Text("Contact Number :"),
                                               ),
                                               //contact
                                               SizedBox(
                                                 // height: 55,
                                                 child: TextFormField(
-                                                  controller: phoneTextController,
+                                                  controller:
+                                                      phoneTextController,
                                                   enabled: isEditing,
                                                   maxLength: 13,
                                                   decoration: InputDecoration(
-                                                    prefixIcon:
-                                                        const Icon(CupertinoIcons.phone),
+                                                    prefixIcon: const Icon(
+                                                        CupertinoIcons.phone),
                                                     hintText: fetchedContactNo,
                                                   ),
-                                                  keyboardType: TextInputType.phone,
+                                                  keyboardType:
+                                                      TextInputType.phone,
                                                   validator: (value) {
-                                                    if (value == null || value.isEmpty) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
                                                       return 'Enter contact number';
-                                                    } else if (value.isNotEmpty &&
+                                                    } else if (value
+                                                            .isNotEmpty &&
                                                         value.length < 13) {
                                                       //_contactNoFocusNode.requestFocus();
                                                       return 'Contact no should be of 10 digits + country code';
@@ -437,28 +467,31 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                               ),
                                               const SizedBox(height: 12),
                                               const Padding(
-                                                padding:
-                                                    EdgeInsets.only(left: 10, bottom: 3),
+                                                padding: EdgeInsets.only(
+                                                    left: 10, bottom: 3),
                                                 child: Text("Email Address :"),
                                               ),
                                               //email
                                               SizedBox(
                                                 child: TextFormField(
-                                                  controller: emailTextController,
+                                                  controller:
+                                                      emailTextController,
                                                   decoration: InputDecoration(
-                                                    prefixIcon:
-                                                        const Icon(Icons.email_outlined),
+                                                    prefixIcon: const Icon(
+                                                        Icons.email_outlined),
                                                     hintText: fetchedEmail,
                                                   ),
                                                   enabled: isEditing,
                                                   validator: (value) {
-                                                    if (value == null || value.isEmpty) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
                                                       return 'Enter an email address';
                                                     }
                                                     // Regular expression for validating an email address
                                                     final emailRegex = RegExp(
                                                         r'^[\w.-]+@([\w-]+\.)+[\w-]{2,4}$');
-                                                    if (!emailRegex.hasMatch(value)) {
+                                                    if (!emailRegex
+                                                        .hasMatch(value)) {
                                                       return 'Enter valid email address';
                                                     }
                                                     return null; // Return null if the input is valid
@@ -467,22 +500,24 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                               ),
                                               const SizedBox(height: 12),
                                               const Padding(
-                                                padding:
-                                                    EdgeInsets.only(left: 10, bottom: 3),
+                                                padding: EdgeInsets.only(
+                                                    left: 10, bottom: 3),
                                                 child: Text("Website :"),
                                               ),
                                               //website
                                               SizedBox(
                                                 child: TextFormField(
-                                                  controller: websiteTextController,
+                                                  controller:
+                                                      websiteTextController,
                                                   decoration: InputDecoration(
-                                                    prefixIcon: const Icon(
-                                                        Icons.dataset_linked_outlined),
+                                                    prefixIcon: const Icon(Icons
+                                                        .dataset_linked_outlined),
                                                     hintText: fetchedWebsite,
                                                   ),
                                                   enabled: isEditing,
                                                   validator: (value) {
-                                                    if (value == null || value.isEmpty) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
                                                       return 'Enter website URL';
                                                     }
                                                     // Regular expression for validating a URL
@@ -494,7 +529,8 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                                     );
                                                     if (websiteTextController
                                                             .text.isNotEmpty &&
-                                                        !urlRegex.hasMatch(value)) {
+                                                        !urlRegex
+                                                            .hasMatch(value)) {
                                                       // _websiteFocusNode.requestFocus();
                                                       return 'Enter valid URL';
                                                     }
@@ -504,8 +540,8 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                               ),
                                               const SizedBox(height: 12),
                                               const Padding(
-                                                padding:
-                                                    EdgeInsets.only(left: 10, bottom: 3),
+                                                padding: EdgeInsets.only(
+                                                    left: 10, bottom: 3),
                                                 child: Text("Full Address :"),
                                               ),
                                               //address
@@ -514,15 +550,19 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                                   maxLength: 100,
                                                   minLines: 2,
                                                   maxLines: 4,
-                                                  controller: addressTextController,
+                                                  controller:
+                                                      addressTextController,
                                                   decoration: InputDecoration(
-                                                    prefixIcon: const Icon(CupertinoIcons
-                                                        .pencil_ellipsis_rectangle),
-                                                    hintText: fetchedFullAddress,
+                                                    prefixIcon: const Icon(
+                                                        CupertinoIcons
+                                                            .pencil_ellipsis_rectangle),
+                                                    hintText:
+                                                        fetchedFullAddress,
                                                   ),
                                                   enabled: isEditing,
                                                   validator: (value) {
-                                                    if (value == null || value.isEmpty) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
                                                       return 'Enter full address';
                                                     }
                                                     if (value.isNotEmpty &&
@@ -535,23 +575,26 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                               ),
                                               const SizedBox(height: 12),
                                               const Padding(
-                                                padding:
-                                                    EdgeInsets.only(left: 10, bottom: 3),
+                                                padding: EdgeInsets.only(
+                                                    left: 10, bottom: 3),
                                                 child: Text("Pincode :"),
                                               ),
                                               //pincode
                                               SizedBox(
                                                 child: TextFormField(
-                                                  controller: pincodeTextController,
+                                                  controller:
+                                                      pincodeTextController,
                                                   decoration: InputDecoration(
-                                                    prefixIcon:
-                                                        const Icon(Icons.pin_rounded),
+                                                    prefixIcon: const Icon(
+                                                        Icons.pin_rounded),
                                                     hintText: fetchedPinCode,
                                                   ),
                                                   enabled: isEditing,
-                                                  keyboardType: TextInputType.phone,
+                                                  keyboardType:
+                                                      TextInputType.phone,
                                                   validator: (value) {
-                                                    if (value == null || value.isEmpty) {
+                                                    if (value == null ||
+                                                        value.isEmpty) {
                                                       return 'Enter pin code of an NGO';
                                                     }
                                                     if (value.isNotEmpty &&
@@ -564,8 +607,8 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                               ),
                                               const SizedBox(height: 12),
                                               const Padding(
-                                                padding:
-                                                    EdgeInsets.only(left: 10, bottom: 3),
+                                                padding: EdgeInsets.only(
+                                                    left: 10, bottom: 3),
                                                 child: Text("State :"),
                                               ),
                                               //state
@@ -576,11 +619,15 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                                 ),
                                                 child: SizedBox(
                                                   //height: 60,
-                                                  child: DropdownButtonFormField<String>(
+                                                  child:
+                                                      DropdownButtonFormField<
+                                                          String>(
                                                     value: selectedState,
-                                                    items: DropdownItems.dropdownItemState
+                                                    items: DropdownItems
+                                                        .dropdownItemState
                                                         .map((String state) {
-                                                      return DropdownMenuItem<String>(
+                                                      return DropdownMenuItem<
+                                                          String>(
                                                         // alignment: AlignmentDirectional.topStart,
                                                         value: state,
                                                         child: Text(state),
@@ -590,7 +637,8 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                                       setState(() {
                                                         selectedState = value!;
                                                         // Update city list based on the selected state
-                                                        updateCityList(selectedState);
+                                                        updateCityList(
+                                                            selectedState);
                                                         // Reset selected city when state changes
                                                         selectedCity = '';
                                                       });
@@ -598,12 +646,15 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                                     decoration: InputDecoration(
                                                       enabled: isEditing,
                                                       // border: OutlineInputBorder(),
-                                                      hintText: "Select your State",
+                                                      hintText:
+                                                          "Select your State",
                                                       prefixIcon: const Icon(
-                                                          CupertinoIcons.map_pin_ellipse),
+                                                          CupertinoIcons
+                                                              .map_pin_ellipse),
                                                     ),
                                                     validator: (value) {
-                                                      if (value == "Select your State") {
+                                                      if (value ==
+                                                          "Select your State") {
                                                         return 'Select your State';
                                                       }
                                                       return null; // Return null if the input is valid
@@ -613,8 +664,8 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                               ),
                                               const SizedBox(height: 10),
                                               const Padding(
-                                                padding:
-                                                    EdgeInsets.only(left: 10, bottom: 3),
+                                                padding: EdgeInsets.only(
+                                                    left: 10, bottom: 3),
                                                 child: Text("City :"),
                                               ),
                                               //city
@@ -625,13 +676,17 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                                 ),
                                                 child: SizedBox(
                                                   //height: 60,
-                                                  child: DropdownButtonFormField<String>(
-                                                    value: selectedCity.isNotEmpty
-                                                        ? selectedCity
-                                                        : null,
-                                                    items:
-                                                        dropdownItemCity.map((String city) {
-                                                      return DropdownMenuItem<String>(
+                                                  child:
+                                                      DropdownButtonFormField<
+                                                          String>(
+                                                    value:
+                                                        selectedCity.isNotEmpty
+                                                            ? selectedCity
+                                                            : null,
+                                                    items: dropdownItemCity
+                                                        .map((String city) {
+                                                      return DropdownMenuItem<
+                                                          String>(
                                                         value: city,
                                                         child: Text(city),
                                                       );
@@ -642,17 +697,21 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                                       });
                                                     },
                                                     decoration: InputDecoration(
-                                                      border: OutlineInputBorder(
+                                                      border:
+                                                          OutlineInputBorder(
                                                         borderRadius:
-                                                            BorderRadius.circular(24),
+                                                            BorderRadius
+                                                                .circular(24),
                                                       ),
                                                       enabled: isEditing,
-                                                      hintText: "Select your City",
-                                                      prefixIcon: const Icon(
-                                                          Icons.location_city_rounded),
+                                                      hintText:
+                                                          "Select your City",
+                                                      prefixIcon: const Icon(Icons
+                                                          .location_city_rounded),
                                                     ),
                                                     validator: (value) {
-                                                      if (value == null || value.isEmpty) {
+                                                      if (value == null ||
+                                                          value.isEmpty) {
                                                         return 'Select your City';
                                                       }
                                                       return null; // Return null if the input is valid
@@ -667,19 +726,26 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                       const SizedBox(height: 20),
                                       //extra details
                                       Align(
-                                        alignment: AlignmentDirectional.bottomEnd,
+                                        alignment:
+                                            AlignmentDirectional.bottomEnd,
                                         child: SizedBox(
-                                          width: MediaQuery.of(context).size.width * 0.85,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.85,
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
                                             children: [
                                               const SizedBox(height: 10),
                                               Padding(
-                                                padding: const EdgeInsets.only(right: 10),
+                                                padding: const EdgeInsets.only(
+                                                    right: 10),
                                                 child: Text(
                                                   "Govt agency registered at : \t$fetchedRegTime",
                                                   style: const TextStyle(
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       fontSize: 11),
                                                 ),
                                               ),
@@ -694,7 +760,8 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                               ),
                               const SizedBox(height: 9),
                               Padding(
-                                padding: const EdgeInsets.only(right: 20, left: 20),
+                                padding:
+                                    const EdgeInsets.only(right: 20, left: 20),
                                 child: Container(
                                   padding: const EdgeInsets.only(bottom: 2),
                                   width: double.infinity,
@@ -707,7 +774,8 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                               "Enable editing to edit Govt Agency profile ..",
                                               "Okay");
                                         } else {
-                                          if (_personalFormKey.currentState!.validate()) {
+                                          if (_personalFormKey.currentState!
+                                              .validate()) {
                                             updateGovtProfile();
                                           }
                                         }
@@ -715,7 +783,8 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                                       style: ButtonStyle(
                                         shape: MaterialStateProperty.all(
                                           RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(18),
+                                            borderRadius:
+                                                BorderRadius.circular(18),
                                           ),
                                         ),
                                       ),
@@ -730,104 +799,107 @@ class _Govt_ProfileState extends State<Govt_Profile> {
                       ),
                     ],
                   ),
-                Column(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: SingleChildScrollView(
-                                child: Form(
-                                  key: _othersFormKey,
-                                  child: AbsorbPointer(
-                                    absorbing: !isEditing,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-
-                                        const Padding(
-                                          padding: EdgeInsets.only(
-                                              top: 25, left: 10, bottom: 3),
-                                          child: Text("About govt Agency :"),
-                                        ),
-                                        //About govt
-                                        SizedBox(
-                                          child: TextFormField(
-                                            controller: aboutGovtTextController,
-                                            textCapitalization: TextCapitalization.sentences,
-                                            decoration: InputDecoration(
-                                              prefixIcon: const Icon(
-                                                  CupertinoIcons
-                                                      .building_2_fill),
-                                              hintText: fetchedAboutGovt.isEmpty ? "Add about Govt Agency" : fetchedAboutGovt,
-                                            ),
-                                            enabled: isEditing,
-                                            maxLines: 5,
-                                            maxLength: 250,
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'Enter about Govt';
-                                              }
-                                              if (value.isNotEmpty &&
-                                                  value.length < 10) {
-                                                return 'Too short';
-                                              }
-                                              return null;
-                                            },
+                  Column(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  child: Form(
+                                    key: _othersFormKey,
+                                    child: AbsorbPointer(
+                                      absorbing: !isEditing,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 25, left: 10, bottom: 3),
+                                            child: Text("About govt Agency :"),
                                           ),
-                                        ),
-                                        const SizedBox(height: 12),
-                                      ],
+                                          const SizedBox(height: 10),
+                                          //About govt
+                                          SizedBox(
+                                            child: TextFormField(
+                                              controller:
+                                                  aboutGovtTextController,
+                                              textCapitalization:
+                                                  TextCapitalization.sentences,
+                                              decoration: InputDecoration(
+                                                prefixIcon: const Icon(
+                                                    CupertinoIcons
+                                                        .building_2_fill),
+                                                hintText: fetchedAboutGovt
+                                                        .isEmpty
+                                                    ? "Add about Govt Agency"
+                                                    : fetchedAboutGovt,
+                                              ),
+                                              enabled: isEditing,
+                                              maxLines: 5,
+                                              maxLength: 250,
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return 'Enter about Govt';
+                                                }
+                                                if (value.isNotEmpty &&
+                                                    value.length < 10) {
+                                                  return 'Too short';
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                          ),
+                                          const SizedBox(height: 12),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                      const EdgeInsets.only(right: 20, left: 20),
-                      child: Container(
-                        padding: const EdgeInsets.only(bottom: 18),
-                        width: double.infinity,
-                        child: ClipRRect(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (isEditing == false) {
-                                showSnakeBar(
-                                    context,
-                                    "Enable editing to edit Govt Agency profile ..",
-                                    "okay");
-                              } else {
-                                if (_othersFormKey.currentState!.validate()) {
-                                  updateOtherProfile();
-                                }
-                              }
-                            },
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius:
-                                  BorderRadius.circular(18),
-                                ),
-                              ),
-                            ),
-                            child: const Text("Update Profile"),
+                            ],
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                )
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20, left: 20),
+                        child: Container(
+                          padding: const EdgeInsets.only(bottom: 18),
+                          width: double.infinity,
+                          child: ClipRRect(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (isEditing == false) {
+                                  showSnakeBar(
+                                      context,
+                                      "Enable editing to edit Govt Agency profile ..",
+                                      "okay");
+                                } else {
+                                  if (_othersFormKey.currentState!.validate()) {
+                                    updateOtherProfile();
+                                  }
+                                }
+                              },
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18),
+                                  ),
+                                ),
+                              ),
+                              child: const Text("Update Profile"),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
-            ),
+              ),
       ),
     );
   }

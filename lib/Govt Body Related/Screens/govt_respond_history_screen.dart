@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../Utils/Utils.dart';
-import '../../Utils/common_files/declined_req_details.dart';
+import '../../Utils/common_files/request/declined_req_details.dart';
 import '../../Utils/common_files/response/response_details_screen.dart';
 import '../../Utils/constants.dart';
 

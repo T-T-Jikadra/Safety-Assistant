@@ -28,7 +28,7 @@ class _UserProfileState extends State<UserProfile> {
 
   String fetchedFname = "";
   String fetchedLname = "";
-  String profileUrl = '';
+  String profileUrl = "";
   String? fetchedGender = "";
   late Timestamp fetchedBirthDate = Timestamp.now();
   String? fetchedPhone = "";

@@ -321,7 +321,8 @@ class _commonbg_adminState extends State<commonbg_admin> {
                                         ),
                                         const SizedBox(width: 8),
                                         const ImageIcon(
-                                          AssetImage('assets/images/request_icon.png'),
+                                          AssetImage(
+                                              'assets/images/request_icon.png'),
                                           color: Colors.white,
                                           // size: 5.0,
                                         ),
@@ -918,37 +919,42 @@ class _commonbg_adminState extends State<commonbg_admin> {
   Future<void> fetchNumbers() async {
     try {
       //citizen
-      QuerySnapshot citizenSnap =
-          await FirebaseFirestore.instance.collection("clc_citizen").get();
+      DocumentSnapshot citizenSnap = await FirebaseFirestore.instance
+          .collection("clc_citizen")
+          .doc("citizen_count")
+          .get();
 
       //ngo
-      QuerySnapshot ngoSnap =
-          await FirebaseFirestore.instance.collection("clc_ngo").get();
+      DocumentSnapshot ngoSnap = await FirebaseFirestore.instance
+          .collection("clc_ngo")
+          .doc("ngo_count")
+          .get();
 
       //govt
-      QuerySnapshot govtSnap =
-          await FirebaseFirestore.instance.collection("clc_govt").get();
+      DocumentSnapshot govtSnap = await FirebaseFirestore.instance
+          .collection("clc_govt")
+          .doc("govt_count")
+          .get();
 
       //req
-      QuerySnapshot reqSnap =
-          await FirebaseFirestore.instance.collection("clc_request").get();
+      DocumentSnapshot reqSnap = await FirebaseFirestore.instance
+          .collection("clc_request")
+          .doc("request_count")
+          .get();
 
       //response
-      QuerySnapshot resSnap =
-          await FirebaseFirestore.instance.collection("clc_response").get();
+      DocumentSnapshot responseSnap = await FirebaseFirestore.instance
+          .collection("clc_response")
+          .doc("response_count")
+          .get();
 
-      resSnap.docs.forEach((DocumentSnapshot document) {
-        if (document.id.startsWith('Res')) {
-          numberOfResponse++;
-        }
-      });
+
       setState(() {
-        numberOfCitizen = citizenSnap.size;
-        numberOfNGO = ngoSnap.size;
-        numberOfGovt = govtSnap.size;
-        numberOfReq = reqSnap.size;
-        // numberOfResponse = resSnap.size;
-        numberOfResponse = 34;
+        numberOfCitizen = (citizenSnap.exists) ? citizenSnap.get("count") : 0;
+        numberOfNGO = (ngoSnap.exists) ? ngoSnap.get("count") : 0;
+        numberOfGovt =(govtSnap.exists) ? govtSnap.get("count") : 0;
+        numberOfReq = (reqSnap.exists) ? reqSnap.get("count") : 0;
+        numberOfResponse = (responseSnap.exists) ? responseSnap.get("count") : 0;
       });
     } catch (e) {
       if (kDebugMode) {

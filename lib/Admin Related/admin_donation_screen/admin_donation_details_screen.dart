@@ -80,7 +80,7 @@ class _Admin_Donation_Details_ScreenState extends State<Admin_Donation_Details_S
                             Row(
                               children: [
                                 const Icon(CupertinoIcons
-                                    .person),
+                                    .person_alt),
                                 const SizedBox(width: 12),
                                 Column(
                                   crossAxisAlignment:
@@ -140,7 +140,7 @@ class _Admin_Donation_Details_ScreenState extends State<Admin_Donation_Details_S
                             const SizedBox(height: 8),
                             Row(
                               children: [
-                                const Icon(Icons.speaker),
+                                const Icon(Icons.payment_sharp),
                                 const SizedBox(width: 12),
                                 Column(
                                   crossAxisAlignment:
@@ -167,7 +167,10 @@ class _Admin_Donation_Details_ScreenState extends State<Admin_Donation_Details_S
                             const SizedBox(height: 8),
                             Row(
                               children: [
-                                const Icon(Icons.location_city_rounded),
+                                const ImageIcon(
+                                  AssetImage('assets/images/upi_icon.png'),
+                                ),
+
                                 const SizedBox(width: 12),
                                 Column(
                                   crossAxisAlignment:
@@ -209,7 +212,9 @@ class _Admin_Donation_Details_ScreenState extends State<Admin_Donation_Details_S
                             const SizedBox(height: 8),
                             Row(
                               children: [
-                                const Icon(Icons.location_city_rounded),
+                                const ImageIcon(
+                                  AssetImage('assets/images/transaction_icon.png'),
+                                ),
                                 const SizedBox(width: 12),
                                 Column(
                                   crossAxisAlignment:

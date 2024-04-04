@@ -416,18 +416,21 @@ class _Open_Feedback_Details_ScreenState
                                       controller: descController,
                                       maxLength: 100,
                                       decoration: InputDecoration(
-                                        hintText: 'Write your feedback here ...',
-                                        hintStyle:
-                                        const TextStyle(color: Colors.black),
+                                        hintText:
+                                            'Write your feedback here ...',
+                                        hintStyle: const TextStyle(
+                                            color: Colors.black),
                                         enabledBorder:
-                                        const OutlineInputBorder().copyWith(
-                                          borderRadius: BorderRadius.circular(10),
+                                            const OutlineInputBorder().copyWith(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           borderSide: const BorderSide(
                                               width: 1, color: Colors.black),
                                         ),
                                         focusedBorder:
-                                        const OutlineInputBorder().copyWith(
-                                          borderRadius: BorderRadius.circular(10),
+                                            const OutlineInputBorder().copyWith(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           borderSide: const BorderSide(
                                               width: 1, color: Colors.black12),
                                         ),
@@ -695,6 +698,22 @@ class _Open_Feedback_Details_ScreenState
 
       govtResponseRef.update({'fid': ""});
     }
+
+    int totalDocCount = 0;
+    await FirebaseFirestore.instance.runTransaction((transaction) async {
+      DocumentSnapshot snapshot = await transaction.get(FirebaseFirestore
+          .instance
+          .collection("clc_feedback")
+          .doc("feedback_count"));
+      totalDocCount = (snapshot.exists) ? snapshot.get('count') : 0;
+      totalDocCount--;
+
+      transaction.set(
+          FirebaseFirestore.instance
+              .collection("clc_feedback")
+              .doc("feedback_count"),
+          {'count': totalDocCount});
+    });
 
     //delete feedback doc
     DocumentReference feedbackRef =

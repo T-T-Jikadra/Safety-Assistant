@@ -59,8 +59,7 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: DefaultTabController(
+    return DefaultTabController(
         length: 2, // Number of tabs
         child: Scaffold(
           appBar: AppBar(
@@ -416,14 +415,22 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
                             child: ClipRRect(
                                 child: ElevatedButton(
                                     onPressed: () async {
-                                      CollectionReference alertCollection =
-                                          FirebaseFirestore.instance
-                                              .collection("clc_alert");
 
-                                      QuerySnapshot snapshot =
-                                          await alertCollection.get();
-                                      int totalDocCount = snapshot.size;
-                                      totalDocCount++;
+                                      int totalDocCount = 0;
+                                      await FirebaseFirestore.instance.runTransaction((transaction) async {
+                                        // Get the current count of requests
+                                        DocumentSnapshot snapshot = await transaction.get(FirebaseFirestore
+                                            .instance
+                                            .collection("clc_alert")
+                                            .doc("alert_count"));
+                                        totalDocCount = (snapshot.exists) ? snapshot.get('count') : 0;
+                                        totalDocCount++;
+
+                                        transaction.set(
+                                            FirebaseFirestore.instance.collection("clc_alert").doc("alert_count"),
+                                            {'count': totalDocCount});
+                                      });
+
                                       //to get dos anf donts document id
                                       fetchDid(selectedDisaster, totalDocCount);
 
@@ -933,8 +940,8 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
             ],
           ),
         ),
-      ),
-    );
+      );
+
   }
 
   void fetchDid(String typeOfDisaster, int totalCount) async {
