@@ -365,7 +365,7 @@ class NgoTile extends StatefulWidget {
 
 class _NgoTileState extends State<NgoTile> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _heightAnimation;
+  // late Animation<double> _heightAnimation;
 
   bool isExpanded = false;
 
@@ -376,9 +376,9 @@ class _NgoTileState extends State<NgoTile> with SingleTickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-    _heightAnimation = Tween<double>(begin: 0, end: 100).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn),
-    );
+    // _heightAnimation = Tween<double>(begin: 0, end: 100).animate(
+    //   CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn),
+    // );
   }
 
   @override
@@ -779,7 +779,7 @@ class govtTile extends StatefulWidget {
 class _GovtTileState extends State<govtTile>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _heightAnimation;
+  // late Animation<double> _heightAnimation;
 
   bool isExpanded = false;
 
@@ -790,9 +790,9 @@ class _GovtTileState extends State<govtTile>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-    _heightAnimation = Tween<double>(begin: 0, end: 100).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn),
-    );
+    // _heightAnimation = Tween<double>(begin: 0, end: 100).animate(
+    //   CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn),
+    // );
   }
 
   @override

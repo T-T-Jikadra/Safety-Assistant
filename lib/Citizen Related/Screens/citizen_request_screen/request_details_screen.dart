@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../citizen_NGO-GA_list/citizen_donate_screen.dart';
 import '../citizen_feedback_screen/open_feedback_details_screen.dart';
 
 // ignore: camel_case_types
@@ -31,6 +32,7 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
   //ngo
   bool hasNGOResponded = false;
   String fetchedNid = '';
+  String fetchedNGOUpi = '';
   String fetchedNGOFid = '';
   bool hasNGOFeedbackSent = false;
   String fetchedNGOName = '';
@@ -57,7 +59,7 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
   @override
   void initState() {
     super.initState();
-    fetchNGOResponseDetails();
+    fetchNGOResponseDetails().then((value) => fetchNGOUPIDetails());
     fetchGovtResponseDetails();
     // Start loading
     Future.delayed(const Duration(milliseconds: 1100), () {
@@ -638,136 +640,201 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+
                                         children: [
-                                          hasNGOFeedbackSent
-                                              ? Row(
-                                                  children: [
-                                                    const Icon(
-                                                        Iconsax.tick_circle4),
-                                                    const SizedBox(width: 5),
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .push(
-                                                          PageRouteBuilder(
-                                                            pageBuilder: (context,
-                                                                    animation,
-                                                                    secondaryAnimation) =>
-                                                                Open_Feedback_Details_Screen(
-                                                                    fid:
-                                                                        fetchedNGOFid),
-                                                            transitionsBuilder:
-                                                                (context,
-                                                                    animation,
-                                                                    secondaryAnimation,
-                                                                    child) {
-                                                              var begin =
-                                                                  const Offset(
-                                                                      1.0, 0.0);
-                                                              var end =
-                                                                  Offset.zero;
-                                                              var curve =
-                                                                  Curves.ease;
+                                          Column(
+                                            children: [
+                                              hasNGOFeedbackSent
+                                                  ? Row(
+                                                      children: [
+                                                        const Icon(
+                                                            Iconsax.tick_circle4),
+                                                        const SizedBox(width: 5),
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.of(context)
+                                                                .push(
+                                                              PageRouteBuilder(
+                                                                pageBuilder: (context,
+                                                                        animation,
+                                                                        secondaryAnimation) =>
+                                                                    Open_Feedback_Details_Screen(
+                                                                        fid:
+                                                                            fetchedNGOFid),
+                                                                transitionsBuilder:
+                                                                    (context,
+                                                                        animation,
+                                                                        secondaryAnimation,
+                                                                        child) {
+                                                                  var begin =
+                                                                      const Offset(
+                                                                          1.0, 0.0);
+                                                                  var end =
+                                                                      Offset.zero;
+                                                                  var curve =
+                                                                      Curves.ease;
 
-                                                              var tween = Tween(
-                                                                      begin:
-                                                                          begin,
-                                                                      end: end)
-                                                                  .chain(CurveTween(
-                                                                      curve:
-                                                                          curve));
-                                                              var offsetAnimation =
-                                                                  animation
-                                                                      .drive(
-                                                                          tween);
+                                                                  var tween = Tween(
+                                                                          begin:
+                                                                              begin,
+                                                                          end: end)
+                                                                      .chain(CurveTween(
+                                                                          curve:
+                                                                              curve));
+                                                                  var offsetAnimation =
+                                                                      animation
+                                                                          .drive(
+                                                                              tween);
 
-                                                              return SlideTransition(
-                                                                position:
-                                                                    offsetAnimation,
-                                                                child: child,
-                                                              );
-                                                            },
-                                                          ),
-                                                        );
-                                                      },
-                                                      child: const Text(
-                                                          "Feedback submitted",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.teal,
-                                                              fontSize: 15,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold)),
-                                                    ),
-                                                  ],
-                                                )
-                                              : Row(
-                                                  children: [
-                                                    const Icon(Iconsax.receipt),
-                                                    const SizedBox(width: 5),
-                                                    TextButton(
-                                                      child: const Text(
-                                                          "Give Feedback !",
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .deepOrangeAccent,
-                                                              fontSize: 15,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold)),
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .push(
-                                                          PageRouteBuilder(
-                                                            pageBuilder: (context,
-                                                                    animation,
-                                                                    secondaryAnimation) =>
-                                                                User_Feedback_Screen(
-                                                                    authority_name:
-                                                                        fetchedNGOName,
-                                                                    authority_id:
-                                                                        fetchedNid,
-                                                                    respond_id:
-                                                                        widget.documentSnapshot[
-                                                                            'RespondId']),
-                                                            transitionsBuilder:
-                                                                (context,
-                                                                    animation,
-                                                                    secondaryAnimation,
-                                                                    child) {
-                                                              var begin =
-                                                                  const Offset(
-                                                                      1.0, 0.0);
-                                                              var end =
-                                                                  Offset.zero;
-                                                              var curve =
-                                                                  Curves.ease;
-
-                                                              var tween = Tween(
-                                                                      begin:
-                                                                          begin,
-                                                                      end: end)
-                                                                  .chain(CurveTween(
-                                                                      curve:
-                                                                          curve));
-                                                              var offsetAnimation =
-                                                                  animation
-                                                                      .drive(
-                                                                          tween);
-
-                                                              return SlideTransition(
-                                                                position:
-                                                                    offsetAnimation,
-                                                                child: child,
-                                                              );
-                                                            },
-                                                          ),
-                                                        );
-                                                      },
+                                                                  return SlideTransition(
+                                                                    position:
+                                                                        offsetAnimation,
+                                                                    child: child,
+                                                                  );
+                                                                },
+                                                              ),
+                                                            );
+                                                          },
+                                                          child: const Text(
+                                                              "Feedback submitted",
+                                                              style: TextStyle(
+                                                                  color:
+                                                                      Colors.teal,
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold)),
+                                                        ),
+                                                      ],
                                                     )
-                                                  ],
-                                                ),
+                                                  : Row(
+                                                      children: [
+                                                        const Icon(Iconsax.receipt),
+                                                        const SizedBox(width: 5),
+                                                        TextButton(
+                                                          child: const Text(
+                                                              "Give Feedback !",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .deepOrangeAccent,
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold)),
+                                                          onPressed: () {
+                                                            Navigator.of(context)
+                                                                .push(
+                                                              PageRouteBuilder(
+                                                                pageBuilder: (context,
+                                                                        animation,
+                                                                        secondaryAnimation) =>
+                                                                    User_Feedback_Screen(
+                                                                        authority_name:
+                                                                            fetchedNGOName,
+                                                                        authority_id:
+                                                                            fetchedNid,
+                                                                        respond_id:
+                                                                            widget.documentSnapshot[
+                                                                                'RespondId']),
+                                                                transitionsBuilder:
+                                                                    (context,
+                                                                        animation,
+                                                                        secondaryAnimation,
+                                                                        child) {
+                                                                  var begin =
+                                                                      const Offset(
+                                                                          1.0, 0.0);
+                                                                  var end =
+                                                                      Offset.zero;
+                                                                  var curve =
+                                                                      Curves.ease;
+
+                                                                  var tween = Tween(
+                                                                          begin:
+                                                                              begin,
+                                                                          end: end)
+                                                                      .chain(CurveTween(
+                                                                          curve:
+                                                                              curve));
+                                                                  var offsetAnimation =
+                                                                      animation
+                                                                          .drive(
+                                                                              tween);
+
+                                                                  return SlideTransition(
+                                                                    position:
+                                                                        offsetAnimation,
+                                                                    child: child,
+                                                                  );
+                                                                },
+                                                              ),
+                                                            );
+                                                          },
+                                                        )
+                                                      ],
+                                                    ),
+                                              //donate
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                    padding: const EdgeInsets.only(
+                                                        left: 20, right: 20),
+                                                    width: 150,
+                                                    child: ClipRRect(
+                                                        child: TextButton(
+                                                            style: ButtonStyle(
+                                                              backgroundColor:
+                                                              MaterialStateProperty.all<Color>(
+                                                                  Colors.deepPurple.shade300),
+                                                              foregroundColor:
+                                                              MaterialStateProperty.all<Color>(
+                                                                  Colors.white),
+                                                            ),
+                                                            onPressed: () async {
+                                                              Navigator.of(context).push(
+                                                                PageRouteBuilder(
+                                                                  pageBuilder: (context, animation,
+                                                                      secondaryAnimation) =>
+                                                                      Citizen_Donate_Screen(
+                                                                        authority_name: fetchedNGOName,
+                                                                        authority_id: fetchedNid,
+                                                                        authority_email: fetchedNGOEmail,
+                                                                        authority_upi: fetchedNGOUpi,
+                                                                      ),
+                                                                  transitionsBuilder: (context,
+                                                                      animation,
+                                                                      secondaryAnimation,
+                                                                      child) {
+                                                                    var begin = const Offset(1.0, 0.0);
+                                                                    var end = Offset.zero;
+                                                                    var curve = Curves.ease;
+
+                                                                    var tween = Tween(
+                                                                        begin: begin, end: end)
+                                                                        .chain(
+                                                                        CurveTween(curve: curve));
+                                                                    var offsetAnimation =
+                                                                    animation.drive(tween);
+
+                                                                    return SlideTransition(
+                                                                      position: offsetAnimation,
+                                                                      child: child,
+                                                                    );
+                                                                  },
+                                                                ),
+                                                              );
+                                                            },
+                                                            child: const Text(
+                                                              "Donate",
+                                                              style: TextStyle(fontSize: 15),
+                                                            ))),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+
                                           Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
@@ -1198,6 +1265,33 @@ class _Request_Details_ScreenState extends State<Request_Details_Screen> {
           fetchedNGOEmail = NGOResponseSnapshot.get('ResponderNGOEmail');
           fetchedNGOWebsite = NGOResponseSnapshot.get('ResponderNGOWebsite');
           fetchedNGORespondTime = NGOResponseSnapshot.get('RespondNGOTime');
+        });
+      } else {
+        if (kDebugMode) {
+          print('NGO response Document does not exist');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching NGO response data: $e');
+      }
+    }
+  }
+
+  Future<void> fetchNGOUPIDetails() async {
+    try {
+      // Fetch data from Firestore
+      DocumentSnapshot NGOSnapshot = await FirebaseFirestore.instance
+          .collection('clc_ngo')
+          .doc(fetchedNGOEmail)
+          .get();
+
+      // Check if the document exists
+      if (NGOSnapshot.exists) {
+        // Access the fields from the document
+        setState(() {
+          hasNGOResponded = true;
+          fetchedNGOUpi = NGOSnapshot.get('upiId');
         });
       } else {
         if (kDebugMode) {

@@ -658,22 +658,14 @@ class _GovtSignupPageScreenState extends State<GovtSignupPageScreen> {
                                 if (!GovtTnC) {
                                   return;
                                 } else {
+                                  CollectionReference citizenRequestCollection =
+                                      FirebaseFirestore.instance
+                                          .collection("clc_govt");
                                   //for id
-                                  int totalDocCount = 0;
-                                  await FirebaseFirestore.instance.runTransaction((transaction) async {
-                                    // Get the current count of requests
-                                    DocumentSnapshot snapshot = await transaction.get(FirebaseFirestore
-                                        .instance
-                                        .collection("clc_govt")
-                                        .doc("govt_count"));
-                                    totalDocCount = (snapshot.exists) ? snapshot.get('count') : 0;
-                                    totalDocCount++;
-
-                                    transaction.set(
-                                        FirebaseFirestore.instance.collection("clc_govt").doc("govt_count"),
-                                        {'count': totalDocCount});
-                                  });
-
+                                  QuerySnapshot snapshot =
+                                      await citizenRequestCollection.get();
+                                  int totalDocCount = snapshot.size;
+                                  totalDocCount++;
                                   //Storing data to database
                                   GovtRegistration GovtData = GovtRegistration(
                                       gid: "g$totalDocCount",

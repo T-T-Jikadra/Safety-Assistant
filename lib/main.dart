@@ -29,8 +29,8 @@ void main() async {
   runApp(const splash());
 
   //Orientation
-  // SystemChrome.setPreferredOrientations(
-  //     [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   // Status color
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.white12));

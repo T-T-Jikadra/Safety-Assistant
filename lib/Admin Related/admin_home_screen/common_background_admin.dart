@@ -7,13 +7,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../admin_issue_emergency_numbers/admin_issue_emergency_number_screen.dart';
 import '../admin_manage_alerts_screen/admin_alert_details_screen.dart';
 import '../../Utils/common_files/alerts/alert_history_screen.dart';
 import '../../../Components/Notification_related/notification_services.dart';
 import '../../../Utils/Utils.dart';
 import 'package:intl/intl.dart';
-
+import '../admin_manage_citizen_screen/admin_view_citizen_screen.dart';
+import '../admin_manage_govt_screen/admin_manage_govt_agency_screen.dart';
 import '../admin_manage_media_screen/admin_manage_media_screen.dart';
+import '../admin_manage_ngo_screen/admin_manage_ngo_screen.dart';
 import '../admin_request_history_screen/admin_request_history_screen.dart';
 
 class commonbg_admin extends StatefulWidget {
@@ -73,7 +76,7 @@ class _commonbg_adminState extends State<commonbg_admin> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 80, top: 20),
+                    padding: const EdgeInsets.only(left: 80, top: 15),
                     //location
                     child: Row(
                       children: [
@@ -93,6 +96,39 @@ class _commonbg_adminState extends State<commonbg_admin> {
                                 size: 20,
                               ),
                         const Spacer(),
+                        OutlinedButton(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      const Admin_Issue_Emergency_Numbers_Screen(),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(1.0, 0.0);
+                                    var end = Offset.zero;
+                                    var curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                        animation.drive(tween);
+
+                                    return SlideTransition(
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              "Issue   📞",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.deepPurple),
+                            )),
+                        const SizedBox(width: 10),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: SvgPicture.asset("assets/images/logo_svg.svg",
@@ -112,7 +148,29 @@ class _commonbg_adminState extends State<commonbg_admin> {
                           return Expanded(
                             child: GestureDetector(
                               onTap: () {
-                                // Navigator.pushNamed(context, 'citizen');
+                                Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation,
+                                            secondaryAnimation) =>
+                                        const Admin_View_Citizen_Screen(),
+                                    transitionsBuilder: (context, animation,
+                                        secondaryAnimation, child) {
+                                      var begin = const Offset(1.0, 0.0);
+                                      var end = Offset.zero;
+                                      var curve = Curves.ease;
+
+                                      var tween = Tween(begin: begin, end: end)
+                                          .chain(CurveTween(curve: curve));
+                                      var offsetAnimation =
+                                          animation.drive(tween);
+
+                                      return SlideTransition(
+                                        position: offsetAnimation,
+                                        child: child,
+                                      );
+                                    },
+                                  ),
+                                );
                               },
                               child: Container(
                                   //width: MediaQuery.of(context).size.width * 0.46,
@@ -165,7 +223,31 @@ class _commonbg_adminState extends State<commonbg_admin> {
                         Builder(builder: (context) {
                           return Expanded(
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation,
+                                            secondaryAnimation) =>
+                                        const Admin_Manage_NGO_Screen(),
+                                    transitionsBuilder: (context, animation,
+                                        secondaryAnimation, child) {
+                                      var begin = const Offset(1.0, 0.0);
+                                      var end = Offset.zero;
+                                      var curve = Curves.ease;
+
+                                      var tween = Tween(begin: begin, end: end)
+                                          .chain(CurveTween(curve: curve));
+                                      var offsetAnimation =
+                                          animation.drive(tween);
+
+                                      return SlideTransition(
+                                        position: offsetAnimation,
+                                        child: child,
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
                               child: Container(
                                   height: 80,
                                   decoration: BoxDecoration(
@@ -219,7 +301,31 @@ class _commonbg_adminState extends State<commonbg_admin> {
                         Builder(builder: (context) {
                           return Expanded(
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation,
+                                            secondaryAnimation) =>
+                                        const Admin_Manage_Govt_Agency_Screen(),
+                                    transitionsBuilder: (context, animation,
+                                        secondaryAnimation, child) {
+                                      var begin = const Offset(1.0, 0.0);
+                                      var end = Offset.zero;
+                                      var curve = Curves.ease;
+
+                                      var tween = Tween(begin: begin, end: end)
+                                          .chain(CurveTween(curve: curve));
+                                      var offsetAnimation =
+                                          animation.drive(tween);
+
+                                      return SlideTransition(
+                                        position: offsetAnimation,
+                                        child: child,
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
                               child: Container(
                                   height: 80,
                                   decoration: BoxDecoration(
@@ -280,7 +386,31 @@ class _commonbg_adminState extends State<commonbg_admin> {
                         Builder(builder: (context) {
                           return Expanded(
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation,
+                                            secondaryAnimation) =>
+                                        const Admin_Request_History_Screen(),
+                                    transitionsBuilder: (context, animation,
+                                        secondaryAnimation, child) {
+                                      var begin = const Offset(1.0, 0.0);
+                                      var end = Offset.zero;
+                                      var curve = Curves.ease;
+
+                                      var tween = Tween(begin: begin, end: end)
+                                          .chain(CurveTween(curve: curve));
+                                      var offsetAnimation =
+                                          animation.drive(tween);
+
+                                      return SlideTransition(
+                                        position: offsetAnimation,
+                                        child: child,
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
                               child: Container(
                                   height: 80,
                                   decoration: BoxDecoration(
@@ -335,7 +465,31 @@ class _commonbg_adminState extends State<commonbg_admin> {
                         Builder(builder: (context) {
                           return Expanded(
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation,
+                                            secondaryAnimation) =>
+                                        const Admin_Request_History_Screen(),
+                                    transitionsBuilder: (context, animation,
+                                        secondaryAnimation, child) {
+                                      var begin = const Offset(1.0, 0.0);
+                                      var end = Offset.zero;
+                                      var curve = Curves.ease;
+
+                                      var tween = Tween(begin: begin, end: end)
+                                          .chain(CurveTween(curve: curve));
+                                      var offsetAnimation =
+                                          animation.drive(tween);
+
+                                      return SlideTransition(
+                                        position: offsetAnimation,
+                                        child: child,
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
                               child: Container(
                                   height: 80,
                                   decoration: BoxDecoration(
@@ -925,16 +1079,12 @@ class _commonbg_adminState extends State<commonbg_admin> {
           .get();
 
       //ngo
-      DocumentSnapshot ngoSnap = await FirebaseFirestore.instance
-          .collection("clc_ngo")
-          .doc("ngo_count")
-          .get();
+      QuerySnapshot ngoSnap =
+          await FirebaseFirestore.instance.collection("clc_ngo").get();
 
       //govt
-      DocumentSnapshot govtSnap = await FirebaseFirestore.instance
-          .collection("clc_govt")
-          .doc("govt_count")
-          .get();
+      QuerySnapshot govtSnap =
+          await FirebaseFirestore.instance.collection("clc_govt").get();
 
       //req
       DocumentSnapshot reqSnap = await FirebaseFirestore.instance
@@ -948,13 +1098,13 @@ class _commonbg_adminState extends State<commonbg_admin> {
           .doc("response_count")
           .get();
 
-
       setState(() {
         numberOfCitizen = (citizenSnap.exists) ? citizenSnap.get("count") : 0;
-        numberOfNGO = (ngoSnap.exists) ? ngoSnap.get("count") : 0;
-        numberOfGovt =(govtSnap.exists) ? govtSnap.get("count") : 0;
+        numberOfNGO = ngoSnap.size;
+        numberOfGovt = govtSnap.size;
         numberOfReq = (reqSnap.exists) ? reqSnap.get("count") : 0;
-        numberOfResponse = (responseSnap.exists) ? responseSnap.get("count") : 0;
+        numberOfResponse =
+            (responseSnap.exists) ? responseSnap.get("count") : 0;
       });
     } catch (e) {
       if (kDebugMode) {

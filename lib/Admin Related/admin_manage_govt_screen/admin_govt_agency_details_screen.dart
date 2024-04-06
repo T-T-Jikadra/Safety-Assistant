@@ -1095,19 +1095,6 @@ class _Admin_Govt_Agency_Details_ScreenState
 
   void deleteGovtAgency() async {
     try {
-      int totalDocCount = 0;
-      await FirebaseFirestore.instance.runTransaction((transaction) async {
-        DocumentSnapshot snapshot = await transaction.get(FirebaseFirestore
-            .instance
-            .collection("clc_govt")
-            .doc("govt_count"));
-        totalDocCount = (snapshot.exists) ? snapshot.get('count') : 0;
-        totalDocCount--;
-
-        transaction.set(
-            FirebaseFirestore.instance.collection("clc_govt").doc("govt_count"),
-            {'count': totalDocCount});
-      });
       // Delete user
       DocumentReference userRef = FirebaseFirestore.instance
           .collection('clc_govt')

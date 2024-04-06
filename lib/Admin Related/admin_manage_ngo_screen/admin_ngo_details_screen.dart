@@ -1128,19 +1128,6 @@ class _Admin_NGO_Details_ScreenState extends State<Admin_NGO_Details_Screen> {
 
   void deleteNGO() async {
     try {
-      int totalDocCount = 0;
-      await FirebaseFirestore.instance.runTransaction((transaction) async {
-        DocumentSnapshot snapshot = await transaction.get(FirebaseFirestore
-            .instance
-            .collection("clc_ngo")
-            .doc("ngo_count"));
-        totalDocCount = (snapshot.exists) ? snapshot.get('count') : 0;
-        totalDocCount--;
-
-        transaction.set(
-            FirebaseFirestore.instance.collection("clc_ngo").doc("ngo_count"),
-            {'count': totalDocCount});
-      });
       // Delete user
       DocumentReference userRef = FirebaseFirestore.instance
           .collection('clc_ngo')

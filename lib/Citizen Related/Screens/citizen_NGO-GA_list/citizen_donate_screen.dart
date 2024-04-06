@@ -109,15 +109,16 @@ class _Citizen_Donate_ScreenState extends State<Citizen_Donate_Screen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          const Align(
+                                          Align(
                                             alignment:
                                                 AlignmentDirectional.topStart,
                                             child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 10),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10),
                                               child: Text(
-                                                'Add Amount to donate',
-                                                style: TextStyle(
+                                                'Add Amount to donate : ${widget.authority_name}',
+                                                style: const TextStyle(
                                                     fontSize: 16,
                                                     fontWeight:
                                                         FontWeight.w600),
@@ -1003,7 +1004,8 @@ class NoUPIFound extends StatelessWidget {
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
             title: const Text('Warning : '),
-            content: const Text('No upi id found for this NGO'),
+            content: const Text("No upi id found for this NGO ,"
+                "\n so can't donate ."),
             actions: <Widget>[
               CupertinoDialogAction(
                 isDefaultAction: true,
