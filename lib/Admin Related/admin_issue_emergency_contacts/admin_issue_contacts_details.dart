@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, deprecated_member_use, use_build_context_synchronously, camel_case_types
+// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, deprecated_member_use, use_build_context_synchronously, camel_case_types, avoid_print
 
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
