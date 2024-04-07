@@ -14,6 +14,7 @@ import '../../../Utils/Utils.dart';
 import 'package:intl/intl.dart';
 import '../../../Utils/common_files/alerts/alert_screen.dart';
 import '../../../Utils/common_files/media/media_history_screen.dart';
+import '../../../Utils/constants.dart';
 import '../citizen_DSG/citizen_disaster_list.dart';
 import '../citizen_helipline_screen.dart';
 import '../citizen_request_screen/citizen_request_screen.dart';
@@ -30,6 +31,20 @@ class _commonbgState extends State<commonbg> {
   String fetchedState = "";
   String fetchedCity = "";
   bool isFetched = false;
+
+  final bool _showWelcomeDialog = true;
+  bool _welcomeDialogShown = false;
+
+  String info = '';
+  String state = '';
+  String city = '';
+  String level = '';
+  String c1 = '';
+  String c2 = '';
+  String c3 = '';
+  String c4 = '';
+  String c5 = '';
+  String c6 = '';
 
   @override
   void initState() {
@@ -51,6 +66,11 @@ class _commonbgState extends State<commonbg> {
 
   @override
   Widget build(BuildContext context) {
+    if (_showWelcomeDialog && !_welcomeDialogShown) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showEmergencyContactsPopUp(context);
+      });
+    }
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white12,
@@ -646,7 +666,8 @@ class _commonbgState extends State<commonbg> {
                                               height: 30, width: 30),
                                           const SizedBox(height: 10),
                                           const Text("DSG",
-                                              style: TextStyle(color: Colors.black)),
+                                              style: TextStyle(
+                                                  color: Colors.black)),
                                         ],
                                       ),
                                     ),
@@ -657,12 +678,12 @@ class _commonbgState extends State<commonbg> {
                         //2nd
                         Expanded(
                           child: GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const Media_History_Screen(),
+                                          secondaryAnimation) =>
+                                      const Media_History_Screen(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -672,7 +693,7 @@ class _commonbgState extends State<commonbg> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -702,7 +723,8 @@ class _commonbgState extends State<commonbg> {
                                               height: 30, width: 30),
                                           const SizedBox(height: 10),
                                           const Text("Media",
-                                              style: TextStyle(color: Colors.black)),
+                                              style: TextStyle(
+                                                  color: Colors.black)),
                                         ],
                                       ),
                                     ),
@@ -717,8 +739,8 @@ class _commonbgState extends State<commonbg> {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
-                                      secondaryAnimation) =>
-                                  const Citizen_HelpLines(),
+                                          secondaryAnimation) =>
+                                      const Citizen_HelpLines(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     var begin = const Offset(1.0, 0.0);
@@ -728,7 +750,7 @@ class _commonbgState extends State<commonbg> {
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
                                     var offsetAnimation =
-                                    animation.drive(tween);
+                                        animation.drive(tween);
 
                                     return SlideTransition(
                                       position: offsetAnimation,
@@ -754,11 +776,14 @@ class _commonbgState extends State<commonbg> {
                                           vertical: 10),
                                       child: Column(
                                         children: [
-                                          Image.asset("assets/images/helpline.png",
-                                              height: 30, width: 30),
+                                          Image.asset(
+                                              "assets/images/helpline.png",
+                                              height: 30,
+                                              width: 30),
                                           const SizedBox(height: 10),
                                           const Text("Helpline",
-                                              style: TextStyle(color: Colors.black)),
+                                              style: TextStyle(
+                                                  color: Colors.black)),
                                         ],
                                       ),
                                     ),
@@ -766,7 +791,6 @@ class _commonbgState extends State<commonbg> {
                                 )),
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -778,6 +802,167 @@ class _commonbgState extends State<commonbg> {
         ),
       ),
     );
+  }
+
+  void _showEmergencyContactsPopUp(BuildContext context) {
+    _welcomeDialogShown = true;
+    if (_showWelcomeDialog) {
+      fetchCitizenData().then((value) => showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (BuildContext context) {
+              return Stack(
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom,
+                    ),
+                    height: MediaQuery.of(context).size.height * 0.8,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection("clc_emergency_numbers")
+                                .where("city", isEqualTo: fetchedCity)
+                                .where("isVisible", isEqualTo: "true")
+                                .orderBy('sentTime', descending: true)
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.active) {
+                                if (snapshot.hasData) {
+                                  var documents = snapshot.data!.docs;
+                                  if (documents.isNotEmpty) {
+                                    // Extracting values from the first document
+                                    var firstDoc = documents[0];
+                                    // typeofDisaster = firstDoc['info'];
+                                    state = firstDoc['state'];
+                                    city = firstDoc['city'];
+                                    info = firstDoc['info'];
+                                    c1 = firstDoc['Contact_1'];
+                                    c2 = firstDoc['Contact_2'];
+                                    c3 = firstDoc['Contact_3'];
+                                    c4 = firstDoc['Contact_4'];
+                                    c5 = firstDoc['Contact_5'];
+                                    c6 = firstDoc['Contact_6'];
+
+                                    List<DataRow> rows = [
+                                      buildSingleRow("1. $c1"),
+                                    ];
+
+                                    if (c2.isNotEmpty) {
+                                      rows.add(buildSingleRow("2. $c2"));
+                                    }
+                                    if (c3.isNotEmpty) {
+                                      rows.add(buildSingleRow("3. $c3"));
+                                    }
+                                    if (c4.isNotEmpty) {
+                                      rows.add(buildSingleRow("4. $c4"));
+                                    }
+                                    if (c5.isNotEmpty) {
+                                      rows.add(buildSingleRow("5. $c5"));
+                                    }
+                                    if (c6.isNotEmpty) {
+                                      rows.add(buildSingleRow("6. $c6"));
+                                    }
+
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 15, right: 15, top: 8),
+                                      child: Column(
+                                        children: [
+                                          const SizedBox(height: 15),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            child: Center(
+                                              child: Text(info,
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 20)),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 15),
+                                          const Image(
+                                            image: AssetImage(
+                                                "assets/images/emergency_contact.png"),
+                                            width: 100,
+                                            height: 100,
+                                          ),
+                                          const SizedBox(height: 15),
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20, vertical: 8),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(19.0),
+                                              border: Border.all(
+                                                color: Colors.grey,
+                                                width: 1.0,
+                                              ),
+                                            ),
+                                            child: DataTable(
+                                              columnSpacing: 10.0,
+                                              columns: const [
+                                                DataColumn(
+                                                    label: Text('Contacts',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                colorPrimary))),
+                                              ],
+                                              rows: rows,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  } else {
+                                    return const Center(
+                                      child: Text(
+                                        'No emergency contact details found !',
+                                        style: TextStyle(
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                }
+                              } else if (snapshot.hasError) {
+                                showToastMsg(snapshot.error.toString());
+                              }
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: -25,
+                    right: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ));
+    }
   }
 
   Future<void> fetchCitizenData() async {

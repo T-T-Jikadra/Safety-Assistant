@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../admin_issue_emergency_numbers/admin_issue_emergency_number_screen.dart';
+import '../admin_issue_emergency_contacts/admin_issue_emergency_contacts_screen.dart';
 import '../admin_manage_alerts_screen/admin_alert_details_screen.dart';
 import '../../Utils/common_files/alerts/alert_history_screen.dart';
 import '../../../Components/Notification_related/notification_services.dart';

@@ -140,6 +140,45 @@ class _Admin_Donation_Details_ScreenState extends State<Admin_Donation_Details_S
                             const SizedBox(height: 8),
                             Row(
                               children: [
+                                const ImageIcon(
+                                  AssetImage('assets/images/upi_icon.png'),
+                                ),
+                                const SizedBox(width: 12),
+                                Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  children: [
+                                    const Text("NGO upi id:",
+                                        style: TextStyle(fontSize: 13)),
+                                    const SizedBox(height: 4),
+                                    SizedBox(
+                                      width: MediaQuery.of(context)
+                                          .size
+                                          .width *
+                                          0.65,
+                                      child: Row(
+                                        children: [
+                                          Flexible(
+                                            child: Text(
+                                                widget.documentSnapshot[
+                                                'ngo_upiId'],
+                                                overflow:
+                                                TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                    fontSize: 16)),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            const Divider(height: 2),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
                                 const Icon(Icons.payment_sharp),
                                 const SizedBox(width: 12),
                                 Column(

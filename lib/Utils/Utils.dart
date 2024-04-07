@@ -82,7 +82,27 @@ void showSnakeBar(BuildContext context, String message, String actionLabel) {
 //dialog
 void showMsgDialog(BuildContext context, String message) {
   // Set up the AlertDialog
-
+  final CupertinoAlertDialog alert = CupertinoAlertDialog(
+    title: const Text('Alert : '),
+    content: Text('\n$message'),
+    actions: <Widget>[
+      CupertinoDialogAction(
+        isDefaultAction: true,
+        child: const Text('Okay'),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      )
+    ],
+  );
+  // Show the dialog
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
 
 //special dialog for back
@@ -269,6 +289,12 @@ DataRow buildDataRow(String field, String data) {
       style: const TextStyle(fontWeight: FontWeight.bold),
     )),
     DataCell(Text(data)),
+  ]);
+}
+
+DataRow buildSingleRow(String? data) {
+  return DataRow(cells: [
+    DataCell(Text(data!)),
   ]);
 }
 

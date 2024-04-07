@@ -33,198 +33,197 @@ class _NGO_GA_ListScreenState extends State<NGO_GA_ListScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 2, // Number of tabs
-        child: Scaffold(
-          //backgroundColor: Colors.white,
-          appBar: AppBar(
-            elevation: 50,
-            backgroundColor: Colors.black12,
-            centerTitle: true,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(25),
-                    bottomLeft: Radius.circular(25))),
-            title: const Text("Search your nearby Agencies"),
-            bottom: const TabBar(
-              tabs: [
-                Tab(text: 'NGO'), // First tab
-                Tab(text: 'Government'), // Second tab
-              ],
-            ),
-          ),
-          body: TabBarView(
-            children: [
-              // Content of the first tab (NGO)
-              Column(
-                children: [
-                  const SizedBox(height: 15),
-                  //state
-                  Flex(
-                    direction: Axis.horizontal,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            left: 25,
-                            right: 25,
-                          ),
-                          child: SizedBox(
-                            height: 60,
-                            child: DropdownButtonFormField<String>(
-                              value: selectedState_ngo,
-                              items: DropdownItems.dropdownItemState
-                                  .map((String state) {
-                                return DropdownMenuItem<String>(
-                                  // alignment: AlignmentDirectional.topStart,
-                                  value: state,
-                                  child: Text(state),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedState_ngo = value!;
-                                  // Update city list based on the selected state
-                                  updateCityList(selectedState_ngo);
-                                  // Reset selected city when state changes
-                                  selectedCity_ngo = '';
-                                });
-                              },
-                              decoration: const InputDecoration(
-                                // border: OutlineInputBorder(),
-                                hintText: "Select your State",
-                              ),
-                              //hint: const Text("Select your State"), // Hint text displayed initially
-                              validator: (value) {
-                                if (value == "Select your state") {
-                                  return 'Select your State';
-                                }
-                                return null; // Return null if the input is valid
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  //city
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 25,
-                      right: 25,
-                    ),
-                    child: SizedBox(
-                      height: 60,
-                      child: DropdownButtonFormField<String>(
-                        value: selectedCity_ngo.isNotEmpty
-                            ? selectedCity_ngo
-                            : null,
-                        items: dropdownItemCity.map((String city) {
-                          return DropdownMenuItem<String>(
-                            value: city,
-                            child: Text(city),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            selectedCity_ngo = value!;
-                          });
-                        },
-                        decoration: const InputDecoration(
-                          hintText: "Select your City",
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  ngo_list(
-                      selectedState: selectedState_ngo,
-                      selectedCity: selectedCity_ngo),
-                ],
-              ),
-              // Content of the second tab (Govt)
-              Column(
-                children: [
-                  const SizedBox(height: 15),
-                  //state
-                  Flex(
-                    direction: Axis.horizontal,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            left: 25,
-                            right: 25,
-                          ),
-                          child: SizedBox(
-                            height: 60,
-                            child: DropdownButtonFormField<String>(
-                              value: selectedState,
-                              items: DropdownItems.dropdownItemState
-                                  .map((String state) {
-                                return DropdownMenuItem<String>(
-                                  // alignment: AlignmentDirectional.topStart,
-                                  value: state,
-                                  child: Text(state),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedState = value!;
-                                  // Update city list based on the selected state
-                                  updateCityList(selectedState);
-                                  // Reset selected city when state changes
-                                  selectedCity = '';
-                                });
-                              },
-                              decoration: const InputDecoration(
-                                // border: OutlineInputBorder(),
-                                hintText: "Select your State",
-                              ),
-                              //hint: const Text("Select your State"), // Hint text displayed initially
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  //city
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 25,
-                      right: 25,
-                    ),
-                    child: SizedBox(
-                      height: 60,
-                      child: DropdownButtonFormField<String>(
-                        value: selectedCity.isNotEmpty ? selectedCity : null,
-                        items: dropdownItemCity.map((String city) {
-                          return DropdownMenuItem<String>(
-                            value: city,
-                            child: Text(city),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            selectedCity = value!;
-                          });
-                        },
-                        decoration: const InputDecoration(
-                          hintText: "Select your City",
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  govt_list(
-                      selectedState: selectedState, selectedCity: selectedCity),
-                ],
-              ),
+      length: 2, // Number of tabs
+      child: Scaffold(
+        //backgroundColor: Colors.white,
+        appBar: AppBar(
+          elevation: 50,
+          backgroundColor: Colors.black12,
+          centerTitle: true,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(25),
+                  bottomLeft: Radius.circular(25))),
+          title: const Text("Search your nearby Agencies"),
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: 'NGO'), // First tab
+              Tab(text: 'Government'), // Second tab
             ],
           ),
         ),
-      );
+        body: TabBarView(
+          children: [
+            // Content of the first tab (NGO)
+            Column(
+              children: [
+                const SizedBox(height: 15),
+                //state
+                Flex(
+                  direction: Axis.horizontal,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 25,
+                          right: 25,
+                        ),
+                        child: SizedBox(
+                          height: 60,
+                          child: DropdownButtonFormField<String>(
+                            value: selectedState_ngo,
+                            items: DropdownItems.dropdownItemState
+                                .map((String state) {
+                              return DropdownMenuItem<String>(
+                                // alignment: AlignmentDirectional.topStart,
+                                value: state,
+                                child: Text(state),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                selectedState_ngo = value!;
+                                // Update city list based on the selected state
+                                updateCityList(selectedState_ngo);
+                                // Reset selected city when state changes
+                                selectedCity_ngo = '';
+                              });
+                            },
+                            decoration: const InputDecoration(
+                              // border: OutlineInputBorder(),
+                              hintText: "Select your State",
+                            ),
+                            //hint: const Text("Select your State"), // Hint text displayed initially
+                            validator: (value) {
+                              if (value == "Select your state") {
+                                return 'Select your State';
+                              }
+                              return null; // Return null if the input is valid
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                //city
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 25,
+                    right: 25,
+                  ),
+                  child: SizedBox(
+                    height: 60,
+                    child: DropdownButtonFormField<String>(
+                      value:
+                          selectedCity_ngo.isNotEmpty ? selectedCity_ngo : null,
+                      items: dropdownItemCity.map((String city) {
+                        return DropdownMenuItem<String>(
+                          value: city,
+                          child: Text(city),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedCity_ngo = value!;
+                        });
+                      },
+                      decoration: const InputDecoration(
+                        hintText: "Select your City",
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                ngo_list(
+                    selectedState: selectedState_ngo,
+                    selectedCity: selectedCity_ngo),
+              ],
+            ),
+            // Content of the second tab (Govt)
+            Column(
+              children: [
+                const SizedBox(height: 15),
+                //state
+                Flex(
+                  direction: Axis.horizontal,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 25,
+                          right: 25,
+                        ),
+                        child: SizedBox(
+                          height: 60,
+                          child: DropdownButtonFormField<String>(
+                            value: selectedState,
+                            items: DropdownItems.dropdownItemState
+                                .map((String state) {
+                              return DropdownMenuItem<String>(
+                                // alignment: AlignmentDirectional.topStart,
+                                value: state,
+                                child: Text(state),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                selectedState = value!;
+                                // Update city list based on the selected state
+                                updateCityList(selectedState);
+                                // Reset selected city when state changes
+                                selectedCity = '';
+                              });
+                            },
+                            decoration: const InputDecoration(
+                              // border: OutlineInputBorder(),
+                              hintText: "Select your State",
+                            ),
+                            //hint: const Text("Select your State"), // Hint text displayed initially
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                //city
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 25,
+                    right: 25,
+                  ),
+                  child: SizedBox(
+                    height: 60,
+                    child: DropdownButtonFormField<String>(
+                      value: selectedCity.isNotEmpty ? selectedCity : null,
+                      items: dropdownItemCity.map((String city) {
+                        return DropdownMenuItem<String>(
+                          value: city,
+                          child: Text(city),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedCity = value!;
+                        });
+                      },
+                      decoration: const InputDecoration(
+                        hintText: "Select your City",
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                govt_list(
+                    selectedState: selectedState, selectedCity: selectedCity),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   void updateCityList(String state) {
@@ -365,6 +364,7 @@ class NgoTile extends StatefulWidget {
 
 class _NgoTileState extends State<NgoTile> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+
   // late Animation<double> _heightAnimation;
 
   bool isExpanded = false;
@@ -535,18 +535,10 @@ class _NgoTileState extends State<NgoTile> with SingleTickerProviderStateMixin {
                         children: [
                           Container(
                             padding: const EdgeInsets.only(
-                                bottom: 30, left: 20, right: 20),
-                            width: 150,
+                                bottom: 3, left: 20, right: 20),
+                            //width: 150,
                             child: ClipRRect(
-                                child: TextButton(
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Colors.deepPurple.shade300),
-                                      foregroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Colors.white),
-                                    ),
+                                child: OutlinedButton(
                                     onPressed: () async {
                                       Navigator.of(context).push(
                                         PageRouteBuilder(
@@ -581,9 +573,17 @@ class _NgoTileState extends State<NgoTile> with SingleTickerProviderStateMixin {
                                         ),
                                       );
                                     },
-                                    child: const Text(
-                                      "Donate",
-                                      style: TextStyle(fontSize: 15),
+                                    child: const Row(
+                                      children: [
+                                        Icon(Icons.currency_rupee),
+                                        SizedBox(width: 5),
+                                        Text(
+                                          "Donate",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ],
                                     ))),
                           ),
                         ],
@@ -779,6 +779,7 @@ class govtTile extends StatefulWidget {
 class _GovtTileState extends State<govtTile>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+
   // late Animation<double> _heightAnimation;
 
   bool isExpanded = false;

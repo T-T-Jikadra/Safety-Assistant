@@ -98,7 +98,10 @@ dependencies:
   image_picker: ^1.0.7
   flutter_launcher_icons: "^0.13.1"
   firebase_storage: ^11.6.9
-  razorpay_flutter:
+  #razorpay_flutter:
+
+  carousel_slider: ^4.2.1
+
 
 
 flutter_launcher_icons:

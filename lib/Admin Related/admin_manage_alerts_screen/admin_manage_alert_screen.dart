@@ -415,30 +415,6 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
                             child: ClipRRect(
                                 child: ElevatedButton(
                                     onPressed: () async {
-
-                                      int totalDocCount = 0;
-                                      await FirebaseFirestore.instance.runTransaction((transaction) async {
-                                        // Get the current count of requests
-                                        DocumentSnapshot snapshot = await transaction.get(FirebaseFirestore
-                                            .instance
-                                            .collection("clc_alert")
-                                            .doc("alert_count"));
-                                        totalDocCount = (snapshot.exists) ? snapshot.get('count') : 0;
-                                        totalDocCount++;
-
-                                        transaction.set(
-                                            FirebaseFirestore.instance.collection("clc_alert").doc("alert_count"),
-                                            {'count': totalDocCount});
-                                      });
-
-                                      //to get dos anf donts document id
-                                      fetchDid(selectedDisaster, totalDocCount);
-
-                                      if (fetchedDid != null) {
-                                        if (kDebugMode) {
-                                          print(fetchedDid);
-                                        }
-                                      }
                                       //progress
                                       showDialog(
                                         context: context,
@@ -476,6 +452,29 @@ class _Admin_Manage_Alert_ScreenState extends State<Admin_Manage_Alert_Screen> {
                                       if (_formKey.currentState!.validate()) {
                                         if (!alertSent) {
                                           try {
+                                            int totalDocCount = 0;
+                                            await FirebaseFirestore.instance.runTransaction((transaction) async {
+                                              // Get the current count of requests
+                                              DocumentSnapshot snapshot = await transaction.get(FirebaseFirestore
+                                                  .instance
+                                                  .collection("clc_alert")
+                                                  .doc("alert_count"));
+                                              totalDocCount = (snapshot.exists) ? snapshot.get('count') : 0;
+                                              totalDocCount++;
+
+                                              transaction.set(
+                                                  FirebaseFirestore.instance.collection("clc_alert").doc("alert_count"),
+                                                  {'count': totalDocCount});
+                                            });
+
+                                            //to get dos anf donts document id
+                                            fetchDid(selectedDisaster, totalDocCount);
+
+                                            if (fetchedDid != null) {
+                                              if (kDebugMode) {
+                                                print(fetchedDid);
+                                              }
+                                            }
                                             //to selected city
                                             var CitywiseCitizenSnap =
                                                 await FirebaseFirestore.instance

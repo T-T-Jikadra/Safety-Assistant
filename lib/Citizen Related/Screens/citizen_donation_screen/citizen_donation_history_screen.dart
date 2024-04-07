@@ -216,32 +216,6 @@ class _Citizen_Donation_History_ScreenState
                                                       ],
                                                     ),
                                                   ),
-                                                  const SizedBox(height: 2),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 15, top: 5),
-                                                    child: Row(
-                                                      children: [
-                                                        const Text(
-                                                          "Transaction Id : ",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black),
-                                                        ),
-                                                        Text(
-                                                            snapshot.data!
-                                                                    .docs[index]
-                                                                ['txnId'],
-                                                            style: const TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold)),
-                                                      ],
-                                                    ),
-                                                  ),
                                                   const SizedBox(height: 4),
                                                   Padding(
                                                     padding:
