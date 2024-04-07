@@ -583,11 +583,6 @@ class _Admin_Manage_Media_ScreenState extends State<Admin_Manage_Media_Screen> {
                                                                         CrossAxisAlignment
                                                                             .start,
                                                                     children: [
-                                                                      const Text(
-                                                                          "News Title : ",
-                                                                          style: TextStyle(
-                                                                              color: Colors.black,
-                                                                              fontSize: 13)),
                                                                       const SizedBox(
                                                                           height:
                                                                               3),
@@ -664,6 +659,7 @@ class _Admin_Manage_Media_ScreenState extends State<Admin_Manage_Media_Screen> {
                                                                         overflow:
                                                                             TextOverflow
                                                                                 .ellipsis,
+                                                                        textAlign: TextAlign.justify,
                                                                         style: const TextStyle(
                                                                             color:
                                                                                 Colors.black,

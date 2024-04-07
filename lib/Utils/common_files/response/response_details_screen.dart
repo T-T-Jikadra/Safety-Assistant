@@ -43,6 +43,7 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
   String fetchedCitizenCity = "";
   String fetchedReqAddress = "";
   String fetchedPincode = '';
+  String fetchedReqTime = "";
 
   //ngo
   bool hasNGOResponded = false;
@@ -170,14 +171,6 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                 const SizedBox(height: 8),
                                 const Divider(height: 2),
                                 const SizedBox(height: 8),
-                                // const Text("Citizen id :",
-                                //     style: TextStyle(fontSize: 13)),
-                                // const SizedBox(height: 4),
-                                // Text(widget.documentSnapshot['cid'],
-                                //     style: const TextStyle(fontSize: 16)),
-                                // const SizedBox(height: 8),
-                                // const Divider(height: 2),
-                                // const SizedBox(height: 8),
                                 Row(
                                   children: [
                                     const Icon(Iconsax.call),
@@ -218,12 +211,13 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                         const SizedBox(height: 4),
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.67,
-                                          child: Text(fetchedReqAddress,maxLines: 3,
-                                              style:
-                                                  const TextStyle(fontSize: 16)),
+                                          child: Text(fetchedReqAddress,
+                                              maxLines: 3,
+                                              style: const TextStyle(
+                                                  fontSize: 16)),
                                         ),
                                       ],
                                     ),
@@ -288,7 +282,7 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                                 fontSize: 11,
                                                 color: Colors.grey)),
                                         const SizedBox(width: 4),
-                                        Text(fetchedCitizenState,
+                                        Text(fetchedReqTime,
                                             style: const TextStyle(
                                                 fontSize: 11,
                                                 color: Colors.grey)),
@@ -304,13 +298,13 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
 
                         isNGO
                             ? Column(
-                              children: [
-                                const Text("Response Details : ",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 17)),
-                                const SizedBox(height: 20),
-                                Container(
+                                children: [
+                                  const Text("Response Details : ",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 17)),
+                                  const SizedBox(height: 20),
+                                  Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
@@ -327,7 +321,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                               style: TextStyle(fontSize: 13)),
                                           const SizedBox(height: 4),
                                           Text(fetchedNGOName,
-                                              style: const TextStyle(fontSize: 16)),
+                                              style: const TextStyle(
+                                                  fontSize: 16)),
                                           const SizedBox(height: 8),
                                           const Divider(height: 2),
                                           const SizedBox(height: 8),
@@ -336,12 +331,13 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                           const SizedBox(height: 4),
                                           SizedBox(
                                             width: MediaQuery.of(context)
-                                                .size
-                                                .width *
+                                                    .size
+                                                    .width *
                                                 0.67,
-                                            child: Text(fetchedNGOAddress,maxLines: 3,
-                                                style:
-                                                const TextStyle(fontSize: 16)),
+                                            child: Text(fetchedNGOAddress,
+                                                maxLines: 3,
+                                                style: const TextStyle(
+                                                    fontSize: 16)),
                                           ),
                                           const SizedBox(height: 8),
                                           const Divider(height: 2),
@@ -359,8 +355,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                                     MainAxisAlignment.start,
                                                 children: [
                                                   const Text("Contact no :",
-                                                      style:
-                                                          TextStyle(fontSize: 13)),
+                                                      style: TextStyle(
+                                                          fontSize: 13)),
                                                   const SizedBox(height: 4),
                                                   Text(fetchedNGOContact,
                                                       style: const TextStyle(
@@ -368,7 +364,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                                 ],
                                               ),
                                               IconButton(
-                                                  icon: const Icon(Iconsax.call5,
+                                                  icon: const Icon(
+                                                      Iconsax.call5,
                                                       color: Colors.green),
                                                   onPressed: () {
                                                     launch(
@@ -393,8 +390,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                                     MainAxisAlignment.start,
                                                 children: [
                                                   const Text("Website :",
-                                                      style:
-                                                          TextStyle(fontSize: 13)),
+                                                      style: TextStyle(
+                                                          fontSize: 13)),
                                                   const SizedBox(height: 4),
                                                   Text(fetchedNGOWebsite,
                                                       style: const TextStyle(
@@ -402,7 +399,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                                 ],
                                               ),
                                               IconButton(
-                                                icon: const Icon(Iconsax.global5,
+                                                icon: const Icon(
+                                                    Iconsax.global5,
                                                     color: Colors.green),
                                                 onPressed: () {
                                                   _launchWebURL(
@@ -418,7 +416,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                               style: TextStyle(fontSize: 13)),
                                           const SizedBox(height: 4),
                                           Text(fetchedNGOEmail,
-                                              style: const TextStyle(fontSize: 16)),
+                                              style: const TextStyle(
+                                                  fontSize: 16)),
                                           const SizedBox(height: 5),
                                           Row(
                                             mainAxisAlignment:
@@ -427,12 +426,14 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                               hasNGOFeedbackSent
                                                   ? Row(
                                                       children: [
-                                                        const Icon(
-                                                            Iconsax.tick_circle4),
-                                                        const SizedBox(width: 5),
+                                                        const Icon(Iconsax
+                                                            .tick_circle4),
+                                                        const SizedBox(
+                                                            width: 5),
                                                         TextButton(
                                                           onPressed: () {
-                                                            Navigator.of(context)
+                                                            Navigator.of(
+                                                                    context)
                                                                 .push(
                                                               PageRouteBuilder(
                                                                 pageBuilder: (context,
@@ -448,16 +449,20 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                                                         child) {
                                                                   var begin =
                                                                       const Offset(
-                                                                          1.0, 0.0);
+                                                                          1.0,
+                                                                          0.0);
                                                                   var end =
-                                                                      Offset.zero;
+                                                                      Offset
+                                                                          .zero;
                                                                   var curve =
-                                                                      Curves.ease;
+                                                                      Curves
+                                                                          .ease;
 
                                                                   var tween = Tween(
                                                                           begin:
                                                                               begin,
-                                                                          end: end)
+                                                                          end:
+                                                                              end)
                                                                       .chain(CurveTween(
                                                                           curve:
                                                                               curve));
@@ -469,7 +474,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                                                   return SlideTransition(
                                                                     position:
                                                                         offsetAnimation,
-                                                                    child: child,
+                                                                    child:
+                                                                        child,
                                                                   );
                                                                 },
                                                               ),
@@ -478,8 +484,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                                           child: const Text(
                                                               "View Feedback",
                                                               style: TextStyle(
-                                                                  color:
-                                                                      Colors.teal,
+                                                                  color: Colors
+                                                                      .teal,
                                                                   fontSize: 15,
                                                                   fontWeight:
                                                                       FontWeight
@@ -492,15 +498,14 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                                         Icon(Iconsax.receipt),
                                                         SizedBox(width: 5),
                                                         Text(
-                                                              "Waiting for Feedback !",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .deepOrangeAccent,
-                                                                  fontSize: 15,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold)),
-
+                                                            "Waiting for Feedback !",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .deepOrangeAccent,
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
                                                       ],
                                                     ),
                                               Column(
@@ -530,17 +535,17 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                       ),
                                     ),
                                   ),
-                              ],
-                            )
+                                ],
+                              )
                             : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text("Response Details : ",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 17)),
-                                const SizedBox(height: 20),
-                                Container(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text("Response Details : ",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 17)),
+                                  const SizedBox(height: 20),
+                                  Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
@@ -557,7 +562,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                               style: TextStyle(fontSize: 13)),
                                           const SizedBox(height: 4),
                                           Text(fetchedGovtName,
-                                              style: const TextStyle(fontSize: 16)),
+                                              style: const TextStyle(
+                                                  fontSize: 16)),
                                           const SizedBox(height: 8),
                                           const Divider(height: 2),
                                           const SizedBox(height: 8),
@@ -565,7 +571,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                               style: TextStyle(fontSize: 13)),
                                           const SizedBox(height: 4),
                                           Text(fetchedGovtAddress,
-                                              style: const TextStyle(fontSize: 16)),
+                                              style: const TextStyle(
+                                                  fontSize: 16)),
                                           const SizedBox(height: 8),
                                           const Divider(height: 2),
                                           const SizedBox(height: 8),
@@ -582,8 +589,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                                     MainAxisAlignment.start,
                                                 children: [
                                                   const Text("Contact no :",
-                                                      style:
-                                                          TextStyle(fontSize: 13)),
+                                                      style: TextStyle(
+                                                          fontSize: 13)),
                                                   const SizedBox(height: 4),
                                                   Text(fetchedGovtContact,
                                                       style: const TextStyle(
@@ -591,7 +598,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                                 ],
                                               ),
                                               IconButton(
-                                                  icon: const Icon(Iconsax.call5,
+                                                  icon: const Icon(
+                                                      Iconsax.call5,
                                                       color: Colors.green),
                                                   onPressed: () {
                                                     launch(
@@ -603,7 +611,6 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                           const SizedBox(height: 8),
                                           const Divider(height: 2),
                                           const SizedBox(height: 8),
-
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -617,8 +624,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                                     MainAxisAlignment.start,
                                                 children: [
                                                   const Text("Website :",
-                                                      style:
-                                                          TextStyle(fontSize: 13)),
+                                                      style: TextStyle(
+                                                          fontSize: 13)),
                                                   const SizedBox(height: 4),
                                                   Text(fetchedGovtWebsite,
                                                       style: const TextStyle(
@@ -626,7 +633,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                                 ],
                                               ),
                                               IconButton(
-                                                icon: const Icon(Iconsax.global5,
+                                                icon: const Icon(
+                                                    Iconsax.global5,
                                                     color: Colors.green),
                                                 onPressed: () {
                                                   _launchWebURL(
@@ -642,7 +650,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                               style: TextStyle(fontSize: 13)),
                                           const SizedBox(height: 4),
                                           Text(fetchedGovtEmail,
-                                              style: const TextStyle(fontSize: 16)),
+                                              style: const TextStyle(
+                                                  fontSize: 16)),
                                           const SizedBox(height: 5),
                                           Row(
                                             mainAxisAlignment:
@@ -651,12 +660,14 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                               hasGovtFeedbackSent
                                                   ? Row(
                                                       children: [
-                                                        const Icon(
-                                                            Iconsax.tick_circle4),
-                                                        const SizedBox(width: 5),
+                                                        const Icon(Iconsax
+                                                            .tick_circle4),
+                                                        const SizedBox(
+                                                            width: 5),
                                                         TextButton(
                                                           onPressed: () {
-                                                            Navigator.of(context)
+                                                            Navigator.of(
+                                                                    context)
                                                                 .push(
                                                               PageRouteBuilder(
                                                                 pageBuilder: (context,
@@ -672,16 +683,20 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                                                         child) {
                                                                   var begin =
                                                                       const Offset(
-                                                                          1.0, 0.0);
+                                                                          1.0,
+                                                                          0.0);
                                                                   var end =
-                                                                      Offset.zero;
+                                                                      Offset
+                                                                          .zero;
                                                                   var curve =
-                                                                      Curves.ease;
+                                                                      Curves
+                                                                          .ease;
 
                                                                   var tween = Tween(
                                                                           begin:
                                                                               begin,
-                                                                          end: end)
+                                                                          end:
+                                                                              end)
                                                                       .chain(CurveTween(
                                                                           curve:
                                                                               curve));
@@ -693,7 +708,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                                                   return SlideTransition(
                                                                     position:
                                                                         offsetAnimation,
-                                                                    child: child,
+                                                                    child:
+                                                                        child,
                                                                   );
                                                                 },
                                                               ),
@@ -702,8 +718,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                                           child: const Text(
                                                               "View Feedback",
                                                               style: TextStyle(
-                                                                  color:
-                                                                      Colors.teal,
+                                                                  color: Colors
+                                                                      .teal,
                                                                   fontSize: 15,
                                                                   fontWeight:
                                                                       FontWeight
@@ -716,15 +732,14 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                                         Icon(Iconsax.receipt),
                                                         SizedBox(width: 5),
                                                         Text(
-                                                              "Waiting for feedback !",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .deepOrangeAccent,
-                                                                  fontSize: 15,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold)),
-
+                                                            "Waiting for feedback !",
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .deepOrangeAccent,
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold)),
                                                       ],
                                                     ),
                                               Column(
@@ -754,8 +769,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
                                       ),
                                     ),
                                   ),
-                              ],
-                            ),
+                                ],
+                              ),
                         //Govt
 
                         // //Govt respond
@@ -1218,6 +1233,8 @@ class _Response_Details_ScreenState extends State<Response_Details_Screen> {
           fetchedCitizenCity = ReqSnapshot.get('city');
           fetchedReqAddress = ReqSnapshot.get('fullAddress');
           fetchedPincode = ReqSnapshot.get('pinCode');
+          fetchedReqTime =
+              ReqSnapshot.get('reqTime').toString().substring(0, 16);
         });
       } else {
         if (kDebugMode) {

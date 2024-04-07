@@ -861,6 +861,7 @@ class _Open_Req_ScreenState extends State<Open_Req_Screen> {
         decId: 'Dec_$totalDocCount',
         username: widget.userName,
         auth_id: iAmNGO == true ? fetchedNid : fetchedGid,
+        auth_name: iAmNGO == true ? fetchedNGOName : fetchedGovtName,
         decline_reason: reasonController.text.trim());
 
     Map<String, dynamic> DeclineReqJson = ResponseNGOData.toDeclineReqJson();

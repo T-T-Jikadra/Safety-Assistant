@@ -183,7 +183,7 @@ class _Admin_NGOListTileState extends State<Admin_NGOListTile>
                           ),
                           GestureDetector(
                             onTap: () {
-                              _launchWebURL("https://${widget.website}");
+                              _launchWebURL(widget.website);
                             },
                             child: MouseRegion(
                               cursor: SystemMouseCursors.click,

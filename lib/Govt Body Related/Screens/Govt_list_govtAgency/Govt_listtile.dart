@@ -182,7 +182,7 @@ class _GovtListTileState extends State<govtListTile>
                           ),
                           GestureDetector(
                             onTap: () {
-                              _launchWebURL("https://${widget.website}");
+                              _launchWebURL(widget.website);
                             },
                             child: MouseRegion(
                               cursor: SystemMouseCursors.click,

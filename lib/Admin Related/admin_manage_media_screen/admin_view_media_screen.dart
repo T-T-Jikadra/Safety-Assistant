@@ -110,7 +110,7 @@ class _Admin_Manage_News_ScreenState extends State<Admin_Manage_News_Screen> {
           ),
         ),
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(right: 20, left: 20, bottom: 15),
+          padding: const EdgeInsets.only(right: 20, left: 20, bottom: 15,top: 9),
           child: Row(
             children: [
               Expanded(

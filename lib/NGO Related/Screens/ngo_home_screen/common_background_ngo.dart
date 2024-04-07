@@ -656,7 +656,7 @@ class _commonbg_ngoState extends State<commonbg_ngo> {
                     //enlargeFactor: 0.5,
                     //reverse: true,
                   )),
-              const SizedBox(height: 10)
+              const SizedBox(height: 65)
             ],
           ),
         ),

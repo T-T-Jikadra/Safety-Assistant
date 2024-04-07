@@ -221,6 +221,13 @@ class _media_history_list_widgetState extends State<media_history_list_widget> {
                                                       mainAxisAlignment:
                                                           MainAxisAlignment.end,
                                                       children: [
+                                                        const Icon(
+                                                            Icons
+                                                                .watch_later_outlined,
+                                                            size: 16,
+                                                            color:
+                                                            Colors.black54),
+                                                        const SizedBox(width: 7),
                                                         Text(
                                                             DateFormat(
                                                                 'dd-MM-yyyy , HH:mm')

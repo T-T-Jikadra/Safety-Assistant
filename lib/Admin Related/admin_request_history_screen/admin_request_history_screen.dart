@@ -227,6 +227,34 @@ class _Admin_Request_History_ScreenState
                                                                 ),
                                                               ),
                                                               const SizedBox(
+                                                                  height: 2),
+                                                              Padding(
+                                                                padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    left:
+                                                                    15,
+                                                                    top: 5),
+                                                                child: Row(
+                                                                  children: [
+                                                                    const Text(
+                                                                      "Authority name : ",
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                          Colors.black),
+                                                                    ),
+                                                                    Text(
+                                                                        snapshot.data!.docs[index]
+                                                                        [
+                                                                        'auth_name'],
+                                                                        style: const TextStyle(
+                                                                            color:
+                                                                            Colors.black,
+                                                                            fontWeight: FontWeight.bold)),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
                                                                   height: 4),
                                                               Padding(
                                                                 padding:

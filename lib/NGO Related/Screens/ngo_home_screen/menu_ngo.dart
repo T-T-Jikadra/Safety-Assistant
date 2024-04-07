@@ -30,7 +30,7 @@ List<Menu_ngo> sidebarMenus = [
   ),
   Menu_ngo(
     title: "Donation History",
-    icon: Icons.monetization_on_outlined,
+    icon: Icons.currency_rupee_sharp,
   ),
   Menu_ngo(
     title: "Alerts",

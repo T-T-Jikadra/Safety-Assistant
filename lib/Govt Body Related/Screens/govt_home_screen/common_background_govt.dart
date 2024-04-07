@@ -660,7 +660,7 @@ class _commonbg_govtState extends State<commonbg_govt> {
                     //enlargeFactor: 0.5,
                     //reverse: true,
                   )),
-              const SizedBox(height: 10)
+              const SizedBox(height: 65)
             ],
           ),
         ),

@@ -183,7 +183,7 @@ class _NgoListTileState extends State<NgoListTile>
                           ),
                           GestureDetector(
                             onTap: () {
-                              _launchWebURL("https://${widget.website}");
+                              _launchWebURL(widget.website);
                             },
                             child: MouseRegion(
                               cursor: SystemMouseCursors.click,

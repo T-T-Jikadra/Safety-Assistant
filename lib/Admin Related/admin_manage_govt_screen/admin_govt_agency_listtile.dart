@@ -2,7 +2,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'admin_govt_agency_details_screen.dart';
 
 class Admin_GovtListTile extends StatefulWidget {
@@ -183,7 +182,7 @@ class _Admin_GovtListTileState extends State<Admin_GovtListTile>
                           ),
                           GestureDetector(
                             onTap: () {
-                              _launchWebURL("https://${widget.website}");
+                              _launchWebURL(widget.website);
                             },
                             child: MouseRegion(
                               cursor: SystemMouseCursors.click,

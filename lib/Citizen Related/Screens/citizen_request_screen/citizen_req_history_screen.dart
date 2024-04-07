@@ -226,6 +226,13 @@ class _req_history_list_widgetState extends State<req_history_list_widget> {
                                                       MainAxisAlignment.end,
                                                   children: [
                                                     //const Text("City : ",style: TextStyle(fontWeight: FontWeight.bold)),
+                                                    const Icon(
+                                                        Icons
+                                                            .watch_later_outlined,
+                                                        size: 16,
+                                                        color:
+                                                        Colors.black54),
+                                                    const SizedBox(width: 7),
                                                     Text(
                                                         DateFormat(
                                                                 'dd-MM-yyyy , HH:mm')

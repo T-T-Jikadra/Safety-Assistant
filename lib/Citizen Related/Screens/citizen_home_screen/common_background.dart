@@ -922,15 +922,24 @@ class _commonbgState extends State<commonbg> {
                                       ),
                                     );
                                   } else {
-                                    return const Center(
-                                      child: Text(
-                                        'No emergency contact details found !',
-                                        style: TextStyle(
-                                          fontSize: 19,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.grey,
+                                    return  Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const SizedBox(height: 160),
+                                        Image.asset("assets/images/not_found.png",height: 100,width: 100),
+                                        const SizedBox(height: 70),
+                                        const Center(
+                                          child: Text(
+                                            'No emergency contact details found !',
+                                            style: TextStyle(
+                                              fontSize: 19,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                      ],
                                     );
                                   }
                                 }

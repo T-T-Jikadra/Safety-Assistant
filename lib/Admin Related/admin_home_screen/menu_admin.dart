@@ -43,7 +43,7 @@ List<Menu_admin> sidebarMenus = [
   ),
   Menu_admin(
     title: "Donation History",
-    icon: Icons.monetization_on_outlined,
+    icon: Icons.currency_rupee_sharp,
   ),
 ];
 

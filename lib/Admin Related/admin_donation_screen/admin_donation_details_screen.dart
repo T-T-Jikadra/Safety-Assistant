@@ -14,11 +14,12 @@ class Admin_Donation_Details_Screen extends StatefulWidget {
   });
 
   @override
-  State<Admin_Donation_Details_Screen> createState() => _Admin_Donation_Details_ScreenState();
+  State<Admin_Donation_Details_Screen> createState() =>
+      _Admin_Donation_Details_ScreenState();
 }
 
-class _Admin_Donation_Details_ScreenState extends State<Admin_Donation_Details_Screen> {
-
+class _Admin_Donation_Details_ScreenState
+    extends State<Admin_Donation_Details_Screen> {
   bool isLoading = true;
 
   @override
@@ -49,264 +50,288 @@ class _Admin_Donation_Details_ScreenState extends State<Admin_Donation_Details_S
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                     const Align(
-                       alignment: AlignmentDirectional.topStart,
-                       child: Text("Donation Details : ",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              fontSize: 18,
-                              color: Colors.blueGrey)),
-                     ),
-                    const SizedBox(height: 20),
-                    Card(
-                      //width: double.infinity,
-                      // decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(15),
-                      //     color: Colors.blueGrey.withOpacity(0.1)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 25, vertical: 15),
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                const Icon(CupertinoIcons
-                                    .person_alt),
-                                const SizedBox(width: 12),
-                                Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  children: [
-                                    const Text("Name of Doner :",
-                                        style: TextStyle(fontSize: 13)),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                        widget.documentSnapshot[
-                                        'donerName'],
-                                        style:
-                                        const TextStyle(fontSize: 16)),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            const Divider(height: 2),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                const Icon(Icons.description),
-                                const SizedBox(width: 12),
-                                Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  children: [
-                                    const Text("Name of NGO :",
-                                        style: TextStyle(fontSize: 13)),
-                                    const SizedBox(height: 4),
-                                    SizedBox(
-                                      width: MediaQuery.of(context)
-                                          .size
-                                          .width *
-                                          0.65,
-                                      child: Row(
-                                        children: [
-                                          Flexible(
-                                            child: Text(
-                                                widget.documentSnapshot[
-                                                'NGOName'],
-                                                overflow:
-                                                TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                    fontSize: 16)),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            const Divider(height: 2),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                const ImageIcon(
-                                  AssetImage('assets/images/upi_icon.png'),
-                                ),
-                                const SizedBox(width: 12),
-                                Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  children: [
-                                    const Text("NGO upi id:",
-                                        style: TextStyle(fontSize: 13)),
-                                    const SizedBox(height: 4),
-                                    SizedBox(
-                                      width: MediaQuery.of(context)
-                                          .size
-                                          .width *
-                                          0.65,
-                                      child: Row(
-                                        children: [
-                                          Flexible(
-                                            child: Text(
-                                                widget.documentSnapshot[
-                                                'ngo_upiId'],
-                                                overflow:
-                                                TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                    fontSize: 16)),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            const Divider(height: 2),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                const Icon(Icons.payment_sharp),
-                                const SizedBox(width: 12),
-                                Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: MediaQuery.of(context)
-                                          .size
-                                          .width *
-                                          0.6,
-                                      child: const Text("Payment Mode :",
-                                          style: TextStyle(fontSize: 13)),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(widget.documentSnapshot['mode'],
-                                        style:
-                                        const TextStyle(fontSize: 16)),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            const Divider(height: 2),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                const ImageIcon(
-                                  AssetImage('assets/images/upi_icon.png'),
-                                ),
-
-                                const SizedBox(width: 12),
-                                Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  children: [
-                                    const Text("UPI id :",
-                                        style: TextStyle(fontSize: 13)),
-                                    const SizedBox(height: 4),
-                                    Text(widget.documentSnapshot['upiId'],
-                                        style:
-                                        const TextStyle(fontSize: 16)),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            const Divider(height: 2),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                const Icon(Icons.currency_rupee),
-                                const SizedBox(width: 12),
-                                Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  children: [
-                                    const Text("Amount :",
-                                        style: TextStyle(fontSize: 13)),
-                                    const SizedBox(height: 4),
-                                    Text("${widget.documentSnapshot['amount']} /-",
-                                        style:
-                                        const TextStyle(fontSize: 16)),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            const Divider(height: 2),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                const ImageIcon(
-                                  AssetImage('assets/images/transaction_icon.png'),
-                                ),
-                                const SizedBox(width: 12),
-                                Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  children: [
-                                    const Text("Transaction id :",
-                                        style: TextStyle(fontSize: 13)),
-                                    const SizedBox(height: 4),
-                                    Text(widget.documentSnapshot['txnId'],
-                                        style:
-                                        const TextStyle(fontSize: 16)),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 5),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Column(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.start,
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  children: [
-                                    const Text("Transaction time :",
-                                        style: TextStyle(
-                                            fontSize: 11,
-                                            color: Colors.grey)),
-                                    const SizedBox(width: 4),
-                                    Text(
-                                        DateFormat('dd-MM-yyyy , HH:mm')
-                                            .format(DateTime.parse(
-                                            widget.documentSnapshot[
-                                            'txnTime'])),
-                                        style: const TextStyle(
-                                            fontSize: 11,
-                                            color: Colors.grey)),
-                                  ],
-                                ),
-                              ],
-                            )
-                          ],
+                      children: [
+                        const SizedBox(height: 10),
+                        const Align(
+                          alignment: AlignmentDirectional.topStart,
+                          child: Text("Donation Details : ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 18,
+                                  color: Colors.blueGrey)),
                         ),
-                      ),
-                    ),
-                  ],
-                )
+                        const SizedBox(height: 20),
+                        Card(
+                          //width: double.infinity,
+                          // decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(15),
+                          //     color: Colors.blueGrey.withOpacity(0.1)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 25, vertical: 15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Icon(CupertinoIcons.person_alt),
+                                    const SizedBox(width: 12),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text("Name of Doner :",
+                                            style: TextStyle(fontSize: 13)),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                            widget
+                                                .documentSnapshot['donerName'],
+                                            style:
+                                                const TextStyle(fontSize: 16)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                const Divider(height: 2),
+                                const SizedBox(height: 8),
+                                Row(
+                                  children: [
+                                    const Icon(Icons.description),
+                                    const SizedBox(width: 12),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text("Name of NGO :",
+                                            style: TextStyle(fontSize: 13)),
+                                        const SizedBox(height: 4),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.65,
+                                          child: Row(
+                                            children: [
+                                              Flexible(
+                                                child: Text(
+                                                    widget.documentSnapshot[
+                                                        'NGOName'],
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                        fontSize: 16)),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                const Divider(height: 2),
+                                const SizedBox(height: 8),
+                                Row(
+                                  children: [
+                                    const ImageIcon(
+                                      AssetImage('assets/images/upi_icon.png'),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text("NGO UPI id :",
+                                            style: TextStyle(fontSize: 13)),
+                                        const SizedBox(height: 4),
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.65,
+                                          child: Row(
+                                            children: [
+                                              Flexible(
+                                                child: Text(
+                                                    widget.documentSnapshot[
+                                                        'ngo_upiId'],
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                        fontSize: 16)),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                const Divider(height: 2),
+                                const SizedBox(height: 8),
+                                Row(
+                                  children: [
+                                    const Icon(Icons.payment_sharp),
+                                    const SizedBox(width: 12),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.6,
+                                          child: const Text("Payment Mode :",
+                                              style: TextStyle(fontSize: 13)),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(widget.documentSnapshot['mode'],
+                                            style:
+                                                const TextStyle(fontSize: 16)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                const Divider(height: 2),
+                                const SizedBox(height: 8),
+                                Row(
+                                  children: [
+                                    const ImageIcon(
+                                      AssetImage('assets/images/upi_icon.png'),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text("Citizen UPI id :",
+                                            style: TextStyle(fontSize: 13)),
+                                        const SizedBox(height: 4),
+                                        Text(widget.documentSnapshot['upiId'],
+                                            style:
+                                                const TextStyle(fontSize: 16)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                const Divider(height: 2),
+                                const SizedBox(height: 8),
+                                Row(
+                                  children: [
+                                    const Icon(Icons.currency_rupee),
+                                    const SizedBox(width: 12),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text("Amount :",
+                                            style: TextStyle(fontSize: 13)),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                            "${widget.documentSnapshot['amount']} /-",
+                                            style:
+                                                const TextStyle(fontSize: 16)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                const Divider(height: 2),
+                                const SizedBox(height: 8),
+                                Row(
+                                  children: [
+                                    const ImageIcon(
+                                      AssetImage(
+                                          'assets/images/transaction_icon.png'),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text("Transaction id :",
+                                            style: TextStyle(fontSize: 13)),
+                                        const SizedBox(height: 4),
+                                        Text(widget.documentSnapshot['txnId'],
+                                            style:
+                                                const TextStyle(fontSize: 16)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                const Divider(height: 2),
+                                const SizedBox(height: 8),
+                                Row(
+                                  children: [
+                                    const Icon(Icons.watch_later_outlined),
+                                    const SizedBox(width: 12),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text("Transaction time :",
+                                            style: TextStyle(fontSize: 13)),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                            DateFormat('dd-MM-yyyy , HH:mm')
+                                                .format(DateTime.parse(
+                                                    widget.documentSnapshot[
+                                                        'txnTime'])),
+                                            style:
+                                                const TextStyle(fontSize: 15)),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                // Row(
+                                //   mainAxisAlignment: MainAxisAlignment.end,
+                                //   children: [
+                                //     Column(
+                                //       mainAxisAlignment:
+                                //       MainAxisAlignment.start,
+                                //       crossAxisAlignment:
+                                //       CrossAxisAlignment.start,
+                                //       children: [
+                                //         const Text("Transaction time :",
+                                //             style: TextStyle(
+                                //                 fontSize: 11,
+                                //                 color: Colors.grey)),
+                                //         const SizedBox(width: 4),
+                                //         Text(
+                                //             DateFormat('dd-MM-yyyy , HH:mm')
+                                //                 .format(DateTime.parse(
+                                //                 widget.documentSnapshot[
+                                //                 'txnTime'])),
+                                //             style: const TextStyle(
+                                //                 fontSize: 11,
+                                //                 color: Colors.grey)),
+                                //       ],
+                                //     ),
+                                //   ],
+                                // )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }

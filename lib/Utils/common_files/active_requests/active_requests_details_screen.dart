@@ -34,7 +34,8 @@ class Active_Req_Details_Screen extends StatefulWidget {
       required this.rid});
 
   @override
-  State<Active_Req_Details_Screen> createState() => _Active_Req_Details_ScreenState();
+  State<Active_Req_Details_Screen> createState() =>
+      _Active_Req_Details_ScreenState();
 }
 
 class _Active_Req_Details_ScreenState extends State<Active_Req_Details_Screen> {
@@ -43,6 +44,7 @@ class _Active_Req_Details_ScreenState extends State<Active_Req_Details_Screen> {
   String iAmNGO = '';
   String iAmGovt = '';
   String authority_id = '';
+  String authority_name = '';
   String newRid = '';
 
   //for Request
@@ -437,7 +439,7 @@ class _Active_Req_Details_ScreenState extends State<Active_Req_Details_Screen> {
         setState(() {
           authority_id = fetchedNid = NGOSnapshot.get('nid');
 //          authority_id = NGOSnapshot.get('nid');
-          fetchedNGOName = NGOSnapshot.get('nameOfNGO');
+          authority_name = fetchedNGOName = NGOSnapshot.get('nameOfNGO');
           fetchedNGORegNo = NGOSnapshot.get('NGORegNo');
           fetchedNGOPhone = NGOSnapshot.get('contactNumber');
           fetchedNGOState = NGOSnapshot.get('state');
@@ -477,7 +479,7 @@ class _Active_Req_Details_ScreenState extends State<Active_Req_Details_Screen> {
         setState(() {
           authority_id = fetchedGid = GovtSnapshot.get('gid');
           // authority_id = GovtSnapshot.get('gid');
-          fetchedGovtName = GovtSnapshot.get('GovtAgencyName');
+          authority_name = fetchedGovtName = GovtSnapshot.get('GovtAgencyName');
           fetchedGovtRegNo = GovtSnapshot.get('GovtAgencyRegNo');
           fetchedGovtPhone = GovtSnapshot.get('contactNumber');
           fetchedGovtState = GovtSnapshot.get('state');
@@ -791,7 +793,8 @@ class _Active_Req_Details_ScreenState extends State<Active_Req_Details_Screen> {
         decId: 'Dec_$totalDocCount',
         username: widget.userName,
         auth_id: authority_id,
-        decline_reason: reasonController.text.trim());
+        decline_reason: reasonController.text.trim(),
+        auth_name: authority_name);
 
     Map<String, dynamic> DeclineReqJson = ResponseNGOData.toDeclineReqJson();
 

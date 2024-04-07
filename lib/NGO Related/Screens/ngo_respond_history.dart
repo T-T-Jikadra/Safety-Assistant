@@ -324,6 +324,7 @@ class _NGO_Response_History_ScreenState
           .doc(email)
           .collection("ngo")
           .where("ResponderNGOEmail", isEqualTo: email)
+          .orderBy('RespondNGOTime', descending: true)
           .get();
 
       List<String> requestIds = responseQuerySnapshot.docs
@@ -335,6 +336,7 @@ class _NGO_Response_History_ScreenState
         final requestQuerySnapshot = await FirebaseFirestore.instance
             .collection("clc_request")
             .where("RequestId", isEqualTo: requestId)
+            //.orderBy('reqTime', descending: true)
             .get();
 
         responseData.addAll(
@@ -526,27 +528,28 @@ class _response_history_list_widgetState
                                         ],
                                       ),
                                     ),
-                                    const SizedBox(height: 2),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 15, top: 5),
-                                      child: Row(
-                                        children: [
-                                          const Text(
-                                            "City : ",
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                          Text(
-                                            '${responseData['city']}',
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+
+                                    // const SizedBox(height: 2),
+                                    // Padding(
+                                    //   padding: const EdgeInsets.only(
+                                    //       left: 15, top: 5),
+                                    //   child: Row(
+                                    //     children: [
+                                    //       const Text(
+                                    //         "City : ",
+                                    //         style:
+                                    //             TextStyle(color: Colors.black),
+                                    //       ),
+                                    //       Text(
+                                    //         '${responseData['city']}',
+                                    //         style: const TextStyle(
+                                    //           color: Colors.black,
+                                    //           fontSize: 15,
+                                    //         ),
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
                                     const SizedBox(height: 2),
                                     Padding(
                                       padding: const EdgeInsets.only(

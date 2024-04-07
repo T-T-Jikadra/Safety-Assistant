@@ -122,7 +122,7 @@ class _Onboarding_ScreenState extends State<Onboarding_Screen> {
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18)))),
                 child: const Text(
-                  "get started",
+                  "Get Started",
                   style: TextStyle(color: Colors.white),
                 ))),
       ),

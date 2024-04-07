@@ -148,7 +148,7 @@ class _NGO_Donation_Details_ScreenState
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Text("UPI id :",
+                                        const Text("Citizen UPI id :",
                                             style: TextStyle(fontSize: 13)),
                                         const SizedBox(height: 4),
                                         Text(widget.documentSnapshot['upiId'],
@@ -204,33 +204,32 @@ class _NGO_Donation_Details_ScreenState
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 5),
+                                const SizedBox(height: 8),
+                                const Divider(height: 2),
+                                const SizedBox(height: 8),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
+                                    const Icon(Icons.watch_later_outlined),
+                                    const SizedBox(width: 12),
                                     Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: [
                                         const Text("Transaction time :",
-                                            style: TextStyle(
-                                                fontSize: 11,
-                                                color: Colors.grey)),
-                                        const SizedBox(width: 4),
+                                            style: TextStyle(fontSize: 13)),
+                                        const SizedBox(height: 4),
                                         Text(
                                             DateFormat('dd-MM-yyyy , HH:mm')
                                                 .format(DateTime.parse(
-                                                    widget.documentSnapshot[
-                                                        'txnTime'])),
+                                                widget.documentSnapshot[
+                                                'txnTime'])),
                                             style: const TextStyle(
-                                                fontSize: 11,
-                                                color: Colors.grey)),
+                                                fontSize: 15)),
                                       ],
                                     ),
                                   ],
-                                )
+                                ),
+                                const SizedBox(height: 5),
                               ],
                             ),
                           ),

@@ -47,8 +47,8 @@ class _NGO_GA_ListScreenState extends State<NGO_GA_ListScreen> {
           title: const Text("Search your nearby Agencies"),
           bottom: const TabBar(
             tabs: [
-              Tab(text: 'NGO'), // First tab
-              Tab(text: 'Government'), // Second tab
+              Tab(text: 'NGOs'), // First tab
+              Tab(text: 'Govt Agencies'), // Second tab
             ],
           ),
         ),
@@ -538,7 +538,7 @@ class _NgoTileState extends State<NgoTile> with SingleTickerProviderStateMixin {
                                 bottom: 3, left: 20, right: 20),
                             //width: 150,
                             child: ClipRRect(
-                                child: OutlinedButton(
+                                child: TextButton(
                                     onPressed: () async {
                                       Navigator.of(context).push(
                                         PageRouteBuilder(
