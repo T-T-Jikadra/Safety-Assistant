@@ -142,6 +142,37 @@ class _Admin_Request_Details_ScreenState extends State<Admin_Request_Details_Scr
                           const SizedBox(height: 8),
                           Row(
                             children: [
+                              const Icon(Icons.person_outline_outlined),
+                              const SizedBox(width: 12),
+                              Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  const Text("Citizen name :",
+                                      style: TextStyle(fontSize: 13)),
+                                  const SizedBox(height: 4),
+                                  SizedBox(
+                                    width: MediaQuery.of(context)
+                                        .size
+                                        .width *
+                                        0.65,
+                                    child: Text(
+                                        widget.documentSnapshot[
+                                        'userName'],
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                            fontSize: 16)),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          const Divider(height: 2),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
                               const Icon(Iconsax.call),
                               const SizedBox(width: 12),
                               Column(
