@@ -1087,10 +1087,8 @@ class _commonbg_adminState extends State<commonbg_admin> {
           await FirebaseFirestore.instance.collection("clc_govt").get();
 
       //req
-      DocumentSnapshot reqSnap = await FirebaseFirestore.instance
-          .collection("clc_request")
-          .doc("request_count")
-          .get();
+      QuerySnapshot reqSnap =
+      await FirebaseFirestore.instance.collection("clc_request").get();
 
       //response
       DocumentSnapshot responseSnap = await FirebaseFirestore.instance
@@ -1102,7 +1100,7 @@ class _commonbg_adminState extends State<commonbg_admin> {
         numberOfCitizen = (citizenSnap.exists) ? citizenSnap.get("count") : 0;
         numberOfNGO = ngoSnap.size;
         numberOfGovt = govtSnap.size;
-        numberOfReq = (reqSnap.exists) ? reqSnap.get("count") : 0;
+        numberOfReq = reqSnap.size;
         numberOfResponse =
             (responseSnap.exists) ? responseSnap.get("count") : 0;
       });
